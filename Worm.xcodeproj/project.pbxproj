@@ -1,0 +1,616 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		4E42D20824448362002CAA4E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E42D20724448362002CAA4E /* AppDelegate.swift */; };
+		4E42D20A24448362002CAA4E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E42D20924448362002CAA4E /* SceneDelegate.swift */; };
+		4E42D20D24448362002CAA4E /* Worm.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4E42D20B24448362002CAA4E /* Worm.xcdatamodeld */; };
+		4E42D20F24448362002CAA4E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E42D20E24448362002CAA4E /* ContentView.swift */; };
+		4E42D21124448363002CAA4E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4E42D21024448363002CAA4E /* Assets.xcassets */; };
+		4E42D21424448363002CAA4E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4E42D21324448363002CAA4E /* Preview Assets.xcassets */; };
+		4E42D21724448363002CAA4E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4E42D21524448363002CAA4E /* LaunchScreen.storyboard */; };
+		4E42D22224448364002CAA4E /* WormTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E42D22124448364002CAA4E /* WormTests.swift */; };
+		4E42D22D24448364002CAA4E /* WormUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E42D22C24448364002CAA4E /* WormUITests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		4E42D21E24448364002CAA4E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4E42D1FC24448362002CAA4E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4E42D20324448362002CAA4E;
+			remoteInfo = Worm;
+		};
+		4E42D22924448364002CAA4E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4E42D1FC24448362002CAA4E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4E42D20324448362002CAA4E;
+			remoteInfo = Worm;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		4E42D20424448362002CAA4E /* Worm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Worm.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4E42D20724448362002CAA4E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		4E42D20924448362002CAA4E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		4E42D20C24448362002CAA4E /* Worm.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Worm.xcdatamodel; sourceTree = "<group>"; };
+		4E42D20E24448362002CAA4E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		4E42D21024448363002CAA4E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		4E42D21324448363002CAA4E /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		4E42D21624448363002CAA4E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		4E42D21824448363002CAA4E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4E42D21D24448364002CAA4E /* WormTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WormTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		4E42D22124448364002CAA4E /* WormTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WormTests.swift; sourceTree = "<group>"; };
+		4E42D22324448364002CAA4E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4E42D22824448364002CAA4E /* WormUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WormUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		4E42D22C24448364002CAA4E /* WormUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WormUITests.swift; sourceTree = "<group>"; };
+		4E42D22E24448364002CAA4E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		4E42D20124448362002CAA4E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4E42D21A24448364002CAA4E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4E42D22524448364002CAA4E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		4E42D1FB24448362002CAA4E = {
+			isa = PBXGroup;
+			children = (
+				4E42D20624448362002CAA4E /* Worm */,
+				4E42D22024448364002CAA4E /* WormTests */,
+				4E42D22B24448364002CAA4E /* WormUITests */,
+				4E42D20524448362002CAA4E /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		4E42D20524448362002CAA4E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4E42D20424448362002CAA4E /* Worm.app */,
+				4E42D21D24448364002CAA4E /* WormTests.xctest */,
+				4E42D22824448364002CAA4E /* WormUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4E42D20624448362002CAA4E /* Worm */ = {
+			isa = PBXGroup;
+			children = (
+				4E42D20724448362002CAA4E /* AppDelegate.swift */,
+				4E42D20924448362002CAA4E /* SceneDelegate.swift */,
+				4E42D20E24448362002CAA4E /* ContentView.swift */,
+				4E42D21024448363002CAA4E /* Assets.xcassets */,
+				4E42D21524448363002CAA4E /* LaunchScreen.storyboard */,
+				4E42D21824448363002CAA4E /* Info.plist */,
+				4E42D20B24448362002CAA4E /* Worm.xcdatamodeld */,
+				4E42D21224448363002CAA4E /* Preview Content */,
+			);
+			path = Worm;
+			sourceTree = "<group>";
+		};
+		4E42D21224448363002CAA4E /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				4E42D21324448363002CAA4E /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		4E42D22024448364002CAA4E /* WormTests */ = {
+			isa = PBXGroup;
+			children = (
+				4E42D22124448364002CAA4E /* WormTests.swift */,
+				4E42D22324448364002CAA4E /* Info.plist */,
+			);
+			path = WormTests;
+			sourceTree = "<group>";
+		};
+		4E42D22B24448364002CAA4E /* WormUITests */ = {
+			isa = PBXGroup;
+			children = (
+				4E42D22C24448364002CAA4E /* WormUITests.swift */,
+				4E42D22E24448364002CAA4E /* Info.plist */,
+			);
+			path = WormUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		4E42D20324448362002CAA4E /* Worm */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4E42D23124448364002CAA4E /* Build configuration list for PBXNativeTarget "Worm" */;
+			buildPhases = (
+				4E42D20024448362002CAA4E /* Sources */,
+				4E42D20124448362002CAA4E /* Frameworks */,
+				4E42D20224448362002CAA4E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Worm;
+			productName = Worm;
+			productReference = 4E42D20424448362002CAA4E /* Worm.app */;
+			productType = "com.apple.product-type.application";
+		};
+		4E42D21C24448364002CAA4E /* WormTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4E42D23424448364002CAA4E /* Build configuration list for PBXNativeTarget "WormTests" */;
+			buildPhases = (
+				4E42D21924448364002CAA4E /* Sources */,
+				4E42D21A24448364002CAA4E /* Frameworks */,
+				4E42D21B24448364002CAA4E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				4E42D21F24448364002CAA4E /* PBXTargetDependency */,
+			);
+			name = WormTests;
+			productName = WormTests;
+			productReference = 4E42D21D24448364002CAA4E /* WormTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		4E42D22724448364002CAA4E /* WormUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4E42D23724448364002CAA4E /* Build configuration list for PBXNativeTarget "WormUITests" */;
+			buildPhases = (
+				4E42D22424448364002CAA4E /* Sources */,
+				4E42D22524448364002CAA4E /* Frameworks */,
+				4E42D22624448364002CAA4E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				4E42D22A24448364002CAA4E /* PBXTargetDependency */,
+			);
+			name = WormUITests;
+			productName = WormUITests;
+			productReference = 4E42D22824448364002CAA4E /* WormUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		4E42D1FC24448362002CAA4E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1140;
+				LastUpgradeCheck = 1140;
+				ORGANIZATIONNAME = "Nikita Lazarev-Zubov";
+				TargetAttributes = {
+					4E42D20324448362002CAA4E = {
+						CreatedOnToolsVersion = 11.4;
+					};
+					4E42D21C24448364002CAA4E = {
+						CreatedOnToolsVersion = 11.4;
+						TestTargetID = 4E42D20324448362002CAA4E;
+					};
+					4E42D22724448364002CAA4E = {
+						CreatedOnToolsVersion = 11.4;
+						TestTargetID = 4E42D20324448362002CAA4E;
+					};
+				};
+			};
+			buildConfigurationList = 4E42D1FF24448362002CAA4E /* Build configuration list for PBXProject "Worm" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 4E42D1FB24448362002CAA4E;
+			productRefGroup = 4E42D20524448362002CAA4E /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				4E42D20324448362002CAA4E /* Worm */,
+				4E42D21C24448364002CAA4E /* WormTests */,
+				4E42D22724448364002CAA4E /* WormUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		4E42D20224448362002CAA4E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4E42D21724448363002CAA4E /* LaunchScreen.storyboard in Resources */,
+				4E42D21424448363002CAA4E /* Preview Assets.xcassets in Resources */,
+				4E42D21124448363002CAA4E /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4E42D21B24448364002CAA4E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4E42D22624448364002CAA4E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		4E42D20024448362002CAA4E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4E42D20824448362002CAA4E /* AppDelegate.swift in Sources */,
+				4E42D20D24448362002CAA4E /* Worm.xcdatamodeld in Sources */,
+				4E42D20F24448362002CAA4E /* ContentView.swift in Sources */,
+				4E42D20A24448362002CAA4E /* SceneDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4E42D21924448364002CAA4E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4E42D22224448364002CAA4E /* WormTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4E42D22424448364002CAA4E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4E42D22D24448364002CAA4E /* WormUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		4E42D21F24448364002CAA4E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4E42D20324448362002CAA4E /* Worm */;
+			targetProxy = 4E42D21E24448364002CAA4E /* PBXContainerItemProxy */;
+		};
+		4E42D22A24448364002CAA4E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4E42D20324448362002CAA4E /* Worm */;
+			targetProxy = 4E42D22924448364002CAA4E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		4E42D21524448363002CAA4E /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4E42D21624448363002CAA4E /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		4E42D22F24448364002CAA4E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		4E42D23024448364002CAA4E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		4E42D23224448364002CAA4E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_ASSET_PATHS = "\"Worm/Preview Content\"";
+				DEVELOPMENT_TEAM = V42H29UY7B;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = Worm/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.LazarevZubov.Worm;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		4E42D23324448364002CAA4E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_ASSET_PATHS = "\"Worm/Preview Content\"";
+				DEVELOPMENT_TEAM = V42H29UY7B;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = Worm/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.LazarevZubov.Worm;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		4E42D23524448364002CAA4E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = V42H29UY7B;
+				INFOPLIST_FILE = WormTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.LazarevZubov.WormTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Worm.app/Worm";
+			};
+			name = Debug;
+		};
+		4E42D23624448364002CAA4E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = V42H29UY7B;
+				INFOPLIST_FILE = WormTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.LazarevZubov.WormTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Worm.app/Worm";
+			};
+			name = Release;
+		};
+		4E42D23824448364002CAA4E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = V42H29UY7B;
+				INFOPLIST_FILE = WormUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.LazarevZubov.WormUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Worm;
+			};
+			name = Debug;
+		};
+		4E42D23924448364002CAA4E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = V42H29UY7B;
+				INFOPLIST_FILE = WormUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.LazarevZubov.WormUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Worm;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		4E42D1FF24448362002CAA4E /* Build configuration list for PBXProject "Worm" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4E42D22F24448364002CAA4E /* Debug */,
+				4E42D23024448364002CAA4E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4E42D23124448364002CAA4E /* Build configuration list for PBXNativeTarget "Worm" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4E42D23224448364002CAA4E /* Debug */,
+				4E42D23324448364002CAA4E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4E42D23424448364002CAA4E /* Build configuration list for PBXNativeTarget "WormTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4E42D23524448364002CAA4E /* Debug */,
+				4E42D23624448364002CAA4E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4E42D23724448364002CAA4E /* Build configuration list for PBXNativeTarget "WormUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4E42D23824448364002CAA4E /* Debug */,
+				4E42D23924448364002CAA4E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		4E42D20B24448362002CAA4E /* Worm.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				4E42D20C24448362002CAA4E /* Worm.xcdatamodel */,
+			);
+			currentVersion = 4E42D20C24448362002CAA4E /* Worm.xcdatamodel */;
+			path = Worm.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 4E42D1FC24448362002CAA4E /* Project object */;
+}
