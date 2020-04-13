@@ -8,14 +8,22 @@
 
 import SwiftUI
 
+// TODO: Rename and implement the initial screen.
+
 struct ContentView: View {
-    var body: some View {
-        Text("Hello, World!")
-    }
+
+    // MARK: - Properties
+
+    var body: some View { Text("Hello, World!") }
+
 }
 
+// MARK: -
+
 struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-    }
+
+    // MARK: - Properties
+
+    static var previews: some View { ContentView() }
+
 }

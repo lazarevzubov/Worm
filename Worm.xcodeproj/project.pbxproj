@@ -14,8 +14,6 @@
 		4E42D21124448363002CAA4E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4E42D21024448363002CAA4E /* Assets.xcassets */; };
 		4E42D21424448363002CAA4E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4E42D21324448363002CAA4E /* Preview Assets.xcassets */; };
 		4E42D21724448363002CAA4E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4E42D21524448363002CAA4E /* LaunchScreen.storyboard */; };
-		4E42D22224448364002CAA4E /* WormTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E42D22124448364002CAA4E /* WormTests.swift */; };
-		4E42D22D24448364002CAA4E /* WormUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E42D22C24448364002CAA4E /* WormUITests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,10 +44,8 @@
 		4E42D21624448363002CAA4E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4E42D21824448363002CAA4E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4E42D21D24448364002CAA4E /* WormTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WormTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		4E42D22124448364002CAA4E /* WormTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WormTests.swift; sourceTree = "<group>"; };
 		4E42D22324448364002CAA4E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4E42D22824448364002CAA4E /* WormUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WormUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		4E42D22C24448364002CAA4E /* WormUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WormUITests.swift; sourceTree = "<group>"; };
 		4E42D22E24448364002CAA4E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -101,14 +97,11 @@
 		4E42D20624448362002CAA4E /* Worm */ = {
 			isa = PBXGroup;
 			children = (
-				4E42D20724448362002CAA4E /* AppDelegate.swift */,
-				4E42D20924448362002CAA4E /* SceneDelegate.swift */,
-				4E42D20E24448362002CAA4E /* ContentView.swift */,
-				4E42D21024448363002CAA4E /* Assets.xcassets */,
-				4E42D21524448363002CAA4E /* LaunchScreen.storyboard */,
+				4E42D21224448363002CAA4E /* Preview Content */,
+				4E42D23C24448690002CAA4E /* Resources */,
+				4E42D23A2444837D002CAA4E /* Sources */,
 				4E42D21824448363002CAA4E /* Info.plist */,
 				4E42D20B24448362002CAA4E /* Worm.xcdatamodeld */,
-				4E42D21224448363002CAA4E /* Preview Content */,
 			);
 			path = Worm;
 			sourceTree = "<group>";
@@ -124,7 +117,7 @@
 		4E42D22024448364002CAA4E /* WormTests */ = {
 			isa = PBXGroup;
 			children = (
-				4E42D22124448364002CAA4E /* WormTests.swift */,
+				4E42D23D244486C1002CAA4E /* Tests */,
 				4E42D22324448364002CAA4E /* Info.plist */,
 			);
 			path = WormTests;
@@ -133,10 +126,51 @@
 		4E42D22B24448364002CAA4E /* WormUITests */ = {
 			isa = PBXGroup;
 			children = (
-				4E42D22C24448364002CAA4E /* WormUITests.swift */,
+				4E42D23E244486C9002CAA4E /* Tests */,
 				4E42D22E24448364002CAA4E /* Info.plist */,
 			);
 			path = WormUITests;
+			sourceTree = "<group>";
+		};
+		4E42D23A2444837D002CAA4E /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				4E42D23B24448645002CAA4E /* Main */,
+				4E42D20E24448362002CAA4E /* ContentView.swift */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		4E42D23B24448645002CAA4E /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				4E42D20724448362002CAA4E /* AppDelegate.swift */,
+				4E42D20924448362002CAA4E /* SceneDelegate.swift */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		4E42D23C24448690002CAA4E /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				4E42D21024448363002CAA4E /* Assets.xcassets */,
+				4E42D21524448363002CAA4E /* LaunchScreen.storyboard */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		4E42D23D244486C1002CAA4E /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		4E42D23E244486C9002CAA4E /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Tests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -281,7 +315,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4E42D22224448364002CAA4E /* WormTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -289,7 +322,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4E42D22D24448364002CAA4E /* WormUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -370,7 +402,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -424,7 +456,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
