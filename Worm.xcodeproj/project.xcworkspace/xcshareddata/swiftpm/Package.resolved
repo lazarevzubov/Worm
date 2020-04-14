@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "GoodreadsService",
+        "repositoryURL": "https://github.com/lazarevzubov/GoodreadsService.git",
+        "state": {
+          "branch": "master",
+          "revision": "e604be59e99b7a3b7c94c9d58995e216849d609c",
+          "version": null
+        }
+      }
+    ]
+  },
+  "version": 1
+}

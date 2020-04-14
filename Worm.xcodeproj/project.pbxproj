@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -14,6 +14,7 @@
 		4E42D21124448363002CAA4E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4E42D21024448363002CAA4E /* Assets.xcassets */; };
 		4E42D21424448363002CAA4E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4E42D21324448363002CAA4E /* Preview Assets.xcassets */; };
 		4E42D21724448363002CAA4E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4E42D21524448363002CAA4E /* LaunchScreen.storyboard */; };
+		4E42D24C24463A1E002CAA4E /* GoodreadsService in Frameworks */ = {isa = PBXBuildFile; productRef = 4E42D24B24463A1E002CAA4E /* GoodreadsService */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +55,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4E42D24C24463A1E002CAA4E /* GoodreadsService in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -81,6 +83,7 @@
 				4E42D22024448364002CAA4E /* WormTests */,
 				4E42D22B24448364002CAA4E /* WormUITests */,
 				4E42D20524448362002CAA4E /* Products */,
+				4E42D2402444A187002CAA4E /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -173,6 +176,13 @@
 			path = Tests;
 			sourceTree = "<group>";
 		};
+		4E42D2402444A187002CAA4E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -189,6 +199,9 @@
 			dependencies = (
 			);
 			name = Worm;
+			packageProductDependencies = (
+				4E42D24B24463A1E002CAA4E /* GoodreadsService */,
+			);
 			productName = Worm;
 			productReference = 4E42D20424448362002CAA4E /* Worm.app */;
 			productType = "com.apple.product-type.application";
@@ -261,6 +274,9 @@
 				Base,
 			);
 			mainGroup = 4E42D1FB24448362002CAA4E;
+			packageReferences = (
+				4E42D24A24463A1E002CAA4E /* XCRemoteSwiftPackageReference "GoodreadsService" */,
+			);
 			productRefGroup = 4E42D20524448362002CAA4E /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -630,6 +646,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		4E42D24A24463A1E002CAA4E /* XCRemoteSwiftPackageReference "GoodreadsService" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/lazarevzubov/GoodreadsService.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		4E42D24B24463A1E002CAA4E /* GoodreadsService */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4E42D24A24463A1E002CAA4E /* XCRemoteSwiftPackageReference "GoodreadsService" */;
+			productName = GoodreadsService;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		4E42D20B24448362002CAA4E /* Worm.xcdatamodeld */ = {
