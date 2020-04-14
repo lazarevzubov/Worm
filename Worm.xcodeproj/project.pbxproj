@@ -49,6 +49,7 @@
 		4E42D22824448364002CAA4E /* WormUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WormUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4E42D22E24448364002CAA4E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4E42D24D24463AEE002CAA4E /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		4E42D24F24463C4A002CAA4E /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +81,7 @@
 		4E42D1FB24448362002CAA4E = {
 			isa = PBXGroup;
 			children = (
+				4E42D24F24463C4A002CAA4E /* LICENSE */,
 				4E42D24D24463AEE002CAA4E /* README.md */,
 				4E42D20624448362002CAA4E /* Worm */,
 				4E42D22024448364002CAA4E /* WormTests */,
