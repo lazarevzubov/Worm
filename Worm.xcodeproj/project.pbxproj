@@ -15,6 +15,7 @@
 		4E42D21424448363002CAA4E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4E42D21324448363002CAA4E /* Preview Assets.xcassets */; };
 		4E42D21724448363002CAA4E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4E42D21524448363002CAA4E /* LaunchScreen.storyboard */; };
 		4E42D24C24463A1E002CAA4E /* GoodreadsService in Frameworks */ = {isa = PBXBuildFile; productRef = 4E42D24B24463A1E002CAA4E /* GoodreadsService */; };
+		4EE8272C244CA0AA00102B5D /* Coordinator in Frameworks */ = {isa = PBXBuildFile; productRef = 4EE8272B244CA0AA00102B5D /* Coordinator */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +59,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4E42D24C24463A1E002CAA4E /* GoodreadsService in Frameworks */,
+				4EE8272C244CA0AA00102B5D /* Coordinator in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -143,6 +145,7 @@
 			isa = PBXGroup;
 			children = (
 				4E42D23B24448645002CAA4E /* Main */,
+				4EE82722244B305500102B5D /* Navigation */,
 				4E42D20E24448362002CAA4E /* ContentView.swift */,
 			);
 			path = Sources;
@@ -187,6 +190,13 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		4EE82722244B305500102B5D /* Navigation */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Navigation;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -205,6 +215,7 @@
 			name = Worm;
 			packageProductDependencies = (
 				4E42D24B24463A1E002CAA4E /* GoodreadsService */,
+				4EE8272B244CA0AA00102B5D /* Coordinator */,
 			);
 			productName = Worm;
 			productReference = 4E42D20424448362002CAA4E /* Worm.app */;
@@ -280,6 +291,7 @@
 			mainGroup = 4E42D1FB24448362002CAA4E;
 			packageReferences = (
 				4E42D24A24463A1E002CAA4E /* XCRemoteSwiftPackageReference "GoodreadsService" */,
+				4EE8272A244CA0AA00102B5D /* XCRemoteSwiftPackageReference "Coordinator" */,
 			);
 			productRefGroup = 4E42D20524448362002CAA4E /* Products */;
 			projectDirPath = "";
@@ -660,6 +672,14 @@
 				kind = branch;
 			};
 		};
+		4EE8272A244CA0AA00102B5D /* XCRemoteSwiftPackageReference "Coordinator" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/lazarevzubov/Coordinator.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -667,6 +687,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 4E42D24A24463A1E002CAA4E /* XCRemoteSwiftPackageReference "GoodreadsService" */;
 			productName = GoodreadsService;
+		};
+		4EE8272B244CA0AA00102B5D /* Coordinator */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4EE8272A244CA0AA00102B5D /* XCRemoteSwiftPackageReference "Coordinator" */;
+			productName = Coordinator;
 		};
 /* End XCSwiftPackageProductDependency section */
 
