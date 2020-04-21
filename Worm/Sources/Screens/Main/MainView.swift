@@ -6,13 +6,29 @@
 //  Copyright © 2020 Nikita Lazarev-Zubov. All rights reserved.
 //
 
+import GoodreadsService
 import SwiftUI
 
 struct MainView: View {
 
     // MARK: - Properties
 
-    var body: some View { Text("Hello, World!") }
+    var body: some View {
+        NavigationView {
+            List(model.books) { book in
+                VStack(alignment: .leading) {
+                    Text(book.authors.joined(separator: ", "))
+                        .font(.body)
+                        .fontWeight(.light)
+                        .foregroundColor(Color(red: 0.1, green: 0.1, blue: 0.1, opacity: 1.0))
+                    Text(book.title)
+                        .font(.headline)
+                        .fontWeight(.medium)
+                        .foregroundColor(Color.black)
+                }
+            }.navigationBarTitle("Search")
+        }
+    }
 
     // MARK: Private properties
 
@@ -33,8 +49,11 @@ struct MainView_Previews: PreviewProvider {
     // MARK: - Properties
 
     static var previews: some View {
-        let model = MainViewPreviewModel()
-        return MainView(model: model)
+        MainView(model: MainViewPreviewModel())
     }
 
 }
+
+// MARK: -
+
+extension Book: Identifiable { }
