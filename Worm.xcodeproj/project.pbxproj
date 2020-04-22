@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4E3093172450BF1200E1610E /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E3093162450BF1200E1610E /* SearchBar.swift */; };
 		4E42D20824448362002CAA4E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E42D20724448362002CAA4E /* AppDelegate.swift */; };
 		4E42D20A24448362002CAA4E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E42D20924448362002CAA4E /* SceneDelegate.swift */; };
 		4E42D20D24448362002CAA4E /* Worm.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4E42D20B24448362002CAA4E /* Worm.xcdatamodeld */; };
@@ -17,7 +18,7 @@
 		4E42D24C24463A1E002CAA4E /* GoodreadsService in Frameworks */ = {isa = PBXBuildFile; productRef = 4E42D24B24463A1E002CAA4E /* GoodreadsService */; };
 		4EE8272C244CA0AA00102B5D /* Coordinator in Frameworks */ = {isa = PBXBuildFile; productRef = 4EE8272B244CA0AA00102B5D /* Coordinator */; };
 		4EE8272E244CB51E00102B5D /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EE8272D244CB51E00102B5D /* MainCoordinator.swift */; };
-		4EE82746244DF0E700102B5D /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EE82745244DF0E700102B5D /* MainViewModel.swift */; };
+		4EE82746244DF0E700102B5D /* MainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EE82745244DF0E700102B5D /* MainModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +39,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4E3093162450BF1200E1610E /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		4E42D20424448362002CAA4E /* Worm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Worm.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4E42D20724448362002CAA4E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4E42D20924448362002CAA4E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -54,7 +56,7 @@
 		4E42D24D24463AEE002CAA4E /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		4E42D24F24463C4A002CAA4E /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		4EE8272D244CB51E00102B5D /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
-		4EE82745244DF0E700102B5D /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
+		4EE82745244DF0E700102B5D /* MainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -221,8 +223,9 @@
 		4EE82744244DF01800102B5D /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				4EE82745244DF0E700102B5D /* MainViewModel.swift */,
+				4EE82745244DF0E700102B5D /* MainModel.swift */,
 				4E42D20E24448362002CAA4E /* MainView.swift */,
+				4E3093162450BF1200E1610E /* SearchBar.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -366,9 +369,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4E3093172450BF1200E1610E /* SearchBar.swift in Sources */,
 				4E42D20824448362002CAA4E /* AppDelegate.swift in Sources */,
 				4E42D20D24448362002CAA4E /* Worm.xcdatamodeld in Sources */,
-				4EE82746244DF0E700102B5D /* MainViewModel.swift in Sources */,
+				4EE82746244DF0E700102B5D /* MainModel.swift in Sources */,
 				4E42D20F24448362002CAA4E /* MainView.swift in Sources */,
 				4EE8272E244CB51E00102B5D /* MainCoordinator.swift in Sources */,
 				4E42D20A24448362002CAA4E /* SceneDelegate.swift in Sources */,

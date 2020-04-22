@@ -1,5 +1,5 @@
 //
-//  MainViewModel.swift
+//  MainModel.swift
 //  Worm
 //
 //  Created by Nikita Lazarev-Zubov on 20.4.2020.
@@ -10,7 +10,7 @@ import GoodreadsService
 
 // TODO: HeaderDoc.
 
-protocol MainViewModel {
+protocol MainModel {
 
     // MARK: - Properties
 
@@ -20,7 +20,7 @@ protocol MainViewModel {
 
 // MARK: -
 
-struct MainViewDefaultModel: MainViewModel {
+struct MainViewDefaultModel: MainModel {
 
     // MARK: - Properties
 
@@ -32,7 +32,7 @@ struct MainViewDefaultModel: MainViewModel {
 
 // MARK: -
 
-struct MainViewPreviewModel: MainViewModel {
+struct MainViewPreviewModel: MainModel {
 
     // MARK: - Properties
 
