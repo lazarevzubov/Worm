@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4E3093172450BF1200E1610E /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E3093162450BF1200E1610E /* SearchBar.swift */; };
+		4E3093272451F86B00E1610E /* GoodreadsAPIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E3093262451F86B00E1610E /* GoodreadsAPIKey.swift */; };
 		4E42D20824448362002CAA4E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E42D20724448362002CAA4E /* AppDelegate.swift */; };
 		4E42D20A24448362002CAA4E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E42D20924448362002CAA4E /* SceneDelegate.swift */; };
 		4E42D20D24448362002CAA4E /* Worm.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4E42D20B24448362002CAA4E /* Worm.xcdatamodeld */; };
@@ -40,6 +41,7 @@
 
 /* Begin PBXFileReference section */
 		4E3093162450BF1200E1610E /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
+		4E3093262451F86B00E1610E /* GoodreadsAPIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoodreadsAPIKey.swift; sourceTree = "<group>"; };
 		4E42D20424448362002CAA4E /* Worm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Worm.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4E42D20724448362002CAA4E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4E42D20924448362002CAA4E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -208,6 +210,7 @@
 		4EE82742244DEFF600102B5D /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				4E3093262451F86B00E1610E /* GoodreadsAPIKey.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -372,6 +375,7 @@
 				4E3093172450BF1200E1610E /* SearchBar.swift in Sources */,
 				4E42D20824448362002CAA4E /* AppDelegate.swift in Sources */,
 				4E42D20D24448362002CAA4E /* Worm.xcdatamodeld in Sources */,
+				4E3093272451F86B00E1610E /* GoodreadsAPIKey.swift in Sources */,
 				4EE82746244DF0E700102B5D /* MainModel.swift in Sources */,
 				4E42D20F24448362002CAA4E /* MainView.swift in Sources */,
 				4EE8272E244CB51E00102B5D /* MainCoordinator.swift in Sources */,

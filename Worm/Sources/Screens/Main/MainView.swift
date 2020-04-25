@@ -19,24 +19,17 @@ struct MainView: View {
                 SearchBar(placeholder: NSLocalizedString("SearchBarPlaceholder",
                                                          value: "Search books",
                                                          comment: "Search bar placeholder"),
-                          text: $searchText)
-                List { // TODO: Factor out.
-                    ForEach(model.books.filter {
-                        searchText.isEmpty
-                            ? true
-                            : $0.title.lowercased().contains(searchText.lowercased())
-                        },
-                            id: \.self) { book in
-                                VStack(alignment: .leading) {
-                                    Text(book.authors.joined(separator: ", "))
-                                        .font(.body)
-                                        .fontWeight(.light)
-                                        .foregroundColor(Color(red: 0.1, green: 0.1, blue: 0.1, opacity: 1.0))
-                                    Text(book.title)
-                                        .font(.headline)
-                                        .fontWeight(.medium)
-                                        .foregroundColor(.black)
-                                }
+                          text: $model.query)
+                List(model.books) { book in
+                    VStack(alignment: .leading) {
+                        Text(book.authors.joined(separator: ", "))
+                            .font(.body)
+                            .fontWeight(.light)
+                            .foregroundColor(Color(red: 0.1, green: 0.1, blue: 0.1, opacity: 1.0))
+                        Text(book.title)
+                            .font(.headline)
+                            .fontWeight(.medium)
+                            .foregroundColor(.black)
                     }
                 }
             }.navigationBarTitle(NSLocalizedString("MainScreenTitle", value: "Search", comment: "Main screen title"))
@@ -45,15 +38,10 @@ struct MainView: View {
 
     // MARK: Private properties
 
-    private let model: MainModel
+    @EnvironmentObject
+    private var model: MainModel
     @State
     private var searchText = ""
-
-    // MARK: - Initialization
-
-    init(model: MainModel) {
-        self.model = model
-    }
 
 }
 
@@ -63,8 +51,10 @@ struct MainView_Previews: PreviewProvider {
 
     // MARK: - Properties
 
+    // MARK: PreviewProvider protocol properties
+
     static var previews: some View {
-        MainView(model: MainViewPreviewModel())
+        MainView()
     }
 
 }
