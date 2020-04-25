@@ -9,7 +9,7 @@
 import GoodreadsService
 import SwiftUI
 
-struct MainView: View {
+struct MainView<Model: MainModel>: View {
 
     // MARK: - Properties
 
@@ -39,7 +39,7 @@ struct MainView: View {
     // MARK: Private properties
 
     @EnvironmentObject
-    private var model: MainModel
+    private var model: Model
     @State
     private var searchText = ""
 
@@ -54,7 +54,7 @@ struct MainView_Previews: PreviewProvider {
     // MARK: PreviewProvider protocol properties
 
     static var previews: some View {
-        MainView()
+        MainView<MainPreviewModel>().environmentObject(MainPreviewModel())
     }
 
 }
