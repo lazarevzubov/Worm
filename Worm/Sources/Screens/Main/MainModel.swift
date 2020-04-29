@@ -7,6 +7,7 @@
 //
 
 import Combine
+import Foundation
 import GoodreadsService
 
 // TODO: HeaderDoc.
@@ -31,16 +32,46 @@ final class MainDefaultModel: MainModel {
     @Published
     var query = "" {
         didSet {
-            service.searchBooks(query) {
-                // TODO: Fetch books.
-                print($0)
+            currentSearchWorkItem?.cancel()
+            let newSearchWorkItem = DispatchWorkItem { [weak self] in
+                guard let self = self else {
+                    return
+                }
+
+                self.books.removeAll()
+                if !self.query.isEmpty {
+                    self.service.searchBooks(self.query) { [weak self] in
+                        self?.currentSearchResult = $0
+                    }
+                }
             }
+            currentSearchWorkItem = newSearchWorkItem
+            DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(250), execute: newSearchWorkItem)
         }
     }
+    @Published
     private(set) var books = [Book]()
 
     // MARK: Private properties
 
+    private var currentSearchResult = [String]() {
+        didSet {
+            currentSearchResult.forEach {
+                service.getBook(by: $0) { [weak self] book in
+                    guard let self = self,
+                        let book = book else {
+                        return
+                    }
+                    if self.currentSearchResult.contains(book.id) {
+                        DispatchQueue.main.async { [weak self] in
+                            self?.books.append(book)
+                        }
+                    }
+                }
+            }
+        }
+    }
+    private var currentSearchWorkItem: DispatchWorkItem?
     private lazy var service = GoodreadsService(key: goodreadsAPIKey)
 
 }
