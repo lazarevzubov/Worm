@@ -31,8 +31,9 @@ final class MainCoordinator: Coordinator {
     // MARK: Coordinator protocol methods
 
     func start() {
-        let view = MainView<MainDefaultModel>().environmentObject(MainDefaultModel())
-        let controller = UIHostingController(rootView: view)
+        let view = MainFactory.makeMainView()
+        let navigationView = NavigationView { view }
+        let controller = UIHostingController(rootView: navigationView)
 
         window?.rootViewController = controller
         window?.makeKeyAndVisible()
