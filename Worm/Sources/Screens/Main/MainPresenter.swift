@@ -31,7 +31,7 @@ final class MainDefaultPresenter<Model: MainModel>: MainPresenter {
     // MARK: MainPresenter protocol properties
 
     @Published
-    var query: String {
+    var query: String = "" {
         didSet { model.query = query }
     }
     private(set) var model: Model
@@ -40,7 +40,6 @@ final class MainDefaultPresenter<Model: MainModel>: MainPresenter {
 
     init(model: Model) {
         self.model = model
-        self.query = model.query
     }
 
 }

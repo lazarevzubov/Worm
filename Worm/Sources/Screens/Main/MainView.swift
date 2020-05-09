@@ -38,8 +38,6 @@ struct MainView<Presenter: MainPresenter>: View {
 
     @EnvironmentObject
     private var presenter: Presenter
-    @State
-    private var searchText = ""
 
 }
 
