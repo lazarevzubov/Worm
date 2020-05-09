@@ -24,11 +24,11 @@ struct MainView<Presenter: MainPresenter>: View {
                     Text(book.authors.joined(separator: ", "))
                         .font(.body)
                         .fontWeight(.light)
-                        .foregroundColor(Color(red: 0.1, green: 0.1, blue: 0.1, opacity: 1.0))
+                        .foregroundColor(.secondary)
                     Text(book.title)
                         .font(.headline)
                         .fontWeight(.medium)
-                        .foregroundColor(.black)
+                        .foregroundColor(.primary)
                 }
             }
         }.navigationBarTitle(NSLocalizedString("MainScreenTitle", value: "Search", comment: "Main screen title"))
