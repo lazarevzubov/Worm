@@ -18,6 +18,6 @@ enum MainFactory {
         let model = MainDefaultModel()
         let presenter = MainDefaultPresenter(model: model)
 
-        return MainView<MainDefaultPresenter<MainDefaultModel>>().environmentObject(presenter)
+        return MainView<MainDefaultPresenter<MainDefaultModel>>(presenter: presenter)
     }
 }

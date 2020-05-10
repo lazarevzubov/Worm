@@ -13,13 +13,15 @@ struct MainView<Presenter: MainPresenter>: View {
 
     // MARK: - Properties
 
+    // MARK: View protocol properties
+
     var body: some View {
         VStack {
             SearchBar(placeholder: NSLocalizedString("SearchBarPlaceholder",
                                                      value: "Search books",
                                                      comment: "Search bar placeholder"),
                       text: $presenter.query)
-            List(presenter.model.books) { book in
+            List(presenter.books) { book in
                 VStack(alignment: .leading) {
                     Text(book.authors.joined(separator: ", "))
                         .font(.body)
@@ -31,13 +33,20 @@ struct MainView<Presenter: MainPresenter>: View {
                         .foregroundColor(.primary)
                 }
             }
-        }.navigationBarTitle(NSLocalizedString("MainScreenTitle", value: "Search", comment: "Main screen title"))
+        }
+        .navigationBarTitle(NSLocalizedString("MainScreenTitle", value: "Search", comment: "Main screen title"))
     }
 
     // MARK: Private properties
 
-    @EnvironmentObject
+    @ObservedObject
     private var presenter: Presenter
+
+    // MARK: - Initialization
+
+    init(presenter: Presenter) {
+        self.presenter = presenter
+    }
 
 }
 
@@ -49,9 +58,7 @@ struct MainView_Previews: PreviewProvider {
 
     // MARK: PreviewProvider protocol properties
 
-    static var previews: some View {
-        MainView<MainPreviewPresenter<MainDefaultModel>>().environmentObject(MainPreviewPresenter<MainDefaultModel>())
-    }
+    static var previews: some View { MainView(presenter: MainPreviewPresenter()) }
 
 }
 

@@ -6,7 +6,6 @@
 //  Copyright © 2020 Nikita Lazarev-Zubov. All rights reserved.
 //
 
-import Combine
 import Foundation
 import GoodreadsService
 
@@ -16,8 +15,11 @@ protocol MainModel: ObservableObject {
 
     // MARK: - Properties
 
-    var query: String { get set }
     var books: [Book] { get }
+
+    // MARK: - Methods
+
+    func searchBooks(by query: String)
 
 }
 
@@ -30,82 +32,73 @@ final class MainDefaultModel: MainModel {
     // MARK: MainModel protocol properties
 
     @Published
-    var query = "" {
-        didSet {
-            currentSearchWorkItem?.cancel()
-            let newSearchWorkItem = DispatchWorkItem { [weak self] in
-                guard let self = self else {
-                    return
-                }
-
-                self.books.removeAll()
-                if !self.query.isEmpty {
-                    self.service.searchBooks(self.query) { [weak self] in
-                        self?.currentSearchResult = $0
-                    }
-                }
-            }
-            currentSearchWorkItem = newSearchWorkItem
-            DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(250), execute: newSearchWorkItem)
-        }
-    }
-    @Published
     private(set) var books = [Book]()
 
     // MARK: Private properties
 
+    private let dispatchQueue: DispatchQueue
     private var currentSearchResult = [String]() {
         didSet {
-            currentSearchResult.forEach {
-                service.getBook(by: $0) { [weak self] book in
-                    guard let self = self,
-                        let book = book else {
-                        return
-                    }
-                    if self.currentSearchResult.contains(book.id) {
-                        DispatchQueue.main.async { [weak self] in
-                            self?.books.append(book)
-                        }
-                    }
-                }
-            }
+            currentSearchResult.forEach { handleSearchResult($0) }
         }
     }
     private var currentSearchWorkItem: DispatchWorkItem?
     private lazy var service = GoodreadsService(key: goodreadsAPIKey)
 
-}
+    // MARK: - Initialization
 
-// MARK: -
-
-final class MainPreviewModel: MainModel {
-
-    // MARK: - Properties
-
-    // MARK: MainModel protocol properties
-
-    var books: [Book] {
-        return [Book(authors: ["J.R.R. Tolkien"], title: "The Lord of the Rings", id: "1"),
-                Book(authors: ["Michale Bond"], title: "Paddington Pop-Up London", id: "2"),
-                Book(authors: ["J.K. Rowling"], title: "Harry Potter and the Sorcecer's Stone", id: "3"),
-                Book(authors: ["George R.R. Martin"], title: "A Game of Thrones", id: "4"),
-                Book(authors: ["Frank Herbert"], title: "Dune I", id: "5"),
-                Book(authors: ["Mikhail Bulgakov"], title: "The Master and Margarita", id: "6"),
-                Book(authors: ["Alan Moore"], title: "Watchmen", id: "7"),
-                Book(authors: ["Steve McConnell"], title: "Code Complete", id: "8"),
-                Book(authors: ["Jane Austen"], title: "Pride and Prejudice", id: "9"),
-                Book(authors: ["Martin Fowler"],
-                     title: "Refactoring: Improving the Design of Existing Code",
-                     id: "10"),
-                Book(authors: ["Stephen King"], title: "The Shining", id: "11"),
-                Book(authors: ["Hannah Arendt"],
-                     title: "Eichmann in Jerusalem: A Report on the Banality of Evil",
-                     id: "12"),
-                Book(authors: ["Fyodor Dostoyevsky"], title: "The Idiot", id: "13"),
-                Book(authors: ["Ken Kesey"], title: "Sometimes a Great Notion", id: "14"),
-                Book(authors: ["Haruki Murakami"], title: "The Wind-Up Bird Chronicle", id: "15")]
+    init(dispatchQueue: DispatchQueue = DispatchQueue(label: "com.LazarevZubov.Worm.MainDefaultModel")) {
+        self.dispatchQueue = dispatchQueue
     }
-    @Published
-    var query = ""
+
+    // MARK: - Methods
+
+    // MARK: MainModel protocol methods
+
+    func searchBooks(by query: String) {
+        currentSearchWorkItem?.cancel()
+
+        let newSearchWorkItem = makeSearchWorkItem(query: query)
+        currentSearchWorkItem = newSearchWorkItem
+
+        dispatchQueue.asyncAfter(deadline: .now() + .milliseconds(500), execute: newSearchWorkItem)
+    }
+
+    // MARK: Private methods
+
+    private func makeSearchWorkItem(query: String) -> DispatchWorkItem {
+        return DispatchWorkItem { [weak self] in
+            self?.reset()
+            if !query.isEmpty {
+                self?.handle(searchQuery: query)
+            }
+        }
+    }
+
+    private func reset() {
+        books.removeAll()
+        currentSearchResult.removeAll()
+    }
+
+    private func handle(searchQuery: String) {
+        service.searchBooks(searchQuery) { [weak self] in
+            self?.currentSearchResult = $0
+        }
+    }
+
+    private func handleSearchResult(_ result: String) {
+        service.getBook(by: result) { [weak self] book in
+            guard let book = book else {
+                return
+            }
+            self?.appendIfNeeded(book: book)
+        }
+    }
+
+    private func appendIfNeeded(book: Book) {
+        if currentSearchResult.contains(book.id) {
+            books.append(book)
+        }
+    }
 
 }
