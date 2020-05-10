@@ -9,7 +9,11 @@
 import GoodreadsService
 import SwiftUI
 
+// TODO: HeaderDoc.
+
 struct MainView<Presenter: MainPresenter>: View {
+
+    // TODO: LocalizedStringKeys.
 
     // MARK: - Properties
 

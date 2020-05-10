@@ -42,7 +42,7 @@ struct SearchBar: UIViewRepresentable {
     // MARK: UIViewRepresentable protocol methods
 
     func makeCoordinator() -> Coordinator {
-        return Coordinator(text: $text)
+        Coordinator(text: $text)
     }
 
     func makeUIView(context: UIViewRepresentableContext<SearchBar>) -> UISearchBar {
