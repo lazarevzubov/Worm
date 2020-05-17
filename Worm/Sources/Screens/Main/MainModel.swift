@@ -43,7 +43,7 @@ final class MainDefaultModel: MainModel {
         }
     }
     private var currentSearchWorkItem: DispatchWorkItem?
-    private lazy var service = GoodreadsService(key: goodreadsAPIKey)
+    private lazy var service = GoodreadsService(key: ServiceSettings.goodreadsAPIKey)
 
     // MARK: - Initialization
 

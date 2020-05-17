@@ -6,4 +6,12 @@
 //  Copyright © 2020 Nikita Lazarev-Zubov. All rights reserved.
 //
 
-let goodreadsAPIKey = "JQfiS9k0doIho3vm13Qxdg"
+// TODO: HeaderDoc.
+
+enum ServiceSettings {
+
+    // MARK: - Properties
+
+    static let goodreadsAPIKey = "JQfiS9k0doIho3vm13Qxdg"
+
+}
