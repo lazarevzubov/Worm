@@ -8,6 +8,7 @@
 
 import SwiftUI
 
+// TODO: HeaderDoc.
 struct SearchBar: UIViewRepresentable {
 
     final class Coordinator: NSObject, UISearchBarDelegate {
@@ -35,7 +36,9 @@ struct SearchBar: UIViewRepresentable {
 
     // MARK: - Properties
 
+    // TODO: HeaderDoc.
     var placeholder = ""
+    // TODO: HeaderDoc.
     @Binding
     var text: String
 

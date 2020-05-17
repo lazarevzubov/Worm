@@ -9,11 +9,11 @@
 import SwiftUI
 
 // TODO: HeaderDoc.
-
 enum MainFactory {
 
     // MARK: - Methods
 
+    // TODO: HeaderDoc.
     static func makeMainView() -> some View {
         let model = MainDefaultModel()
         let presenter = MainDefaultPresenter(model: model)

@@ -10,21 +10,23 @@ import Foundation
 import GoodreadsService
 
 // TODO: HeaderDoc.
-
 protocol MainModel: ObservableObject {
 
     // MARK: - Properties
 
+    // TODO: HeaderDoc.
     var books: [Book] { get }
 
     // MARK: - Methods
 
+    // TODO: HeaderDoc.
     func searchBooks(by query: String)
 
 }
 
 // MARK: -
 
+// TODO: HeaderDoc.
 final class MainDefaultModel: MainModel {
 
     // MARK: - Properties
@@ -45,6 +47,7 @@ final class MainDefaultModel: MainModel {
 
     // MARK: - Initialization
 
+    // TODO: HeaderDoc.
     init(service: Service = GoodreadsService(key: ServiceSettings.goodreadsAPIKey),
          dispatchQueue: DispatchQueue = DispatchQueue(label: "com.LazarevZubov.Worm.MainDefaultModel")) {
         self.service = service

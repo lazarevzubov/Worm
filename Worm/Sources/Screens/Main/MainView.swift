@@ -10,7 +10,6 @@ import GoodreadsService
 import SwiftUI
 
 // TODO: HeaderDoc.
-
 struct MainView<Presenter: MainPresenter>: View {
 
     // TODO: LocalizedStringKeys.
@@ -48,6 +47,7 @@ struct MainView<Presenter: MainPresenter>: View {
 
     // MARK: - Initialization
 
+    // TODO: HeaderDoc.
     init(presenter: Presenter) {
         self.presenter = presenter
     }
@@ -56,6 +56,7 @@ struct MainView<Presenter: MainPresenter>: View {
 
 // MARK: -
 
+// TODO: HeaderDoc.
 struct MainView_Previews: PreviewProvider {
 
     // MARK: - Properties

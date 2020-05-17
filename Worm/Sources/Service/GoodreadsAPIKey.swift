@@ -9,22 +9,25 @@
 import GoodreadsService
 
 // TODO: HeaderDoc.
-
 enum ServiceSettings {
 
     // MARK: - Properties
 
+    // TODO: HeaderDoc.
     static let goodreadsAPIKey = "JQfiS9k0doIho3vm13Qxdg"
 
 }
 
 // MARK: -
 
+// TODO: HeaderDoc.
 protocol Service {
 
     // MARK: - Methods
 
+    // TODO: HeaderDoc.
     func searchBooks(_ query: String, resultCompletion: @escaping (_ ids: [String]) -> Void)
+    // TODO: HeaderDoc.
     func getBook(by id: String, resultCompletion: @escaping (_ book: Book?) -> Void)
 
 }

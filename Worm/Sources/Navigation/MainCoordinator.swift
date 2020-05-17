@@ -11,7 +11,6 @@ import SwiftUI
 import UIKit
 
 // TODO: HeaderDoc.
-
 final class MainCoordinator: Coordinator {
 
     // MARK: - Properties
@@ -22,6 +21,7 @@ final class MainCoordinator: Coordinator {
 
     // MARK: - Initialization
 
+    // TODO: HeaderDoc.
     init(window: UIWindow) {
         self.window = window
     }

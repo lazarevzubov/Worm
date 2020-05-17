@@ -10,6 +10,7 @@ import Coordinator
 import SwiftUI
 import UIKit
 
+// TODO: HeaderDoc.
 final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     // MARK: - Properties

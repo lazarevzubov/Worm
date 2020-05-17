@@ -11,18 +11,20 @@ import Foundation
 import GoodreadsService
 
 // TODO: HeaderDoc.
-
 protocol MainPresenter: ObservableObject {
 
     // MARK: - Properties
 
+    // TODO: HeaderDoc.
     var query: String { get set }
+    // TODO: HeaderDoc.
     var books: [Book] { get }
 
 }
 
 // MARK: -
 
+// TODO: HeaderDoc.
 final class MainDefaultPresenter<Model: MainModel>: MainPresenter {
 
     // MARK: - Properties
@@ -42,6 +44,7 @@ final class MainDefaultPresenter<Model: MainModel>: MainPresenter {
 
     // MARK: - Initialization
 
+    // TODO: HeaderDoc.
     init(model: Model) {
         self.model = model
         bind(model: self.model)
@@ -62,6 +65,7 @@ final class MainDefaultPresenter<Model: MainModel>: MainPresenter {
 
 // MARK: -
 
+// TODO: HeaderDoc.
 final class MainPreviewPresenter: MainPresenter {
 
     // MARK: - Properties
