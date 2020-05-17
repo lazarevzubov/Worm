@@ -37,17 +37,17 @@ final class MainDefaultModel: MainModel {
     // MARK: Private properties
 
     private let dispatchQueue: DispatchQueue
+    private let service: Service
     private var currentSearchResult = [String]() {
-        didSet {
-            currentSearchResult.forEach { handleSearchResult($0) }
-        }
+        didSet { currentSearchResult.forEach { handleSearchResult($0) } }
     }
     private var currentSearchWorkItem: DispatchWorkItem?
-    private lazy var service = GoodreadsService(key: ServiceSettings.goodreadsAPIKey)
 
     // MARK: - Initialization
 
-    init(dispatchQueue: DispatchQueue = DispatchQueue(label: "com.LazarevZubov.Worm.MainDefaultModel")) {
+    init(service: Service = GoodreadsService(key: ServiceSettings.goodreadsAPIKey),
+         dispatchQueue: DispatchQueue = DispatchQueue(label: "com.LazarevZubov.Worm.MainDefaultModel")) {
+        self.service = service
         self.dispatchQueue = dispatchQueue
     }
 
