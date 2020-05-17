@@ -7,7 +7,20 @@
 		<key>Worm.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>1</integer>
+			<integer>0</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>4E42D20324448362002CAA4E</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>4ECAA5AE24713A0E003D3F8D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
 		</dict>
 	</dict>
 </dict>
