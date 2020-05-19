@@ -39,6 +39,7 @@ final class MainDefaultModel: MainModel {
     // MARK: Private properties
 
     private let dispatchQueue: DispatchQueue
+    private let queryDelay: DispatchTimeInterval?
     private let service: Service
     private var currentSearchResult = [String]() {
         didSet { currentSearchResult.forEach { handleSearchResult($0) } }
@@ -49,9 +50,11 @@ final class MainDefaultModel: MainModel {
 
     // TODO: HeaderDoc.
     init(service: Service = GoodreadsService(key: ServiceSettings.goodreadsAPIKey),
-         dispatchQueue: DispatchQueue = DispatchQueue(label: "com.LazarevZubov.Worm.MainDefaultModel")) {
+         dispatchQueue: DispatchQueue = DispatchQueue(label: "com.LazarevZubov.Worm.MainDefaultModel"),
+         queryDelay: DispatchTimeInterval? = .milliseconds(500)) {
         self.service = service
         self.dispatchQueue = dispatchQueue
+        self.queryDelay = queryDelay
     }
 
     // MARK: - Methods
@@ -64,7 +67,11 @@ final class MainDefaultModel: MainModel {
         let newSearchWorkItem = makeSearchWorkItem(query: query)
         currentSearchWorkItem = newSearchWorkItem
 
-        dispatchQueue.asyncAfter(deadline: .now() + .milliseconds(500), execute: newSearchWorkItem)
+        if let queryDelay = queryDelay {
+            dispatchQueue.asyncAfter(deadline: .now() + queryDelay, execute: newSearchWorkItem)
+        } else {
+            dispatchQueue.async(execute: newSearchWorkItem)
+        }
     }
 
     // MARK: Private methods
@@ -99,6 +106,7 @@ final class MainDefaultModel: MainModel {
     }
 
     private func appendIfNeeded(book: Book) {
+        // TODO: Find a way to test it.
         if currentSearchResult.contains(book.id) {
             books.append(book)
         }
