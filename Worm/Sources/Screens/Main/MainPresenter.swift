@@ -40,7 +40,7 @@ final class MainDefaultPresenter<Model: MainModel>: MainPresenter {
     // MARK: Private methods
 
     private let model: Model
-    private var cancellables = Set<AnyCancellable>()
+    private lazy var cancellables = Set<AnyCancellable>()
 
     // MARK: - Initialization
 
@@ -53,12 +53,15 @@ final class MainDefaultPresenter<Model: MainModel>: MainPresenter {
     // MARK: - Methods
 
     private func bind(model: Model) {
-        model.objectWillChange
+        // TODO: Find a way to test it.
+        model
+            .objectWillChange
             .receive(on: DispatchQueue.main)
             .sink { _ in
                 self.objectWillChange.send()
                 self.books = model.books
-        }.store(in: &cancellables)
+        }
+        .store(in: &cancellables)
     }
 
 }
