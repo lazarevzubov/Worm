@@ -77,7 +77,7 @@ final class MainPreviewPresenter: MainPresenter {
 
     var books: [Book] {
         [Book(authors: ["J.R.R. Tolkien"], title: "The Lord of the Rings", id: "1"),
-         Book(authors: ["Michale Bond"], title: "Paddington Pop-Up London", id: "2"),
+         Book(authors: ["Michael Bond"], title: "Paddington Pop-Up London", id: "2"),
          Book(authors: ["J.K. Rowling"], title: "Harry Potter and the Sorcecer's Stone", id: "3"),
          Book(authors: ["George R.R. Martin"], title: "A Game of Thrones", id: "4"),
          Book(authors: ["Frank Herbert"], title: "Dune I", id: "5"),

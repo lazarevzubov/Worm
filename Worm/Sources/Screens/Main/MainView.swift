@@ -9,6 +9,8 @@
 import GoodreadsService
 import SwiftUI
 
+// TODO: Check accessibility.
+
 // TODO: HeaderDoc.
 struct MainView<Presenter: MainPresenter>: View {
 

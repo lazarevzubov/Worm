@@ -49,7 +49,7 @@ final class MainDefaultModel: MainModel {
     // MARK: - Initialization
 
     // TODO: HeaderDoc.
-    init(service: Service = GoodreadsService(key: ServiceSettings.goodreadsAPIKey),
+    init(service: Service,
          dispatchQueue: DispatchQueue = DispatchQueue(label: "com.LazarevZubov.Worm.MainDefaultModel"),
          queryDelay: DispatchTimeInterval? = .milliseconds(500)) {
         self.service = service

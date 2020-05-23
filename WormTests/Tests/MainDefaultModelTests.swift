@@ -16,7 +16,7 @@ final class MainDefaultModelTests: XCTestCase {
     // MARK: - Methods
 
     func testBooksInitiallyEmpty() {
-        let model = MainDefaultModel()
+        let model = MainDefaultModel(service: MockService())
         XCTAssertTrue(model.books.isEmpty)
     }
 

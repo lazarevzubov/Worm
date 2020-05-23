@@ -53,6 +53,7 @@ struct SearchBar: UIViewRepresentable {
         searchBar.delegate = context.coordinator
         searchBar.searchBarStyle = .minimal
         searchBar.placeholder = placeholder
+        searchBar.searchTextField.accessibilityIdentifier = "searchBar"
 
         return searchBar
     }

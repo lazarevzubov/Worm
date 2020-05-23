@@ -23,7 +23,7 @@
       </BuildActionEntries>
    </BuildAction>
    <TestAction
-      buildConfiguration = "Debug"
+      buildConfiguration = "Test"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES"
@@ -48,6 +48,18 @@
                BlueprintIdentifier = "4ECAA5AE24713A0E003D3F8D"
                BuildableName = "WormTests.xctest"
                BlueprintName = "WormTests"
+               ReferencedContainer = "container:Worm.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "YES"
+            testExecutionOrdering = "random">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "4E4A3845247590F5008AB1C2"
+               BuildableName = "WormUITests.xctest"
+               BlueprintName = "WormUITests"
                ReferencedContainer = "container:Worm.xcodeproj">
             </BuildableReference>
          </TestableReference>

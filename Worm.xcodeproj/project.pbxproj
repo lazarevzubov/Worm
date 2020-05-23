@@ -19,7 +19,9 @@
 		4E42D24C24463A1E002CAA4E /* GoodreadsService in Frameworks */ = {isa = PBXBuildFile; productRef = 4E42D24B24463A1E002CAA4E /* GoodreadsService */; };
 		4E4A383F24745B56008AB1C2 /* MainDefaultPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E4A383E24745B56008AB1C2 /* MainDefaultPresenterTests.swift */; };
 		4E4A384124758EE5008AB1C2 /* MainCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E4A384024758EE5008AB1C2 /* MainCoordinatorTests.swift */; };
+		4E4A3849247590F5008AB1C2 /* MainScreenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E4A3848247590F5008AB1C2 /* MainScreenTests.swift */; };
 		4E53BDDA24649525006F6348 /* MainPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E53BDD924649525006F6348 /* MainPresenter.swift */; };
+		4E78D96D247592BC00906542 /* XCTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E78D96C247592BC00906542 /* XCTest.swift */; };
 		4E796BE02465CC2500C6543A /* MainFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E796BDF2465CC2500C6543A /* MainFactory.swift */; };
 		4ECAA5BA24713A38003D3F8D /* MainDefaultModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ECAA5B924713A38003D3F8D /* MainDefaultModelTests.swift */; };
 		4EE8272C244CA0AA00102B5D /* Coordinator in Frameworks */ = {isa = PBXBuildFile; productRef = 4EE8272B244CA0AA00102B5D /* Coordinator */; };
@@ -28,6 +30,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		4E4A384B247590F5008AB1C2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4E42D1FC24448362002CAA4E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4E42D20324448362002CAA4E;
+			remoteInfo = Worm;
+		};
 		4ECAA5B424713A0F003D3F8D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 4E42D1FC24448362002CAA4E /* Project object */;
@@ -53,7 +62,11 @@
 		4E42D24F24463C4A002CAA4E /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		4E4A383E24745B56008AB1C2 /* MainDefaultPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainDefaultPresenterTests.swift; sourceTree = "<group>"; };
 		4E4A384024758EE5008AB1C2 /* MainCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinatorTests.swift; sourceTree = "<group>"; };
+		4E4A3846247590F5008AB1C2 /* WormUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WormUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		4E4A3848247590F5008AB1C2 /* MainScreenTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenTests.swift; sourceTree = "<group>"; };
+		4E4A384A247590F5008AB1C2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4E53BDD924649525006F6348 /* MainPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPresenter.swift; sourceTree = "<group>"; };
+		4E78D96C247592BC00906542 /* XCTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCTest.swift; sourceTree = "<group>"; };
 		4E796BDF2465CC2500C6543A /* MainFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFactory.swift; sourceTree = "<group>"; };
 		4ECAA5AF24713A0E003D3F8D /* WormTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WormTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4ECAA5B324713A0F003D3F8D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -69,6 +82,13 @@
 			files = (
 				4E42D24C24463A1E002CAA4E /* GoodreadsService in Frameworks */,
 				4EE8272C244CA0AA00102B5D /* Coordinator in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4E4A3843247590F5008AB1C2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -89,6 +109,7 @@
 				4E42D24D24463AEE002CAA4E /* README.md */,
 				4E42D20624448362002CAA4E /* Worm */,
 				4ECAA5B024713A0F003D3F8D /* WormTests */,
+				4E4A3847247590F5008AB1C2 /* WormUITests */,
 				4E42D20524448362002CAA4E /* Products */,
 				4E42D2402444A187002CAA4E /* Frameworks */,
 			);
@@ -99,6 +120,7 @@
 			children = (
 				4E42D20424448362002CAA4E /* Worm.app */,
 				4ECAA5AF24713A0E003D3F8D /* WormTests.xctest */,
+				4E4A3846247590F5008AB1C2 /* WormUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -157,6 +179,32 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		4E4A3847247590F5008AB1C2 /* WormUITests */ = {
+			isa = PBXGroup;
+			children = (
+				4E78D96B247592AD00906542 /* Helpers */,
+				4E4A3850247591A8008AB1C2 /* Tests */,
+				4E4A384A247590F5008AB1C2 /* Info.plist */,
+			);
+			path = WormUITests;
+			sourceTree = "<group>";
+		};
+		4E4A3850247591A8008AB1C2 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				4E4A3848247590F5008AB1C2 /* MainScreenTests.swift */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		4E78D96B247592AD00906542 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				4E78D96C247592BC00906542 /* XCTest.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 		4ECAA5B024713A0F003D3F8D /* WormTests */ = {
@@ -238,6 +286,24 @@
 			productReference = 4E42D20424448362002CAA4E /* Worm.app */;
 			productType = "com.apple.product-type.application";
 		};
+		4E4A3845247590F5008AB1C2 /* WormUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4E4A384D247590F5008AB1C2 /* Build configuration list for PBXNativeTarget "WormUITests" */;
+			buildPhases = (
+				4E4A3842247590F5008AB1C2 /* Sources */,
+				4E4A3843247590F5008AB1C2 /* Frameworks */,
+				4E4A3844247590F5008AB1C2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				4E4A384C247590F5008AB1C2 /* PBXTargetDependency */,
+			);
+			name = WormUITests;
+			productName = WormUITests;
+			productReference = 4E4A3846247590F5008AB1C2 /* WormUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		4ECAA5AE24713A0E003D3F8D /* WormTests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4ECAA5B624713A0F003D3F8D /* Build configuration list for PBXNativeTarget "WormTests" */;
@@ -269,6 +335,10 @@
 					4E42D20324448362002CAA4E = {
 						CreatedOnToolsVersion = 11.4;
 					};
+					4E4A3845247590F5008AB1C2 = {
+						CreatedOnToolsVersion = 11.4.1;
+						TestTargetID = 4E42D20324448362002CAA4E;
+					};
 					4ECAA5AE24713A0E003D3F8D = {
 						CreatedOnToolsVersion = 11.4.1;
 						TestTargetID = 4E42D20324448362002CAA4E;
@@ -294,6 +364,7 @@
 			targets = (
 				4E42D20324448362002CAA4E /* Worm */,
 				4ECAA5AE24713A0E003D3F8D /* WormTests */,
+				4E4A3845247590F5008AB1C2 /* WormUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -306,6 +377,13 @@
 				4E42D21724448363002CAA4E /* LaunchScreen.storyboard in Resources */,
 				4E42D21424448363002CAA4E /* Preview Assets.xcassets in Resources */,
 				4E42D21124448363002CAA4E /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4E4A3844247590F5008AB1C2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -336,6 +414,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		4E4A3842247590F5008AB1C2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4E78D96D247592BC00906542 /* XCTest.swift in Sources */,
+				4E4A3849247590F5008AB1C2 /* MainScreenTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4ECAA5AB24713A0E003D3F8D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -349,6 +436,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		4E4A384C247590F5008AB1C2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4E42D20324448362002CAA4E /* Worm */;
+			targetProxy = 4E4A384B247590F5008AB1C2 /* PBXContainerItemProxy */;
+		};
 		4ECAA5B524713A0F003D3F8D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 4E42D20324448362002CAA4E /* Worm */;
@@ -522,6 +614,168 @@
 			};
 			name = Release;
 		};
+		4E4A384E247590F5008AB1C2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = V42H29UY7B;
+				INFOPLIST_FILE = WormUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.LazarevZubov.WormUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Worm;
+			};
+			name = Debug;
+		};
+		4E4A384F247590F5008AB1C2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = V42H29UY7B;
+				INFOPLIST_FILE = WormUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.LazarevZubov.WormUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Worm;
+			};
+			name = Release;
+		};
+		4E78D96E2477060C00906542 /* Test */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"TEST=1",
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG TEST";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Test;
+		};
+		4E78D96F2477060C00906542 /* Test */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_ASSET_PATHS = "\"Worm/Preview Content\"";
+				DEVELOPMENT_TEAM = 848WKW3SN8;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = Worm/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.LazarevZubov.Worm;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Test;
+		};
+		4E78D9702477060C00906542 /* Test */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = V42H29UY7B;
+				INFOPLIST_FILE = WormTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.LazarevZubov.WormTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Worm.app/Worm";
+			};
+			name = Test;
+		};
+		4E78D9712477060C00906542 /* Test */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = V42H29UY7B;
+				INFOPLIST_FILE = WormUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.LazarevZubov.WormUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Worm;
+			};
+			name = Test;
+		};
 		4ECAA5B724713A0F003D3F8D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -571,6 +825,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				4E42D22F24448364002CAA4E /* Debug */,
+				4E78D96E2477060C00906542 /* Test */,
 				4E42D23024448364002CAA4E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -580,7 +835,18 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				4E42D23224448364002CAA4E /* Debug */,
+				4E78D96F2477060C00906542 /* Test */,
 				4E42D23324448364002CAA4E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4E4A384D247590F5008AB1C2 /* Build configuration list for PBXNativeTarget "WormUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4E4A384E247590F5008AB1C2 /* Debug */,
+				4E78D9712477060C00906542 /* Test */,
+				4E4A384F247590F5008AB1C2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -589,6 +855,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				4ECAA5B724713A0F003D3F8D /* Debug */,
+				4E78D9702477060C00906542 /* Test */,
 				4ECAA5B824713A0F003D3F8D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;

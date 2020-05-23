@@ -17,13 +17,15 @@ final class MainCoordinator: Coordinator {
 
     // MARK: Private properties
 
+    private let mockingService: Bool
     private weak var window: UIWindow?
 
     // MARK: - Initialization
 
     // TODO: HeaderDoc.
-    init(window: UIWindow) {
+    init(window: UIWindow, mockingService: Bool = false) {
         self.window = window
+        self.mockingService = mockingService
     }
 
     // MARK: - Methods
@@ -31,7 +33,7 @@ final class MainCoordinator: Coordinator {
     // MARK: Coordinator protocol methods
 
     func start() {
-        let view = MainFactory.makeMainView()
+        let view = MainFactory.makeMainView(mockingService: mockingService)
         let navigationView = NavigationView { view }
         let controller = UIHostingController(rootView: navigationView)
 
