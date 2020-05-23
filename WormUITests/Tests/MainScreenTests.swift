@@ -19,7 +19,6 @@ final class MainScreenTests: XCTestCase {
     func testSearchBarVisible() throws {
         let app = XCUIApplication()
         app.launch()
-        print(app.debugDescription)
 
         let searchBar = app.searchFields["searchBar"]
         wait(forElement: searchBar)
