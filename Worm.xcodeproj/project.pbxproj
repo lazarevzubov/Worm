@@ -22,6 +22,7 @@
 		4E4A3849247590F5008AB1C2 /* MainScreenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E4A3848247590F5008AB1C2 /* MainScreenTests.swift */; };
 		4E53BDDA24649525006F6348 /* MainPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E53BDD924649525006F6348 /* MainPresenter.swift */; };
 		4E78D96D247592BC00906542 /* XCTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E78D96C247592BC00906542 /* XCTest.swift */; };
+		4E78D97A2479AF5A00906542 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E78D9792479AF5A00906542 /* Settings.swift */; };
 		4E796BE02465CC2500C6543A /* MainFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E796BDF2465CC2500C6543A /* MainFactory.swift */; };
 		4ECAA5BA24713A38003D3F8D /* MainDefaultModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ECAA5B924713A38003D3F8D /* MainDefaultModelTests.swift */; };
 		4EE8272C244CA0AA00102B5D /* Coordinator in Frameworks */ = {isa = PBXBuildFile; productRef = 4EE8272B244CA0AA00102B5D /* Coordinator */; };
@@ -67,6 +68,7 @@
 		4E4A384A247590F5008AB1C2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4E53BDD924649525006F6348 /* MainPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPresenter.swift; sourceTree = "<group>"; };
 		4E78D96C247592BC00906542 /* XCTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCTest.swift; sourceTree = "<group>"; };
+		4E78D9792479AF5A00906542 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		4E796BDF2465CC2500C6543A /* MainFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFactory.swift; sourceTree = "<group>"; };
 		4ECAA5AF24713A0E003D3F8D /* WormTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WormTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4ECAA5B324713A0F003D3F8D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -238,6 +240,7 @@
 			isa = PBXGroup;
 			children = (
 				4E3093262451F86B00E1610E /* Service.swift */,
+				4E78D9792479AF5A00906542 /* Settings.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -410,6 +413,7 @@
 				4EE82746244DF0E700102B5D /* MainModel.swift in Sources */,
 				4E42D20F24448362002CAA4E /* MainView.swift in Sources */,
 				4EE8272E244CB51E00102B5D /* MainCoordinator.swift in Sources */,
+				4E78D97A2479AF5A00906542 /* Settings.swift in Sources */,
 				4E42D20A24448362002CAA4E /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

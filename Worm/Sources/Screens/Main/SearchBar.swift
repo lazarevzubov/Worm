@@ -8,18 +8,24 @@
 
 import SwiftUI
 
-// TODO: HeaderDoc.
+/// The SwiftUI wrapper for the UIKit's `UISearchBar`.
 struct SearchBar: UIViewRepresentable {
 
+    /// Coordinates with the internal view object.
     final class Coordinator: NSObject, UISearchBarDelegate {
 
         // MARK: - Properties
 
+        /// The current text of the search field.
         @Binding
         var text: String
 
         // MARK: - Initialization
 
+        /**
+         Creates the coordinator.
+         - Parameter text: A binding to the search field text.
+         */
         init(text: Binding<String>) {
             _text = text
         }
@@ -36,9 +42,9 @@ struct SearchBar: UIViewRepresentable {
 
     // MARK: - Properties
 
-    // TODO: HeaderDoc.
+    /// The placeholder of the search field text.
     var placeholder = ""
-    // TODO: HeaderDoc.
+    /// The current text of the search field.
     @Binding
     var text: String
 

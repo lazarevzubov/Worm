@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-// TODO: HeaderDoc.
+/// Manages the life cycle of the app.
 @UIApplicationMain
 final class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -33,6 +33,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
 
     // MARK: - Methods
 
+    /// Saves the current state of the app's CoreData context.
     func saveContext() {
         let context = persistentContainer.viewContext
         if context.hasChanges {

@@ -10,10 +10,12 @@ import Coordinator
 import SwiftUI
 import UIKit
 
-// TODO: HeaderDoc.
+/// Manages the life cycle of a scene.
 final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     // MARK: - Properties
+
+    // MARK: UIWindowSceneDelegate protocol properties
 
     var window: UIWindow? {
         didSet {
@@ -50,8 +52,7 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // let contentView = ContentView().environment(\.managedObjectContext, context)
 
         if let windowScene = scene as? UIWindowScene {
-            let window = UIWindow(windowScene: windowScene)
-            self.window = window
+            window = UIWindow(windowScene: windowScene)
         }
     }
 

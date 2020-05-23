@@ -11,7 +11,7 @@ import SwiftUI
 
 // TODO: Check accessibility.
 
-// TODO: HeaderDoc.
+/// The book search screen.
 struct MainView<Presenter: MainPresenter>: View {
 
     // TODO: LocalizedStringKeys.
@@ -49,7 +49,10 @@ struct MainView<Presenter: MainPresenter>: View {
 
     // MARK: - Initialization
 
-    // TODO: HeaderDoc.
+    /**
+     Creates the screen.
+     - Parameter presenter: The presentation logic handler.
+     */
     init(presenter: Presenter) {
         self.presenter = presenter
     }
@@ -58,14 +61,14 @@ struct MainView<Presenter: MainPresenter>: View {
 
 // MARK: -
 
-// TODO: HeaderDoc.
+/// Produces the book search screen preview for Xcode.
 struct MainView_Previews: PreviewProvider {
 
     // MARK: - Properties
 
     // MARK: PreviewProvider protocol properties
 
-    static var previews: some View { MainView(presenter: MainPreviewPresenter()) }
+    static var previews: some View {MainView(presenter: MainPreviewPresenter()) }
 
 }
 

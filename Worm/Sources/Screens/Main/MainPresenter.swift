@@ -10,21 +10,21 @@ import Combine
 import Foundation
 import GoodreadsService
 
-// TODO: HeaderDoc.
+/// The presentation logic of the book search screen.
 protocol MainPresenter: ObservableObject {
 
     // MARK: - Properties
 
-    // TODO: HeaderDoc.
+    /// The current search query.
     var query: String { get set }
-    // TODO: HeaderDoc.
+    /// The list of books corresponding to the current search query.
     var books: [Book] { get }
 
 }
 
 // MARK: -
 
-// TODO: HeaderDoc.
+/// The presentation logic of the book search screen relying on the default model implementation.
 final class MainDefaultPresenter<Model: MainModel>: MainPresenter {
 
     // MARK: - Properties
@@ -44,7 +44,10 @@ final class MainDefaultPresenter<Model: MainModel>: MainPresenter {
 
     // MARK: - Initialization
 
-    // TODO: HeaderDoc.
+    /**
+     Creates the presentation logic object.
+     - Parameter model: The search screen model.
+     */
     init(model: Model) {
         self.model = model
         bind(model: self.model)
@@ -68,7 +71,7 @@ final class MainDefaultPresenter<Model: MainModel>: MainPresenter {
 
 // MARK: -
 
-// TODO: HeaderDoc.
+/// The mock presentation logic object for the book search screen preview.
 final class MainPreviewPresenter: MainPresenter {
 
     // MARK: - Properties

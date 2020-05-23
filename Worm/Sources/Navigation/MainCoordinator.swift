@@ -10,7 +10,7 @@ import Coordinator
 import SwiftUI
 import UIKit
 
-// TODO: HeaderDoc.
+/// Handles the navigation to and within the main screen of the app.
 final class MainCoordinator: Coordinator {
 
     // MARK: - Properties
@@ -22,7 +22,13 @@ final class MainCoordinator: Coordinator {
 
     // MARK: - Initialization
 
-    // TODO: HeaderDoc.
+    /**
+     Creates a coordinator.
+
+     - Parameters:
+        - window: The app's key window.
+        - mockingService: Indicates whether the app's UI shall be mocked.
+     */
     init(window: UIWindow, mockingService: Bool = false) {
         self.window = window
         self.mockingService = mockingService

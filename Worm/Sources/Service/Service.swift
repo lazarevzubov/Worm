@@ -8,27 +8,29 @@
 
 import GoodreadsService
 
-// TODO: HeaderDoc.
+/// The data service of the app.
 protocol Service {
 
     // MARK: - Methods
 
-    // TODO: HeaderDoc.
+    /**
+     Dispatches a book search query.
+
+     - Parameters:
+        - query: The search query.
+        - resultCompletion: The block of code to run upon the query completion.
+        - ids: The result of the query consisting of book IDs.
+     */
     func searchBooks(_ query: String, resultCompletion: @escaping (_ ids: [String]) -> Void)
-    // TODO: HeaderDoc.
+    /**
+     Dispatches a request of a book info.
+
+     - Parameters:
+        - id: The ID of the book.
+        - resultCompletion: The block of code to run upon the request completion.
+        - book: The result of the request.
+     */
     func getBook(by id: String, resultCompletion: @escaping (_ book: Book?) -> Void)
-
-}
-
-// MARK: -
-
-// TODO: HeaderDoc.
-enum ServiceSettings {
-
-    // MARK: - Properties
-
-    // TODO: HeaderDoc.
-    static let goodreadsAPIKey = "JQfiS9k0doIho3vm13Qxdg"
 
 }
 
@@ -38,7 +40,11 @@ extension GoodreadsService: Service { }
 
 // MARK: -
 
-// TODO: HeaderDoc.
+/**
+ A mock implementation of the service.
+
+ Useful for testing.
+ */
 final class MockService: Service {
 
     // MARK: - Properties

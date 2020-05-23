@@ -9,14 +9,20 @@
 import GoodreadsService
 import SwiftUI
 
-// TODO: HeaderDoc.
+/// A set of creational methods for building the main screen of the app.
 enum MainFactory {
 
     // MARK: - Methods
 
-    // TODO: HeaderDoc.
-    static func makeMainView(mockingService: Bool) -> some View {
-        let service: Service = !mockingService ? GoodreadsService(key: ServiceSettings.goodreadsAPIKey) : MockService()
+    /**
+     Creates the main screen view.
+     - Parameter mockingService: Indicates whether to build the real or a mock view.
+     - Returns: The view of the main screen.
+     */
+    static func makeMainView(mockingService: Bool = false) -> some View {
+        let service: Service = !mockingService
+            ? GoodreadsService(key: Settings.goodreadsAPIKey)
+            : MockService()
         let model = MainDefaultModel(service: service)
         let presenter = MainDefaultPresenter(model: model)
 

@@ -9,24 +9,27 @@
 import Foundation
 import GoodreadsService
 
-// TODO: HeaderDoc.
+/// The search screen model.
 protocol MainModel: ObservableObject {
 
     // MARK: - Properties
 
-    // TODO: HeaderDoc.
+    /// The list of books corresponding to the current search query.
     var books: [Book] { get }
 
     // MARK: - Methods
 
-    // TODO: HeaderDoc.
+    /**
+     Queries the book search engine.
+     - Parameter query: The query to search.
+     */
     func searchBooks(by query: String)
 
 }
 
 // MARK: -
 
-// TODO: HeaderDoc.
+/// The search screen model implemented on top of a data providing service.
 final class MainDefaultModel: MainModel {
 
     // MARK: - Properties
@@ -48,7 +51,14 @@ final class MainDefaultModel: MainModel {
 
     // MARK: - Initialization
 
-    // TODO: HeaderDoc.
+    /**
+     Creates a model.
+
+     - Parameters:
+        - service: The data providing service.
+        - dispatchQueue: The queue to dispatch search requests.
+        - queryDelay: The delay after which the request is actually dispatched. This delay is useful to prevent too many request while typing a query.
+     */
     init(service: Service,
          dispatchQueue: DispatchQueue = DispatchQueue(label: "com.LazarevZubov.Worm.MainDefaultModel"),
          queryDelay: DispatchTimeInterval? = .milliseconds(500)) {
