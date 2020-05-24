@@ -35,6 +35,19 @@ final class MainDefaultPresenterTests: XCTestCase {
         XCTAssertTrue(presenter.books.isEmpty)
     }
 
+    func testUpdate() {
+        let model = MainMockModel()
+        let queue = DispatchQueue(label: "com.LazarevZubov.Worm.MainDefaultPresenterTests")
+        let presenter = MainDefaultPresenter(model: model, updateQueue: queue)
+
+        let books = [Book(authors: [], title: "Title1", id: "1"),
+                     Book(authors: [], title: "Title2", id: "2")]
+        model.books = books
+
+        queue.sync { }
+        XCTAssertEqual(presenter.books, books)
+    }
+
 }
 
 // MARK: -

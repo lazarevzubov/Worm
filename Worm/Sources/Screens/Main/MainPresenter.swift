@@ -40,6 +40,7 @@ final class MainDefaultPresenter<Model: MainModel>: MainPresenter {
     // MARK: Private methods
 
     private let model: Model
+    private let updateQueue: DispatchQueue
     private lazy var cancellables = Set<AnyCancellable>()
 
     // MARK: - Initialization
@@ -48,18 +49,19 @@ final class MainDefaultPresenter<Model: MainModel>: MainPresenter {
      Creates the presentation logic object.
      - Parameter model: The search screen model.
      */
-    init(model: Model) {
+    init(model: Model, updateQueue: DispatchQueue = .main) {
         self.model = model
+        self.updateQueue = updateQueue
+
         bind(model: self.model)
     }
 
     // MARK: - Methods
 
     private func bind(model: Model) {
-        // TODO: Find a way to test it.
         model
             .objectWillChange
-            .receive(on: DispatchQueue.main)
+            .receive(on: updateQueue)
             .sink { _ in
                 self.objectWillChange.send()
                 self.books = model.books
