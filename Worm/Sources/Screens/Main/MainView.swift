@@ -39,6 +39,7 @@ struct MainView<Presenter: MainPresenter>: View {
             }
         }
         .navigationBarTitle("Search")
+        .modifier(DismissingKeyboard())
     }
 
     // MARK: Private properties
