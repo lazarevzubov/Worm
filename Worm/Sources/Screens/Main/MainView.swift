@@ -23,7 +23,7 @@ struct MainView<Presenter: MainPresenter>: View {
             SearchBar(placeholder: "Search books", text: $presenter.query)
             List(presenter.books) { book in
                 VStack(alignment: .leading) {
-                    Text(book.authors.joined(separator: ", "))
+                    Text(book.authors)
                         .font(.body)
                         .fontWeight(.light)
                         .foregroundColor(.secondary)
@@ -35,7 +35,7 @@ struct MainView<Presenter: MainPresenter>: View {
                         .accessibility(hidden: true)
                 }
                 .accessibilityElement()
-                .accessibility(label: Text("\(book.authors.joined(separator: ", ")) – \(book.title)"))
+                .accessibility(label: Text("\(book.authors) – \(book.title)"))
             }
         }
         .navigationBarTitle("Search")
@@ -70,7 +70,3 @@ struct MainView_Previews: PreviewProvider {
     static var previews: some View {MainView(presenter: MainPreviewPresenter()) }
 
 }
-
-// MARK: - Identifiable
-
-extension Book: Identifiable { }
