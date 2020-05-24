@@ -9,8 +9,6 @@
 import GoodreadsService
 import SwiftUI
 
-// TODO: Check accessibility.
-
 /// The book search screen.
 struct MainView<Presenter: MainPresenter>: View {
 
@@ -22,24 +20,25 @@ struct MainView<Presenter: MainPresenter>: View {
 
     var body: some View {
         VStack {
-            SearchBar(placeholder: NSLocalizedString("SearchBarPlaceholder",
-                                                     value: "Search books",
-                                                     comment: "Search bar placeholder"),
-                      text: $presenter.query)
+            SearchBar(placeholder: "Search books", text: $presenter.query)
             List(presenter.books) { book in
                 VStack(alignment: .leading) {
                     Text(book.authors.joined(separator: ", "))
                         .font(.body)
                         .fontWeight(.light)
                         .foregroundColor(.secondary)
+                        .accessibility(hidden: true)
                     Text(book.title)
                         .font(.headline)
                         .fontWeight(.medium)
                         .foregroundColor(.primary)
+                        .accessibility(hidden: true)
                 }
+                .accessibilityElement()
+                .accessibility(label: Text("\(book.authors.joined(separator: ", ")) – \(book.title)"))
             }
         }
-        .navigationBarTitle(NSLocalizedString("MainScreenTitle", value: "Search", comment: "Main screen title"))
+        .navigationBarTitle("Search")
     }
 
     // MARK: Private properties
