@@ -10,16 +10,16 @@ import Combine
 import Foundation
 import GoodreadsService
 
-// TODO: HeaderDoc.
+/// A book data for a visual representation.
 struct BookViewModel {
 
     // MARK: - Properties
 
-    // TODO: HeaderDoc.
+    /// Formatted authors list.
     let authors: String
-    // TODO: HeaderDoc.
+    /// The book ID.
     let id: String
-    // TODO: HeaderDoc.
+    /// The book title.
     let title: String
 
 }

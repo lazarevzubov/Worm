@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-// TODO: HeaderDoc
+/// The modifier to a view which forces keyboard to dismiss on tap.
 struct DismissingKeyboard: ViewModifier {
 
     // MARK: - Methods
