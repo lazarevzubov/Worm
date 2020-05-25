@@ -24,6 +24,10 @@ struct BookViewModel {
 
 }
 
+// MARK: - Equatable
+
+extension BookViewModel: Equatable { }
+
 // MARK: - Identifiable
 
 extension BookViewModel: Identifiable { }

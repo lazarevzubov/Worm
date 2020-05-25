@@ -43,9 +43,11 @@ final class MainDefaultPresenterTests: XCTestCase {
         let books = [Book(authors: [], title: "Title1", id: "1"),
                      Book(authors: [], title: "Title2", id: "2")]
         model.books = books
-
         queue.sync { }
-        XCTAssertEqual(presenter.books, books)
+
+        let expectedBooks = [BookViewModel(authors: "", id: "1", title: "Title1"),
+                             BookViewModel(authors: "", id: "2", title: "Title2")]
+        XCTAssertEqual(presenter.books, expectedBooks)
     }
 
 }
