@@ -38,8 +38,8 @@ struct MainView<Presenter: MainPresenter>: View {
                 .accessibility(label: Text("\(book.authors) – \(book.title)"))
             }
         }
-        .navigationBarTitle("Search")
         .modifier(DismissingKeyboard())
+        .navigationBarTitle("Search")
     }
 
     // MARK: Private properties
@@ -55,6 +55,15 @@ struct MainView<Presenter: MainPresenter>: View {
      */
     init(presenter: Presenter) {
         self.presenter = presenter
+
+        // Complement: UIColor(red: (190.0 / 255.0), green: (142.0 / 255.0), blue: (155.0 / 255.0), alpha: 1.0)
+        UINavigationBar.appearance().backgroundColor = UIColor(red: (172.0 / 255.0),
+                                                               green: (211.0 / 255.0),
+                                                               blue: (214.0 / 255.0),
+                                                               alpha: 1.0)
+
+        UINavigationBar.appearance().titleTextAttributes = [.foregroundColor : UIColor.black]
+        UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor : UIColor.black]
     }
 
 }
