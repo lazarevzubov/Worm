@@ -37,8 +37,8 @@ struct MainView<Presenter: MainPresenter>: View {
                 .accessibilityElement()
                 .accessibility(label: Text("\(book.authors) – \(book.title)"))
             }
+            .onTapGesture { UIApplication.shared.windows.first{ $0.isKeyWindow }?.endEditing(true) }
         }
-        .modifier(DismissingKeyboard())
         .navigationBarTitle("Search")
     }
 
