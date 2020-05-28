@@ -12,15 +12,13 @@ import SwiftUI
 /// The book search screen.
 struct MainView<Presenter: MainPresenter>: View {
 
-    // TODO: LocalizedStringKeys.
-
     // MARK: - Properties
 
     // MARK: View protocol properties
 
     var body: some View {
         VStack {
-            SearchBar(placeholder: "Search books", text: $presenter.query)
+            SearchBar(text: $presenter.query, placeholder: "SearchScreenSearchFieldPlaceholder")
             List(presenter.books) { book in
                 VStack(alignment: .leading) {
                     Text(book.authors)
@@ -39,7 +37,7 @@ struct MainView<Presenter: MainPresenter>: View {
             }
             .onTapGesture { UIApplication.shared.windows.first{ $0.isKeyWindow }?.endEditing(true) }
         }
-        .navigationBarTitle("Search")
+        .navigationBarTitle("SearchScreenTitle")
     }
 
     // MARK: Private properties

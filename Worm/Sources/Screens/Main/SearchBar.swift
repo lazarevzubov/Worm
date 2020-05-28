@@ -42,11 +42,25 @@ struct SearchBar: UIViewRepresentable {
 
     // MARK: - Properties
 
-    /// The placeholder of the search field text.
-    var placeholder = ""
-    /// The current text of the search field.
+    // MARK: Private properties
+
+    private let placeholder: String
     @Binding
-    var text: String
+    private var text: String
+
+    // MARK: - Initialization
+
+    /**
+     Creates a search bar SwiftUI wrapper.
+
+     - Parameters:
+     - text: The current text of the search field.
+     - placeholderKey: The placeholder of the search field text.
+     */
+    init(text: Binding<String>, placeholder placeholderKey: String) {
+        self.placeholder = NSLocalizedString(placeholderKey, comment: "Search field placeholder")
+        self._text = text
+    }
 
     // MARK: UIViewRepresentable protocol methods
 
