@@ -20,17 +20,23 @@ struct MainView<Presenter: MainPresenter>: View {
         VStack {
             SearchBar(text: $presenter.query, placeholder: "SearchScreenSearchFieldPlaceholder")
             List(presenter.books) { book in
-                VStack(alignment: .leading) {
-                    Text(book.authors)
-                        .font(.body)
-                        .fontWeight(.light)
-                        .foregroundColor(.secondary)
-                        .accessibility(hidden: true)
-                    Text(book.title)
-                        .font(.headline)
-                        .fontWeight(.medium)
+                // TODO: Extract cell.
+                HStack {
+                    VStack(alignment: .leading) {
+                        Text(book.authors)
+                            .font(.body)
+                            .fontWeight(.light)
+                            .foregroundColor(.secondary)
+                            .accessibility(hidden: true)
+                        Text(book.title)
+                            .font(.headline)
+                            .fontWeight(.medium)
+                            .foregroundColor(.primary)
+                            .accessibility(hidden: true)
+                    }
+                    Spacer()
+                    Image(systemName: "heart")
                         .foregroundColor(.primary)
-                        .accessibility(hidden: true)
                 }
                 .accessibilityElement()
                 .accessibility(label: Text("\(book.authors) – \(book.title)"))
