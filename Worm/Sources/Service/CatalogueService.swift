@@ -9,7 +9,7 @@
 import GoodreadsService
 
 /// The data service of the app.
-protocol Service {
+protocol CatalogueService {
 
     // MARK: - Methods
 
@@ -36,7 +36,7 @@ protocol Service {
 
 // MARK: - Service
 
-extension GoodreadsService: Service { }
+extension GoodreadsService: CatalogueService { }
 
 // MARK: -
 
@@ -45,7 +45,7 @@ extension GoodreadsService: Service { }
 
  Useful for testing.
  */
-final class MockService: Service {
+final class MockService: CatalogueService {
 
     // MARK: - Properties
 

@@ -47,7 +47,7 @@ final class MainDefaultModel: MainModel {
     private let databaseContext: NSManagedObjectContext
     private let dispatchQueue: DispatchQueue
     private let queryDelay: DispatchTimeInterval?
-    private let service: Service
+    private let service: CatalogueService
     private var currentSearchResult = [String]() {
         didSet { currentSearchResult.forEach { handleSearchResult($0) } }
     }
@@ -64,7 +64,7 @@ final class MainDefaultModel: MainModel {
         - dispatchQueue: The queue to dispatch search requests.
         - queryDelay: The delay after which the request is actually dispatched. This delay is useful to prevent too many request while typing a query.
      */
-    init(service: Service,
+    init(service: CatalogueService,
          databaseContext: NSManagedObjectContext,
          dispatchQueue: DispatchQueue = DispatchQueue(label: "com.LazarevZubov.Worm.MainDefaultModel"),
          queryDelay: DispatchTimeInterval? = .milliseconds(500)) {

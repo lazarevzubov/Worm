@@ -67,7 +67,7 @@ final class MainDefaultModelTests: XCTestCase {
 
 // MARK: -
 
-private final class MockService: Service {
+private final class MockService: CatalogueService {
 
     // MARK: - Properties
 
