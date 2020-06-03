@@ -7,6 +7,7 @@
 //
 
 import Coordinator
+import CoreData
 import SwiftUI
 import UIKit
 
@@ -17,6 +18,7 @@ final class MainCoordinator: Coordinator {
 
     // MARK: Private properties
 
+    private let context: NSManagedObjectContext
     private let mockingService: Bool
     private weak var window: UIWindow?
 
@@ -29,8 +31,9 @@ final class MainCoordinator: Coordinator {
         - window: The app's key window.
         - mockingService: Indicates whether the app's UI shall be mocked.
      */
-    init(window: UIWindow, mockingService: Bool = false) {
+    init(window: UIWindow, context: NSManagedObjectContext, mockingService: Bool = false) {
         self.window = window
+        self.context = context
         self.mockingService = mockingService
     }
 
@@ -39,7 +42,7 @@ final class MainCoordinator: Coordinator {
     // MARK: Coordinator protocol methods
 
     func start() {
-        let view = MainFactory.makeMainView(mockingService: mockingService)
+        let view = MainFactory.makeMainView(context: context, mockingService: mockingService)
         let navigationView = NavigationView { view }
         let controller = UIHostingController(rootView: navigationView)
 

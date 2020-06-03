@@ -6,6 +6,7 @@
 //  Copyright © 2020 Nikita Lazarev-Zubov. All rights reserved.
 //
 
+import CoreData
 import GoodreadsService
 import SwiftUI
 
@@ -14,16 +15,17 @@ enum MainFactory {
 
     // MARK: - Methods
 
+    // TODO: Fix HeaderDoc.
     /**
      Creates the main screen view.
      - Parameter mockingService: Indicates whether to build the real or a mock view.
      - Returns: The view of the main screen.
      */
-    static func makeMainView(mockingService: Bool = false) -> some View {
+    static func makeMainView(context: NSManagedObjectContext, mockingService: Bool = false) -> some View {
         let service: Service = !mockingService
             ? GoodreadsService(key: Settings.goodreadsAPIKey)
             : MockService()
-        let model = MainDefaultModel(service: service)
+        let model = MainDefaultModel(service: service, databaseContext: context)
         let presenter = MainDefaultPresenter(model: model)
 
         return MainView<MainDefaultPresenter<MainDefaultModel>>(presenter: presenter)

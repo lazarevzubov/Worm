@@ -6,6 +6,7 @@
 //  Copyright © 2020 Nikita Lazarev-Zubov. All rights reserved.
 //
 
+import CoreData
 import Foundation
 import GoodreadsService
 
@@ -41,6 +42,7 @@ final class MainDefaultModel: MainModel {
 
     // MARK: Private properties
 
+    private let databaseContext: NSManagedObjectContext
     private let dispatchQueue: DispatchQueue
     private let queryDelay: DispatchTimeInterval?
     private let service: Service
@@ -51,6 +53,7 @@ final class MainDefaultModel: MainModel {
 
     // MARK: - Initialization
 
+    // TODO: Update HeaderDoc.
     /**
      Creates a model.
 
@@ -60,9 +63,11 @@ final class MainDefaultModel: MainModel {
         - queryDelay: The delay after which the request is actually dispatched. This delay is useful to prevent too many request while typing a query.
      */
     init(service: Service,
+         databaseContext: NSManagedObjectContext,
          dispatchQueue: DispatchQueue = DispatchQueue(label: "com.LazarevZubov.Worm.MainDefaultModel"),
          queryDelay: DispatchTimeInterval? = .milliseconds(500)) {
         self.service = service
+        self.databaseContext = databaseContext
         self.dispatchQueue = dispatchQueue
         self.queryDelay = queryDelay
     }

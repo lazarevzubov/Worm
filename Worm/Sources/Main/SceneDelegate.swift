@@ -7,6 +7,7 @@
 //
 
 import Coordinator
+import CoreData
 import SwiftUI
 import UIKit
 
@@ -20,13 +21,20 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow? {
         didSet {
             if let window = window {
-                coordinator = MainCoordinator(window: window, mockingService: testing)
+                coordinator = MainCoordinator(window: window, context: viewContext, mockingService: testing)
             }
         }
     }
 
     // MARK: Private properties
 
+    private var viewContext: NSManagedObjectContext {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            // TODO: Handle error properly.
+            fatalError("Impossible state: shared UIApplication delegate is not an AppDelegate.")
+        }
+        return appDelegate.persistentContainer.viewContext
+    }
     private var coordinator: Coordinator? {
         didSet { coordinator?.start() }
     }
@@ -45,12 +53,6 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene,
                willConnectTo session: UISceneSession,
                options connectionOptions: UIScene.ConnectionOptions) {
-        // guard let context = (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer.viewContext else {
-            // fatalError("Impossible state: shared UIApplication delegate is not an AppDelegate.")
-        // }
-        // Add `@Environment(\.managedObjectContext)` in the views that will need the context.
-        // let contentView = ContentView().environment(\.managedObjectContext, context)
-
         if let windowScene = scene as? UIWindowScene {
             window = UIWindow(windowScene: windowScene)
         }
