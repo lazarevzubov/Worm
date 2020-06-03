@@ -25,6 +25,8 @@ protocol MainModel: ObservableObject {
      - Parameter query: The query to search.
      */
     func searchBooks(by query: String)
+    // TODO: HeaderDoc.
+    func isFavorite(id: String) -> Bool
 
 }
 
@@ -87,6 +89,20 @@ final class MainDefaultModel: MainModel {
         } else {
             dispatchQueue.async(execute: newSearchWorkItem)
         }
+    }
+
+    func isFavorite(id: String) -> Bool {
+        // TODO: CoreData service.
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "FavoriteBook")
+        if let favoriteBooks = try? databaseContext.fetch(fetchRequest) {
+            for book in favoriteBooks {
+                if book.value(forKey: "id") as? String == id {
+                    return true
+                }
+            }
+        }
+
+        return false
     }
 
     // MARK: Private methods

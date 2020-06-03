@@ -35,7 +35,7 @@ struct MainView<Presenter: MainPresenter>: View {
                             .accessibility(hidden: true)
                     }
                     Spacer()
-                    Image(systemName: "heart")
+                    Image(systemName: (book.favorite ? "heart.fill" : "heart"))
                         .foregroundColor(.primary)
                 }
                 .accessibilityElement()
@@ -81,6 +81,6 @@ struct MainView_Previews: PreviewProvider {
 
     // MARK: PreviewProvider protocol properties
 
-    static var previews: some View {MainView(presenter: MainPreviewPresenter()) }
+    static var previews: some View { MainView(presenter: MainPreviewPresenter()) }
 
 }
