@@ -44,10 +44,10 @@ final class MainDefaultModel: MainModel {
 
     // MARK: Private properties
 
-    private let databaseContext: NSManagedObjectContext
+    private let catalogueService: CatalogueService
     private let dispatchQueue: DispatchQueue
+    private let persistenseService: PersistenseService
     private let queryDelay: DispatchTimeInterval?
-    private let service: CatalogueService
     private var currentSearchResult = [String]() {
         didSet { currentSearchResult.forEach { handleSearchResult($0) } }
     }
@@ -64,12 +64,12 @@ final class MainDefaultModel: MainModel {
         - dispatchQueue: The queue to dispatch search requests.
         - queryDelay: The delay after which the request is actually dispatched. This delay is useful to prevent too many request while typing a query.
      */
-    init(service: CatalogueService,
-         databaseContext: NSManagedObjectContext,
+    init(catalogueService: CatalogueService,
+         persistenseService: PersistenseService,
          dispatchQueue: DispatchQueue = DispatchQueue(label: "com.LazarevZubov.Worm.MainDefaultModel"),
          queryDelay: DispatchTimeInterval? = .milliseconds(500)) {
-        self.service = service
-        self.databaseContext = databaseContext
+        self.catalogueService = catalogueService
+        self.persistenseService = persistenseService
         self.dispatchQueue = dispatchQueue
         self.queryDelay = queryDelay
     }
@@ -92,17 +92,7 @@ final class MainDefaultModel: MainModel {
     }
 
     func isFavorite(id: String) -> Bool {
-        // TODO: CoreData service.
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "FavoriteBook")
-        if let favoriteBooks = try? databaseContext.fetch(fetchRequest) {
-            for book in favoriteBooks {
-                if book.value(forKey: "id") as? String == id {
-                    return true
-                }
-            }
-        }
-
-        return false
+        return persistenseService.favoriteBooks.map { $0.id }.contains(id)
     }
 
     // MARK: Private methods
@@ -122,13 +112,13 @@ final class MainDefaultModel: MainModel {
     }
 
     private func handle(searchQuery: String) {
-        service.searchBooks(searchQuery) { [weak self] in
+        catalogueService.searchBooks(searchQuery) { [weak self] in
             self?.currentSearchResult = $0
         }
     }
 
     private func handleSearchResult(_ result: String) {
-        service.getBook(by: result) { [weak self] book in
+        catalogueService.getBook(by: result) { [weak self] book in
             guard let book = book else {
                 return
             }

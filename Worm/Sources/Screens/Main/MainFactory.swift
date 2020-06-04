@@ -22,10 +22,12 @@ enum MainFactory {
      - Returns: The view of the main screen.
      */
     static func makeMainView(context: NSManagedObjectContext, mockingService: Bool = false) -> some View {
-        let service: CatalogueService = !mockingService
+        let catalogueService: CatalogueService = !mockingService
             ? GoodreadsService(key: Settings.goodreadsAPIKey)
             : MockService()
-        let model = MainDefaultModel(service: service, databaseContext: context)
+        let persistenseService = PersistenseCoreDataService(databaseContext: context)
+        let model = MainDefaultModel(catalogueService: catalogueService, persistenseService: persistenseService)
+
         let presenter = MainDefaultPresenter(model: model)
 
         return MainView<MainDefaultPresenter<MainDefaultModel>>(presenter: presenter)
