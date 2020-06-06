@@ -17,6 +17,8 @@ protocol MainModel: ObservableObject {
 
     /// The list of books corresponding to the current search query.
     var books: [Book] { get }
+    // TODO: HeaderDoc.
+    var favoriteBookIDs: [String] { get }
 
     // MARK: - Methods
 
@@ -26,7 +28,7 @@ protocol MainModel: ObservableObject {
      */
     func searchBooks(by query: String)
     // TODO: HeaderDoc.
-    func isFavorite(id: String) -> Bool
+    func toggleFavoriteState(bookID: String)
 
 }
 
@@ -41,6 +43,8 @@ final class MainDefaultModel: MainModel {
 
     @Published
     private(set) var books = [Book]()
+    @Published
+    private(set) var favoriteBookIDs = [String]()
 
     // MARK: Private properties
 
@@ -72,6 +76,8 @@ final class MainDefaultModel: MainModel {
         self.persistenseService = persistenseService
         self.dispatchQueue = dispatchQueue
         self.queryDelay = queryDelay
+
+        updateFavorites()
     }
 
     // MARK: - Methods
@@ -91,11 +97,20 @@ final class MainDefaultModel: MainModel {
         }
     }
 
-    func isFavorite(id: String) -> Bool {
-        return persistenseService.favoriteBooks.map { $0.id }.contains(id)
+    func toggleFavoriteState(bookID: String) {
+        if favoriteBookIDs.contains(bookID) {
+            persistenseService.removeFromFavoriteBooks(bookID)
+        } else {
+            persistenseService.addToFavoriteBooks(bookID)
+        }
+        updateFavorites()
     }
 
     // MARK: Private methods
+
+    private func updateFavorites() {
+        favoriteBookIDs = persistenseService.favoriteBooks.compactMap { $0.id }
+    }
 
     private func makeSearchWorkItem(query: String) -> DispatchWorkItem {
         return DispatchWorkItem { [weak self] in

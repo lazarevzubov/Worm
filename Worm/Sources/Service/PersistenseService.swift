@@ -16,6 +16,13 @@ protocol PersistenseService {
     // TODO: HeaderDoc.
     var favoriteBooks: [FavoriteBook] { get }
 
+    // MARK: - Methods
+
+    // TODO: HeaderDoc.
+    func addToFavoriteBooks(_ id: String)
+    // TODO: HeaderDoc.
+    func removeFromFavoriteBooks(_ id: String)
+
 }
 
 // MARK: -
@@ -41,6 +48,30 @@ final class PersistenseCoreDataService: PersistenseService {
     // TODO: HeaderDoc.
     init(databaseContext: NSManagedObjectContext) {
         self.databaseContext = databaseContext
+    }
+
+    // MARK: - Methods
+
+    // MARK: PersistenseService protocol methods
+
+    func addToFavoriteBooks(_ id: String) {
+        let favoriteBook = NSManagedObject(entity: FavoriteBook.entity(), insertInto: databaseContext)
+        favoriteBook.setValue(id, forKey: "id") // TODO: Find out how to do that properly.
+
+        try? databaseContext.save()
+    }
+
+    func removeFromFavoriteBooks(_ id: String) {
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: FavoriteBook.entity().name!)
+        let favoriteBooks = (try? databaseContext.fetch(fetchRequest) as? [FavoriteBook]) ?? []
+        favoriteBooks.forEach {
+            if $0.id == id {
+                databaseContext.delete($0)
+                try? databaseContext.save()
+
+                return
+            }
+        }
     }
 
 }

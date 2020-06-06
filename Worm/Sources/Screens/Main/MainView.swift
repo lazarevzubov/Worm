@@ -18,6 +18,7 @@ struct MainView<Presenter: MainPresenter>: View {
 
     var body: some View {
         VStack {
+            // TODO: Close on tap.
             SearchBar(text: $presenter.query, placeholder: "SearchScreenSearchFieldPlaceholder")
             List(presenter.books) { book in
                 // TODO: Extract cell.
@@ -34,14 +35,18 @@ struct MainView<Presenter: MainPresenter>: View {
                             .foregroundColor(.primary)
                             .accessibility(hidden: true)
                     }
+                    .accessibilityElement()
+                    .accessibility(label: Text("\(book.authors) – \(book.title)"))
                     Spacer()
-                    Image(systemName: (book.favorite ? "heart.fill" : "heart"))
-                        .foregroundColor(.primary)
+                    // TODO: Bind to State.
+                    // TODO: Check accessibility.
+                    Button(action: { self.presenter.toggleFavoriteState(bookID: book.id) }) {
+                        Image(systemName: (book.favorite ? "heart.fill" : "heart"))
+                            .foregroundColor(.primary)
+                    }
                 }
-                .accessibilityElement()
-                .accessibility(label: Text("\(book.authors) – \(book.title)"))
+                .buttonStyle(PlainButtonStyle())
             }
-            .onTapGesture { UIApplication.shared.windows.first{ $0.isKeyWindow }?.endEditing(true) }
         }
         .navigationBarTitle("SearchScreenTitle")
     }

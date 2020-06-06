@@ -36,20 +36,6 @@ extension BookViewModel: Identifiable { }
 
 // MARK: -
 
-extension Book {
-
-    // MARK: - Methods
-
-    // TODO: HeaderDoc.
-    func asViewModel() -> BookViewModel {
-        // TODO: Real data for favorite.
-        BookViewModel(authors: authors.joined(separator: ", "), favorite: false, id: id, title: title)
-    }
-
-}
-
-// MARK: -
-
 /// The presentation logic of the book search screen.
 protocol MainPresenter: ObservableObject {
 
@@ -59,6 +45,11 @@ protocol MainPresenter: ObservableObject {
     var query: String { get set }
     /// The list of books corresponding to the current search query.
     var books: [BookViewModel] { get }
+
+    // MARK: - Methods
+
+    // TODO: HeaderDoc.
+    func toggleFavoriteState(bookID: String)
 
 }
 
@@ -98,13 +89,21 @@ final class MainDefaultPresenter<Model: MainModel>: MainPresenter {
 
     // MARK: - Methods
 
+    // MARK: MainPresenter protocol methods
+
+    func toggleFavoriteState(bookID: String) {
+        model.toggleFavoriteState(bookID: bookID)
+    }
+
+    // MARK: Private methods
+
     private func bind(model: Model) {
         model
             .objectWillChange
             .receive(on: updateQueue)
             .sink { [weak self] _ in
                 self?.objectWillChange.send()
-                self?.books = model.books.map { $0.asViewModel() }
+                self?.books = model.books.map { $0.asViewModel(favorite: model.favoriteBookIDs.contains($0.id)) }
         }
         .store(in: &cancellables)
     }
@@ -120,32 +119,58 @@ final class MainPreviewPresenter: MainPresenter {
 
     // MARK: MainPresenter protocol properties
 
-    var books: [BookViewModel] {
-        [BookViewModel(authors: "J.R.R. Tolkien", favorite: true, id: "1", title: "The Lord of the Rings"),
-         BookViewModel(authors: "Michael Bond", favorite: false, id: "2", title: "Paddington Pop-Up London"),
-         BookViewModel(authors: "J.K. Rowling",
-                       favorite: false,
-                       id: "3",
-                       title: "Harry Potter and the Sorcecer's Stone"),
-         BookViewModel(authors: "George R.R. Martin", favorite: false, id: "4", title: "A Game of Thrones"),
-         BookViewModel(authors: "Frank Herbert", favorite: true, id: "5", title: "Dune I"),
-         BookViewModel(authors: "Mikhail Bulgakov", favorite: false, id: "6", title: "The Master and Margarita"),
-         BookViewModel(authors: "Alan Moore", favorite: false, id: "7", title: "Watchmen"),
-         BookViewModel(authors: "Steve McConnell", favorite: false, id: "8", title: "Code Complete"),
-         BookViewModel(authors: "Jane Austen", favorite: true, id: "9", title: "Pride and Prejudice"),
-         BookViewModel(authors: "Martin Fowler",
-                       favorite: false,
-                       id: "10",
-                       title: "Refactoring: Improving the Design of Existing Code"),
-         BookViewModel(authors: "Stephen King", favorite: false, id: "11", title: "The Shining"),
-         BookViewModel(authors: "Hannah Arendt",
-                       favorite: false,
-                       id: "12",
-                       title: "Eichmann in Jerusalem: A Report on the Banality of Evil"),
-         BookViewModel(authors: "Fyodor Dostoyevsky", favorite: true, id: "13", title: "The Idiot"),
-         BookViewModel(authors: "Ken Kesey", favorite: true, id: "14", title: "Sometimes a Great Notion"),
-         BookViewModel(authors: "Haruki Murakami", favorite: false, id: "15", title: "The Wind-Up Bird Chronicle")]
-    }
+    private(set) var books: [BookViewModel] = [
+        BookViewModel(authors: "J.R.R. Tolkien", favorite: true, id: "1", title: "The Lord of the Rings"),
+        BookViewModel(authors: "Michael Bond", favorite: false, id: "2", title: "Paddington Pop-Up London"),
+        BookViewModel(authors: "J.K. Rowling",
+                      favorite: false,
+                      id: "3",
+                      title: "Harry Potter and the Sorcecer's Stone"),
+        BookViewModel(authors: "George R.R. Martin", favorite: false, id: "4", title: "A Game of Thrones"),
+        BookViewModel(authors: "Frank Herbert", favorite: true, id: "5", title: "Dune I"),
+        BookViewModel(authors: "Mikhail Bulgakov", favorite: false, id: "6", title: "The Master and Margarita"),
+        BookViewModel(authors: "Alan Moore", favorite: false, id: "7", title: "Watchmen"),
+        BookViewModel(authors: "Steve McConnell", favorite: false, id: "8", title: "Code Complete"),
+        BookViewModel(authors: "Jane Austen", favorite: true, id: "9", title: "Pride and Prejudice"),
+        BookViewModel(authors: "Martin Fowler",
+                      favorite: false,
+                      id: "10",
+                      title: "Refactoring: Improving the Design of Existing Code"),
+        BookViewModel(authors: "Stephen King", favorite: false, id: "11", title: "The Shining"),
+        BookViewModel(authors: "Hannah Arendt",
+                      favorite: false,
+                      id: "12",
+                      title: "Eichmann in Jerusalem: A Report on the Banality of Evil"),
+        BookViewModel(authors: "Fyodor Dostoyevsky", favorite: true, id: "13", title: "The Idiot"),
+        BookViewModel(authors: "Ken Kesey", favorite: true, id: "14", title: "Sometimes a Great Notion"),
+        BookViewModel(authors: "Haruki Murakami", favorite: false, id: "15", title: "The Wind-Up Bird Chronicle")
+    ]
     var query = ""
+
+    // MARK: - Methods
+
+    // MARK: MainPresenter protocol methods
+
+    func toggleFavoriteState(bookID: String) {
+        books = books.map {
+            BookViewModel(authors: $0.authors,
+                          favorite: ($0.id == bookID ? !$0.favorite : $0.favorite),
+                          id: $0.id,
+                          title: $0.title)
+
+        }
+    }
+
+}
+
+// MARK: -
+
+private extension Book {
+
+    // MARK: - Methods
+
+    func asViewModel(favorite: Bool) -> BookViewModel {
+        BookViewModel(authors: authors.joined(separator: ", "), favorite: favorite, id: id, title: title)
+    }
 
 }
