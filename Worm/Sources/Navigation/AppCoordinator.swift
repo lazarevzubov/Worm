@@ -1,5 +1,5 @@
 //
-//  MainCoordinator.swift
+//  AppCoordinator.swift
 //  Worm
 //
 //  Created by Nikita Lazarev-Zubov on 19.4.2020.
@@ -12,7 +12,7 @@ import SwiftUI
 import UIKit
 
 /// Handles the navigation to and within the main screen of the app.
-final class MainCoordinator: Coordinator {
+final class AppCoordinator: Coordinator {
 
     // MARK: - Properties
 

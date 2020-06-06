@@ -18,7 +18,7 @@ final class MainCoordinatorTests: XCTestCase {
         var window = UIWindow()
         weak var weakWindow = window
 
-        _ = MainCoordinator(window: window)
+        _ = AppCoordinator(window: window)
         XCTAssertNotNil(weakWindow)
 
         window = UIWindow()
@@ -27,7 +27,7 @@ final class MainCoordinatorTests: XCTestCase {
 
     func testWindowHasRootViewControllerAfterStart() {
         let window = UIWindow()
-        let coordinator = MainCoordinator(window: window)
+        let coordinator = AppCoordinator(window: window)
         XCTAssertNil(window.rootViewController)
 
         coordinator.start()
@@ -36,7 +36,7 @@ final class MainCoordinatorTests: XCTestCase {
 
     func testWindowIsKeyAfterStart() {
         let window = UIWindow()
-        let coordinator = MainCoordinator(window: window)
+        let coordinator = AppCoordinator(window: window)
         XCTAssertFalse(window.isKeyWindow)
 
         coordinator.start()

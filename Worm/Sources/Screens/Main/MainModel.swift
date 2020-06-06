@@ -38,7 +38,7 @@ protocol MainModel: ObservableObject {
 // MARK: -
 
 /// The search screen model implemented on top of a data providing service.
-final class MainDefaultModel: MainModel {
+final class MainServiceBasedModel: MainModel {
 
     // MARK: - Properties
 
@@ -53,7 +53,7 @@ final class MainDefaultModel: MainModel {
 
     private let catalogueService: CatalogueService
     private let dispatchQueue: DispatchQueue
-    private let persistenseService: PersistenseService
+    private let persistenseService: FavoritesService
     private let queryDelay: DispatchTimeInterval?
     private var currentSearchResult = [String]() {
         didSet { currentSearchResult.forEach { handleSearchResult($0) } }
@@ -72,7 +72,7 @@ final class MainDefaultModel: MainModel {
         - queryDelay: The delay after which the request is actually dispatched. This delay is useful to prevent too many request while typing a query.
      */
     init(catalogueService: CatalogueService,
-         persistenseService: PersistenseService,
+         persistenseService: FavoritesService,
          dispatchQueue: DispatchQueue = DispatchQueue(label: "com.LazarevZubov.Worm.MainDefaultModel"),
          queryDelay: DispatchTimeInterval? = .milliseconds(500)) {
         self.catalogueService = catalogueService

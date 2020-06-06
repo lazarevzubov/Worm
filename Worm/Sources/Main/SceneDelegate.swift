@@ -21,7 +21,7 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow? {
         didSet {
             if let window = window {
-                coordinator = MainCoordinator(window: window, context: viewContext, mockingService: testing)
+                coordinator = AppCoordinator(window: window, context: viewContext, mockingService: testing)
             }
         }
     }

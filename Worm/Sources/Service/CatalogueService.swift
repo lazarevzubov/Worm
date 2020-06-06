@@ -45,7 +45,7 @@ extension GoodreadsService: CatalogueService { }
 
  Useful for testing.
  */
-final class MockService: CatalogueService {
+final class CatalogueMockService: CatalogueService {
 
     // MARK: - Properties
 
@@ -78,12 +78,12 @@ final class MockService: CatalogueService {
     // MARK: Service protocol methods
 
     func searchBooks(_ query: String, resultCompletion: @escaping ([String]) -> Void) {
-        let ids = MockService.books.map { $0.id }
+        let ids = CatalogueMockService.books.map { $0.id }
         resultCompletion(ids)
     }
 
     func getBook(by id: String, resultCompletion: @escaping (Book?) -> Void) {
-        let book = MockService.books.first { $0.id == id }
+        let book = CatalogueMockService.books.first { $0.id == id }
         resultCompletion(book)
     }
 

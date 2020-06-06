@@ -16,14 +16,14 @@ final class MainDefaultModelTests: XCTestCase {
     // MARK: - Methods
 
     func testBooksInitiallyEmpty() {
-        let model = MainDefaultModel(service: MockService())
+        let model = MainServiceBasedModel(service: MockService())
         XCTAssertTrue(model.books.isEmpty)
     }
 
     func testSeachBook() {
         let service = MockService()
         let queue = DispatchQueue(label: "com.LazarevZubov.Worm.MainDefaultModelTests")
-        let model = MainDefaultModel(service: service, dispatchQueue: queue, queryDelay: nil)
+        let model = MainServiceBasedModel(service: service, dispatchQueue: queue, queryDelay: nil)
 
         let query = "Query"
         model.searchBooks(by: query)
@@ -36,7 +36,7 @@ final class MainDefaultModelTests: XCTestCase {
     func testCancelPreviousQuery() {
         let expectation = XCTestExpectation()
         let service = MockService(searchExpectation: expectation)
-        let model = MainDefaultModel(service: service, queryDelay: .milliseconds(100))
+        let model = MainServiceBasedModel(service: service, queryDelay: .milliseconds(100))
 
         let query1 = "Query1"
         model.searchBooks(by: query1)
@@ -56,7 +56,7 @@ final class MainDefaultModelTests: XCTestCase {
         expectation.expectedFulfillmentCount = result.count
 
         let service = MockService(searchBookResult: result, bookRequestExpectation: expectation)
-        let model = MainDefaultModel(service: service, queryDelay: nil)
+        let model = MainServiceBasedModel(service: service, queryDelay: nil)
 
         model.searchBooks(by: "Query")
         wait(for: [expectation], timeout: 1.0)

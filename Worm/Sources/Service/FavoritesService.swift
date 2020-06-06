@@ -1,5 +1,5 @@
 //
-//  PersistenseService.swift
+//  FavoritesService.swift
 //  Worm
 //
 //  Created by Nikita Lazarev-Zubov on 4.6.2020.
@@ -9,7 +9,7 @@
 import CoreData
 
 /// A service providing an interface to track and manipulate the list of favorite books.
-protocol PersistenseService {
+protocol FavoritesService {
 
     // MARK: - Properties
 
@@ -34,7 +34,7 @@ protocol PersistenseService {
 // MARK: -
 
 /// The favorite books service based on a Core Data persistent storage.
-final class PersistenseCoreDataService: PersistenseService {
+final class FavoritesCoreDataService: FavoritesService {
 
     // MARK: - Properties
 

@@ -27,12 +27,12 @@ enum MainFactory {
     static func makeMainView(context: NSManagedObjectContext, mockingService: Bool = false) -> some View {
         let catalogueService: CatalogueService = !mockingService
             ? GoodreadsService(key: Settings.goodreadsAPIKey)
-            : MockService()
-        let persistenseService = PersistenseCoreDataService(databaseContext: context)
-        let model = MainDefaultModel(catalogueService: catalogueService, persistenseService: persistenseService)
+            : CatalogueMockService()
+        let persistenseService = FavoritesCoreDataService(databaseContext: context)
+        let model = MainServiceBasedModel(catalogueService: catalogueService, persistenseService: persistenseService)
 
         let presenter = MainDefaultPresenter(model: model)
 
-        return MainView<MainDefaultPresenter<MainDefaultModel>>(presenter: presenter)
+        return MainView<MainDefaultPresenter<MainServiceBasedModel>>(presenter: presenter)
     }
 }
