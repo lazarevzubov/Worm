@@ -17,7 +17,7 @@ struct BookViewModel {
 
     /// Formatted authors list.
     let authors: String
-    // TODO: HeaderDoc.
+    /// Whether the book is in the favorites list.
     let favorite: Bool
     /// The book ID.
     let id: String
@@ -48,7 +48,10 @@ protocol MainPresenter: ObservableObject {
 
     // MARK: - Methods
 
-    // TODO: HeaderDoc.
+    /**
+    Toggles the favorite-ness state of a book.
+    - Parameter bookID: The ID of the book to manipulate.
+    */
     func toggleFavoriteState(bookID: String)
 
 }

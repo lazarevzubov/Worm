@@ -38,7 +38,6 @@ struct MainView<Presenter: MainPresenter>: View {
                     .accessibilityElement()
                     .accessibility(label: Text("\(book.authors) – \(book.title)"))
                     Spacer()
-                    // TODO: Bind to State.
                     // TODO: Check accessibility.
                     Button(action: { self.presenter.toggleFavoriteState(bookID: book.id) }) {
                         Image(systemName: (book.favorite ? "heart.fill" : "heart"))

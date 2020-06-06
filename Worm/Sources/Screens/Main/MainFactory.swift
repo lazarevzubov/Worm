@@ -15,10 +15,13 @@ enum MainFactory {
 
     // MARK: - Methods
 
-    // TODO: Fix HeaderDoc.
     /**
      Creates the main screen view.
-     - Parameter mockingService: Indicates whether to build the real or a mock view.
+
+     - Parameters:
+        - context: An object space to manipulate and track changes to the app's Core Data persistent storage.
+        - mockingService: Indicates whether to build the real or a mock view.
+
      - Returns: The view of the main screen.
      */
     static func makeMainView(context: NSManagedObjectContext, mockingService: Bool = false) -> some View {
