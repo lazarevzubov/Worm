@@ -8,6 +8,8 @@
 
 import SwiftUI
 
+// TODO: Extend to SwiftUI Extensions Swift Package.
+
 /// The SwiftUI wrapper for the UIKit's `UISearchBar`.
 struct SearchBar: UIViewRepresentable {
 

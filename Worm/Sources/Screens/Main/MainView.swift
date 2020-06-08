@@ -6,7 +6,6 @@
 //  Copyright © 2020 Nikita Lazarev-Zubov. All rights reserved.
 //
 
-import GoodreadsService
 import SwiftUI
 
 /// The book search screen.
@@ -18,34 +17,8 @@ struct MainView<Presenter: MainPresenter>: View {
 
     var body: some View {
         VStack {
-            // TODO: Close on tap.
-            SearchBar(text: $presenter.query, placeholder: "SearchScreenSearchFieldPlaceholder")
-            List(presenter.books) { book in
-                // TODO: Extract cell.
-                HStack {
-                    VStack(alignment: .leading) {
-                        Text(book.authors)
-                            .font(.body)
-                            .fontWeight(.light)
-                            .foregroundColor(.secondary)
-                            .accessibility(hidden: true)
-                        Text(book.title)
-                            .font(.headline)
-                            .fontWeight(.medium)
-                            .foregroundColor(.primary)
-                            .accessibility(hidden: true)
-                    }
-                    .accessibilityElement()
-                    .accessibility(label: Text("\(book.authors) – \(book.title)"))
-                    Spacer()
-                    // TODO: Check accessibility.
-                    Button(action: { self.presenter.toggleFavoriteState(bookID: book.id) }) {
-                        Image(systemName: (book.favorite ? "heart.fill" : "heart"))
-                            .foregroundColor(.primary)
-                    }
-                }
-                .buttonStyle(PlainButtonStyle())
-            }
+            SearchBar(text: $presenter.query, placeholder: "SearchScreenSearchFieldPlaceholder") // TODO: Close on tap.
+            List(presenter.books) { MainViewListCell(book: $0, presenter: self.presenter) }
         }
         .navigationBarTitle("SearchScreenTitle")
     }
