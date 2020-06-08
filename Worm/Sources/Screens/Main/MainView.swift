@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import UIKit2SwiftUI
 
 /// The book search screen.
 struct MainView<Presenter: MainPresenter>: View {
