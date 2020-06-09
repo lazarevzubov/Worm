@@ -6,7 +6,6 @@
 //  Copyright © 2020 Nikita Lazarev-Zubov. All rights reserved.
 //
 
-import CoreData
 import GoodreadsService
 import SwiftUI
 
@@ -24,15 +23,16 @@ enum MainFactory {
 
      - Returns: The view of the main screen.
      */
-    static func makeMainView(context: NSManagedObjectContext, mockingService: Bool = false) -> some View {
+    static func makeMainView(context: PersistenceContext, mockingService: Bool = false) -> some View {
         let catalogueService: CatalogueService = !mockingService
             ? GoodreadsService(key: Settings.goodreadsAPIKey)
             : CatalogueMockService()
-        let persistenseService = FavoritesCoreDataService(databaseContext: context)
+        let persistenseService = FavoritesPersistenceService(persistenceContext: context)
         let model = MainServiceBasedModel(catalogueService: catalogueService, persistenseService: persistenseService)
 
         let presenter = MainDefaultPresenter(model: model)
 
         return MainView<MainDefaultPresenter<MainServiceBasedModel>>(presenter: presenter)
     }
+
 }

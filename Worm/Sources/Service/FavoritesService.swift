@@ -33,8 +33,40 @@ protocol FavoritesService {
 
 // MARK: -
 
+// TODO: HeaderDoc.
+protocol PersistenceContext {
+
+    // MARK: - Methods
+
+    // TODO: HeaderDoc.
+    func fetch<T>(_ request: NSFetchRequest<T>) throws -> [T] where T: NSFetchRequestResult
+    // TODO: HeaderDoc.
+    func delete(_ object: NSManagedObject)
+    // TODO: HeaderDoc.
+    func save() throws
+}
+
+// MARK: - PersistenceContext
+
+extension NSManagedObjectContext: PersistenceContext { }
+
+// MARK: -
+
+extension NSManagedObject {
+
+    // MARK: - Initialization
+
+    // TODO: HeaderDoc.
+    convenience init(entity: NSEntityDescription, insertInto context: PersistenceContext) {
+        self.init(entity: entity, insertInto: context as? NSManagedObjectContext)
+    }
+
+}
+
+// MARK: -
+
 /// The favorite books service based on a Core Data persistent storage.
-final class FavoritesCoreDataService: FavoritesService {
+final class FavoritesPersistenceService: FavoritesService {
 
     // MARK: - Properties
 
@@ -42,12 +74,12 @@ final class FavoritesCoreDataService: FavoritesService {
         // TODO: Find a way to eliminate force-unwrapping.
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: FavoriteBook.entity().name!)
         
-        return (try? databaseContext.fetch(fetchRequest) as? [FavoriteBook]) ?? []
+        return (try? persistenceContext.fetch(fetchRequest) as? [FavoriteBook]) ?? []
     }
 
     // MARK: Private properties
 
-    private let databaseContext: NSManagedObjectContext
+    private let persistenceContext: PersistenceContext
 
     // MARK: - Initialization
 
@@ -55,8 +87,8 @@ final class FavoritesCoreDataService: FavoritesService {
      Creates a service instance.
      - Parameter databaseContext: An object space to manipulate and track changes to the app's Core Data persistent storage.
      */
-    init(databaseContext: NSManagedObjectContext) {
-        self.databaseContext = databaseContext
+    init(persistenceContext: PersistenceContext) {
+        self.persistenceContext = persistenceContext
     }
 
     // MARK: - Methods
@@ -64,19 +96,19 @@ final class FavoritesCoreDataService: FavoritesService {
     // MARK: PersistenseService protocol methods
 
     func addToFavoriteBooks(_ id: String) {
-        let favoriteBook = NSManagedObject(entity: FavoriteBook.entity(), insertInto: databaseContext)
+        let favoriteBook = NSManagedObject(entity: FavoriteBook.entity(), insertInto: persistenceContext)
         favoriteBook.setValue(id, forKey: "id") // TODO: Find out how to do that properly.
 
-        try? databaseContext.save()
+        try? persistenceContext.save()
     }
 
     func removeFromFavoriteBooks(_ id: String) {
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: FavoriteBook.entity().name!)
-        let favoriteBooks = (try? databaseContext.fetch(fetchRequest) as? [FavoriteBook]) ?? []
+        let favoriteBooks = (try? persistenceContext.fetch(fetchRequest) as? [FavoriteBook]) ?? []
         favoriteBooks.forEach {
             if $0.id == id {
-                databaseContext.delete($0)
-                try? databaseContext.save()
+                persistenceContext.delete($0)
+                try? persistenceContext.save()
 
                 return
             }

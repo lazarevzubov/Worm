@@ -16,27 +16,33 @@ final class MainDefaultModelTests: XCTestCase {
     // MARK: - Methods
 
     func testBooksInitiallyEmpty() {
-        let model = MainServiceBasedModel(service: MockService())
+        let model = MainServiceBasedModel(catalogueService: CatalogueMockService(),
+                                          persistenseService: FavoritesStubService())
         XCTAssertTrue(model.books.isEmpty)
     }
 
     func testSeachBook() {
-        let service = MockService()
+        let catalogueService = CatalogueMockService()
         let queue = DispatchQueue(label: "com.LazarevZubov.Worm.MainDefaultModelTests")
-        let model = MainServiceBasedModel(service: service, dispatchQueue: queue, queryDelay: nil)
+        let model = MainServiceBasedModel(catalogueService: catalogueService,
+                                          persistenseService: FavoritesStubService(),
+                                          dispatchQueue: queue,
+                                          queryDelay: nil)
 
         let query = "Query"
         model.searchBooks(by: query)
         queue.sync { }
 
-        XCTAssertEqual(service.handledQueries.count, 1)
-        XCTAssertEqual(service.handledQueries.first!, query)
+        XCTAssertEqual(catalogueService.handledQueries.count, 1)
+        XCTAssertEqual(catalogueService.handledQueries.first!, query)
     }
 
     func testCancelPreviousQuery() {
         let expectation = XCTestExpectation()
-        let service = MockService(searchExpectation: expectation)
-        let model = MainServiceBasedModel(service: service, queryDelay: .milliseconds(100))
+        let catalogueService = CatalogueMockService(searchExpectation: expectation)
+        let model = MainServiceBasedModel(catalogueService: catalogueService,
+                                          persistenseService: FavoritesStubService(),
+                                          queryDelay: .milliseconds(100))
 
         let query1 = "Query1"
         model.searchBooks(by: query1)
@@ -45,8 +51,8 @@ final class MainDefaultModelTests: XCTestCase {
         model.searchBooks(by: query2)
 
         wait(for: [expectation], timeout: 1.0)
-        XCTAssertEqual(service.handledQueries.count, 1)
-        XCTAssertEqual(service.handledQueries.first!, query2)
+        XCTAssertEqual(catalogueService.handledQueries.count, 1)
+        XCTAssertEqual(catalogueService.handledQueries.first!, query2)
     }
 
     func testSearchResultFiresBookRequest() {
@@ -55,19 +61,21 @@ final class MainDefaultModelTests: XCTestCase {
         let expectation = XCTestExpectation()
         expectation.expectedFulfillmentCount = result.count
 
-        let service = MockService(searchBookResult: result, bookRequestExpectation: expectation)
-        let model = MainServiceBasedModel(service: service, queryDelay: nil)
+        let catalogueService = CatalogueMockService(searchBookResult: result, bookRequestExpectation: expectation)
+        let model = MainServiceBasedModel(catalogueService: catalogueService,
+                                          persistenseService: FavoritesStubService(),
+                                          queryDelay: nil)
 
         model.searchBooks(by: "Query")
         wait(for: [expectation], timeout: 1.0)
-        XCTAssertEqual(service.handledBookRequests, result)
+        XCTAssertEqual(catalogueService.handledBookRequests, result)
     }
 
 }
 
 // MARK: -
 
-private final class MockService: CatalogueService {
+private final class CatalogueMockService: CatalogueService {
 
     // MARK: - Properties
 
@@ -103,6 +111,30 @@ private final class MockService: CatalogueService {
     func getBook(by id: String, resultCompletion: @escaping (Book?) -> Void) {
         handledBookRequests.append(id)
         bookRequestExpectation?.fulfill()
+    }
+
+}
+
+// MARK: -
+
+private final class FavoritesStubService: FavoritesService {
+
+    // MARK: - Properties
+
+    // MARK: FavoritesService protocol properties
+
+    let favoriteBooks = [FavoriteBook]()
+
+    // MARK: - Methods
+
+    // MARK: - FavoritesService protocol methods
+
+    func addToFavoriteBooks(_ id: String) {
+        // Do nothing.
+    }
+
+    func removeFromFavoriteBooks(_ id: String) {
+        // Do nothing.
     }
 
 }

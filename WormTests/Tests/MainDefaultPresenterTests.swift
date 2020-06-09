@@ -45,8 +45,8 @@ final class MainDefaultPresenterTests: XCTestCase {
         model.books = books
         queue.sync { }
 
-        let expectedBooks = [BookViewModel(authors: "", id: "1", title: "Title1"),
-                             BookViewModel(authors: "", id: "2", title: "Title2")]
+        let expectedBooks = [BookViewModel(authors: "", favorite: false, id: "1", title: "Title1"),
+                             BookViewModel(authors: "", favorite: false, id: "2", title: "Title2")]
         XCTAssertEqual(presenter.books, expectedBooks)
     }
 
@@ -64,6 +64,7 @@ private final class MainMockModel: MainModel {
 
     @Published
     var books = [Book]()
+    let favoriteBookIDs = [String]()
 
     // MARK: - Methods
 
@@ -71,6 +72,10 @@ private final class MainMockModel: MainModel {
 
     func searchBooks(by query: String) {
         lastQuery = query
+    }
+
+    func toggleFavoriteState(bookID: String) {
+        // Do nothing.
     }
 
 }

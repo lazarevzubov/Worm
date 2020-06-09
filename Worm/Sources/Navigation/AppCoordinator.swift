@@ -7,7 +7,6 @@
 //
 
 import Coordinator
-import CoreData
 import SwiftUI
 import UIKit
 
@@ -18,7 +17,7 @@ final class AppCoordinator: Coordinator {
 
     // MARK: Private properties
 
-    private let context: NSManagedObjectContext
+    private let context: PersistenceContext
     private let mockingService: Bool
     private weak var window: UIWindow?
 
@@ -31,7 +30,7 @@ final class AppCoordinator: Coordinator {
         - window: The app's key window.
         - mockingService: Indicates whether the app's UI shall be mocked.
      */
-    init(window: UIWindow, context: NSManagedObjectContext, mockingService: Bool = false) {
+    init(window: UIWindow, context: PersistenceContext, mockingService: Bool = false) {
         self.window = window
         self.context = context
         self.mockingService = mockingService
