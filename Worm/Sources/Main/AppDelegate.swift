@@ -17,8 +17,23 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
 
     // MARK: - Properties
 
-    // MARK: Private properties
+    // TODO: HeaderDoc.
+    private(set) lazy var managedObjectContext: NSManagedObjectContext = {
+        #if TEST
+        let managedObjectModel = NSManagedObjectModel.mergedModel(from: [.main])!
 
+        let persistentStoreCoordinator = NSPersistentStoreCoordinator(managedObjectModel: managedObjectModel)
+        try! persistentStoreCoordinator.addPersistentStore(ofType: NSInMemoryStoreType, configurationName: nil, at: nil)
+
+        let managedObjectContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
+        managedObjectContext.persistentStoreCoordinator = persistentStoreCoordinator
+
+        return managedObjectContext
+        #else
+        return persistentContainer.viewContext
+        #endif
+    }()
+    // TODO: HeaderDoc.
     private(set) lazy var persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "Worm")
         container.loadPersistentStores { _, error in

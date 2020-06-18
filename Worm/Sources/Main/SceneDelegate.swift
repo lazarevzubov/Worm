@@ -8,6 +8,7 @@
 
 import Coordinator
 import CoreData
+import GoodreadsService
 import SwiftUI
 import UIKit
 
@@ -21,29 +22,25 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow? {
         didSet {
             if let window = window {
-                coordinator = AppCoordinator(window: window, context: viewContext, mockingService: testing)
+                guard let context = (UIApplication.shared.delegate as? AppDelegate)?.managedObjectContext else {
+                    fatalError("\(#file) \(#line) Wrong app configuration.")
+                }
+                coordinator = AppCoordinator(window: window, context: context, catalogueService: catalogueService)
             }
         }
     }
 
     // MARK: Private properties
 
-    private var viewContext: NSManagedObjectContext {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            // TODO: Handle error properly.
-            fatalError("Impossible state: shared UIApplication delegate is not an AppDelegate.")
-        }
-        return appDelegate.persistentContainer.viewContext
+    private var catalogueService: CatalogueService {
+        #if TEST
+        return CatalogueMockService()
+        #else
+        return GoodreadsService(key: Settings.goodreadsAPIKey)
+        #endif
     }
     private var coordinator: Coordinator? {
         didSet { coordinator?.start() }
-    }
-    private var testing: Bool {
-        #if TEST
-        return true
-        #else
-        return false
-        #endif
     }
 
     // MARK: - Methods

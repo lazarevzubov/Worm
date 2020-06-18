@@ -6,7 +6,7 @@
 //  Copyright © 2020 Nikita Lazarev-Zubov. All rights reserved.
 //
 
-import GoodreadsService
+import CoreData
 import SwiftUI
 
 /// A set of creational methods for building the main screen of the app.
@@ -14,6 +14,7 @@ enum MainFactory {
 
     // MARK: - Methods
 
+    // TODO: Update HeaderDoc.
     /**
      Creates the main screen view.
 
@@ -23,12 +24,9 @@ enum MainFactory {
 
      - Returns: The view of the main screen.
      */
-    static func makeMainView(context: PersistenceContext, mockingService: Bool = false) -> some View {
-        let catalogueService: CatalogueService = !mockingService
-            ? GoodreadsService(key: Settings.goodreadsAPIKey)
-            : CatalogueMockService()
-        let persistenseService = FavoritesPersistenceService(persistenceContext: context)
-        let model = MainServiceBasedModel(catalogueService: catalogueService, persistenseService: persistenseService)
+    static func makeMainView(context: NSManagedObjectContext, catalogueService: CatalogueService) -> some View {
+        let persistenseService = FavoritesService(persistenceContext: context)
+        let model = MainServiceBasedModel(catalogueService: catalogueService, favoritesService: persistenseService)
 
         let presenter = MainDefaultPresenter(model: model)
 

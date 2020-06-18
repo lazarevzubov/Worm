@@ -53,7 +53,7 @@ final class MainServiceBasedModel: MainModel {
 
     private let catalogueService: CatalogueService
     private let dispatchQueue: DispatchQueue
-    private let persistenseService: FavoritesService
+    private let favoritesService: FavoritesService
     private let queryDelay: DispatchTimeInterval?
     private var currentSearchResult = [String]() {
         didSet { currentSearchResult.forEach { handleSearchResult($0) } }
@@ -67,16 +67,16 @@ final class MainServiceBasedModel: MainModel {
 
      - Parameters:
         - catalogueService: The data providing service.
-        - persistenseService: A service providing an interface to track and manipulate the list of favorite books.
+        - favoritesService: A service providing an interface to track and manipulate the list of favorite books.
         - dispatchQueue: The queue to dispatch search requests.
         - queryDelay: The delay after which the request is actually dispatched. This delay is useful to prevent too many request while typing a query.
      */
     init(catalogueService: CatalogueService,
-         persistenseService: FavoritesService,
+         favoritesService: FavoritesService,
          dispatchQueue: DispatchQueue = DispatchQueue(label: "com.LazarevZubov.Worm.MainDefaultModel"),
          queryDelay: DispatchTimeInterval? = .milliseconds(500)) {
         self.catalogueService = catalogueService
-        self.persistenseService = persistenseService
+        self.favoritesService = favoritesService
         self.dispatchQueue = dispatchQueue
         self.queryDelay = queryDelay
 
@@ -102,9 +102,9 @@ final class MainServiceBasedModel: MainModel {
 
     func toggleFavoriteState(bookID: String) {
         if favoriteBookIDs.contains(bookID) {
-            persistenseService.removeFromFavoriteBooks(bookID)
+            favoritesService.removeFromFavoriteBooks(bookID)
         } else {
-            persistenseService.addToFavoriteBooks(bookID)
+            favoritesService.addToFavoriteBooks(bookID)
         }
         updateFavorites()
     }
@@ -112,7 +112,7 @@ final class MainServiceBasedModel: MainModel {
     // MARK: Private methods
 
     private func updateFavorites() {
-        favoriteBookIDs = persistenseService.favoriteBooks.compactMap { $0.id }
+        favoriteBookIDs = favoritesService.favoriteBooks.compactMap { $0.id }
     }
 
     private func makeSearchWorkItem(query: String) -> DispatchWorkItem {

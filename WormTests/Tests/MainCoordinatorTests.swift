@@ -19,7 +19,9 @@ final class MainCoordinatorTests: XCTestCase {
         var window = UIWindow()
         weak var weakWindow = window
 
-        _ = AppCoordinator(window: window, context: PersistenceStubContext())
+        _ = AppCoordinator(window: window,
+                           context: (UIApplication.shared.delegate as! AppDelegate).managedObjectContext,
+                           catalogueService: CatalogueTestingMockService())
         XCTAssertNotNil(weakWindow)
 
         window = UIWindow()
@@ -28,7 +30,9 @@ final class MainCoordinatorTests: XCTestCase {
 
     func testWindowHasRootViewControllerAfterStart() {
         let window = UIWindow()
-        let coordinator = AppCoordinator(window: window, context: PersistenceStubContext())
+        let coordinator = AppCoordinator(window: window,
+                                         context: (UIApplication.shared.delegate as! AppDelegate).managedObjectContext,
+                                         catalogueService: CatalogueTestingMockService())
         XCTAssertNil(window.rootViewController)
 
         coordinator.start()
@@ -37,33 +41,13 @@ final class MainCoordinatorTests: XCTestCase {
 
     func testWindowIsKeyAfterStart() {
         let window = UIWindow()
-        let coordinator = AppCoordinator(window: window, context: PersistenceStubContext())
+        let coordinator = AppCoordinator(window: window,
+                                         context: (UIApplication.shared.delegate as! AppDelegate).managedObjectContext,
+                                         catalogueService: CatalogueTestingMockService())
         XCTAssertFalse(window.isKeyWindow)
 
         coordinator.start()
         XCTAssertTrue(window.isKeyWindow)
-    }
-
-}
-
-// MARK: -
-
-private struct PersistenceStubContext: PersistenceContext {
-
-    // MARK: - Methods
-
-    // MARK: PersistenceContext protocol methods
-
-    func fetch<T>(_ request: NSFetchRequest<T>) throws -> [T] where T : NSFetchRequestResult {
-        return []
-    }
-
-    func delete(_ object: NSManagedObject) {
-        // Do nothing.
-    }
-
-    func save() throws {
-        // Do nothing.
     }
 
 }
