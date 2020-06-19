@@ -39,7 +39,14 @@ struct MainView<Presenter: MainPresenter>: View {
      */
     init(presenter: Presenter) {
         self.presenter = presenter
+        configureNavigationBar()
+    }
 
+    // MARK: - Methods
+
+    // MARK: Private methods
+
+    private func configureNavigationBar() {
         // Complement: UIColor(red: (190.0 / 255.0), green: (142.0 / 255.0), blue: (155.0 / 255.0), alpha: 1.0)
         UINavigationBar.appearance().backgroundColor = UIColor(red: (172.0 / 255.0),
                                                                green: (211.0 / 255.0),
