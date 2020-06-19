@@ -50,6 +50,22 @@ final class MainDefaultPresenterTests: XCTestCase {
         XCTAssertEqual(presenter.books, expectedBooks)
     }
 
+    func testToggleFavoriteState() {
+        let model = MainMockModel()
+
+        let bookID1 = "1"
+        let bookID2 = "2"
+        model.favoriteBookIDs = [bookID1, bookID2]
+
+        let presenter = MainDefaultPresenter(model: model)
+
+        presenter.toggleFavoriteState(bookID: bookID1)
+        XCTAssertEqual(model.favoriteBookIDs, [bookID2])
+
+        presenter.toggleFavoriteState(bookID: bookID1)
+        XCTAssertEqual(model.favoriteBookIDs, [bookID2, bookID1])
+    }
+
 }
 
 // MARK: -
@@ -64,7 +80,7 @@ private final class MainMockModel: MainModel {
 
     @Published
     var books = [Book]()
-    let favoriteBookIDs = [String]()
+    var favoriteBookIDs = [String]()
 
     // MARK: - Methods
 
@@ -75,7 +91,11 @@ private final class MainMockModel: MainModel {
     }
 
     func toggleFavoriteState(bookID: String) {
-        // Do nothing.
+        if favoriteBookIDs.contains(where: { $0 == bookID }) {
+            favoriteBookIDs.removeAll { $0 == bookID }
+        } else {
+            favoriteBookIDs.append(bookID)
+        }
     }
 
 }
