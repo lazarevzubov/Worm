@@ -18,6 +18,7 @@
 		4E4A383F24745B56008AB1C2 /* MainDefaultPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E4A383E24745B56008AB1C2 /* MainDefaultPresenterTests.swift */; };
 		4E4A3849247590F5008AB1C2 /* MainScreenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E4A3848247590F5008AB1C2 /* MainScreenTests.swift */; };
 		4E53BDDA24649525006F6348 /* MainPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E53BDD924649525006F6348 /* MainPresenter.swift */; };
+		4E59BE35249BE8490048DED6 /* BookViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E59BE34249BE8490048DED6 /* BookViewModelTests.swift */; };
 		4E5DD23F2489633F000D6D17 /* FavoritesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5DD23E2489633F000D6D17 /* FavoritesService.swift */; };
 		4E70639D248EC57000EA9144 /* UIKit2SwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 4E70639C248EC57000EA9144 /* UIKit2SwiftUI */; };
 		4E78D96D247592BC00906542 /* XCTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E78D96C247592BC00906542 /* XCTest.swift */; };
@@ -71,6 +72,7 @@
 		4E4A3848247590F5008AB1C2 /* MainScreenTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenTests.swift; sourceTree = "<group>"; };
 		4E4A384A247590F5008AB1C2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4E53BDD924649525006F6348 /* MainPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPresenter.swift; sourceTree = "<group>"; };
+		4E59BE34249BE8490048DED6 /* BookViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookViewModelTests.swift; sourceTree = "<group>"; };
 		4E5DD23E2489633F000D6D17 /* FavoritesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesService.swift; sourceTree = "<group>"; };
 		4E78D96C247592BC00906542 /* XCTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCTest.swift; sourceTree = "<group>"; };
 		4E78D9792479AF5A00906542 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
@@ -232,6 +234,7 @@
 		4ECAA5BB24713A40003D3F8D /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				4E59BE34249BE8490048DED6 /* BookViewModelTests.swift */,
 				4E4A384024758EE5008AB1C2 /* MainCoordinatorTests.swift */,
 				4ECAA5B924713A38003D3F8D /* MainDefaultModelTests.swift */,
 				4E4A383E24745B56008AB1C2 /* MainDefaultPresenterTests.swift */,
@@ -458,6 +461,7 @@
 				4EFD7E62249A96DC008A7606 /* MainDefaultModelTests.swift in Sources */,
 				4E4A383F24745B56008AB1C2 /* MainDefaultPresenterTests.swift in Sources */,
 				4EFD7E67249BE425008A7606 /* CatalogueTestingMockService.swift in Sources */,
+				4E59BE35249BE8490048DED6 /* BookViewModelTests.swift in Sources */,
 				4EFD7E6024994142008A7606 /* Worm.xcdatamodeld in Sources */,
 				4EFD7E61249A96DA008A7606 /* MainCoordinatorTests.swift in Sources */,
 			);
