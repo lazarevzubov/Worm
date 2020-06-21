@@ -19,6 +19,8 @@
 		4E4A3849247590F5008AB1C2 /* MainScreenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E4A3848247590F5008AB1C2 /* MainScreenTests.swift */; };
 		4E53BDDA24649525006F6348 /* MainPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E53BDD924649525006F6348 /* MainPresenter.swift */; };
 		4E59BE35249BE8490048DED6 /* BookViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E59BE34249BE8490048DED6 /* BookViewModelTests.swift */; };
+		4E59BE37249D41810048DED6 /* FavoriteBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E59BE36249D41810048DED6 /* FavoriteBook.swift */; };
+		4E59BE3B249D471F0048DED6 /* FavoritesPersistenceServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E59BE3A249D471F0048DED6 /* FavoritesPersistenceServiceTests.swift */; };
 		4E5DD23F2489633F000D6D17 /* FavoritesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5DD23E2489633F000D6D17 /* FavoritesService.swift */; };
 		4E70639D248EC57000EA9144 /* UIKit2SwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 4E70639C248EC57000EA9144 /* UIKit2SwiftUI */; };
 		4E78D96D247592BC00906542 /* XCTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E78D96C247592BC00906542 /* XCTest.swift */; };
@@ -32,7 +34,7 @@
 		4EE82746244DF0E700102B5D /* MainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EE82745244DF0E700102B5D /* MainModel.swift */; };
 		4EFD7E6024994142008A7606 /* Worm.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4E42D20B24448362002CAA4E /* Worm.xcdatamodeld */; };
 		4EFD7E61249A96DA008A7606 /* MainCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E4A384024758EE5008AB1C2 /* MainCoordinatorTests.swift */; };
-		4EFD7E62249A96DC008A7606 /* MainDefaultModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ECAA5B924713A38003D3F8D /* MainDefaultModelTests.swift */; };
+		4EFD7E62249A96DC008A7606 /* MainServiceBasedModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ECAA5B924713A38003D3F8D /* MainServiceBasedModelTests.swift */; };
 		4EFD7E67249BE425008A7606 /* CatalogueTestingMockService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EFD7E66249BE425008A7606 /* CatalogueTestingMockService.swift */; };
 /* End PBXBuildFile section */
 
@@ -73,6 +75,8 @@
 		4E4A384A247590F5008AB1C2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4E53BDD924649525006F6348 /* MainPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPresenter.swift; sourceTree = "<group>"; };
 		4E59BE34249BE8490048DED6 /* BookViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookViewModelTests.swift; sourceTree = "<group>"; };
+		4E59BE36249D41810048DED6 /* FavoriteBook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteBook.swift; sourceTree = "<group>"; };
+		4E59BE3A249D471F0048DED6 /* FavoritesPersistenceServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesPersistenceServiceTests.swift; sourceTree = "<group>"; };
 		4E5DD23E2489633F000D6D17 /* FavoritesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesService.swift; sourceTree = "<group>"; };
 		4E78D96C247592BC00906542 /* XCTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCTest.swift; sourceTree = "<group>"; };
 		4E78D9792479AF5A00906542 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
@@ -81,7 +85,7 @@
 		4E9BEFA9248C28C3006B3AAD /* MainViewListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewListCell.swift; sourceTree = "<group>"; };
 		4ECAA5AF24713A0E003D3F8D /* WormTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WormTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4ECAA5B324713A0F003D3F8D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4ECAA5B924713A38003D3F8D /* MainDefaultModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainDefaultModelTests.swift; sourceTree = "<group>"; };
+		4ECAA5B924713A38003D3F8D /* MainServiceBasedModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainServiceBasedModelTests.swift; sourceTree = "<group>"; };
 		4EE8272D244CB51E00102B5D /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		4EE82745244DF0E700102B5D /* MainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainModel.swift; sourceTree = "<group>"; };
 		4EFD7E66249BE425008A7606 /* CatalogueTestingMockService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogueTestingMockService.swift; sourceTree = "<group>"; };
@@ -213,6 +217,24 @@
 			path = Tests;
 			sourceTree = "<group>";
 		};
+		4E59BE38249D46D90048DED6 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				4E42D20E24448362002CAA4E /* MainView.swift */,
+				4E9BEFA9248C28C3006B3AAD /* MainViewListCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		4E59BE39249D46E40048DED6 /* Favorites */ = {
+			isa = PBXGroup;
+			children = (
+				4E59BE36249D41810048DED6 /* FavoriteBook.swift */,
+				4E5DD23E2489633F000D6D17 /* FavoritesService.swift */,
+			);
+			path = Favorites;
+			sourceTree = "<group>";
+		};
 		4E78D96B247592AD00906542 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
@@ -235,9 +257,10 @@
 			isa = PBXGroup;
 			children = (
 				4E59BE34249BE8490048DED6 /* BookViewModelTests.swift */,
+				4E59BE3A249D471F0048DED6 /* FavoritesPersistenceServiceTests.swift */,
 				4E4A384024758EE5008AB1C2 /* MainCoordinatorTests.swift */,
-				4ECAA5B924713A38003D3F8D /* MainDefaultModelTests.swift */,
 				4E4A383E24745B56008AB1C2 /* MainDefaultPresenterTests.swift */,
+				4ECAA5B924713A38003D3F8D /* MainServiceBasedModelTests.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -253,8 +276,8 @@
 		4EE82742244DEFF600102B5D /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				4E59BE39249D46E40048DED6 /* Favorites */,
 				4E3093262451F86B00E1610E /* CatalogueService.swift */,
-				4E5DD23E2489633F000D6D17 /* FavoritesService.swift */,
 				4E78D9792479AF5A00906542 /* Settings.swift */,
 			);
 			path = Service;
@@ -271,11 +294,10 @@
 		4EE82744244DF01800102B5D /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				4E59BE38249D46D90048DED6 /* View */,
 				4E796BDF2465CC2500C6543A /* MainFactory.swift */,
 				4EE82745244DF0E700102B5D /* MainModel.swift */,
 				4E53BDD924649525006F6348 /* MainPresenter.swift */,
-				4E42D20E24448362002CAA4E /* MainView.swift */,
-				4E9BEFA9248C28C3006B3AAD /* MainViewListCell.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -433,6 +455,7 @@
 				4E42D20824448362002CAA4E /* AppDelegate.swift in Sources */,
 				4E5DD23F2489633F000D6D17 /* FavoritesService.swift in Sources */,
 				4E796BE02465CC2500C6543A /* MainFactory.swift in Sources */,
+				4E59BE37249D41810048DED6 /* FavoriteBook.swift in Sources */,
 				4E3093272451F86B00E1610E /* CatalogueService.swift in Sources */,
 				4E53BDDA24649525006F6348 /* MainPresenter.swift in Sources */,
 				4EE82746244DF0E700102B5D /* MainModel.swift in Sources */,
@@ -458,12 +481,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4EFD7E62249A96DC008A7606 /* MainDefaultModelTests.swift in Sources */,
+				4EFD7E62249A96DC008A7606 /* MainServiceBasedModelTests.swift in Sources */,
 				4E4A383F24745B56008AB1C2 /* MainDefaultPresenterTests.swift in Sources */,
 				4EFD7E67249BE425008A7606 /* CatalogueTestingMockService.swift in Sources */,
 				4E59BE35249BE8490048DED6 /* BookViewModelTests.swift in Sources */,
 				4EFD7E6024994142008A7606 /* Worm.xcdatamodeld in Sources */,
 				4EFD7E61249A96DA008A7606 /* MainCoordinatorTests.swift in Sources */,
+				4E59BE3B249D471F0048DED6 /* FavoritesPersistenceServiceTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

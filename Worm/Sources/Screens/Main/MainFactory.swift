@@ -25,7 +25,7 @@ enum MainFactory {
      - Returns: The view of the main screen.
      */
     static func makeMainView(context: NSManagedObjectContext, catalogueService: CatalogueService) -> some View {
-        let persistenseService = FavoritesService(persistenceContext: context)
+        let persistenseService = FavoritesPersistenceService(persistenceContext: context)
         let model = MainServiceBasedModel(catalogueService: catalogueService, favoritesService: persistenseService)
 
         let presenter = MainDefaultPresenter(model: model)

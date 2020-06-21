@@ -1,5 +1,5 @@
 //
-//  MainDefaultModelTests.swift
+//  MainServiceBasedModelTests.swift
 //  WormTests
 //
 //  Created by Nikita Lazarev-Zubov on 17.5.2020.
@@ -12,42 +12,27 @@ import GoodreadsService
 import Worm
 import XCTest
 
-final class MainDefaultModelTests: XCTestCase {
+final class MainServiceBasedModelTests: XCTestCase {
 
     // MARK: - Methods
 
     func testBooksInitiallyEmpty() {
-        let catalogueService = CatalogueTestingMockService()
-
-        let persistenceContext = (UIApplication.shared.delegate as! AppDelegate).managedObjectContext
-        let favoritesService = FavoritesService(persistenceContext: persistenceContext)
-        
-        let model = MainServiceBasedModel(catalogueService: catalogueService, favoritesService: favoritesService)
-
+        let model = MainServiceBasedModel(catalogueService: CatalogueTestingMockService(),
+                                          favoritesService: FavoritesMockService())
         XCTAssertTrue(model.books.isEmpty)
     }
 
     func testFavoriteBookIDsInitiallyEmpty() {
-        let catalogueService = CatalogueTestingMockService()
-
-        let persistenceContext = (UIApplication.shared.delegate as! AppDelegate).managedObjectContext
-        let favoritesService = FavoritesService(persistenceContext: persistenceContext)
-
-        let model = MainServiceBasedModel(catalogueService: catalogueService, favoritesService: favoritesService)
-
+        let model = MainServiceBasedModel(catalogueService: CatalogueTestingMockService(),
+                                          favoritesService: FavoritesMockService())
         XCTAssertTrue(model.favoriteBookIDs.isEmpty)
     }
 
     func testSeachBook() {
         let catalogueService = CatalogueTestingMockService()
-
-        let persistenceContext = (UIApplication.shared.delegate as! AppDelegate).managedObjectContext
-        let favoritesService = FavoritesService(persistenceContext: persistenceContext)
-
         let queue = DispatchQueue(label: "com.LazarevZubov.Worm.MainDefaultModelTests")
-
         let model = MainServiceBasedModel(catalogueService: catalogueService,
-                                          favoritesService: favoritesService,
+                                          favoritesService: FavoritesMockService(),
                                           dispatchQueue: queue,
                                           queryDelay: nil)
 
@@ -63,11 +48,8 @@ final class MainDefaultModelTests: XCTestCase {
         let expectation = XCTestExpectation()
         let catalogueService = CatalogueTestingMockService(searchExpectation: expectation)
 
-        let persistenceContext = (UIApplication.shared.delegate as! AppDelegate).managedObjectContext
-        let favoritesService = FavoritesService(persistenceContext: persistenceContext)
-
         let model = MainServiceBasedModel(catalogueService: catalogueService,
-                                          favoritesService: favoritesService,
+                                          favoritesService: FavoritesMockService(),
                                           queryDelay: .milliseconds(100))
 
         let query1 = "Query1"
@@ -90,11 +72,8 @@ final class MainDefaultModelTests: XCTestCase {
         let catalogueService = CatalogueTestingMockService(searchBookResult: result,
                                                            bookRequestExpectation: expectation)
 
-        let persistenceContext = (UIApplication.shared.delegate as! AppDelegate).managedObjectContext
-        let favoritesService = FavoritesService(persistenceContext: persistenceContext)
-
         let model = MainServiceBasedModel(catalogueService: catalogueService,
-                                          favoritesService: favoritesService,
+                                          favoritesService: FavoritesMockService(),
                                           queryDelay: nil)
 
         model.searchBooks(by: "Query")
@@ -103,13 +82,8 @@ final class MainDefaultModelTests: XCTestCase {
     }
 
     func testToggleFavorite() {
-        let catalogueService = CatalogueTestingMockService()
-
-        let persistenceContext = (UIApplication.shared.delegate as! AppDelegate).managedObjectContext
-        let favoritesService = FavoritesService(persistenceContext: persistenceContext)
-
-        let model = MainServiceBasedModel(catalogueService: catalogueService,
-                                          favoritesService: favoritesService,
+        let model = MainServiceBasedModel(catalogueService: CatalogueTestingMockService(),
+                                          favoritesService: FavoritesMockService(),
                                           queryDelay: nil)
 
         let id = "id"
@@ -120,6 +94,56 @@ final class MainDefaultModelTests: XCTestCase {
 
         model.toggleFavoriteState(bookID: id)
         XCTAssertFalse(model.favoriteBookIDs.contains(id))
+    }
+
+}
+
+// MARK: -
+
+private class MockFavoriteBook: FavoriteBook {
+
+    // MARK: - Properties
+
+    override var id: String {
+        set {
+            // Do nothing.
+        }
+        get { return mockID }
+    }
+    var mockID: String = ""
+
+    // MARK: - Initialization
+
+    convenience init(id: String) {
+        self.init()
+        self.mockID = id
+    }
+
+}
+
+// MARK: -
+
+private final class FavoritesMockService: FavoritesService {
+
+    // MARK: - Properties
+
+    // MARK: FavoritesService protocol properties
+
+    private(set) var favoriteBooks = [FavoriteBook]()
+
+    // MARK: - Methods
+
+    // MARK: FavoritesService protocol methods
+
+    func addToFavoriteBooks(_ id: String) {
+        if !favoriteBooks.contains(where: { $0.id == id }) {
+            let book = MockFavoriteBook(id: id)
+            favoriteBooks.append(book)
+        }
+    }
+
+    func removeFromFavoriteBooks(_ id: String) {
+        favoriteBooks.removeAll { $0.id == id }
     }
 
 }

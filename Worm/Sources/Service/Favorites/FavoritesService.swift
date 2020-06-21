@@ -8,15 +8,34 @@
 
 import CoreData
 
-/// The favorite books service based on a Core Data persistent storage.
-final class FavoritesService {
+// TODO: HeaderDoc.
+protocol FavoritesService {
 
     // MARK: - Properties
 
-    var favoriteBooks: [FavoriteBook] {
-        // TODO: Find a way to eliminate force-unwrapping.
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: FavoriteBook.entity().name!)
+    // TODO: HeaderDoc.
+    var favoriteBooks: [FavoriteBook] { get }
 
+    // MARK: - Methods
+
+    // TODO: HeaderDoc.
+    func addToFavoriteBooks(_ id: String)
+    // TODO: HeaderDoc.
+    func removeFromFavoriteBooks(_ id: String)
+
+}
+
+// MARK: -
+
+/// The favorite books service based on a Core Data persistent storage.
+final class FavoritesPersistenceService: FavoritesService {
+
+    // MARK: - Properties
+
+    // MARK: FavoritesService protocol properties
+
+    var favoriteBooks: [FavoriteBook] {
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: FavoriteBook.entityName)
         return (try? persistenceContext.fetch(fetchRequest) as? [FavoriteBook]) ?? []
     }
 
@@ -37,17 +56,18 @@ final class FavoritesService {
 
     // MARK: - Methods
 
-    // MARK: PersistenseService protocol methods
+    // MARK: FavoritesService protocol methods
 
     func addToFavoriteBooks(_ id: String) {
         let favoriteBook = NSManagedObject(entity: FavoriteBook.entity(), insertInto: persistenceContext)
         favoriteBook.setValue(id, forKey: "id") // TODO: Find out how to do that properly.
 
-        try! persistenceContext.save()
+        // TODO: Handle errors.
+        try? persistenceContext.save()
     }
 
     func removeFromFavoriteBooks(_ id: String) {
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: FavoriteBook.entity().name!)
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: FavoriteBook.entityName)
         let favoriteBooks = (try? persistenceContext.fetch(fetchRequest) as? [FavoriteBook]) ?? []
         favoriteBooks.forEach {
             if $0.id == id {
