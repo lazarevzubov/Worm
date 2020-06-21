@@ -62,8 +62,13 @@ final class FavoritesPersistenceService: FavoritesService {
         let favoriteBook = NSManagedObject(entity: FavoriteBook.entity(), insertInto: persistenceContext)
         favoriteBook.setValue(id, forKey: "id") // TODO: Find out how to do that properly.
 
-        // TODO: Handle errors.
-        try? persistenceContext.save()
+        do {
+            try persistenceContext.save()
+        } catch {
+            // TODO: Handle errors.
+            let nserror = error as NSError
+            fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+        }
     }
 
     func removeFromFavoriteBooks(_ id: String) {
