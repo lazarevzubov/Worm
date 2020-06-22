@@ -21,6 +21,7 @@
 		4E59BE35249BE8490048DED6 /* BookViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E59BE34249BE8490048DED6 /* BookViewModelTests.swift */; };
 		4E59BE37249D41810048DED6 /* FavoriteBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E59BE36249D41810048DED6 /* FavoriteBook.swift */; };
 		4E59BE3B249D471F0048DED6 /* FavoritesPersistenceServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E59BE3A249D471F0048DED6 /* FavoritesPersistenceServiceTests.swift */; };
+		4E59BE3D249FCC140048DED6 /* CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E59BE3C249FCC140048DED6 /* CoreData.swift */; };
 		4E5DD23F2489633F000D6D17 /* FavoritesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5DD23E2489633F000D6D17 /* FavoritesService.swift */; };
 		4E70639D248EC57000EA9144 /* UIKit2SwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 4E70639C248EC57000EA9144 /* UIKit2SwiftUI */; };
 		4E78D96D247592BC00906542 /* XCTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E78D96C247592BC00906542 /* XCTest.swift */; };
@@ -77,6 +78,7 @@
 		4E59BE34249BE8490048DED6 /* BookViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookViewModelTests.swift; sourceTree = "<group>"; };
 		4E59BE36249D41810048DED6 /* FavoriteBook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteBook.swift; sourceTree = "<group>"; };
 		4E59BE3A249D471F0048DED6 /* FavoritesPersistenceServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesPersistenceServiceTests.swift; sourceTree = "<group>"; };
+		4E59BE3C249FCC140048DED6 /* CoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreData.swift; sourceTree = "<group>"; };
 		4E5DD23E2489633F000D6D17 /* FavoritesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesService.swift; sourceTree = "<group>"; };
 		4E78D96C247592BC00906542 /* XCTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCTest.swift; sourceTree = "<group>"; };
 		4E78D9792479AF5A00906542 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
@@ -178,6 +180,7 @@
 			children = (
 				4E42D20724448362002CAA4E /* AppDelegate.swift */,
 				4E42D20924448362002CAA4E /* SceneDelegate.swift */,
+				4E59BE3C249FCC140048DED6 /* CoreData.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -456,6 +459,7 @@
 				4E5DD23F2489633F000D6D17 /* FavoritesService.swift in Sources */,
 				4E796BE02465CC2500C6543A /* MainFactory.swift in Sources */,
 				4E59BE37249D41810048DED6 /* FavoriteBook.swift in Sources */,
+				4E59BE3D249FCC140048DED6 /* CoreData.swift in Sources */,
 				4E3093272451F86B00E1610E /* CatalogueService.swift in Sources */,
 				4E53BDDA24649525006F6348 /* MainPresenter.swift in Sources */,
 				4EE82746244DF0E700102B5D /* MainModel.swift in Sources */,

@@ -13,54 +13,7 @@ import CoreData
 @UIApplicationMain
 final class AppDelegate: UIResponder, UIApplicationDelegate {
 
-    // TODO: Factor out CoreData managing.
-
-    // MARK: - Properties
-
-    // TODO: HeaderDoc.
-    private(set) lazy var managedObjectContext: NSManagedObjectContext = {
-        #if TEST
-        let managedObjectModel = NSManagedObjectModel.mergedModel(from: [.main])!
-
-        let persistentStoreCoordinator = NSPersistentStoreCoordinator(managedObjectModel: managedObjectModel)
-        try! persistentStoreCoordinator.addPersistentStore(ofType: NSInMemoryStoreType, configurationName: nil, at: nil)
-
-        let managedObjectContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
-        managedObjectContext.persistentStoreCoordinator = persistentStoreCoordinator
-
-        return managedObjectContext
-        #else
-        return persistentContainer.viewContext
-        #endif
-    }()
-    // TODO: HeaderDoc.
-    private(set) lazy var persistentContainer: NSPersistentContainer = {
-        let container = NSPersistentContainer(name: "Worm")
-        container.loadPersistentStores { _, error in
-            if let error = error as NSError? {
-                // TODO: Handle errors.
-                fatalError("Unresolved error \(error), \(error.userInfo)")
-            }
-        }
-
-        return container
-    }()
-
     // MARK: - Methods
-
-    /// Saves the current state of the app's CoreData context.
-    func saveContext() {
-        let context = persistentContainer.viewContext
-        if context.hasChanges {
-            do {
-                try context.save()
-            } catch {
-                // TODO: Handle errors.
-                let nserror = error as NSError
-                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
-            }
-        }
-    }
 
     // MARK: UIApplicationDelegate protocol methods
 

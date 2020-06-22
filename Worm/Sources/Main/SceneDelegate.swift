@@ -22,10 +22,9 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow? {
         didSet {
             if let window = window {
-                guard let context = (UIApplication.shared.delegate as? AppDelegate)?.managedObjectContext else {
-                    fatalError("\(#file) \(#line) Wrong app configuration.")
-                }
-                coordinator = AppCoordinator(window: window, context: context, catalogueService: catalogueService)
+                coordinator = AppCoordinator(window: window,
+                                             context: CoreData.shared.managedObjectContext,
+                                             catalogueService: catalogueService)
             }
         }
     }
@@ -56,13 +55,7 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     func sceneDidEnterBackground(_ scene: UIScene) {
-        saveContext()
-    }
-
-    // MARK: Private properties
-
-    private func saveContext() {
-        (UIApplication.shared.delegate as? AppDelegate)?.saveContext()
+         CoreData.shared.saveContext()
     }
 
 }

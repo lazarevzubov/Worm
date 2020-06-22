@@ -18,7 +18,7 @@ final class FavoritesPersistenceServiceTests: XCTestCase {
     override func tearDown() {
         super.tearDown()
 
-        let managedObjectContext = (UIApplication.shared.delegate as! AppDelegate).managedObjectContext
+        let managedObjectContext = CoreData.shared.managedObjectContext
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: FavoriteBook.entityName)
         let objects = try! managedObjectContext.fetch(fetchRequest) as! [FavoriteBook]
         for object in objects {
@@ -27,14 +27,14 @@ final class FavoritesPersistenceServiceTests: XCTestCase {
     }
 
     func testFavoriteBooksInitiallyEmpty() {
-        let context = (UIApplication.shared.delegate as! AppDelegate).managedObjectContext
+        let context = CoreData.shared.managedObjectContext
         let service = FavoritesPersistenceService(persistenceContext: context)
 
         XCTAssertTrue(service.favoriteBooks.isEmpty)
     }
 
     func testAdd() {
-        let context = (UIApplication.shared.delegate as! AppDelegate).managedObjectContext
+        let context = CoreData.shared.managedObjectContext
         let service = FavoritesPersistenceService(persistenceContext: context)
 
         let id = "1"
@@ -49,7 +49,7 @@ final class FavoritesPersistenceServiceTests: XCTestCase {
     }
 
     func testRemove() {
-        let context = (UIApplication.shared.delegate as! AppDelegate).managedObjectContext
+        let context = CoreData.shared.managedObjectContext
         let service = FavoritesPersistenceService(persistenceContext: context)
 
         let id = "1"
