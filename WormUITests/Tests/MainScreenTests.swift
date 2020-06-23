@@ -39,22 +39,6 @@ final class MainScreenTests: XCTestCase {
         waitForExpectations(timeout: 5.0)
     }
 
-    func testKeyboardDeactivation() {
-        let app = XCUIApplication()
-        app.launch()
-
-        let searchBar = app.searchFields["searchBar"]
-        wait(forElement: searchBar)
-        searchBar.tap()
-
-        let tables = app.tables.element
-        tables.tap()
-
-        let updated = NSPredicate(format: "count == 0")
-        expectation(for: updated, evaluatedWith: app.keyboards)
-        waitForExpectations(timeout: 1.0)
-    }
-
     func testResultsInitiallyEmpty() {
         let app = XCUIApplication()
         app.launch()
