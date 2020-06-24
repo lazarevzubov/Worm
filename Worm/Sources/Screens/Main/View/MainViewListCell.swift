@@ -11,8 +11,6 @@ import SwiftUI
 /// Main screen list's cell.
 struct MainViewListCell<Presenter: MainPresenter>: View {
 
-    // TODO: Check accessibility.
-
     // MARK: - Properties
 
     // MARK: View protocol properties
