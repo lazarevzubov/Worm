@@ -18,15 +18,7 @@ final class CoreData {
     /// An object space for manipulating and tracking changes to managed objects.
     private(set) lazy var managedObjectContext: NSManagedObjectContext = {
         #if TEST
-        let managedObjectModel = NSManagedObjectModel.mergedModel(from: [.main])!
-
-        let persistentStoreCoordinator = NSPersistentStoreCoordinator(managedObjectModel: managedObjectModel)
-        try! persistentStoreCoordinator.addPersistentStore(ofType: NSInMemoryStoreType, configurationName: nil, at: nil)
-
-        let managedObjectContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
-        managedObjectContext.persistentStoreCoordinator = persistentStoreCoordinator
-
-        return managedObjectContext
+        return makeInMemoryContext()
         #else
         return persistentContainer.viewContext
         #endif
@@ -66,6 +58,20 @@ final class CoreData {
                 fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
             }
         }
+    }
+
+    // MARK: Private methods
+
+    private func makeInMemoryContext() -> NSManagedObjectContext {
+        let managedObjectModel = NSManagedObjectModel.mergedModel(from: [.main])!
+
+        let persistentStoreCoordinator = NSPersistentStoreCoordinator(managedObjectModel: managedObjectModel)
+        try! persistentStoreCoordinator.addPersistentStore(ofType: NSInMemoryStoreType, configurationName: nil, at: nil)
+
+        let managedObjectContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
+        managedObjectContext.persistentStoreCoordinator = persistentStoreCoordinator
+
+        return managedObjectContext
     }
 
 }
