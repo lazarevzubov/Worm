@@ -31,7 +31,7 @@ final class CoreData {
         container.loadPersistentStores { _, error in
             if let error = error as NSError? {
                 // TODO: Handle errors.
-                fatalError("Unresolved error \(error), \(error.userInfo)")
+                fatalError("Unresolved error \(error), \(error.userInfo).")
             }
         }
 
@@ -55,7 +55,7 @@ final class CoreData {
             } catch {
                 // TODO: Handle errors.
                 let nserror = error as NSError
-                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+                fatalError("Unresolved error \(nserror), \(nserror.userInfo).")
             }
         }
     }
