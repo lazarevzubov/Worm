@@ -8,7 +8,7 @@
 
 import CoreData
 
-// TODO: HeaderDoc.
+/// A persisted object representing a favorite book.
 class FavoriteBook: NSManagedObject {
 
     // Not final because it needs to be mocked within unit tests.
@@ -16,9 +16,9 @@ class FavoriteBook: NSManagedObject {
 
     // MARK: - Properties
 
-    // TODO: HeaderDoc.
+    /// The entity name for a Core Data database.
     static let entityName = "FavoriteBook"
-    // TODO: HeaderDoc.
+    /// Th book's ID.
     @NSManaged
     var id: String
 

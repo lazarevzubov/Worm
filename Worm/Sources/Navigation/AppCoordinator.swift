@@ -24,13 +24,12 @@ final class AppCoordinator: Coordinator {
 
     // MARK: - Initialization
 
-    // TODO: Update HeaderDoc.
     /**
      Creates a coordinator.
-
      - Parameters:
         - window: The app's key window.
-        - mockingService: Indicates whether the app's UI shall be mocked.
+        - context: An object space for manipulating and tracking changes to managed objects.
+        - catalogueService: The data service of the app.
      */
     init(window: UIWindow, context: NSManagedObjectContext, catalogueService: CatalogueService) {
         self.window = window

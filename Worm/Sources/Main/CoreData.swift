@@ -8,14 +8,14 @@
 
 import CoreData
 
-// TODO: HeaderDoc.
+/// The app's Core Data database enrty point.
 final class CoreData {
 
     // MARK: - Properties
 
-    // TODO: HeaderDoc.
+    /// The shared instane of the Core Data database.
     static let shared = CoreData()
-    // TODO: HeaderDoc.
+    /// An object space for manipulating and tracking changes to managed objects.
     private(set) lazy var managedObjectContext: NSManagedObjectContext = {
         #if TEST
         let managedObjectModel = NSManagedObjectModel.mergedModel(from: [.main])!
@@ -47,6 +47,8 @@ final class CoreData {
     }()
 
     // MARK: - Initialization
+
+    // MARK: Private initialization
 
     private init() { }
 

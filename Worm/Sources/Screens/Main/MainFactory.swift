@@ -14,14 +14,11 @@ enum MainFactory {
 
     // MARK: - Methods
 
-    // TODO: Update HeaderDoc.
     /**
      Creates the main screen view.
-
      - Parameters:
         - context: An object space to manipulate and track changes to the app's Core Data persistent storage.
-        - mockingService: Indicates whether to build the real or a mock view.
-
+        - catalogueService: The data service of the app.
      - Returns: The view of the main screen.
      */
     static func makeMainView(context: NSManagedObjectContext, catalogueService: CatalogueService) -> some View {

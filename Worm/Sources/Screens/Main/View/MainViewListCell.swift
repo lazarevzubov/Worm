@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-// TODO: HeaderDoc.
+/// Main screen list's cell.
 struct MainViewListCell<Presenter: MainPresenter>: View {
 
     // TODO: Check accessibility.
@@ -51,7 +51,12 @@ struct MainViewListCell<Presenter: MainPresenter>: View {
 
     // MARK: - Initialization
 
-    // TODO: HeaderDoc.
+    /**
+     Creates a cell's displaying representation.
+     - Parameters:
+        - book: A book data for a visual representation.
+        - presenter: The presentation logic of the book search screen.
+     */
     init(book: BookViewModel, presenter: Presenter) {
         self.book = book
         self.presenter = presenter

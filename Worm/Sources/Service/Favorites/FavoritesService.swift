@@ -8,19 +8,25 @@
 
 import CoreData
 
-// TODO: HeaderDoc.
+/// Manages a favorite books list.
 protocol FavoritesService {
 
     // MARK: - Properties
 
-    // TODO: HeaderDoc.
+    /// The current list of favortite books.
     var favoriteBooks: [FavoriteBook] { get }
 
     // MARK: - Methods
 
-    // TODO: HeaderDoc.
+    /**
+     Adds a favorite book to the current list.
+     - Parameter id: The ID of the book to be added.
+     */
     func addToFavoriteBooks(_ id: String)
-    // TODO: HeaderDoc.
+    /**
+     Removes a favorite book from the current list.
+     - Parameter id: The ID of the book to be removed.
+     */
     func removeFromFavoriteBooks(_ id: String)
 
 }
@@ -45,10 +51,9 @@ final class FavoritesPersistenceService: FavoritesService {
 
     // MARK: - Initialization
 
-    // TODO: Update HeaderDoc.
     /**
      Creates a service instance.
-     - Parameter databaseContext: An object space to manipulate and track changes to the app's Core Data persistent storage.
+     - Parameter persistenceContext: An object space to manipulate and track changes to the app's Core Data persistent storage.
      */
     init(persistenceContext: NSManagedObjectContext) {
         self.persistenceContext = persistenceContext
