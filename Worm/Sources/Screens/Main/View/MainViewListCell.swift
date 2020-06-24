@@ -11,6 +11,8 @@ import SwiftUI
 // TODO: HeaderDoc.
 struct MainViewListCell<Presenter: MainPresenter>: View {
 
+    // TODO: Check accessibility.
+
     // MARK: - Properties
 
     // MARK: View protocol properties
@@ -30,12 +32,14 @@ struct MainViewListCell<Presenter: MainPresenter>: View {
                     .accessibility(hidden: true)
             }
             .accessibilityElement()
-            .accessibility(label: Text("\(book.authors) – \(book.title)"))
+            .accessibility(label: makeCellAccessibilityLabel(for: book))
             Spacer()
             Button(action: { self.presenter.toggleFavoriteState(bookID: self.book.id) }) {
                 Image(systemName: (book.favorite ? "heart.fill" : "heart"))
                     .foregroundColor(.primary)
-            } // TODO: Check accessibility.
+            }
+            .accessibilityElement()
+            .accessibility(label: makeFavoriteButtonAccessibilityLabel(for: book))
         }
         .buttonStyle(PlainButtonStyle())
     }
@@ -51,6 +55,18 @@ struct MainViewListCell<Presenter: MainPresenter>: View {
     init(book: BookViewModel, presenter: Presenter) {
         self.book = book
         self.presenter = presenter
+    }
+
+    // MARK: - Methods
+
+    // MARK: Private methods
+
+    private func makeCellAccessibilityLabel(for book: BookViewModel) -> Text {
+        return Text("\(book.authors) – \(book.title)")
+    }
+
+    private func makeFavoriteButtonAccessibilityLabel(for book: BookViewModel) -> Text {
+        return Text("\(book.title) favorite \((book.favorite ? "checked" : "unchecked"))")
     }
 
 }

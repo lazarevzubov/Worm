@@ -14,6 +14,8 @@ import UIKit2SwiftUI
 /// The book search screen.
 struct MainView<Presenter: MainPresenter>: View {
 
+    // TODO: Check dynamic fonts.
+
     // MARK: - Properties
 
     // MARK: View protocol properties
