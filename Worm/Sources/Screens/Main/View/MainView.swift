@@ -6,11 +6,15 @@
 //  Copyright © 2020 Nikita Lazarev-Zubov. All rights reserved.
 //
 
-import GoodreadsService
 import SwiftUI
+import UIKit2SwiftUI
+
+// TODO: Check iPads.
 
 /// The book search screen.
 struct MainView<Presenter: MainPresenter>: View {
+
+    // TODO: Check dynamic fonts.
 
     // MARK: - Properties
 
@@ -18,24 +22,8 @@ struct MainView<Presenter: MainPresenter>: View {
 
     var body: some View {
         VStack {
-            SearchBar(text: $presenter.query, placeholder: "SearchScreenSearchFieldPlaceholder")
-            List(presenter.books) { book in
-                VStack(alignment: .leading) {
-                    Text(book.authors)
-                        .font(.body)
-                        .fontWeight(.light)
-                        .foregroundColor(.secondary)
-                        .accessibility(hidden: true)
-                    Text(book.title)
-                        .font(.headline)
-                        .fontWeight(.medium)
-                        .foregroundColor(.primary)
-                        .accessibility(hidden: true)
-                }
-                .accessibilityElement()
-                .accessibility(label: Text("\(book.authors) – \(book.title)"))
-            }
-            .onTapGesture { UIApplication.shared.windows.first{ $0.isKeyWindow }?.endEditing(true) }
+            SearchBar(text: $presenter.query, placeholder: "SearchScreenSearchFieldPlaceholder") // TODO: Close on tap.
+            List(presenter.books) { MainViewListCell(book: $0, presenter: self.presenter) }
         }
         .navigationBarTitle("SearchScreenTitle")
     }
@@ -53,7 +41,14 @@ struct MainView<Presenter: MainPresenter>: View {
      */
     init(presenter: Presenter) {
         self.presenter = presenter
+        configureNavigationBar()
+    }
 
+    // MARK: - Methods
+
+    // MARK: Private methods
+
+    private func configureNavigationBar() {
         // Complement: UIColor(red: (190.0 / 255.0), green: (142.0 / 255.0), blue: (155.0 / 255.0), alpha: 1.0)
         UINavigationBar.appearance().backgroundColor = UIColor(red: (172.0 / 255.0),
                                                                green: (211.0 / 255.0),
@@ -75,6 +70,6 @@ struct MainView_Previews: PreviewProvider {
 
     // MARK: PreviewProvider protocol properties
 
-    static var previews: some View {MainView(presenter: MainPreviewPresenter()) }
+    static var previews: some View { MainView(presenter: MainPreviewPresenter()) }
 
 }

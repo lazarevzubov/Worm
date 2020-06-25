@@ -6,6 +6,7 @@
 //  Copyright © 2020 Nikita Lazarev-Zubov. All rights reserved.
 //
 
+import CoreData
 import Foundation
 import GoodreadsService
 
@@ -16,6 +17,8 @@ protocol MainModel: ObservableObject {
 
     /// The list of books corresponding to the current search query.
     var books: [Book] { get }
+    /// The list of favorite book IDs.
+    var favoriteBookIDs: [String] { get }
 
     // MARK: - Methods
 
@@ -24,13 +27,18 @@ protocol MainModel: ObservableObject {
      - Parameter query: The query to search.
      */
     func searchBooks(by query: String)
+    /**
+     Toggles the favorite-ness state of a book.
+     - Parameter bookID: The ID of the book to manipulate.
+     */
+    func toggleFavoriteState(bookID: String)
 
 }
 
 // MARK: -
 
 /// The search screen model implemented on top of a data providing service.
-final class MainDefaultModel: MainModel {
+final class MainServiceBasedModel: MainModel {
 
     // MARK: - Properties
 
@@ -38,12 +46,15 @@ final class MainDefaultModel: MainModel {
 
     @Published
     private(set) var books = [Book]()
+    @Published
+    private(set) var favoriteBookIDs = [String]()
 
     // MARK: Private properties
 
+    private let catalogueService: CatalogueService
     private let dispatchQueue: DispatchQueue
+    private let favoritesService: FavoritesService
     private let queryDelay: DispatchTimeInterval?
-    private let service: Service
     private var currentSearchResult = [String]() {
         didSet { currentSearchResult.forEach { handleSearchResult($0) } }
     }
@@ -55,16 +66,21 @@ final class MainDefaultModel: MainModel {
      Creates a model.
 
      - Parameters:
-        - service: The data providing service.
+        - catalogueService: The data providing service.
+        - favoritesService: A service providing an interface to track and manipulate the list of favorite books.
         - dispatchQueue: The queue to dispatch search requests.
         - queryDelay: The delay after which the request is actually dispatched. This delay is useful to prevent too many request while typing a query.
      */
-    init(service: Service,
+    init(catalogueService: CatalogueService,
+         favoritesService: FavoritesService,
          dispatchQueue: DispatchQueue = DispatchQueue(label: "com.LazarevZubov.Worm.MainDefaultModel"),
          queryDelay: DispatchTimeInterval? = .milliseconds(500)) {
-        self.service = service
+        self.catalogueService = catalogueService
+        self.favoritesService = favoritesService
         self.dispatchQueue = dispatchQueue
         self.queryDelay = queryDelay
+
+        updateFavorites()
     }
 
     // MARK: - Methods
@@ -84,7 +100,20 @@ final class MainDefaultModel: MainModel {
         }
     }
 
+    func toggleFavoriteState(bookID: String) {
+        if favoriteBookIDs.contains(bookID) {
+            favoritesService.removeFromFavoriteBooks(bookID)
+        } else {
+            favoritesService.addToFavoriteBooks(bookID)
+        }
+        updateFavorites()
+    }
+
     // MARK: Private methods
+
+    private func updateFavorites() {
+        favoriteBookIDs = favoritesService.favoriteBooks.compactMap { $0.id }
+    }
 
     private func makeSearchWorkItem(query: String) -> DispatchWorkItem {
         return DispatchWorkItem { [weak self] in
@@ -101,13 +130,13 @@ final class MainDefaultModel: MainModel {
     }
 
     private func handle(searchQuery: String) {
-        service.searchBooks(searchQuery) { [weak self] in
+        catalogueService.searchBooks(searchQuery) { [weak self] in
             self?.currentSearchResult = $0
         }
     }
 
     private func handleSearchResult(_ result: String) {
-        service.getBook(by: result) { [weak self] book in
+        catalogueService.getBook(by: result) { [weak self] book in
             guard let book = book else {
                 return
             }

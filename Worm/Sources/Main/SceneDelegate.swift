@@ -7,6 +7,8 @@
 //
 
 import Coordinator
+import CoreData
+import GoodreadsService
 import SwiftUI
 import UIKit
 
@@ -20,22 +22,24 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow? {
         didSet {
             if let window = window {
-                coordinator = MainCoordinator(window: window, mockingService: testing)
+                coordinator = AppCoordinator(window: window,
+                                             context: CoreData.shared.managedObjectContext,
+                                             catalogueService: catalogueService)
             }
         }
     }
 
     // MARK: Private properties
 
+    private var catalogueService: CatalogueService {
+        #if TEST
+        return CatalogueMockService()
+        #else
+        return GoodreadsService(key: Settings.goodreadsAPIKey)
+        #endif
+    }
     private var coordinator: Coordinator? {
         didSet { coordinator?.start() }
-    }
-    private var testing: Bool {
-        #if TEST
-        return true
-        #else
-        return false
-        #endif
     }
 
     // MARK: - Methods
@@ -45,25 +49,13 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene,
                willConnectTo session: UISceneSession,
                options connectionOptions: UIScene.ConnectionOptions) {
-        // guard let context = (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer.viewContext else {
-            // fatalError("Impossible state: shared UIApplication delegate is not an AppDelegate.")
-        // }
-        // Add `@Environment(\.managedObjectContext)` in the views that will need the context.
-        // let contentView = ContentView().environment(\.managedObjectContext, context)
-
         if let windowScene = scene as? UIWindowScene {
             window = UIWindow(windowScene: windowScene)
         }
     }
 
     func sceneDidEnterBackground(_ scene: UIScene) {
-        saveContext()
-    }
-
-    // MARK: Private properties
-
-    private func saveContext() {
-        (UIApplication.shared.delegate as? AppDelegate)?.saveContext()
+         CoreData.shared.saveContext()
     }
 
 }

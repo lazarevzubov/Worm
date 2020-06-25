@@ -13,39 +13,7 @@ import CoreData
 @UIApplicationMain
 final class AppDelegate: UIResponder, UIApplicationDelegate {
 
-    // TODO: Factor out CoreData managing.
-
-    // MARK: - Properties
-
-    // MARK: Private properties
-
-    private(set) lazy var persistentContainer: NSPersistentContainer = {
-        let container = NSPersistentContainer(name: "Worm")
-        container.loadPersistentStores { _, error in
-            if let error = error as NSError? {
-                // TODO: Handle errors.
-                fatalError("Unresolved error \(error), \(error.userInfo)")
-            }
-        }
-
-        return container
-    }()
-
     // MARK: - Methods
-
-    /// Saves the current state of the app's CoreData context.
-    func saveContext() {
-        let context = persistentContainer.viewContext
-        if context.hasChanges {
-            do {
-                try context.save()
-            } catch {
-                // TODO: Handle errors.
-                let nserror = error as NSError
-                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
-            }
-        }
-    }
 
     // MARK: UIApplicationDelegate protocol methods
 

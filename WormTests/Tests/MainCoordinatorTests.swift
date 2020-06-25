@@ -6,6 +6,7 @@
 //  Copyright © 2020 Nikita Lazarev-Zubov. All rights reserved.
 //
 
+import CoreData
 @testable
 import Worm
 import XCTest
@@ -18,7 +19,9 @@ final class MainCoordinatorTests: XCTestCase {
         var window = UIWindow()
         weak var weakWindow = window
 
-        _ = MainCoordinator(window: window)
+        _ = AppCoordinator(window: window,
+                           context: CoreData.shared.managedObjectContext,
+                           catalogueService: CatalogueTestingMockService())
         XCTAssertNotNil(weakWindow)
 
         window = UIWindow()
@@ -27,7 +30,9 @@ final class MainCoordinatorTests: XCTestCase {
 
     func testWindowHasRootViewControllerAfterStart() {
         let window = UIWindow()
-        let coordinator = MainCoordinator(window: window)
+        let coordinator = AppCoordinator(window: window,
+                                         context: CoreData.shared.managedObjectContext,
+                                         catalogueService: CatalogueTestingMockService())
         XCTAssertNil(window.rootViewController)
 
         coordinator.start()
@@ -36,7 +41,9 @@ final class MainCoordinatorTests: XCTestCase {
 
     func testWindowIsKeyAfterStart() {
         let window = UIWindow()
-        let coordinator = MainCoordinator(window: window)
+        let coordinator = AppCoordinator(window: window,
+                                         context: CoreData.shared.managedObjectContext,
+                                         catalogueService: CatalogueTestingMockService())
         XCTAssertFalse(window.isKeyWindow)
 
         coordinator.start()

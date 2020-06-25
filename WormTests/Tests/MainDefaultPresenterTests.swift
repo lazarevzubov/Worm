@@ -45,9 +45,25 @@ final class MainDefaultPresenterTests: XCTestCase {
         model.books = books
         queue.sync { }
 
-        let expectedBooks = [BookViewModel(authors: "", id: "1", title: "Title1"),
-                             BookViewModel(authors: "", id: "2", title: "Title2")]
+        let expectedBooks = [BookViewModel(authors: "", favorite: false, id: "1", title: "Title1"),
+                             BookViewModel(authors: "", favorite: false, id: "2", title: "Title2")]
         XCTAssertEqual(presenter.books, expectedBooks)
+    }
+
+    func testToggleFavoriteState() {
+        let model = MainMockModel()
+
+        let bookID1 = "1"
+        let bookID2 = "2"
+        model.favoriteBookIDs = [bookID1, bookID2]
+
+        let presenter = MainDefaultPresenter(model: model)
+
+        presenter.toggleFavoriteState(bookID: bookID1)
+        XCTAssertEqual(model.favoriteBookIDs, [bookID2])
+
+        presenter.toggleFavoriteState(bookID: bookID1)
+        XCTAssertEqual(model.favoriteBookIDs, [bookID2, bookID1])
     }
 
 }
@@ -64,6 +80,7 @@ private final class MainMockModel: MainModel {
 
     @Published
     var books = [Book]()
+    var favoriteBookIDs = [String]()
 
     // MARK: - Methods
 
@@ -71,6 +88,14 @@ private final class MainMockModel: MainModel {
 
     func searchBooks(by query: String) {
         lastQuery = query
+    }
+
+    func toggleFavoriteState(bookID: String) {
+        if favoriteBookIDs.contains(where: { $0 == bookID }) {
+            favoriteBookIDs.removeAll { $0 == bookID }
+        } else {
+            favoriteBookIDs.append(bookID)
+        }
     }
 
 }

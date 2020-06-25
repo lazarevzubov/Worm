@@ -1,5 +1,5 @@
 //
-//  MainCoordinator.swift
+//  AppCoordinator.swift
 //  Worm
 //
 //  Created by Nikita Lazarev-Zubov on 19.4.2020.
@@ -7,31 +7,34 @@
 //
 
 import Coordinator
+import CoreData
 import SwiftUI
 import UIKit
 
 /// Handles the navigation to and within the main screen of the app.
-final class MainCoordinator: Coordinator {
+final class AppCoordinator: Coordinator {
 
     // MARK: - Properties
 
     // MARK: Private properties
 
-    private let mockingService: Bool
+    private let catalogueService: CatalogueService
+    private let context: NSManagedObjectContext
     private weak var window: UIWindow?
 
     // MARK: - Initialization
 
     /**
      Creates a coordinator.
-
      - Parameters:
         - window: The app's key window.
-        - mockingService: Indicates whether the app's UI shall be mocked.
+        - context: An object space for manipulating and tracking changes to managed objects.
+        - catalogueService: The data service of the app.
      */
-    init(window: UIWindow, mockingService: Bool = false) {
+    init(window: UIWindow, context: NSManagedObjectContext, catalogueService: CatalogueService) {
         self.window = window
-        self.mockingService = mockingService
+        self.context = context
+        self.catalogueService = catalogueService
     }
 
     // MARK: - Methods
@@ -39,7 +42,7 @@ final class MainCoordinator: Coordinator {
     // MARK: Coordinator protocol methods
 
     func start() {
-        let view = MainFactory.makeMainView(mockingService: mockingService)
+        let view = MainFactory.makeMainView(context: context, catalogueService: catalogueService)
         let navigationView = NavigationView { view }
         let controller = UIHostingController(rootView: navigationView)
 

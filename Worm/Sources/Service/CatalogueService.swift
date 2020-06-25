@@ -9,7 +9,7 @@
 import GoodreadsService
 
 /// The data service of the app.
-protocol Service {
+protocol CatalogueService {
 
     // MARK: - Methods
 
@@ -36,7 +36,7 @@ protocol Service {
 
 // MARK: - Service
 
-extension GoodreadsService: Service { }
+extension GoodreadsService: CatalogueService { }
 
 // MARK: -
 
@@ -45,7 +45,7 @@ extension GoodreadsService: Service { }
 
  Useful for testing.
  */
-final class MockService: Service {
+final class CatalogueMockService: CatalogueService {
 
     // MARK: - Properties
 
@@ -78,12 +78,12 @@ final class MockService: Service {
     // MARK: Service protocol methods
 
     func searchBooks(_ query: String, resultCompletion: @escaping ([String]) -> Void) {
-        let ids = MockService.books.map { $0.id }
+        let ids = CatalogueMockService.books.map { $0.id }
         resultCompletion(ids)
     }
 
     func getBook(by id: String, resultCompletion: @escaping (Book?) -> Void) {
-        let book = MockService.books.first { $0.id == id }
+        let book = CatalogueMockService.books.first { $0.id == id }
         resultCompletion(book)
     }
 
