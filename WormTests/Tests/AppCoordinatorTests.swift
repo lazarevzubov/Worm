@@ -1,5 +1,5 @@
 //
-//  MainCoordinatorTests.swift
+//  AppCoordinatorTests.swift
 //  WormTests
 //
 //  Created by Nikita Lazarev-Zubov on 20.5.2020.
@@ -11,7 +11,7 @@ import CoreData
 import Worm
 import XCTest
 
-final class MainCoordinatorTests: XCTestCase {
+final class AppCoordinatorTests: XCTestCase {
 
     // MARK: - Methods
 

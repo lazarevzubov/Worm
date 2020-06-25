@@ -1,5 +1,5 @@
 //
-//  MainDefaultPresenterTests.swift
+//  SearchDefaultPresenterTests.swift
 //  WormTests
 //
 //  Created by Nikita Lazarev-Zubov on 19.5.2020.
@@ -11,18 +11,18 @@ import GoodreadsService
 import Worm
 import XCTest
 
-final class MainDefaultPresenterTests: XCTestCase {
+final class SearchDefaultPresenterTests: XCTestCase {
 
     // MARK: - Methods
 
     func testQueryInitiallyEmpty() {
-        let presenter = MainDefaultPresenter(model: MainMockModel())
+        let presenter = SearchDefaultPresenter(model: SearchMockModel())
         XCTAssertTrue(presenter.query.isEmpty)
     }
 
     func testSetQueryActivatesSearch() {
-        let model = MainMockModel()
-        let presenter = MainDefaultPresenter(model: model)
+        let model = SearchMockModel()
+        let presenter = SearchDefaultPresenter(model: model)
         XCTAssertNil(model.lastQuery)
 
         let query = "Query"
@@ -31,14 +31,14 @@ final class MainDefaultPresenterTests: XCTestCase {
     }
 
     func testBookInitiallyEmpty() {
-        let presenter = MainDefaultPresenter(model: MainMockModel())
+        let presenter = SearchDefaultPresenter(model: SearchMockModel())
         XCTAssertTrue(presenter.books.isEmpty)
     }
 
     func testUpdate() {
-        let model = MainMockModel()
-        let queue = DispatchQueue(label: "com.LazarevZubov.Worm.MainDefaultPresenterTests")
-        let presenter = MainDefaultPresenter(model: model, updateQueue: queue)
+        let model = SearchMockModel()
+        let queue = DispatchQueue(label: "com.LazarevZubov.Worm.SearchDefaultPresenterTests")
+        let presenter = SearchDefaultPresenter(model: model, updateQueue: queue)
 
         let books = [Book(authors: [], title: "Title1", id: "1"),
                      Book(authors: [], title: "Title2", id: "2")]
@@ -51,13 +51,13 @@ final class MainDefaultPresenterTests: XCTestCase {
     }
 
     func testToggleFavoriteState() {
-        let model = MainMockModel()
+        let model = SearchMockModel()
 
         let bookID1 = "1"
         let bookID2 = "2"
         model.favoriteBookIDs = [bookID1, bookID2]
 
-        let presenter = MainDefaultPresenter(model: model)
+        let presenter = SearchDefaultPresenter(model: model)
 
         presenter.toggleFavoriteState(bookID: bookID1)
         XCTAssertEqual(model.favoriteBookIDs, [bookID2])
@@ -70,13 +70,13 @@ final class MainDefaultPresenterTests: XCTestCase {
 
 // MARK: -
 
-private final class MainMockModel: MainModel {
+private final class SearchMockModel: SearchModel {
 
     // MARK: - Properties
 
     private(set) var lastQuery: String?
 
-    // MARK: MainModel protocol properties
+    // MARK: SearchModel protocol properties
 
     @Published
     var books = [Book]()
@@ -84,7 +84,7 @@ private final class MainMockModel: MainModel {
 
     // MARK: - Methods
 
-    // MARK: MainModel protocol methods
+    // MARK: SearchModel protocol methods
 
     func searchBooks(by query: String) {
         lastQuery = query

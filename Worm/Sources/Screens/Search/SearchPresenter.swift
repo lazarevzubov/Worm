@@ -1,5 +1,5 @@
 //
-//  MainPresenter.swift
+//  SearchPresenter.swift
 //  Worm
 //
 //  Created by Nikita Lazarev-Zubov on 7.5.2020.
@@ -37,7 +37,7 @@ extension BookViewModel: Identifiable { }
 // MARK: -
 
 /// The presentation logic of the book search screen.
-protocol MainPresenter: ObservableObject {
+protocol SearchPresenter: ObservableObject {
 
     // MARK: - Properties
 
@@ -59,11 +59,11 @@ protocol MainPresenter: ObservableObject {
 // MARK: -
 
 /// The presentation logic of the book search screen relying on the default model implementation.
-final class MainDefaultPresenter<Model: MainModel>: MainPresenter {
+final class SearchDefaultPresenter<Model: SearchModel>: SearchPresenter {
 
     // MARK: - Properties
 
-    // MARK: MainPresenter protocol properties
+    // MARK: SearchPresenter protocol properties
 
     var query: String = "" {
         didSet { model.searchBooks(by: query) }
@@ -92,7 +92,7 @@ final class MainDefaultPresenter<Model: MainModel>: MainPresenter {
 
     // MARK: - Methods
 
-    // MARK: MainPresenter protocol methods
+    // MARK: SearchPresenter protocol methods
 
     func toggleFavoriteState(bookID: String) {
         model.toggleFavoriteState(bookID: bookID)
@@ -116,11 +116,11 @@ final class MainDefaultPresenter<Model: MainModel>: MainPresenter {
 // MARK: -
 
 /// The mock presentation logic object for the book search screen preview.
-final class MainPreviewPresenter: MainPresenter {
+final class SearchPreviewPresenter: SearchPresenter {
 
     // MARK: - Properties
 
-    // MARK: MainPresenter protocol properties
+    // MARK: SearchPresenter protocol properties
 
     private(set) var books: [BookViewModel] = [
         BookViewModel(authors: "J.R.R. Tolkien", favorite: true, id: "1", title: "The Lord of the Rings"),
@@ -152,7 +152,7 @@ final class MainPreviewPresenter: MainPresenter {
 
     // MARK: - Methods
 
-    // MARK: MainPresenter protocol methods
+    // MARK: SearchPresenter protocol methods
 
     func toggleFavoriteState(bookID: String) {
         books = books.map {

@@ -1,5 +1,5 @@
 //
-//  MainView.swift
+//  SearchView.swift
 //  Worm
 //
 //  Created by Nikita Lazarev-Zubov on 13.4.2020.
@@ -12,7 +12,7 @@ import UIKit2SwiftUI
 // TODO: Check iPads.
 
 /// The book search screen.
-struct MainView<Presenter: MainPresenter>: View {
+struct SearchView<Presenter: SearchPresenter>: View {
 
     // TODO: Check dynamic fonts.
 
@@ -23,7 +23,7 @@ struct MainView<Presenter: MainPresenter>: View {
     var body: some View {
         VStack {
             SearchBar(text: $presenter.query, placeholder: "SearchScreenSearchFieldPlaceholder") // TODO: Close on tap.
-            List(presenter.books) { MainViewListCell(book: $0, presenter: self.presenter) }
+            List(presenter.books) { SearchViewListCell(book: $0, presenter: self.presenter) }
         }
         .navigationBarTitle("SearchScreenTitle")
     }
@@ -64,12 +64,12 @@ struct MainView<Presenter: MainPresenter>: View {
 // MARK: -
 
 /// Produces the book search screen preview for Xcode.
-struct MainView_Previews: PreviewProvider {
+struct SearchView_Previews: PreviewProvider {
 
     // MARK: - Properties
 
     // MARK: PreviewProvider protocol properties
 
-    static var previews: some View { MainView(presenter: MainPreviewPresenter()) }
+    static var previews: some View { SearchView(presenter: SearchPreviewPresenter()) }
 
 }

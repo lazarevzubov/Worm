@@ -1,5 +1,5 @@
 //
-//  MainScreenTests.swift
+//  SearchScreenTests.swift
 //  WormUITests
 //
 //  Created by Nikita Lazarev-Zubov on 20.5.2020.
@@ -8,7 +8,7 @@
 
 import XCTest
 
-final class MainScreenTests: XCTestCase {
+final class SearchScreenTests: XCTestCase {
 
     // MARK: - Properties
 
