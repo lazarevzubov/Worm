@@ -42,7 +42,7 @@ final class AppCoordinator: Coordinator {
     // MARK: Coordinator protocol methods
 
     func start() {
-        let view = SearchFactory.makeSearchView(context: context, catalogueService: catalogueService)
+        let view = ViewFactory.makeMainView(context: context, catalogueService: catalogueService)
         let navigationView = NavigationView { view }
         let controller = UIHostingController(rootView: navigationView)
 

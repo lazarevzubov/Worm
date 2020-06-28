@@ -1,5 +1,5 @@
 //
-//  SearchFactory.swift
+//  ViewFactory.swift
 //  Worm
 //
 //  Created by Nikita Lazarev-Zubov on 8.5.2020.
@@ -9,19 +9,21 @@
 import CoreData
 import SwiftUI
 
+// TODO: Update HeaderDoc.
 /// A set of creational methods for building the search screen of the app.
-enum SearchFactory {
+enum ViewFactory {
 
     // MARK: - Methods
 
-    /**
-     Creates the search screen view.
-     - Parameters:
-        - context: An object space to manipulate and track changes to the app's Core Data persistent storage.
-        - catalogueService: The data service of the app.
-     - Returns: The view of the search screen.
-     */
-    static func makeSearchView(context: NSManagedObjectContext, catalogueService: CatalogueService) -> some View {
+    // TODO: HeaderDoc
+    static func makeMainView(context: NSManagedObjectContext, catalogueService: CatalogueService) -> some View {
+        let searchView = makeSearchView(context: context, catalogueService: catalogueService)
+        return MainView(searchView: searchView)
+    }
+
+    // MARK: Private methods
+
+    private static func makeSearchView(context: NSManagedObjectContext, catalogueService: CatalogueService) -> some View {
         let persistenseService = FavoritesPersistenceService(persistenceContext: context)
         let model = SearchServiceBasedModel(catalogueService: catalogueService, favoritesService: persistenseService)
 

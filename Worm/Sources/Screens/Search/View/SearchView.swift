@@ -9,12 +9,8 @@
 import SwiftUI
 import UIKit2SwiftUI
 
-// TODO: Check iPads.
-
 /// The book search screen.
 struct SearchView<Presenter: SearchPresenter>: View {
-
-    // TODO: Check dynamic fonts.
 
     // MARK: - Properties
 

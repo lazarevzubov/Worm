@@ -27,9 +27,10 @@
 		4E78D96D247592BC00906542 /* XCTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E78D96C247592BC00906542 /* XCTest.swift */; };
 		4E78D97A2479AF5A00906542 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E78D9792479AF5A00906542 /* Settings.swift */; };
 		4E78D987247EE4D500906542 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4E78D989247EE4D500906542 /* Localizable.strings */; };
-		4E796BE02465CC2500C6543A /* SearchFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E796BDF2465CC2500C6543A /* SearchFactory.swift */; };
+		4E796BE02465CC2500C6543A /* ViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E796BDF2465CC2500C6543A /* ViewFactory.swift */; };
 		4E9BEFAA248C28C3006B3AAD /* SearchViewListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E9BEFA9248C28C3006B3AAD /* SearchViewListCell.swift */; };
 		4EA637382496B1A900DF2936 /* Worm.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4E42D20B24448362002CAA4E /* Worm.xcdatamodeld */; };
+		4EAD35E924A5253200E6866A /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EAD35E824A5253200E6866A /* MainView.swift */; };
 		4EE8272C244CA0AA00102B5D /* Coordinator in Frameworks */ = {isa = PBXBuildFile; productRef = 4EE8272B244CA0AA00102B5D /* Coordinator */; };
 		4EE8272E244CB51E00102B5D /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EE8272D244CB51E00102B5D /* AppCoordinator.swift */; };
 		4EE82746244DF0E700102B5D /* SearchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EE82745244DF0E700102B5D /* SearchModel.swift */; };
@@ -83,8 +84,9 @@
 		4E78D96C247592BC00906542 /* XCTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCTest.swift; sourceTree = "<group>"; };
 		4E78D9792479AF5A00906542 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		4E78D988247EE4D500906542 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		4E796BDF2465CC2500C6543A /* SearchFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFactory.swift; sourceTree = "<group>"; };
+		4E796BDF2465CC2500C6543A /* ViewFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewFactory.swift; sourceTree = "<group>"; };
 		4E9BEFA9248C28C3006B3AAD /* SearchViewListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewListCell.swift; sourceTree = "<group>"; };
+		4EAD35E824A5253200E6866A /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		4ECAA5AF24713A0E003D3F8D /* WormTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WormTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4ECAA5B324713A0F003D3F8D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4ECAA5B924713A38003D3F8D /* SearchServiceBasedModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchServiceBasedModelTests.swift; sourceTree = "<group>"; };
@@ -246,13 +248,6 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
-		4EAD35E724A5216D00E6866A /* Recommendations */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Recommendations;
-			sourceTree = "<group>";
-		};
 		4ECAA5B024713A0F003D3F8D /* WormTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -297,7 +292,8 @@
 			isa = PBXGroup;
 			children = (
 				4EE82744244DF01800102B5D /* Search */,
-				4EAD35E724A5216D00E6866A /* Recommendations */,
+				4EAD35E824A5253200E6866A /* MainView.swift */,
+				4E796BDF2465CC2500C6543A /* ViewFactory.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -306,7 +302,6 @@
 			isa = PBXGroup;
 			children = (
 				4E59BE38249D46D90048DED6 /* View */,
-				4E796BDF2465CC2500C6543A /* SearchFactory.swift */,
 				4EE82745244DF0E700102B5D /* SearchModel.swift */,
 				4E53BDD924649525006F6348 /* SearchPresenter.swift */,
 			);
@@ -465,7 +460,7 @@
 			files = (
 				4E42D20824448362002CAA4E /* AppDelegate.swift in Sources */,
 				4E5DD23F2489633F000D6D17 /* FavoritesService.swift in Sources */,
-				4E796BE02465CC2500C6543A /* SearchFactory.swift in Sources */,
+				4E796BE02465CC2500C6543A /* ViewFactory.swift in Sources */,
 				4E59BE37249D41810048DED6 /* FavoriteBook.swift in Sources */,
 				4E59BE3D249FCC140048DED6 /* CoreData.swift in Sources */,
 				4E3093272451F86B00E1610E /* CatalogueService.swift in Sources */,
@@ -476,6 +471,7 @@
 				4E78D97A2479AF5A00906542 /* Settings.swift in Sources */,
 				4E42D20A24448362002CAA4E /* SceneDelegate.swift in Sources */,
 				4EA637382496B1A900DF2936 /* Worm.xcdatamodeld in Sources */,
+				4EAD35E924A5253200E6866A /* MainView.swift in Sources */,
 				4E9BEFAA248C28C3006B3AAD /* SearchViewListCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
