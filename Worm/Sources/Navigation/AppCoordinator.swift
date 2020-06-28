@@ -43,8 +43,7 @@ final class AppCoordinator: Coordinator {
 
     func start() {
         let view = ViewFactory.makeMainView(context: context, catalogueService: catalogueService)
-        let navigationView = NavigationView { view }
-        let controller = UIHostingController(rootView: navigationView)
+        let controller = UIHostingController(rootView: view)
 
         window?.rootViewController = controller
         window?.makeKeyAndVisible()

@@ -19,12 +19,14 @@ struct MainView<SearchView: View>: View {
 
     var body: some View {
         TabView {
-            searchView
-                .tabItem {
-                    Image(systemName: "magnifyingglass")
-                    Text("Search")
+            NavigationView {
+                searchView
             }
-            Text("Recommendtations coming soon!")
+            .tabItem {
+                Image(systemName: "magnifyingglass")
+                Text("Search")
+            }
+            Text("Recommendtations coming soon!") // TODO.
                 .tabItem {
                     Image(systemName: "checkmark")
                     Text("Recommendtations")
