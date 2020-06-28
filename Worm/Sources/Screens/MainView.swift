@@ -24,6 +24,11 @@ struct MainView<SearchView: View>: View {
                     Image(systemName: "magnifyingglass")
                     Text("Search")
             }
+            Text("Recommendtations coming soon!")
+                .tabItem {
+                    Image(systemName: "checkmark")
+                    Text("Recommendtations")
+            }
         }
     }
 
