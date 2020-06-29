@@ -17,11 +17,16 @@ struct SearchView<Presenter: SearchPresenter>: View {
     // MARK: View protocol properties
 
     var body: some View {
-        VStack {
-            SearchBar(text: $presenter.query, placeholder: "SearchScreenSearchFieldPlaceholder") // TODO: Close on tap.
-            List(presenter.books) { SearchViewListCell(book: $0, presenter: self.presenter) }
+        NavigationView {
+            VStack {
+                SearchBar(text: $presenter.query, placeholder: "SearchScreenSearchFieldPlaceholder") // TODO: Close on tap.
+                List(presenter.books) { SearchViewListCell(book: $0, presenter: self.presenter) }
+            }
+            .navigationBarTitle("SearchScreenTitle")
         }
-        .navigationBarTitle("SearchScreenTitle")
+        .onAppear {
+            self.configureNavigationBar()
+        }
     }
 
     // MARK: Private properties
@@ -37,7 +42,6 @@ struct SearchView<Presenter: SearchPresenter>: View {
      */
     init(presenter: Presenter) {
         self.presenter = presenter
-        configureNavigationBar()
     }
 
     // MARK: - Methods
@@ -45,7 +49,6 @@ struct SearchView<Presenter: SearchPresenter>: View {
     // MARK: Private methods
 
     private func configureNavigationBar() {
-        // Complement: UIColor(red: (190.0 / 255.0), green: (142.0 / 255.0), blue: (155.0 / 255.0), alpha: 1.0)
         UINavigationBar.appearance().backgroundColor = UIColor(red: (172.0 / 255.0),
                                                                green: (211.0 / 255.0),
                                                                blue: (214.0 / 255.0),

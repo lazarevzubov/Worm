@@ -31,6 +31,7 @@
 		4E9BEFAA248C28C3006B3AAD /* SearchViewListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E9BEFA9248C28C3006B3AAD /* SearchViewListCell.swift */; };
 		4EA637382496B1A900DF2936 /* Worm.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4E42D20B24448362002CAA4E /* Worm.xcdatamodeld */; };
 		4EAD35E924A5253200E6866A /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EAD35E824A5253200E6866A /* MainView.swift */; };
+		4EAD35EC24A91F4600E6866A /* RecommendationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EAD35EB24A91F4600E6866A /* RecommendationsView.swift */; };
 		4EE8272C244CA0AA00102B5D /* Coordinator in Frameworks */ = {isa = PBXBuildFile; productRef = 4EE8272B244CA0AA00102B5D /* Coordinator */; };
 		4EE8272E244CB51E00102B5D /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EE8272D244CB51E00102B5D /* AppCoordinator.swift */; };
 		4EE82746244DF0E700102B5D /* SearchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EE82745244DF0E700102B5D /* SearchModel.swift */; };
@@ -87,6 +88,7 @@
 		4E796BDF2465CC2500C6543A /* ViewFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewFactory.swift; sourceTree = "<group>"; };
 		4E9BEFA9248C28C3006B3AAD /* SearchViewListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewListCell.swift; sourceTree = "<group>"; };
 		4EAD35E824A5253200E6866A /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		4EAD35EB24A91F4600E6866A /* RecommendationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationsView.swift; sourceTree = "<group>"; };
 		4ECAA5AF24713A0E003D3F8D /* WormTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WormTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4ECAA5B324713A0F003D3F8D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4ECAA5B924713A38003D3F8D /* SearchServiceBasedModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchServiceBasedModelTests.swift; sourceTree = "<group>"; };
@@ -248,6 +250,14 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
+		4EAD35EA24A91F2B00E6866A /* Recommendations */ = {
+			isa = PBXGroup;
+			children = (
+				4EAD35EB24A91F4600E6866A /* RecommendationsView.swift */,
+			);
+			path = Recommendations;
+			sourceTree = "<group>";
+		};
 		4ECAA5B024713A0F003D3F8D /* WormTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -291,6 +301,7 @@
 		4EE82743244DF01000102B5D /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				4EAD35EA24A91F2B00E6866A /* Recommendations */,
 				4EE82744244DF01800102B5D /* Search */,
 				4EAD35E824A5253200E6866A /* MainView.swift */,
 				4E796BDF2465CC2500C6543A /* ViewFactory.swift */,
@@ -465,6 +476,7 @@
 				4E59BE3D249FCC140048DED6 /* CoreData.swift in Sources */,
 				4E3093272451F86B00E1610E /* CatalogueService.swift in Sources */,
 				4E53BDDA24649525006F6348 /* SearchPresenter.swift in Sources */,
+				4EAD35EC24A91F4600E6866A /* RecommendationsView.swift in Sources */,
 				4EE82746244DF0E700102B5D /* SearchModel.swift in Sources */,
 				4E42D20F24448362002CAA4E /* SearchView.swift in Sources */,
 				4EE8272E244CB51E00102B5D /* AppCoordinator.swift in Sources */,

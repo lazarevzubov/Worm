@@ -6,5 +6,8 @@
   Copyright © 2020 Nikita Lazarev-Zubov. All rights reserved.
 */
 
+"RecommendationsScreenTitle" = "Recommendations";
+"SearchScreenFavoriteMarkCheckedHintFormat" = "%@ favorite checked";
+"SearchScreenFavoriteMarkUncheckedHintFormat" = "%@ favorite unchecked";
 "SearchScreenSearchFieldPlaceholder" = "Search books";
 "SearchScreenTitle" = "Search";
