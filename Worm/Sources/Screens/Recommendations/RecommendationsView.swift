@@ -11,6 +11,8 @@ import SwiftUI
 // TODO: HeaderDoc.
 struct RecommendationsView: View {
 
+    // TODO: Check accessibility.
+
     // MARK: - Properties
 
     // MARK: View protocol properties
@@ -23,6 +25,16 @@ struct RecommendationsView: View {
         .onAppear {
             self.configureNavigationBar()
         }
+    }
+
+    // MARK: Private properties
+
+    private let presenter: RecommendationsPresenter
+
+    // MARK: - Initialization
+
+    init(presenter: RecommendationsPresenter) {
+        self.presenter = presenter
     }
 
     // MARK: - Methods
@@ -50,7 +62,7 @@ struct RecommendationsView_Previews: PreviewProvider {
 
     // MARK: PreviewProvider protocol properties
 
-    static var previews: some View { RecommendationsView() }
+    static var previews: some View { RecommendationsView(presenter: RecommendationsPreviewPresenter()) }
 
 }
 

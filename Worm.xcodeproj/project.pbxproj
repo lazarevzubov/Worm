@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4E2BB74224B79D47006940A0 /* RecommendationsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E2BB74124B79D47006940A0 /* RecommendationsManager.swift */; };
 		4E3093272451F86B00E1610E /* CatalogueService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E3093262451F86B00E1610E /* CatalogueService.swift */; };
 		4E42D20824448362002CAA4E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E42D20724448362002CAA4E /* AppDelegate.swift */; };
 		4E42D20A24448362002CAA4E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E42D20924448362002CAA4E /* SceneDelegate.swift */; };
@@ -35,6 +36,8 @@
 		4EE8272C244CA0AA00102B5D /* Coordinator in Frameworks */ = {isa = PBXBuildFile; productRef = 4EE8272B244CA0AA00102B5D /* Coordinator */; };
 		4EE8272E244CB51E00102B5D /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EE8272D244CB51E00102B5D /* AppCoordinator.swift */; };
 		4EE82746244DF0E700102B5D /* SearchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EE82745244DF0E700102B5D /* SearchModel.swift */; };
+		4EF858A524AA6C13007D7DF0 /* RecommendationsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EF858A424AA6C13007D7DF0 /* RecommendationsPresenter.swift */; };
+		4EF858A724AA6C22007D7DF0 /* RecommendationsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EF858A624AA6C22007D7DF0 /* RecommendationsModel.swift */; };
 		4EFD7E6024994142008A7606 /* Worm.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4E42D20B24448362002CAA4E /* Worm.xcdatamodeld */; };
 		4EFD7E61249A96DA008A7606 /* AppCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E4A384024758EE5008AB1C2 /* AppCoordinatorTests.swift */; };
 		4EFD7E62249A96DC008A7606 /* SearchServiceBasedModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ECAA5B924713A38003D3F8D /* SearchServiceBasedModelTests.swift */; };
@@ -59,6 +62,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4E2BB74124B79D47006940A0 /* RecommendationsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationsManager.swift; sourceTree = "<group>"; };
 		4E3093262451F86B00E1610E /* CatalogueService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogueService.swift; sourceTree = "<group>"; };
 		4E42D20424448362002CAA4E /* Worm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Worm.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4E42D20724448362002CAA4E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -94,6 +98,8 @@
 		4ECAA5B924713A38003D3F8D /* SearchServiceBasedModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchServiceBasedModelTests.swift; sourceTree = "<group>"; };
 		4EE8272D244CB51E00102B5D /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		4EE82745244DF0E700102B5D /* SearchModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchModel.swift; sourceTree = "<group>"; };
+		4EF858A424AA6C13007D7DF0 /* RecommendationsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationsPresenter.swift; sourceTree = "<group>"; };
+		4EF858A624AA6C22007D7DF0 /* RecommendationsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationsModel.swift; sourceTree = "<group>"; };
 		4EFD7E66249BE425008A7606 /* CatalogueTestingMockService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogueTestingMockService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -125,6 +131,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4E2BB74024B79D2E006940A0 /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				4EF858A424AA6C13007D7DF0 /* RecommendationsPresenter.swift */,
+				4E2BB74124B79D47006940A0 /* RecommendationsManager.swift */,
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
 		4E42D1FB24448362002CAA4E = {
 			isa = PBXGroup;
 			children = (
@@ -253,6 +268,8 @@
 		4EAD35EA24A91F2B00E6866A /* Recommendations */ = {
 			isa = PBXGroup;
 			children = (
+				4E2BB74024B79D2E006940A0 /* Presenter */,
+				4EF858A624AA6C22007D7DF0 /* RecommendationsModel.swift */,
 				4EAD35EB24A91F4600E6866A /* RecommendationsView.swift */,
 			);
 			path = Recommendations;
@@ -470,6 +487,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				4E42D20824448362002CAA4E /* AppDelegate.swift in Sources */,
+				4EF858A524AA6C13007D7DF0 /* RecommendationsPresenter.swift in Sources */,
+				4EF858A724AA6C22007D7DF0 /* RecommendationsModel.swift in Sources */,
 				4E5DD23F2489633F000D6D17 /* FavoritesService.swift in Sources */,
 				4E796BE02465CC2500C6543A /* ViewFactory.swift in Sources */,
 				4E59BE37249D41810048DED6 /* FavoriteBook.swift in Sources */,
@@ -479,6 +498,7 @@
 				4EAD35EC24A91F4600E6866A /* RecommendationsView.swift in Sources */,
 				4EE82746244DF0E700102B5D /* SearchModel.swift in Sources */,
 				4E42D20F24448362002CAA4E /* SearchView.swift in Sources */,
+				4E2BB74224B79D47006940A0 /* RecommendationsManager.swift in Sources */,
 				4EE8272E244CB51E00102B5D /* AppCoordinator.swift in Sources */,
 				4E78D97A2479AF5A00906542 /* Settings.swift in Sources */,
 				4E42D20A24448362002CAA4E /* SceneDelegate.swift in Sources */,

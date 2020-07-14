@@ -11,7 +11,9 @@ import SwiftUI
 // TODO: Check iPads.
 
 // TODO: HeaderDoc.
-struct MainView<SearchView: View>: View {
+struct MainView<SearchView: View, RecommendationsView: View>: View {
+
+    // TODO: Check accessibility.
 
     // MARK: - Properties
 
@@ -24,7 +26,7 @@ struct MainView<SearchView: View>: View {
                     Image(systemName: "magnifyingglass")
                     Text("SearchScreenTitle")
             }
-            RecommendationsView()
+            recommendationsView
                 .tabItem {
                     Image(systemName: "checkmark")
                     Text("RecommendationsScreenTitle")
@@ -35,12 +37,14 @@ struct MainView<SearchView: View>: View {
     // MARK: Private properties
 
     private let searchView: SearchView
+    private let recommendationsView: RecommendationsView
 
     // MARK: - Initialization
 
     // TODO: HeaderDoc.
-    init(searchView: SearchView) {
+    init(searchView: SearchView, recommendationsView: RecommendationsView) {
         self.searchView = searchView
+        self.recommendationsView = recommendationsView
     }
 
 }
@@ -54,6 +58,9 @@ struct MainView_Previews: PreviewProvider {
 
     // MARK: PreviewProvider protocol properties
 
-    static var previews: some View { MainView(searchView: SearchView(presenter: SearchPreviewPresenter())) }
+    static var previews: some View {
+        MainView(searchView: SearchView(presenter: SearchPreviewPresenter()),
+                 recommendationsView: RecommendationsView(presenter: RecommendationsPreviewPresenter()))
+    }
 
 }

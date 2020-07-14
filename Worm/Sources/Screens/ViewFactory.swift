@@ -18,18 +18,33 @@ enum ViewFactory {
     // TODO: HeaderDoc
     static func makeMainView(context: NSManagedObjectContext, catalogueService: CatalogueService) -> some View {
         let searchView = makeSearchView(context: context, catalogueService: catalogueService)
-        return MainView(searchView: searchView)
+        let recommendationsView = makeRecommendationsView(context: context, catalogueService: catalogueService)
+        
+        return MainView(searchView: searchView, recommendationsView: recommendationsView)
     }
 
     // MARK: Private methods
 
-    private static func makeSearchView(context: NSManagedObjectContext, catalogueService: CatalogueService) -> some View {
-        let persistenseService = FavoritesPersistenceService(persistenceContext: context)
-        let model = SearchServiceBasedModel(catalogueService: catalogueService, favoritesService: persistenseService)
+    private static func makeSearchView(context: NSManagedObjectContext,
+                                       catalogueService: CatalogueService) -> some View {
+        let favoritesService = FavoritesPersistenceService(persistenceContext: context)
+        let model = SearchServiceBasedModel(catalogueService: catalogueService, favoritesService: favoritesService)
 
         let presenter = SearchDefaultPresenter(model: model)
 
         return SearchView<SearchDefaultPresenter<SearchServiceBasedModel>>(presenter: presenter)
+    }
+
+    private static func makeRecommendationsView(context: NSManagedObjectContext,
+                                                catalogueService: CatalogueService) -> some View {
+        let favoritesService = FavoritesPersistenceService(persistenceContext: context)
+        let model = RecommendationsDefaultModel(favoritesService: favoritesService, catalogueService: catalogueService)
+
+        let recommendationsManager = RecommendationsDefaultManager { model.getBook(by: $0, resultCompletion: $1) }
+
+        let presenter = RecommendationsDefaultPresenter(model: model, recommendationsManager: recommendationsManager)
+
+        return RecommendationsView(presenter: presenter)
     }
 
 }

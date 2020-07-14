@@ -7,7 +7,6 @@
 //
 
 import CoreData
-import Foundation
 import GoodreadsService
 
 /// The search screen model.
@@ -46,7 +45,7 @@ final class SearchServiceBasedModel: SearchModel {
 
     @Published
     private(set) var books = [Book]()
-    @Published
+    @Published // TODO: Check if needed.
     private(set) var favoriteBookIDs = [String]()
 
     // MARK: Private properties
