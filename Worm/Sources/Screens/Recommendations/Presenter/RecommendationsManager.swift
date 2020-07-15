@@ -6,8 +6,10 @@
 //  Copyright © 2020 Nikita Lazarev-Zubov. All rights reserved.
 //
 
+import Combine
+
 // TODO: HeaderDoc.
-protocol RecommendationsManager {
+protocol RecommendationsManager: ObservableObject {
 
     // MARK: - Properties
 
@@ -31,14 +33,20 @@ final class RecommendationsDefaultManager: RecommendationsManager {
 
     // MARK: RecommendationsManager protocol properties
 
-    var recommendations: [Book] {
-        return prioritizedRecommendations.map { $0.value }.sorted { $0.priority > $1.priority }.compactMap { $0.book }
-    }
+    @Published
+    var recommendations = [Book]()
 
     // MARK: Private properties
 
     private let bookDownloader: (_ id: String, @escaping (_ book: Book?) -> Void) -> Void
-    private var prioritizedRecommendations = [String: (priority: Int, book: Book?)]() // TODO: Sync.
+    private var prioritizedRecommendations = [String: (priority: Int, book: Book?)]() { // TODO: Sync.
+        didSet {
+            recommendations = prioritizedRecommendations
+                .map { $0.value }
+                .sorted { $0.priority > $1.priority }
+                .compactMap { $0.book }
+        }
+    }
 
     // MARK: - Initialization
 

@@ -9,6 +9,8 @@
 import UIKit
 import CoreData
 
+// TODO: SwiftUI main.
+
 /// Manages the life cycle of the app.
 @UIApplicationMain
 final class AppDelegate: UIResponder, UIApplicationDelegate {

@@ -6,47 +6,65 @@
 //  Copyright © 2020 Nikita Lazarev-Zubov. All rights reserved.
 //
 
+import Combine
+import Foundation
 import GoodreadsService
 
 // TODO: HeaderDoc.
-protocol RecommendationsPresenter {
+protocol RecommendationsPresenter: ObservableObject {
 
     // MARK: - Properties
 
     // TODO: HeaderDoc.
-    var recommendations: [Book] { get }
+    var recommendations: [BookViewModel] { get }
 
 }
 
 // MARK: -
 
 // TODO: HeaderDoc.
-final class RecommendationsDefaultPresenter: RecommendationsPresenter {
+final class RecommendationsDefaultPresenter<Manager: RecommendationsManager>: RecommendationsPresenter {
 
     // MARK: - Properties
 
     // MARK: RecommendationsPresenter protocol properties
 
-    var recommendations: [Book] { recommendationsManager.recommendations }
+    @Published
+    private(set) var recommendations = [BookViewModel]()
 
     // MARK: Private properties
 
     private let model: RecommendationsModel
-    private let recommendationsManager: RecommendationsManager
+    private let recommendationsManager: Manager
+    private let updateQueue: DispatchQueue
+    private lazy var cancellables = Set<AnyCancellable>()
 
     // MARK: - Initialization
 
     // TODO: HeaderDoc.
-    init(model: RecommendationsModel, recommendationsManager: RecommendationsManager) {
+    init(model: RecommendationsModel, recommendationsManager: Manager, updateQueue: DispatchQueue = .main) {
         self.model = model
         self.recommendationsManager = recommendationsManager
+        self.updateQueue = updateQueue
 
+        bind(recommendationsManager: recommendationsManager)
         updateFavoriteBooks()
     }
 
     // MARK: - Methods
 
     // MARK: Private methods
+
+    private func bind(recommendationsManager: Manager) {
+        recommendationsManager
+            .objectWillChange
+            .receive(on: updateQueue)
+            .sink { [weak self] _ in
+                self?.objectWillChange.send()
+                self?.recommendations = recommendationsManager.recommendations.map { $0.asViewModel(favorite: true) }
+        }
+        .store(in: &cancellables)
+    }
 
     private func updateFavoriteBooks() {
         // FIXME: Nested closures.
@@ -62,13 +80,13 @@ final class RecommendationsDefaultPresenter: RecommendationsPresenter {
 // MARK: -
 
 // TODO: HeaderDoc.
-struct RecommendationsPreviewPresenter: RecommendationsPresenter {
+final class RecommendationsPreviewPresenter: RecommendationsPresenter {
 
     // MARK: - Properties
 
     // MARK: RecommendationsPresenter protocol properties
 
     // TODO.
-    var recommendations = [Book]()
+    var recommendations = [BookViewModel]()
 
 }

@@ -10,31 +10,7 @@ import Combine
 import Foundation
 import GoodreadsService
 
-/// A book data for a visual representation.
-struct BookViewModel {
-
-    // MARK: - Properties
-
-    /// Formatted authors list.
-    let authors: String
-    /// Whether the book is in the favorites list.
-    let favorite: Bool
-    /// The book ID.
-    let id: String
-    /// The book title.
-    let title: String
-
-}
-
-// MARK: - Equatable
-
-extension BookViewModel: Equatable { }
-
-// MARK: - Identifiable
-
-extension BookViewModel: Identifiable { }
-
-// MARK: -
+// FIXME: Same model objects for all layers.
 
 /// The presentation logic of the book search screen.
 protocol SearchPresenter: ObservableObject {
@@ -69,7 +45,7 @@ final class SearchDefaultPresenter<Model: SearchModel>: SearchPresenter {
         didSet { model.searchBooks(by: query) }
     }
     @Published
-    var books = [BookViewModel]()
+    private(set) var books = [BookViewModel]()
 
     // MARK: Private methods
 
@@ -162,18 +138,6 @@ final class SearchPreviewPresenter: SearchPresenter {
                           title: $0.title)
 
         }
-    }
-
-}
-
-// MARK: -
-
-private extension Book {
-
-    // MARK: - Methods
-
-    func asViewModel(favorite: Bool) -> BookViewModel {
-        BookViewModel(authors: authors.joined(separator: ", "), favorite: favorite, id: id, title: title)
     }
 
 }

@@ -20,7 +20,9 @@ struct SearchView<Presenter: SearchPresenter>: View {
         NavigationView {
             VStack {
                 SearchBar(text: $presenter.query, placeholder: "SearchScreenSearchFieldPlaceholder") // TODO: Close on tap.
-                List(presenter.books) { SearchViewListCell(book: $0, presenter: self.presenter) }
+                List(presenter.books) {
+                    SearchViewListCell(book: $0, presenter: self.presenter)
+                }
             }
             .navigationBarTitle("SearchScreenTitle")
         }

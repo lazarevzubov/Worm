@@ -12,6 +12,8 @@ import GoodreadsService
 import SwiftUI
 import UIKit
 
+// TODO: Goodreads facade.
+
 /// Manages the life cycle of a scene.
 final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 

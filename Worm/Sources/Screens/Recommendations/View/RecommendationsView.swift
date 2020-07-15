@@ -9,7 +9,7 @@
 import SwiftUI
 
 // TODO: HeaderDoc.
-struct RecommendationsView: View {
+struct RecommendationsView<Presenter: RecommendationsPresenter>: View {
 
     // TODO: Check accessibility.
 
@@ -19,8 +19,12 @@ struct RecommendationsView: View {
 
     var body: some View {
         NavigationView {
-            Text("Recommendtations coming soon!")
-                .navigationBarTitle("RecommendationsScreenTitle")
+            VStack {
+                List(presenter.recommendations) {
+                    RecommendationsViewListCell(book: $0)
+                }
+            }
+            .navigationBarTitle("RecommendationsScreenTitle")
         }
         .onAppear {
             self.configureNavigationBar()
@@ -29,11 +33,12 @@ struct RecommendationsView: View {
 
     // MARK: Private properties
 
-    private let presenter: RecommendationsPresenter
+    @ObservedObject
+    private var presenter: Presenter
 
     // MARK: - Initialization
 
-    init(presenter: RecommendationsPresenter) {
+    init(presenter: Presenter) {
         self.presenter = presenter
     }
 
@@ -62,7 +67,9 @@ struct RecommendationsView_Previews: PreviewProvider {
 
     // MARK: PreviewProvider protocol properties
 
-    static var previews: some View { RecommendationsView(presenter: RecommendationsPreviewPresenter()) }
+    static var previews: some View {
+        RecommendationsView(presenter: RecommendationsPreviewPresenter())
+    }
 
 }
 
