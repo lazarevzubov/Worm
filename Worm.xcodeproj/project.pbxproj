@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4E1ABCF024C2381D00237C88 /* BookTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E1ABCEF24C2381C00237C88 /* BookTests.swift */; };
 		4E2BB74224B79D47006940A0 /* RecommendationsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E2BB74124B79D47006940A0 /* RecommendationsManager.swift */; };
 		4E3093272451F86B00E1610E /* CatalogueService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E3093262451F86B00E1610E /* CatalogueService.swift */; };
 		4E42D20824448362002CAA4E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E42D20724448362002CAA4E /* AppDelegate.swift */; };
@@ -64,6 +65,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4E1ABCEF24C2381C00237C88 /* BookTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookTests.swift; sourceTree = "<group>"; };
 		4E2BB74124B79D47006940A0 /* RecommendationsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationsManager.swift; sourceTree = "<group>"; };
 		4E3093262451F86B00E1610E /* CatalogueService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogueService.swift; sourceTree = "<group>"; };
 		4E42D20424448362002CAA4E /* Worm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Worm.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -301,9 +303,10 @@
 		4ECAA5BB24713A40003D3F8D /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				4E4A384024758EE5008AB1C2 /* AppCoordinatorTests.swift */,
+				4E1ABCEF24C2381C00237C88 /* BookTests.swift */,
 				4E59BE34249BE8490048DED6 /* BookViewModelTests.swift */,
 				4E59BE3A249D471F0048DED6 /* FavoritesPersistenceServiceTests.swift */,
-				4E4A384024758EE5008AB1C2 /* AppCoordinatorTests.swift */,
 				4E4A383E24745B56008AB1C2 /* SearchDefaultPresenterTests.swift */,
 				4ECAA5B924713A38003D3F8D /* SearchServiceBasedModelTests.swift */,
 			);
@@ -537,6 +540,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4E1ABCF024C2381D00237C88 /* BookTests.swift in Sources */,
 				4EFD7E62249A96DC008A7606 /* SearchServiceBasedModelTests.swift in Sources */,
 				4E4A383F24745B56008AB1C2 /* SearchDefaultPresenterTests.swift in Sources */,
 				4EFD7E67249BE425008A7606 /* CatalogueTestingMockService.swift in Sources */,
