@@ -19,7 +19,18 @@ struct SearchView<Presenter: SearchPresenter>: View {
     var body: some View {
         NavigationView {
             VStack {
-                SearchBar(text: $presenter.query, placeholder: "SearchScreenSearchFieldPlaceholder") // TODO: Close on tap.
+                HStack {
+                    SearchBar(text: $presenter.query, placeholder: "SearchScreenSearchFieldPlaceholder")
+                    Button(action: {
+                        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder),
+                                                        to: nil,
+                                                        from: nil,
+                                                        for: nil)
+                    }) {
+                        Text("CancelButtonTitle")
+                    }
+                    Spacer(minLength: 16.0)
+                }
                 List(presenter.books) {
                     SearchViewListCell(book: $0, presenter: self.presenter)
                 }
