@@ -7,6 +7,7 @@
 //
 
 import Combine
+import GoodreadsService
 
 // TODO: HeaderDoc.
 protocol RecommendationsManager: ObservableObject {
@@ -18,13 +19,12 @@ protocol RecommendationsManager: ObservableObject {
 
     // MARK: - Methods
 
-    // TODO: Syncronize with list instead of adding one by one.
     // TODO: HeaderDoc.
     func addRecommendation(id: String)
 
 }
 
-import GoodreadsService
+// MARK: -
 
 // TODO: HeaderDoc.
 final class RecommendationsDefaultManager: RecommendationsManager {
@@ -39,7 +39,7 @@ final class RecommendationsDefaultManager: RecommendationsManager {
     // MARK: Private properties
 
     private let bookDownloader: (_ id: String, @escaping (_ book: Book?) -> Void) -> Void
-    private var prioritizedRecommendations = [String: (priority: Int, book: Book?)]() { // TODO: Sync.
+    private var prioritizedRecommendations = [String: (priority: Int, book: Book?)]() {
         didSet {
             recommendations = prioritizedRecommendations
                 .map { $0.value }
@@ -64,13 +64,12 @@ final class RecommendationsDefaultManager: RecommendationsManager {
         } else {
             prioritizedRecommendations[id] = (1, nil)
             bookDownloader(id) { [weak self] in
-                guard let self = self else {
+                guard let self = self,
+                    let bookDescriptor = self.prioritizedRecommendations[id],
+                    bookDescriptor.book == nil else {
                     return
                 }
-                if let bookDescriptor = self.prioritizedRecommendations[id],
-                    bookDescriptor.book == nil {
-                    self.prioritizedRecommendations[id] = (bookDescriptor.priority + 1, $0)
-                }
+                self.prioritizedRecommendations[id] = (bookDescriptor.priority + 1, $0)
             }
         }
     }

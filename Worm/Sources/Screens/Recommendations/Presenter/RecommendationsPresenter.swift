@@ -64,6 +64,8 @@ final class RecommendationsDefaultPresenter<Manager: RecommendationsManager>: Re
             .receive(on: updateQueue)
             .sink { [weak self] _ in
                 self?.objectWillChange.send()
+
+                // FIXME: Favorite hardcoded-ness.
                 self?.recommendations = recommendationsManager.recommendations.map { $0.asViewModel(favorite: true) }
         }
         .store(in: &cancellables)

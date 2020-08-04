@@ -22,6 +22,7 @@
 		4E53BDDA24649525006F6348 /* SearchPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E53BDD924649525006F6348 /* SearchPresenter.swift */; };
 		4E55D0F424BF6A9A00611EA7 /* RecommendationsViewListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E55D0F324BF6A9A00611EA7 /* RecommendationsViewListCell.swift */; };
 		4E55D0F624BF6C0200611EA7 /* BookViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E55D0F524BF6C0200611EA7 /* BookViewModel.swift */; };
+		4E56798D24D8903800B0F41F /* RecommendationsDefaultPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E56798C24D8903800B0F41F /* RecommendationsDefaultPresenterTests.swift */; };
 		4E59BE35249BE8490048DED6 /* BookViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E59BE34249BE8490048DED6 /* BookViewModelTests.swift */; };
 		4E59BE37249D41810048DED6 /* FavoriteBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E59BE36249D41810048DED6 /* FavoriteBook.swift */; };
 		4E59BE3B249D471F0048DED6 /* FavoritesPersistenceServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E59BE3A249D471F0048DED6 /* FavoritesPersistenceServiceTests.swift */; };
@@ -32,6 +33,7 @@
 		4E78D97A2479AF5A00906542 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E78D9792479AF5A00906542 /* Settings.swift */; };
 		4E78D987247EE4D500906542 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4E78D989247EE4D500906542 /* Localizable.strings */; };
 		4E796BE02465CC2500C6543A /* ViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E796BDF2465CC2500C6543A /* ViewFactory.swift */; };
+		4E7DE9AF24CA1C8700518FCF /* RecommendationsDefaultManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E7DE9AE24CA1C8700518FCF /* RecommendationsDefaultManagerTests.swift */; };
 		4E9BEFAA248C28C3006B3AAD /* SearchViewListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E9BEFA9248C28C3006B3AAD /* SearchViewListCell.swift */; };
 		4EA637382496B1A900DF2936 /* Worm.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4E42D20B24448362002CAA4E /* Worm.xcdatamodeld */; };
 		4EAD35E924A5253200E6866A /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EAD35E824A5253200E6866A /* MainView.swift */; };
@@ -87,6 +89,7 @@
 		4E53BDD924649525006F6348 /* SearchPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPresenter.swift; sourceTree = "<group>"; };
 		4E55D0F324BF6A9A00611EA7 /* RecommendationsViewListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationsViewListCell.swift; sourceTree = "<group>"; };
 		4E55D0F524BF6C0200611EA7 /* BookViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookViewModel.swift; sourceTree = "<group>"; };
+		4E56798C24D8903800B0F41F /* RecommendationsDefaultPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationsDefaultPresenterTests.swift; sourceTree = "<group>"; };
 		4E59BE34249BE8490048DED6 /* BookViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookViewModelTests.swift; sourceTree = "<group>"; };
 		4E59BE36249D41810048DED6 /* FavoriteBook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteBook.swift; sourceTree = "<group>"; };
 		4E59BE3A249D471F0048DED6 /* FavoritesPersistenceServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesPersistenceServiceTests.swift; sourceTree = "<group>"; };
@@ -96,6 +99,7 @@
 		4E78D9792479AF5A00906542 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		4E78D988247EE4D500906542 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		4E796BDF2465CC2500C6543A /* ViewFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewFactory.swift; sourceTree = "<group>"; };
+		4E7DE9AE24CA1C8700518FCF /* RecommendationsDefaultManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationsDefaultManagerTests.swift; sourceTree = "<group>"; };
 		4E9BEFA9248C28C3006B3AAD /* SearchViewListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewListCell.swift; sourceTree = "<group>"; };
 		4EAD35E824A5253200E6866A /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		4EAD35EB24A91F4600E6866A /* RecommendationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationsView.swift; sourceTree = "<group>"; };
@@ -307,8 +311,10 @@
 				4E1ABCEF24C2381C00237C88 /* BookTests.swift */,
 				4E59BE34249BE8490048DED6 /* BookViewModelTests.swift */,
 				4E59BE3A249D471F0048DED6 /* FavoritesPersistenceServiceTests.swift */,
+				4E7DE9AE24CA1C8700518FCF /* RecommendationsDefaultManagerTests.swift */,
 				4E4A383E24745B56008AB1C2 /* SearchDefaultPresenterTests.swift */,
 				4ECAA5B924713A38003D3F8D /* SearchServiceBasedModelTests.swift */,
+				4E56798C24D8903800B0F41F /* RecommendationsDefaultPresenterTests.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -543,10 +549,12 @@
 				4E1ABCF024C2381D00237C88 /* BookTests.swift in Sources */,
 				4EFD7E62249A96DC008A7606 /* SearchServiceBasedModelTests.swift in Sources */,
 				4E4A383F24745B56008AB1C2 /* SearchDefaultPresenterTests.swift in Sources */,
+				4E56798D24D8903800B0F41F /* RecommendationsDefaultPresenterTests.swift in Sources */,
 				4EFD7E67249BE425008A7606 /* CatalogueTestingMockService.swift in Sources */,
 				4E59BE35249BE8490048DED6 /* BookViewModelTests.swift in Sources */,
 				4EFD7E6024994142008A7606 /* Worm.xcdatamodeld in Sources */,
 				4EFD7E61249A96DA008A7606 /* AppCoordinatorTests.swift in Sources */,
+				4E7DE9AF24CA1C8700518FCF /* RecommendationsDefaultManagerTests.swift in Sources */,
 				4E59BE3B249D471F0048DED6 /* FavoritesPersistenceServiceTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
