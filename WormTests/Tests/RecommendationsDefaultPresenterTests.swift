@@ -16,16 +16,16 @@ final class RecommendationsDefaultPresenterTests: XCTestCase {
     // MARK: - Methods
 
     func testRecommendationsInitiallyEmpty() {
-        let presenter = RecommendationsDefaultPresenter(model: RecommendationsStubModel(),
-                                                        recommendationsManager: RecommendationsStubManager())
+        let presenter = RecommendationsDefaultPresenter(model: RecommendationsMockModel(),
+                                                        recommendationsManager: RecommendationsMockManager())
         XCTAssertTrue(presenter.recommendations.isEmpty)
     }
 
     func testRocommendationsUpdateOnInit() {
         let bookID = "1"
         let books = [Book(authors: [], title: "Title", id: bookID, similarBookIDs: [bookID])]
-        let model = RecommendationsStubModel(books: books)
-        let recommendationsManager = RecommendationsStubManager(books: books)
+        let model = RecommendationsMockModel(books: books)
+        let recommendationsManager = RecommendationsMockManager(books: books)
 
         let queue = DispatchQueue(label: "com.LazarevZubov.Worm.RecommendationsDefaultPresenterTests")
         let presenter = RecommendationsDefaultPresenter(model: model,
@@ -41,10 +41,10 @@ final class RecommendationsDefaultPresenterTests: XCTestCase {
     func testRecommendationsUpdate() {
         let bookID = "1"
         let books = [Book(authors: [], title: "Title", id: bookID, similarBookIDs: [bookID])]
-        let recommendationsManager = RecommendationsStubManager(books: books)
+        let recommendationsManager = RecommendationsMockManager(books: books)
 
         let queue = DispatchQueue(label: "com.LazarevZubov.Worm.RecommendationsDefaultPresenterTests")
-        let presenter = RecommendationsDefaultPresenter(model: RecommendationsStubModel(),
+        let presenter = RecommendationsDefaultPresenter(model: RecommendationsMockModel(),
                                                         recommendationsManager: recommendationsManager,
                                                         updateQueue: queue)
 
@@ -59,7 +59,7 @@ final class RecommendationsDefaultPresenterTests: XCTestCase {
 
 // MARK: -
 
-private struct RecommendationsStubModel: RecommendationsModel {
+private struct RecommendationsMockModel: RecommendationsModel {
 
     // MARK: - Properties
 
@@ -91,7 +91,7 @@ private struct RecommendationsStubModel: RecommendationsModel {
 
 // MARK: -
 
-private final class RecommendationsStubManager: RecommendationsManager {
+private final class RecommendationsMockManager: RecommendationsManager {
 
     // MARK: - Properties
 

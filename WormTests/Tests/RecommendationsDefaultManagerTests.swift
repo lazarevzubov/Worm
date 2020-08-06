@@ -44,10 +44,7 @@ final class RecommendationsDefaultManagerTests: XCTestCase {
 
         manager.addRecommendation(id: "1")
         manager.addRecommendation(id: "2")
-
         XCTAssertEqual(manager.recommendations.count, 2)
-        XCTAssertEqual(manager.recommendations[0].id, "1")
-        XCTAssertEqual(manager.recommendations[1].id, "2")
 
         manager.addRecommendation(id: "2")
         XCTAssertEqual(manager.recommendations.count, 2)

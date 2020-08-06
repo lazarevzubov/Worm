@@ -26,27 +26,24 @@ protocol RecommendationsModel {
 // MARK: -
 
 // TODO: HeaderDoc.
-final class RecommendationsDefaultModel: RecommendationsModel {
+struct RecommendationsDefaultModel: RecommendationsModel {
 
     // MARK: - Properties
 
     // MARK: RecommendationsModel protocol properties
 
-    private(set) var favoriteBookIDs = [String]()
+    let favoriteBookIDs: [String]
 
     // MARK: Private properties
 
     private let catalogueService: CatalogueService
-    private let favoritesService: FavoritesService
 
     // MARK: - Initialization
 
     // TODO: HeaderDoc.
     init(favoritesService: FavoritesService, catalogueService: CatalogueService) {
-        self.favoritesService = favoritesService
+        favoriteBookIDs = favoritesService.favoriteBooks.compactMap { $0.id }
         self.catalogueService = catalogueService
-
-        updateFavorites()
     }
 
     // MARK: - Methods
@@ -55,12 +52,6 @@ final class RecommendationsDefaultModel: RecommendationsModel {
 
     func getBook(by id: String, resultCompletion: @escaping (_ book: Book?) -> Void) {
         catalogueService.getBook(by: id, resultCompletion: resultCompletion)
-    }
-
-    // MARK: Private methods
-
-    private func updateFavorites() {
-        favoriteBookIDs = favoritesService.favoriteBooks.compactMap { $0.id }
     }
 
 }
