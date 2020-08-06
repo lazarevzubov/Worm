@@ -28,20 +28,14 @@ struct SearchView<Presenter: SearchPresenter>: View {
                                                         to: nil,
                                                         from: nil,
                                                         for: nil)
-                    }) {
-                        Text("CancelButtonTitle")
-                    }
+                    }) { Text("CancelButtonTitle") }
                     Spacer(minLength: 16.0)
                 }
-                List(presenter.books) {
-                    SearchViewListCell(book: $0, presenter: self.presenter)
-                }
+                List(presenter.books) { SearchViewListCell(book: $0, presenter: self.presenter) }
             }
             .navigationBarTitle("SearchScreenTitle")
         }
-        .onAppear {
-            self.configureNavigationBar()
-        }
+        .onAppear { self.configureNavigationBar() }
     }
 
     // MARK: Private properties
