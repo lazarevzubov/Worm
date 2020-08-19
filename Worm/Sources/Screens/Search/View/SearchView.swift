@@ -28,7 +28,8 @@ struct SearchView<Presenter: SearchPresenter>: View {
                                                         to: nil,
                                                         from: nil,
                                                         for: nil)
-                    }) { Text("CancelButtonTitle") }
+                        }) { Text("CancelButtonTitle") }
+                        .accessibility(identifier: "cancelSearchButton")
                     Spacer(minLength: 16.0)
                 }
                 List(presenter.books) { SearchViewListCell(book: $0, presenter: self.presenter) }

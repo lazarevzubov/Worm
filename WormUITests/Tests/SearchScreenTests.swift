@@ -56,8 +56,37 @@ final class SearchScreenTests: XCTestCase {
         wait(forElement: searchBar)
         searchBar.tap()
 
-        let updated = NSPredicate(format: "count > 0")
-        expectation(for: updated, evaluatedWith: app.keyboards)
+        let keyboardActivated = NSPredicate(format: "count > 0")
+        expectation(for: keyboardActivated, evaluatedWith: app.keyboards)
+        waitForExpectations(timeout: 5.0)
+    }
+
+    func testCancelSearchButtonVisible() {
+        let app = XCUIApplication()
+        app.launch()
+
+        let cancelButton = app.buttons["cancelSearchButton"]
+        XCTAssertTrue(cancelButton.exists)
+        XCTAssertTrue(cancelButton.isHittable)
+    }
+
+    func testCancelButtonHidesKeyboard() {
+        let app = XCUIApplication()
+        app.launch()
+
+        let searchBar = app.searchFields["searchBar"]
+        wait(forElement: searchBar)
+        searchBar.tap()
+
+        let keyboardActivated = NSPredicate(format: "count > 0")
+        expectation(for: keyboardActivated, evaluatedWith: app.keyboards)
+        waitForExpectations(timeout: 5.0)
+
+        let cancelButton = app.buttons["cancelSearchButton"]
+        cancelButton.tap()
+
+        let keyboardDeactivated = NSPredicate(format: "count == 0")
+        expectation(for: keyboardDeactivated, evaluatedWith: app.keyboards)
         waitForExpectations(timeout: 5.0)
     }
 
@@ -80,7 +109,7 @@ final class SearchScreenTests: XCTestCase {
         // Waits for update.
         let updated = NSPredicate(format: "count > 0")
         expectation(for: updated, evaluatedWith: app.tables.cells)
-        waitForExpectations(timeout: 2.0)
+        waitForExpectations(timeout: 5.0)
 
         var visibleCellsCount = 0
         let cells = app.tables.cells
@@ -111,7 +140,7 @@ final class SearchScreenTests: XCTestCase {
         // Waits for update.
         let updated = NSPredicate(format: "count > 0")
         expectation(for: updated, evaluatedWith: app.tables.cells)
-        waitForExpectations(timeout: 2.0)
+        waitForExpectations(timeout: 5.0)
 
         var visibleCellsCount = 0
         let cells = app.tables.cells
@@ -145,7 +174,7 @@ final class SearchScreenTests: XCTestCase {
         // Wait for update.
         let updated = NSPredicate(format: "count > 0")
         expectation(for: updated, evaluatedWith: app.tables.cells)
-        waitForExpectations(timeout: 2.0)
+        waitForExpectations(timeout: 5.0)
 
         let title = mockedCells
             .map { $0.split(separator: "–").last!.trimmingCharacters(in: .whitespacesAndNewlines) }
@@ -175,7 +204,7 @@ final class SearchScreenTests: XCTestCase {
         // Wait for update.
         let updated = NSPredicate(format: "count > 0")
         expectation(for: updated, evaluatedWith: app.tables.cells)
-        waitForExpectations(timeout: 2.0)
+        waitForExpectations(timeout: 5.0)
 
         let title = mockedCells
             .map { $0.split(separator: "–").last!.trimmingCharacters(in: .whitespacesAndNewlines) }
