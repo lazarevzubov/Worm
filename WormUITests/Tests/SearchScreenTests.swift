@@ -38,7 +38,7 @@ final class SearchScreenTests: XCTestCase {
         continueAfterFailure = false
     }
 
-    func testSearchBarVisible() throws {
+    func testSearchBarVisible() {
         let app = XCUIApplication()
         app.launch()
 
@@ -127,7 +127,8 @@ final class SearchScreenTests: XCTestCase {
             .map { $0.split(separator: "–").last!.trimmingCharacters(in: .whitespacesAndNewlines) }
         // Depending on the screen size. In the specified order.
         for cellIndex in 0..<visibleCellsCount {
-            let favoriteButton = app.otherElements[expectedTexts[cellIndex] + " favorite unchecked"]
+            let favoriteButton = app.otherElements[String(format: "SearchScreenFavoriteMarkUncheckedHintFormat",
+                                                          expectedTexts[cellIndex])]
             XCTAssertTrue(favoriteButton.exists)
         }
     }
@@ -141,24 +142,23 @@ final class SearchScreenTests: XCTestCase {
         searchBar.tap()
         searchBar.typeText("Query")
 
-        // Waits for update.
+        // Wait for update.
         let updated = NSPredicate(format: "count > 0")
         expectation(for: updated, evaluatedWith: app.tables.cells)
         waitForExpectations(timeout: 2.0)
 
-        let uncheckedFavoriteButtonLabel = mockedCells
+        let title = mockedCells
             .map { $0.split(separator: "–").last!.trimmingCharacters(in: .whitespacesAndNewlines) }
-            .first! + " favorite unchecked"
-        let uncheckedFavoriteButton = app.otherElements[uncheckedFavoriteButtonLabel]
+            .first!
+        let uncheckedFavoriteButtonLabel = String(format: "SearchScreenFavoriteMarkUncheckedHintFormat", title)
+        let uncheckedFavoriteButton = app.otherElements[uncheckedFavoriteButtonLabel].firstMatch
 
         XCTAssertTrue(uncheckedFavoriteButton.exists)
         XCTAssertTrue(uncheckedFavoriteButton.isHittable)
         uncheckedFavoriteButton.tap()
 
-        let checkedFavoriteButtonLabel = mockedCells
-            .map { $0.split(separator: "–").last!.trimmingCharacters(in: .whitespacesAndNewlines) }
-            .first! + " favorite checked"
-        let checkedFavoriteButton = app.otherElements[checkedFavoriteButtonLabel]
+        let checkedFavoriteButtonLabel = String(format: "SearchScreenFavoriteMarkCheckedHintFormat", title)
+        let checkedFavoriteButton = app.otherElements[checkedFavoriteButtonLabel].firstMatch
 
         XCTAssertTrue(checkedFavoriteButton.exists)
     }
@@ -172,24 +172,23 @@ final class SearchScreenTests: XCTestCase {
         searchBar.tap()
         searchBar.typeText("Query")
 
-        // Waits for update.
+        // Wait for update.
         let updated = NSPredicate(format: "count > 0")
         expectation(for: updated, evaluatedWith: app.tables.cells)
         waitForExpectations(timeout: 2.0)
 
-        let uncheckedFavoriteButtonLabel = mockedCells
+        let title = mockedCells
             .map { $0.split(separator: "–").last!.trimmingCharacters(in: .whitespacesAndNewlines) }
-            .first! + " favorite unchecked"
-        let uncheckedFavoriteButton = app.otherElements[uncheckedFavoriteButtonLabel]
+            .first!
+        let uncheckedFavoriteButtonLabel = String(format: "SearchScreenFavoriteMarkUncheckedHintFormat", title)
+        let uncheckedFavoriteButton = app.otherElements[uncheckedFavoriteButtonLabel].firstMatch
 
         XCTAssertTrue(uncheckedFavoriteButton.exists)
         XCTAssertTrue(uncheckedFavoriteButton.isHittable)
         uncheckedFavoriteButton.tap()
 
-        let checkedFavoriteButtonLabel = mockedCells
-            .map { $0.split(separator: "–").last!.trimmingCharacters(in: .whitespacesAndNewlines) }
-            .first! + " favorite checked"
-        let checkedFavoriteButton = app.otherElements[checkedFavoriteButtonLabel]
+        let checkedFavoriteButtonLabel = String(format: "SearchScreenFavoriteMarkCheckedHintFormat", title)
+        let checkedFavoriteButton = app.otherElements[checkedFavoriteButtonLabel].firstMatch
 
         XCTAssertTrue(checkedFavoriteButton.exists)
         XCTAssertTrue(checkedFavoriteButton.isHittable)

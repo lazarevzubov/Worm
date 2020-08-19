@@ -69,11 +69,9 @@ struct SearchViewListCell<Presenter: SearchPresenter>: View {
     }
 
     private func makeFavoriteButtonAccessibilityLabel(for book: BookViewModel) -> Text {
-        if book.favorite {
-            return Text(String(format: "SearchScreenFavoriteMarkCheckedHintFormat", book.title))
-        } else {
-            return Text(String(format: "SearchScreenFavoriteMarkUncheckedHintFormat", book.title))
-        }
+        return book.favorite
+            ? Text(String(format: "SearchScreenFavoriteMarkCheckedHintFormat", book.title))
+            : Text(String(format: "SearchScreenFavoriteMarkUncheckedHintFormat", book.title))
     }
 
 }
