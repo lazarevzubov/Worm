@@ -16,9 +16,15 @@ enum ViewFactory {
     // MARK: - Methods
 
     // TODO: HeaderDoc
-    static func makeMainView(context: NSManagedObjectContext, catalogueService: CatalogueService) -> some View {
-        let searchView = makeSearchView(context: context, catalogueService: catalogueService)
-        let recommendationsView = makeRecommendationsView(context: context, catalogueService: catalogueService)
+    static func makeMainView(context: NSManagedObjectContext,
+                             catalogueService: CatalogueService,
+                             favoritesService: FavoritesService) -> some View {
+        let searchView = makeSearchView(context: context,
+                                        catalogueService: catalogueService,
+                                        favoritesService: favoritesService)
+        let recommendationsView = makeRecommendationsView(context: context,
+                                                          catalogueService: catalogueService,
+                                                          favoritesService: favoritesService)
         
         return MainView(searchView: searchView, recommendationsView: recommendationsView)
     }
@@ -26,22 +32,20 @@ enum ViewFactory {
     // MARK: Private methods
 
     private static func makeSearchView(context: NSManagedObjectContext,
-                                       catalogueService: CatalogueService) -> some View {
-        let favoritesService = FavoritesPersistenceService(persistenceContext: context)
+                                       catalogueService: CatalogueService,
+                                       favoritesService: FavoritesService) -> some View {
         let model = SearchServiceBasedModel(catalogueService: catalogueService, favoritesService: favoritesService)
-
         let presenter = SearchDefaultPresenter(model: model)
 
         return SearchView<SearchDefaultPresenter<SearchServiceBasedModel>>(presenter: presenter)
     }
 
     private static func makeRecommendationsView(context: NSManagedObjectContext,
-                                                catalogueService: CatalogueService) -> some View {
-        let favoritesService = FavoritesPersistenceService(persistenceContext: context)
-        let model = RecommendationsDefaultModel(favoritesService: favoritesService, catalogueService: catalogueService)
-
+                                                catalogueService: CatalogueService,
+                                                favoritesService: FavoritesService) -> some View {
+        let model = RecommendationsServiceBasedModel(catalogueService: catalogueService,
+                                                     favoritesService: favoritesService)
         let recommendationsManager = RecommendationsDefaultManager { model.getBook(by: $0, resultCompletion: $1) }
-
         let presenter = RecommendationsDefaultPresenter(model: model, recommendationsManager: recommendationsManager)
 
         return RecommendationsView(presenter: presenter)

@@ -20,8 +20,8 @@ final class RecommendationsDefaultModelTests: XCTestCase {
                              MockFavoriteBook(id: "2")]
         let favoriteService = FavoritesMockService(favoriteBooks: favoriteBooks)
 
-        let model = RecommendationsDefaultModel(favoritesService: favoriteService,
-                                                catalogueService: CatalogueTestingMockService())
+        let model = RecommendationsServiceBasedModel(catalogueService: CatalogueTestingMockService(),
+                                                     favoritesService: favoriteService)
         XCTAssertEqual(model.favoriteBookIDs, favoriteBooks.map { $0.id })
     }
 
@@ -30,8 +30,8 @@ final class RecommendationsDefaultModelTests: XCTestCase {
         let books = [Book(authors: [], title: "Title", id: bookID, similarBookIDs: [bookID])]
         let catalogueService = CatalogueTestingMockService(books: books)
 
-        let model = RecommendationsDefaultModel(favoritesService: FavoritesMockService(),
-                                                catalogueService: catalogueService)
+        let model = RecommendationsServiceBasedModel(catalogueService: catalogueService,
+                                                     favoritesService: FavoritesMockService())
 
         let expecation = XCTestExpectation()
         model.getBook(by: bookID) {

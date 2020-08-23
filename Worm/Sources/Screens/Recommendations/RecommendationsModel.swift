@@ -26,7 +26,7 @@ protocol RecommendationsModel {
 // MARK: -
 
 // TODO: HeaderDoc.
-struct RecommendationsDefaultModel: RecommendationsModel {
+struct RecommendationsServiceBasedModel: RecommendationsModel {
 
     // MARK: - Properties
 
@@ -41,7 +41,7 @@ struct RecommendationsDefaultModel: RecommendationsModel {
     // MARK: - Initialization
 
     // TODO: HeaderDoc.
-    init(favoritesService: FavoritesService, catalogueService: CatalogueService) {
+    init(catalogueService: CatalogueService, favoritesService: FavoritesService) {
         favoriteBookIDs = favoritesService.favoriteBooks.compactMap { $0.id }
         self.catalogueService = catalogueService
     }
