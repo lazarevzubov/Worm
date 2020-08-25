@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4E1ABCF024C2381D00237C88 /* BookTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E1ABCEF24C2381C00237C88 /* BookTests.swift */; };
+		4E1E3FBC24EDAC9300754A96 /* RecommendationsScreenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E1E3FBB24EDAC9300754A96 /* RecommendationsScreenTests.swift */; };
 		4E2BB74224B79D47006940A0 /* RecommendationsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E2BB74124B79D47006940A0 /* RecommendationsManager.swift */; };
 		4E3093272451F86B00E1610E /* CatalogueService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E3093262451F86B00E1610E /* CatalogueService.swift */; };
 		4E42D20824448362002CAA4E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E42D20724448362002CAA4E /* AppDelegate.swift */; };
@@ -70,6 +71,7 @@
 
 /* Begin PBXFileReference section */
 		4E1ABCEF24C2381C00237C88 /* BookTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookTests.swift; sourceTree = "<group>"; };
+		4E1E3FBB24EDAC9300754A96 /* RecommendationsScreenTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationsScreenTests.swift; sourceTree = "<group>"; };
 		4E2BB74124B79D47006940A0 /* RecommendationsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationsManager.swift; sourceTree = "<group>"; };
 		4E3093262451F86B00E1610E /* CatalogueService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogueService.swift; sourceTree = "<group>"; };
 		4E42D20424448362002CAA4E /* Worm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Worm.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -248,6 +250,7 @@
 		4E4A3850247591A8008AB1C2 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				4E1E3FBB24EDAC9300754A96 /* RecommendationsScreenTests.swift */,
 				4E4A3848247590F5008AB1C2 /* SearchScreenTests.swift */,
 			);
 			path = Tests;
@@ -543,6 +546,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4E1E3FBC24EDAC9300754A96 /* RecommendationsScreenTests.swift in Sources */,
 				4E78D96D247592BC00906542 /* XCTest.swift in Sources */,
 				4E4A3849247590F5008AB1C2 /* SearchScreenTests.swift in Sources */,
 			);
