@@ -20,9 +20,7 @@ struct RecommendationsView<Presenter: RecommendationsPresenter>: View {
     var body: some View {
         NavigationView {
             VStack {
-                List(presenter.recommendations) {
-                    RecommendationsViewListCell(book: $0)
-                }
+                List(presenter.recommendations) { RecommendationsViewListCell(book: $0) }
             }
             .navigationBarTitle("RecommendationsScreenTitle")
         }
@@ -68,9 +66,7 @@ struct RecommendationsView_Previews: PreviewProvider {
 
     // MARK: PreviewProvider protocol properties
 
-    static var previews: some View {
-        RecommendationsView(presenter: RecommendationsPreviewPresenter())
-    }
+    static var previews: some View { RecommendationsView(presenter: RecommendationsPreviewPresenter()) }
 
 }
 

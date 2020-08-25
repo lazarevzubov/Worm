@@ -147,6 +147,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4E265C3E24F598D200C98232 /* Catalogue */ = {
+			isa = PBXGroup;
+			children = (
+				4E3093262451F86B00E1610E /* CatalogueService.swift */,
+				4E78D9792479AF5A00906542 /* Settings.swift */,
+			);
+			path = Catalogue;
+			sourceTree = "<group>";
+		};
 		4E2BB74024B79D2E006940A0 /* Presenter */ = {
 			isa = PBXGroup;
 			children = (
@@ -338,9 +347,8 @@
 		4EE82742244DEFF600102B5D /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				4E265C3E24F598D200C98232 /* Catalogue */,
 				4E59BE39249D46E40048DED6 /* Favorites */,
-				4E3093262451F86B00E1610E /* CatalogueService.swift */,
-				4E78D9792479AF5A00906542 /* Settings.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
