@@ -28,6 +28,7 @@ struct RecommendationsView<Presenter: RecommendationsPresenter>: View {
         }
         .onAppear {
             self.configureNavigationBar()
+            self.presenter.onViewAppear()
         }
     }
 

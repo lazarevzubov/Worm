@@ -32,18 +32,21 @@ struct RecommendationsServiceBasedModel: RecommendationsModel {
 
     // MARK: RecommendationsModel protocol properties
 
-    let favoriteBookIDs: [String]
+    var favoriteBookIDs: [String] {
+        return favoritesService.favoriteBooks.compactMap { $0.id }
+    }
 
     // MARK: Private properties
 
     private let catalogueService: CatalogueService
+    private let favoritesService: FavoritesService
 
     // MARK: - Initialization
 
     // TODO: HeaderDoc.
     init(catalogueService: CatalogueService, favoritesService: FavoritesService) {
-        favoriteBookIDs = favoritesService.favoriteBooks.compactMap { $0.id }
         self.catalogueService = catalogueService
+        self.favoritesService = favoritesService
     }
 
     // MARK: - Methods

@@ -21,7 +21,7 @@ final class RecommendationsDefaultPresenterTests: XCTestCase {
         XCTAssertTrue(presenter.recommendations.isEmpty)
     }
 
-    func testRocommendationsUpdateOnInit() {
+    func testRocommendationsUpdateOnViewAppear() {
         let bookID = "1"
         let books = [Book(authors: [], title: "Title", id: bookID, similarBookIDs: [bookID])]
         let model = RecommendationsMockModel(books: books)
@@ -31,6 +31,8 @@ final class RecommendationsDefaultPresenterTests: XCTestCase {
         let presenter = RecommendationsDefaultPresenter(model: model,
                                                         recommendationsManager: recommendationsManager,
                                                         updateQueue: queue)
+
+        presenter.onViewAppear()
         queue.sync {
             // Just sync the the presenter update.
         }
@@ -47,6 +49,7 @@ final class RecommendationsDefaultPresenterTests: XCTestCase {
         let presenter = RecommendationsDefaultPresenter(model: RecommendationsMockModel(),
                                                         recommendationsManager: recommendationsManager,
                                                         updateQueue: queue)
+        presenter.onViewAppear()
 
         recommendationsManager.addRecommendation(id: bookID)
         queue.sync {

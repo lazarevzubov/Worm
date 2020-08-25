@@ -21,6 +21,11 @@ protocol RecommendationsPresenter: ObservableObject {
     // TODO: HeaderDoc.
     var recommendations: [BookViewModel] { get }
 
+    // MARK: - Methods
+
+    // TODO: HeaderDoc.
+    func onViewAppear()
+
 }
 
 // MARK: -
@@ -49,12 +54,16 @@ final class RecommendationsDefaultPresenter<Manager: RecommendationsManager>: Re
         self.model = model
         self.recommendationsManager = recommendationsManager
         self.updateQueue = updateQueue
-
-        bind(recommendationsManager: recommendationsManager)
-        updateFavoriteBooks()
     }
 
     // MARK: - Methods
+
+    // MARK: RecommendationsPresenter protocol methods
+
+    func onViewAppear() {
+        bind(recommendationsManager: recommendationsManager)
+        updateFavoriteBooks()
+    }
 
     // MARK: Private methods
 
@@ -117,5 +126,13 @@ final class RecommendationsPreviewPresenter: RecommendationsPresenter {
         BookViewModel(authors: "Ken Kesey", favorite: true, id: "14", title: "Sometimes a Great Notion"),
         BookViewModel(authors: "Haruki Murakami", favorite: true, id: "15", title: "The Wind-Up Bird Chronicle")
     ]
+
+    // MARK: - Methods
+
+    // MARK: RecommendationsPresenter protocol methods
+
+    func onViewAppear() {
+        // Do nothing.
+    }
 
 }
