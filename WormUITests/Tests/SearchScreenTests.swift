@@ -38,6 +38,13 @@ final class SearchScreenTests: XCTestCase {
         continueAfterFailure = false
     }
 
+    func testSearchInitiallyShown() {
+        let app = XCUIApplication()
+        app.launch()
+
+        XCTAssert(app.staticTexts["Search"].exists) // FIXME: Don't relay on hardcoded localizables.
+    }
+
     func testSearchBarVisible() {
         let app = XCUIApplication()
         app.launch()
