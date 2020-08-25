@@ -102,7 +102,6 @@ final class SearchScreenTests: XCTestCase {
         app.launch()
 
         let searchBar = app.searchFields["searchBar"]
-        wait(forElement: searchBar)
         searchBar.tap()
         searchBar.typeText("Query")
 
@@ -133,7 +132,6 @@ final class SearchScreenTests: XCTestCase {
         app.launch()
 
         let searchBar = app.searchFields["searchBar"]
-        wait(forElement: searchBar)
         searchBar.tap()
         searchBar.typeText("Query")
 
@@ -167,7 +165,6 @@ final class SearchScreenTests: XCTestCase {
         app.launch()
 
         let searchBar = app.searchFields["searchBar"]
-        wait(forElement: searchBar)
         searchBar.tap()
         searchBar.typeText("Query")
 
