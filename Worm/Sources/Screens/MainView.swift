@@ -8,8 +8,6 @@
 
 import SwiftUI
 
-// TODO: Check iPads.
-
 // TODO: HeaderDoc.
 struct MainView<SearchView: View, RecommendationsView: View>: View {
 

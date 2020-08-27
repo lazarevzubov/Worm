@@ -12,7 +12,6 @@ import CoreData
 class FavoriteBook: NSManagedObject {
 
     // Not final because it needs to be mocked within unit tests.
-    // TODO: Find a way to avoid inheritance.
 
     // MARK: - Properties
 

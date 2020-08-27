@@ -45,7 +45,7 @@ final class SearchServiceBasedModel: SearchModel {
 
     @Published
     private(set) var books = [Book]()
-    @Published // TODO: Check if needed.
+    @Published
     private(set) var favoriteBookIDs = [String]()
 
     // MARK: Private properties

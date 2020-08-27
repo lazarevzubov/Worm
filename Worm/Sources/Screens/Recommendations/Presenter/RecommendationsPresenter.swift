@@ -11,7 +11,7 @@ import Foundation
 import GoodreadsService
 
 // TODO: Marking favorites from this screen.
-// TODO: Not displaying favorites.
+// TODO: Blocking books from recommendations.
 
 // TODO: HeaderDoc.
 protocol RecommendationsPresenter: ObservableObject {
@@ -81,12 +81,17 @@ final class RecommendationsDefaultPresenter<Manager: RecommendationsManager>: Re
     }
 
     private func updateFavoriteBooks() {
-        // FIXME: Nested closures.
-        model.favoriteBookIDs.forEach {
-            model.getBook(by: $0) { [weak self] in
-                $0?.similarBookIDs.forEach { self?.recommendationsManager.addRecommendation(id: $0) }
-            }
+        model.favoriteBookIDs.forEach { addSimilarBooksToRecommendations(from: $0) }
+    }
+
+    private func addSimilarBooksToRecommendations(from bookID: String) {
+        model.getBook(by: bookID) { [weak self] in
+            self?.addSimilarBooksToRecommendations(from: $0?.similarBookIDs ?? [])
         }
+    }
+
+    private func addSimilarBooksToRecommendations(from ids: [String]) {
+        ids.forEach { self.recommendationsManager.addRecommendation(id: $0) }
     }
 
 }

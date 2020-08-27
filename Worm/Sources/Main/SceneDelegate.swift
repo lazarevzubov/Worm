@@ -11,7 +11,7 @@ import CoreData
 import SwiftUI
 import UIKit
 
-// TODO: Goodreads facade.
+// TODO: Check design layers (draw diagram maybe).
 
 /// Manages the life cycle of a scene.
 final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
