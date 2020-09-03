@@ -15,6 +15,7 @@ final class CatalogueTestingMockService: CatalogueService {
 
     // MARK: - Properties
 
+    let books: [Book]
     let searchBookResult: [String]
     private(set) var handledBookRequests = [String]()
     private(set) var handledQueries = [String]()
@@ -26,9 +27,11 @@ final class CatalogueTestingMockService: CatalogueService {
 
     // MARK: - Initialization
 
-    init(searchBookResult: [String] = [],
+    init(books: [Book] = [],
+         searchBookResult: [String] = [],
          searchExpectation: XCTestExpectation? = nil,
          bookRequestExpectation: XCTestExpectation? = nil) {
+        self.books = books
         self.searchBookResult = searchBookResult
         self.searchExpectation = searchExpectation
         self.bookRequestExpectation = bookRequestExpectation
@@ -47,6 +50,7 @@ final class CatalogueTestingMockService: CatalogueService {
     func getBook(by id: String, resultCompletion: @escaping (Book?) -> Void) {
         handledBookRequests.append(id)
         bookRequestExpectation?.fulfill()
+        resultCompletion(books.first { $0.id == id })
     }
 
 }

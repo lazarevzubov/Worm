@@ -1,5 +1,5 @@
 //
-//  MainPresenter.swift
+//  SearchPresenter.swift
 //  Worm
 //
 //  Created by Nikita Lazarev-Zubov on 7.5.2020.
@@ -10,34 +10,10 @@ import Combine
 import Foundation
 import GoodreadsService
 
-/// A book data for a visual representation.
-struct BookViewModel {
-
-    // MARK: - Properties
-
-    /// Formatted authors list.
-    let authors: String
-    /// Whether the book is in the favorites list.
-    let favorite: Bool
-    /// The book ID.
-    let id: String
-    /// The book title.
-    let title: String
-
-}
-
-// MARK: - Equatable
-
-extension BookViewModel: Equatable { }
-
-// MARK: - Identifiable
-
-extension BookViewModel: Identifiable { }
-
-// MARK: -
+// FIXME: Same model objects for all layers.
 
 /// The presentation logic of the book search screen.
-protocol MainPresenter: ObservableObject {
+protocol SearchPresenter: ObservableObject {
 
     // MARK: - Properties
 
@@ -59,17 +35,17 @@ protocol MainPresenter: ObservableObject {
 // MARK: -
 
 /// The presentation logic of the book search screen relying on the default model implementation.
-final class MainDefaultPresenter<Model: MainModel>: MainPresenter {
+final class SearchDefaultPresenter<Model: SearchModel>: SearchPresenter {
 
     // MARK: - Properties
 
-    // MARK: MainPresenter protocol properties
+    // MARK: SearchPresenter protocol properties
 
     var query: String = "" {
         didSet { model.searchBooks(by: query) }
     }
     @Published
-    var books = [BookViewModel]()
+    private(set) var books = [BookViewModel]()
 
     // MARK: Private methods
 
@@ -92,7 +68,7 @@ final class MainDefaultPresenter<Model: MainModel>: MainPresenter {
 
     // MARK: - Methods
 
-    // MARK: MainPresenter protocol methods
+    // MARK: SearchPresenter protocol methods
 
     func toggleFavoriteState(bookID: String) {
         model.toggleFavoriteState(bookID: bookID)
@@ -116,11 +92,11 @@ final class MainDefaultPresenter<Model: MainModel>: MainPresenter {
 // MARK: -
 
 /// The mock presentation logic object for the book search screen preview.
-final class MainPreviewPresenter: MainPresenter {
+final class SearchPreviewPresenter: SearchPresenter {
 
     // MARK: - Properties
 
-    // MARK: MainPresenter protocol properties
+    // MARK: SearchPresenter protocol properties
 
     private(set) var books: [BookViewModel] = [
         BookViewModel(authors: "J.R.R. Tolkien", favorite: true, id: "1", title: "The Lord of the Rings"),
@@ -152,7 +128,7 @@ final class MainPreviewPresenter: MainPresenter {
 
     // MARK: - Methods
 
-    // MARK: MainPresenter protocol methods
+    // MARK: SearchPresenter protocol methods
 
     func toggleFavoriteState(bookID: String) {
         books = books.map {
@@ -162,18 +138,6 @@ final class MainPreviewPresenter: MainPresenter {
                           title: $0.title)
 
         }
-    }
-
-}
-
-// MARK: -
-
-private extension Book {
-
-    // MARK: - Methods
-
-    func asViewModel(favorite: Bool) -> BookViewModel {
-        BookViewModel(authors: authors.joined(separator: ", "), favorite: favorite, id: id, title: title)
     }
 
 }

@@ -1,5 +1,5 @@
 //
-//  MainViewListCell.swift
+//  SearchViewListCell.swift
 //  Worm
 //
 //  Created by Nikita Lazarev-Zubov on 6.6.2020.
@@ -8,8 +8,8 @@
 
 import SwiftUI
 
-/// Main screen list's cell.
-struct MainViewListCell<Presenter: MainPresenter>: View {
+/// Search screen list's cell.
+struct SearchViewListCell<Presenter: SearchPresenter>: View {
 
     // MARK: - Properties
 
@@ -69,7 +69,9 @@ struct MainViewListCell<Presenter: MainPresenter>: View {
     }
 
     private func makeFavoriteButtonAccessibilityLabel(for book: BookViewModel) -> Text {
-        return Text("\(book.title) favorite \((book.favorite ? "checked" : "unchecked"))")
+        return book.favorite
+            ? Text(String(format: "SearchScreenFavoriteMarkCheckedHintFormat", book.title))
+            : Text(String(format: "SearchScreenFavoriteMarkUncheckedHintFormat", book.title))
     }
 
 }

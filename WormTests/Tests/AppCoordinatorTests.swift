@@ -1,5 +1,5 @@
 //
-//  MainCoordinatorTests.swift
+//  AppCoordinatorTests.swift
 //  WormTests
 //
 //  Created by Nikita Lazarev-Zubov on 20.5.2020.
@@ -11,7 +11,7 @@ import CoreData
 import Worm
 import XCTest
 
-final class MainCoordinatorTests: XCTestCase {
+final class AppCoordinatorTests: XCTestCase {
 
     // MARK: - Methods
 
@@ -20,8 +20,7 @@ final class MainCoordinatorTests: XCTestCase {
         weak var weakWindow = window
 
         _ = AppCoordinator(window: window,
-                           context: CoreData.shared.managedObjectContext,
-                           catalogueService: CatalogueTestingMockService())
+                           context: CoreData.shared.managedObjectContext)
         XCTAssertNotNil(weakWindow)
 
         window = UIWindow()
@@ -31,8 +30,7 @@ final class MainCoordinatorTests: XCTestCase {
     func testWindowHasRootViewControllerAfterStart() {
         let window = UIWindow()
         let coordinator = AppCoordinator(window: window,
-                                         context: CoreData.shared.managedObjectContext,
-                                         catalogueService: CatalogueTestingMockService())
+                                         context: CoreData.shared.managedObjectContext)
         XCTAssertNil(window.rootViewController)
 
         coordinator.start()
@@ -42,8 +40,7 @@ final class MainCoordinatorTests: XCTestCase {
     func testWindowIsKeyAfterStart() {
         let window = UIWindow()
         let coordinator = AppCoordinator(window: window,
-                                         context: CoreData.shared.managedObjectContext,
-                                         catalogueService: CatalogueTestingMockService())
+                                         context: CoreData.shared.managedObjectContext)
         XCTAssertFalse(window.isKeyWindow)
 
         coordinator.start()

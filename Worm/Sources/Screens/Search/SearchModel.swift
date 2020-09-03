@@ -1,5 +1,5 @@
 //
-//  MainModel.swift
+//  SearchModel.swift
 //  Worm
 //
 //  Created by Nikita Lazarev-Zubov on 20.4.2020.
@@ -7,11 +7,10 @@
 //
 
 import CoreData
-import Foundation
 import GoodreadsService
 
 /// The search screen model.
-protocol MainModel: ObservableObject {
+protocol SearchModel: ObservableObject {
 
     // MARK: - Properties
 
@@ -38,11 +37,11 @@ protocol MainModel: ObservableObject {
 // MARK: -
 
 /// The search screen model implemented on top of a data providing service.
-final class MainServiceBasedModel: MainModel {
+final class SearchServiceBasedModel: SearchModel {
 
     // MARK: - Properties
 
-    // MARK: MainModel protocol properties
+    // MARK: SearchModel protocol properties
 
     @Published
     private(set) var books = [Book]()
@@ -73,7 +72,7 @@ final class MainServiceBasedModel: MainModel {
      */
     init(catalogueService: CatalogueService,
          favoritesService: FavoritesService,
-         dispatchQueue: DispatchQueue = DispatchQueue(label: "com.LazarevZubov.Worm.MainDefaultModel"),
+         dispatchQueue: DispatchQueue = DispatchQueue(label: "com.LazarevZubov.Worm.SearchDefaultModel"),
          queryDelay: DispatchTimeInterval? = .milliseconds(500)) {
         self.catalogueService = catalogueService
         self.favoritesService = favoritesService
@@ -85,7 +84,7 @@ final class MainServiceBasedModel: MainModel {
 
     // MARK: - Methods
 
-    // MARK: MainModel protocol methods
+    // MARK: SearchModel protocol methods
 
     func searchBooks(by query: String) {
         currentSearchWorkItem?.cancel()

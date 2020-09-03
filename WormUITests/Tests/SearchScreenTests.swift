@@ -1,5 +1,5 @@
 //
-//  MainScreenTests.swift
+//  SearchScreenTests.swift
 //  WormUITests
 //
 //  Created by Nikita Lazarev-Zubov on 20.5.2020.
@@ -8,7 +8,7 @@
 
 import XCTest
 
-final class MainScreenTests: XCTestCase {
+final class SearchScreenTests: XCTestCase {
 
     // MARK: - Properties
 
@@ -38,7 +38,14 @@ final class MainScreenTests: XCTestCase {
         continueAfterFailure = false
     }
 
-    func testSearchBarVisible() throws {
+    func testSearchInitiallyShown() {
+        let app = XCUIApplication()
+        app.launch()
+
+        XCTAssert(app.staticTexts["Search"].exists) // FIXME: Don't relay on hardcoded localizables.
+    }
+
+    func testSearchBarVisible() {
         let app = XCUIApplication()
         app.launch()
 
@@ -56,8 +63,37 @@ final class MainScreenTests: XCTestCase {
         wait(forElement: searchBar)
         searchBar.tap()
 
-        let updated = NSPredicate(format: "count > 0")
-        expectation(for: updated, evaluatedWith: app.keyboards)
+        let keyboardActivated = NSPredicate(format: "count > 0")
+        expectation(for: keyboardActivated, evaluatedWith: app.keyboards)
+        waitForExpectations(timeout: 5.0)
+    }
+
+    func testCancelSearchButtonVisible() {
+        let app = XCUIApplication()
+        app.launch()
+
+        let cancelButton = app.buttons["cancelSearchButton"]
+        XCTAssertTrue(cancelButton.exists)
+        XCTAssertTrue(cancelButton.isHittable)
+    }
+
+    func testCancelButtonHidesKeyboard() {
+        let app = XCUIApplication()
+        app.launch()
+
+        let searchBar = app.searchFields["searchBar"]
+        wait(forElement: searchBar)
+        searchBar.tap()
+
+        let keyboardActivated = NSPredicate(format: "count > 0")
+        expectation(for: keyboardActivated, evaluatedWith: app.keyboards)
+        waitForExpectations(timeout: 5.0)
+
+        let cancelButton = app.buttons["cancelSearchButton"]
+        cancelButton.tap()
+
+        let keyboardDeactivated = NSPredicate(format: "count == 0")
+        expectation(for: keyboardDeactivated, evaluatedWith: app.keyboards)
         waitForExpectations(timeout: 5.0)
     }
 
@@ -73,14 +109,13 @@ final class MainScreenTests: XCTestCase {
         app.launch()
 
         let searchBar = app.searchFields["searchBar"]
-        wait(forElement: searchBar)
         searchBar.tap()
         searchBar.typeText("Query")
 
         // Waits for update.
         let updated = NSPredicate(format: "count > 0")
         expectation(for: updated, evaluatedWith: app.tables.cells)
-        waitForExpectations(timeout: 2.0)
+        waitForExpectations(timeout: 5.0)
 
         var visibleCellsCount = 0
         let cells = app.tables.cells
@@ -104,14 +139,13 @@ final class MainScreenTests: XCTestCase {
         app.launch()
 
         let searchBar = app.searchFields["searchBar"]
-        wait(forElement: searchBar)
         searchBar.tap()
         searchBar.typeText("Query")
 
         // Waits for update.
         let updated = NSPredicate(format: "count > 0")
         expectation(for: updated, evaluatedWith: app.tables.cells)
-        waitForExpectations(timeout: 2.0)
+        waitForExpectations(timeout: 5.0)
 
         var visibleCellsCount = 0
         let cells = app.tables.cells
@@ -127,7 +161,8 @@ final class MainScreenTests: XCTestCase {
             .map { $0.split(separator: "–").last!.trimmingCharacters(in: .whitespacesAndNewlines) }
         // Depending on the screen size. In the specified order.
         for cellIndex in 0..<visibleCellsCount {
-            let favoriteButton = app.otherElements[expectedTexts[cellIndex] + " favorite unchecked"]
+            let favoriteButton = app.otherElements[String(format: "SearchScreenFavoriteMarkUncheckedHintFormat",
+                                                          expectedTexts[cellIndex])]
             XCTAssertTrue(favoriteButton.exists)
         }
     }
@@ -137,28 +172,26 @@ final class MainScreenTests: XCTestCase {
         app.launch()
 
         let searchBar = app.searchFields["searchBar"]
-        wait(forElement: searchBar)
         searchBar.tap()
         searchBar.typeText("Query")
 
-        // Waits for update.
+        // Wait for update.
         let updated = NSPredicate(format: "count > 0")
         expectation(for: updated, evaluatedWith: app.tables.cells)
-        waitForExpectations(timeout: 2.0)
+        waitForExpectations(timeout: 5.0)
 
-        let uncheckedFavoriteButtonLabel = mockedCells
+        let title = mockedCells
             .map { $0.split(separator: "–").last!.trimmingCharacters(in: .whitespacesAndNewlines) }
-            .first! + " favorite unchecked"
-        let uncheckedFavoriteButton = app.otherElements[uncheckedFavoriteButtonLabel]
+            .first!
+        let uncheckedFavoriteButtonLabel = String(format: "SearchScreenFavoriteMarkUncheckedHintFormat", title)
+        let uncheckedFavoriteButton = app.otherElements[uncheckedFavoriteButtonLabel].firstMatch
 
         XCTAssertTrue(uncheckedFavoriteButton.exists)
         XCTAssertTrue(uncheckedFavoriteButton.isHittable)
         uncheckedFavoriteButton.tap()
 
-        let checkedFavoriteButtonLabel = mockedCells
-            .map { $0.split(separator: "–").last!.trimmingCharacters(in: .whitespacesAndNewlines) }
-            .first! + " favorite checked"
-        let checkedFavoriteButton = app.otherElements[checkedFavoriteButtonLabel]
+        let checkedFavoriteButtonLabel = String(format: "SearchScreenFavoriteMarkCheckedHintFormat", title)
+        let checkedFavoriteButton = app.otherElements[checkedFavoriteButtonLabel].firstMatch
 
         XCTAssertTrue(checkedFavoriteButton.exists)
     }
@@ -172,24 +205,23 @@ final class MainScreenTests: XCTestCase {
         searchBar.tap()
         searchBar.typeText("Query")
 
-        // Waits for update.
+        // Wait for update.
         let updated = NSPredicate(format: "count > 0")
         expectation(for: updated, evaluatedWith: app.tables.cells)
-        waitForExpectations(timeout: 2.0)
+        waitForExpectations(timeout: 5.0)
 
-        let uncheckedFavoriteButtonLabel = mockedCells
+        let title = mockedCells
             .map { $0.split(separator: "–").last!.trimmingCharacters(in: .whitespacesAndNewlines) }
-            .first! + " favorite unchecked"
-        let uncheckedFavoriteButton = app.otherElements[uncheckedFavoriteButtonLabel]
+            .first!
+        let uncheckedFavoriteButtonLabel = String(format: "SearchScreenFavoriteMarkUncheckedHintFormat", title)
+        let uncheckedFavoriteButton = app.otherElements[uncheckedFavoriteButtonLabel].firstMatch
 
         XCTAssertTrue(uncheckedFavoriteButton.exists)
         XCTAssertTrue(uncheckedFavoriteButton.isHittable)
         uncheckedFavoriteButton.tap()
 
-        let checkedFavoriteButtonLabel = mockedCells
-            .map { $0.split(separator: "–").last!.trimmingCharacters(in: .whitespacesAndNewlines) }
-            .first! + " favorite checked"
-        let checkedFavoriteButton = app.otherElements[checkedFavoriteButtonLabel]
+        let checkedFavoriteButtonLabel = String(format: "SearchScreenFavoriteMarkCheckedHintFormat", title)
+        let checkedFavoriteButton = app.otherElements[checkedFavoriteButtonLabel].firstMatch
 
         XCTAssertTrue(checkedFavoriteButton.exists)
         XCTAssertTrue(checkedFavoriteButton.isHittable)

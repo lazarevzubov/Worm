@@ -1,5 +1,5 @@
 //
-//  MainView.swift
+//  SearchView.swift
 //  Worm
 //
 //  Created by Nikita Lazarev-Zubov on 13.4.2020.
@@ -9,23 +9,34 @@
 import SwiftUI
 import UIKit2SwiftUI
 
-// TODO: Check iPads.
+// TODO: Check accessibility.
 
 /// The book search screen.
-struct MainView<Presenter: MainPresenter>: View {
-
-    // TODO: Check dynamic fonts.
+struct SearchView<Presenter: SearchPresenter>: View {
 
     // MARK: - Properties
 
     // MARK: View protocol properties
 
     var body: some View {
-        VStack {
-            SearchBar(text: $presenter.query, placeholder: "SearchScreenSearchFieldPlaceholder") // TODO: Close on tap.
-            List(presenter.books) { MainViewListCell(book: $0, presenter: self.presenter) }
+        NavigationView {
+            VStack {
+                HStack {
+                    SearchBar(text: $presenter.query, placeholder: "SearchScreenSearchFieldPlaceholder")
+                    Button(action: {
+                        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder),
+                                                        to: nil,
+                                                        from: nil,
+                                                        for: nil)
+                        }) { Text("CancelButtonTitle") }
+                        .accessibility(identifier: "cancelSearchButton")
+                    Spacer(minLength: 16.0)
+                }
+                List(presenter.books) { SearchViewListCell(book: $0, presenter: self.presenter) }
+            }
+            .navigationBarTitle("SearchScreenTitle")
         }
-        .navigationBarTitle("SearchScreenTitle")
+        .onAppear { self.configureNavigationBar() }
     }
 
     // MARK: Private properties
@@ -41,7 +52,6 @@ struct MainView<Presenter: MainPresenter>: View {
      */
     init(presenter: Presenter) {
         self.presenter = presenter
-        configureNavigationBar()
     }
 
     // MARK: - Methods
@@ -49,7 +59,6 @@ struct MainView<Presenter: MainPresenter>: View {
     // MARK: Private methods
 
     private func configureNavigationBar() {
-        // Complement: UIColor(red: (190.0 / 255.0), green: (142.0 / 255.0), blue: (155.0 / 255.0), alpha: 1.0)
         UINavigationBar.appearance().backgroundColor = UIColor(red: (172.0 / 255.0),
                                                                green: (211.0 / 255.0),
                                                                blue: (214.0 / 255.0),
@@ -64,12 +73,12 @@ struct MainView<Presenter: MainPresenter>: View {
 // MARK: -
 
 /// Produces the book search screen preview for Xcode.
-struct MainView_Previews: PreviewProvider {
+struct SearchView_Previews: PreviewProvider {
 
     // MARK: - Properties
 
     // MARK: PreviewProvider protocol properties
 
-    static var previews: some View { MainView(presenter: MainPreviewPresenter()) }
+    static var previews: some View { SearchView(presenter: SearchPreviewPresenter()) }
 
 }
