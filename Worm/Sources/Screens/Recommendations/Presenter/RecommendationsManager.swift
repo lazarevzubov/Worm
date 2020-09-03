@@ -9,24 +9,27 @@
 import Combine
 import GoodreadsService
 
-// TODO: HeaderDoc.
+/// Owns logic of maintaing a list of recommedations.
 protocol RecommendationsManager: ObservableObject {
 
     // MARK: - Properties
 
-    // TODO: HeaderDoc.
+    /// A list of recommended books in ready-to-display order.
     var recommendations: [Book] { get }
 
     // MARK: - Methods
 
-    // TODO: HeaderDoc.
+    /**
+     Adds a recommendation to the list maintaining the latter's proper order.
+     - Parameter id: The ID of book to add.
+     */
     func addRecommendation(id: String)
 
 }
 
 // MARK: -
 
-// TODO: HeaderDoc.
+/// The default logic of the recommendations list maintenance.
 final class RecommendationsDefaultManager: RecommendationsManager {
 
     // MARK: - Properties
@@ -50,6 +53,13 @@ final class RecommendationsDefaultManager: RecommendationsManager {
 
     // MARK: - Initialization
 
+    /**
+     Creates a recommended books list handler.
+     - Parameters:
+        - bookDownloader: The block of code for a book retrieval.
+        - id: The ID of book to retrieve.
+        - book: The retrieved book, or `nil` if not exists or failed to retrieve.
+     */
     init(bookDownloader: @escaping (_ id: String, @escaping (_ book: Book?) -> Void) -> Void) {
         self.bookDownloader = bookDownloader
     }

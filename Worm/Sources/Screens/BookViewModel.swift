@@ -34,13 +34,15 @@ extension BookViewModel: Identifiable { }
 
 // MARK: -
 
-// MARK: -
-
 extension Book {
 
     // MARK: - Methods
 
-    // TODO: HeaderDoc.
+    /**
+     Creates a visual representation data object from the model representation of book.
+     - Parameter favorite: Whether the book is a favorite.
+     - Returns: The book data for a visual representation.
+     */
     func asViewModel(favorite: Bool) -> BookViewModel {
         BookViewModel(authors: authors.joined(separator: ", "), favorite: favorite, id: id, title: title)
     }

@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-// TODO: HeaderDoc.
+/// The main screen visual representation.
 struct MainView<SearchView: View, RecommendationsView: View>: View {
 
     // TODO: Check accessibility.
@@ -39,7 +39,12 @@ struct MainView<SearchView: View, RecommendationsView: View>: View {
 
     // MARK: - Initialization
 
-    // TODO: HeaderDoc.
+    /**
+     Creates a view object.
+     - Parameters:
+        - searchView: The Search tab visual representation.
+        - recommendationsView: The Recommendations tab visual representation.
+     */
     init(searchView: SearchView, recommendationsView: RecommendationsView) {
         self.searchView = searchView
         self.recommendationsView = recommendationsView
@@ -49,7 +54,7 @@ struct MainView<SearchView: View, RecommendationsView: View>: View {
 
 // MARK: -
 
-// TODO: HeaderDoc.
+/// The main screen visual representation for the SwiftUI Previews.
 struct MainView_Previews: PreviewProvider {
 
     // MARK: - Properties

@@ -8,7 +8,7 @@
 
 import GoodreadsService
 
-// TODO: HeaderDoc.
+/// The Recommendations screen data providing object.
 protocol RecommendationsModel {
 
     // MARK: - Properties
@@ -18,14 +18,20 @@ protocol RecommendationsModel {
 
     // MARK: - Methods
 
-    // TODO: HeaderDoc.
+    /**
+     Requests a book by its ID.
+     - Parameters:
+        - id: The book ID.
+        - resultCompletion: The block of code to execute when the result is ready.
+        - book: The retrieved book, or `nil`.
+     */
     func getBook(by id: String, resultCompletion: @escaping (_ book: Book?) -> Void)
     
 }
 
 // MARK: -
 
-// TODO: HeaderDoc.
+/// The Recommendations screen data providing object based on a real service.
 struct RecommendationsServiceBasedModel: RecommendationsModel {
 
     // MARK: - Properties
@@ -43,7 +49,12 @@ struct RecommendationsServiceBasedModel: RecommendationsModel {
 
     // MARK: - Initialization
 
-    // TODO: HeaderDoc.
+    /**
+     Creates a model.
+     - Parameters:
+        - catalogueService: The main data service of the app.
+        - favoritesService: The favorite books list manager.
+     */
     init(catalogueService: CatalogueService, favoritesService: FavoritesService) {
         self.catalogueService = catalogueService
         self.favoritesService = favoritesService

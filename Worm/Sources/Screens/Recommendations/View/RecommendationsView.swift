@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-// TODO: HeaderDoc.
+/// The visual representation of the Recommendations screen.
 struct RecommendationsView<Presenter: RecommendationsPresenter>: View {
 
     // TODO: Check accessibility.
@@ -37,6 +37,10 @@ struct RecommendationsView<Presenter: RecommendationsPresenter>: View {
 
     // MARK: - Initialization
 
+    /**
+     Creates the view object.
+     - Parameter presenter: The object responsible for Recommendations screen presentation logic.
+     */
     init(presenter: Presenter) {
         self.presenter = presenter
     }
@@ -59,7 +63,7 @@ struct RecommendationsView<Presenter: RecommendationsPresenter>: View {
 
 // MARK: -
 
-/// Produces the book search screen preview for Xcode.
+/// Produces the Recommendations screen preview for Xcode.
 struct RecommendationsView_Previews: PreviewProvider {
 
     // MARK: - Properties
@@ -69,4 +73,3 @@ struct RecommendationsView_Previews: PreviewProvider {
     static var previews: some View { RecommendationsView(presenter: RecommendationsPreviewPresenter()) }
 
 }
-

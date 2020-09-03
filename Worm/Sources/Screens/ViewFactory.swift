@@ -9,13 +9,19 @@
 import CoreData
 import SwiftUI
 
-// TODO: Update HeaderDoc.
-/// A set of creational methods for building the search screen of the app.
+/// A set of creational methods for building views for the app.
 enum ViewFactory {
 
     // MARK: - Methods
 
-    // TODO: HeaderDoc
+    /**
+     Creates the main view of the app.
+     - Parameters:
+        - context: An object space used to manipulate and track changes to CoreData managed objects.
+        - catalogueService: The main data service of the app.
+        - favoritesService: The favorite books list manager.
+     - Returns: The main view of the app.
+     */
     static func makeMainView(context: NSManagedObjectContext,
                              catalogueService: CatalogueService,
                              favoritesService: FavoritesService) -> some View {

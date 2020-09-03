@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-// TODO: HeaderDoc.
+/// The visual representation of a cell of the Recommendations list.
 struct RecommendationsViewListCell: View {
 
     // MARK: - Properties
@@ -41,7 +41,10 @@ struct RecommendationsViewListCell: View {
 
     // MARK: - Initialization
 
-    // TODO: HeaderDoc.
+    /**
+     Creates a cell.
+     - Parameter book: The corresponding to the cell book data for a visual representation.
+     */
     init(book: BookViewModel) {
         self.book = book
     }

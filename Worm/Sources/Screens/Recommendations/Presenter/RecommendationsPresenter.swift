@@ -13,24 +13,24 @@ import GoodreadsService
 // TODO: Marking favorites from this screen.
 // TODO: Blocking books from recommendations.
 
-// TODO: HeaderDoc.
+/// Object responsible for Recommendations screen presentation logic.
 protocol RecommendationsPresenter: ObservableObject {
 
     // MARK: - Properties
 
-    // TODO: HeaderDoc.
+    /// A list of view models represeting items on the Recommendations screen.
     var recommendations: [BookViewModel] { get }
 
     // MARK: - Methods
 
-    // TODO: HeaderDoc.
+    /// Called on view became visible.
     func onViewAppear()
 
 }
 
 // MARK: -
 
-// TODO: HeaderDoc.
+/// The default implementation of the Recommendations screen presenter.
 final class RecommendationsDefaultPresenter<Manager: RecommendationsManager>: RecommendationsPresenter {
 
     // MARK: - Properties
@@ -49,7 +49,13 @@ final class RecommendationsDefaultPresenter<Manager: RecommendationsManager>: Re
 
     // MARK: - Initialization
 
-    // TODO: HeaderDoc.
+    /**
+     Creates a presenter object.
+     - Parameters:
+        - model: Data providing object.
+        - recommendationsManager: Object that owns logic of maintaing a list of recommedations.
+        - updateQueue: Queue on which presentation data is passed to view.
+     */
     init(model: RecommendationsModel, recommendationsManager: Manager, updateQueue: DispatchQueue = .main) {
         self.model = model
         self.recommendationsManager = recommendationsManager
@@ -98,7 +104,7 @@ final class RecommendationsDefaultPresenter<Manager: RecommendationsManager>: Re
 
 // MARK: -
 
-// TODO: HeaderDoc.
+/// The implementation of the Recommendations screen presenter that used for SwiftUI previews.
 final class RecommendationsPreviewPresenter: RecommendationsPresenter {
 
     // MARK: - Properties
