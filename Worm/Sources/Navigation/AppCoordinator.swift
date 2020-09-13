@@ -7,8 +7,6 @@
 //
 
 import Coordinator
-import CoreData
-import GoodreadsService
 import SwiftUI
 
 /// Handles the navigation to and within the main screen of the app.
@@ -18,28 +16,23 @@ final class AppCoordinator: Coordinator {
 
     // MARK: Private properties
 
-    private let context: NSManagedObjectContext
+    private let catalogueService: CatalogueService
+    private let favoritesService: FavoritesService
     private weak var window: UIWindow?
-    private lazy var catalogueService: CatalogueService = {
-        #if TEST
-        return CatalogueMockService()
-        #else
-        return GoodreadsService(key: Settings.goodreadsAPIKey)
-        #endif
-    }()
-    private lazy var favoritesService: FavoritesService = FavoritesPersistenceService(persistenceContext: context)
 
     // MARK: - Initialization
 
+    // TODO: Update HeaderDoc.
     /**
      Creates a coordinator.
      - Parameters:
         - window: The app's key window.
         - context: An object space for manipulating and tracking changes to managed objects.
      */
-    init(window: UIWindow, context: NSManagedObjectContext) {
+    init(window: UIWindow, catalogueService: CatalogueService, favoritesService: FavoritesService) {
         self.window = window
-        self.context = context
+        self.catalogueService = catalogueService
+        self.favoritesService = favoritesService
     }
 
     // MARK: - Methods
@@ -47,9 +40,7 @@ final class AppCoordinator: Coordinator {
     // MARK: Coordinator protocol methods
 
     func start() {
-        let view = ViewFactory.makeMainView(context: context,
-                                            catalogueService: catalogueService,
-                                            favoritesService: favoritesService)
+        let view = ViewFactory.makeMainView(catalogueService: catalogueService, favoritesService: favoritesService)
         let controller = UIHostingController(rootView: view)
 
         window?.rootViewController = controller
