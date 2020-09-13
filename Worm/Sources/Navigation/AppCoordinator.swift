@@ -10,7 +10,6 @@ import Coordinator
 import CoreData
 import GoodreadsService
 import SwiftUI
-import UIKit
 
 /// Handles the navigation to and within the main screen of the app.
 final class AppCoordinator: Coordinator {

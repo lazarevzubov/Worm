@@ -6,7 +6,8 @@
 //  Copyright © 2020 Nikita Lazarev-Zubov. All rights reserved.
 //
 
-import CoreData
+import Combine
+import Foundation
 import GoodreadsService
 
 /// The search screen model.

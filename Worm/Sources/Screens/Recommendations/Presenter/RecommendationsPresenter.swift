@@ -8,7 +8,6 @@
 
 import Combine
 import Foundation
-import GoodreadsService
 
 // TODO: Marking favorites from this screen.
 // TODO: Blocking books from recommendations.
