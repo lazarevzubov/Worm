@@ -156,13 +156,13 @@
 			path = Catalogue;
 			sourceTree = "<group>";
 		};
-		4E2BB74024B79D2E006940A0 /* Presenter */ = {
+		4E2BB74024B79D2E006940A0 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				4EF858A424AA6C13007D7DF0 /* RecommendationsPresenter.swift */,
 				4E2BB74124B79D47006940A0 /* RecommendationsManager.swift */,
+				4EF858A624AA6C22007D7DF0 /* RecommendationsModel.swift */,
 			);
-			path = Presenter;
+			path = Model;
 			sourceTree = "<group>";
 		};
 		4E42D1FB24448362002CAA4E = {
@@ -303,9 +303,9 @@
 		4EAD35EA24A91F2B00E6866A /* Recommendations */ = {
 			isa = PBXGroup;
 			children = (
-				4E2BB74024B79D2E006940A0 /* Presenter */,
+				4E2BB74024B79D2E006940A0 /* Model */,
 				4E55D0F224BF6A5B00611EA7 /* View */,
-				4EF858A624AA6C22007D7DF0 /* RecommendationsModel.swift */,
+				4EF858A424AA6C13007D7DF0 /* RecommendationsPresenter.swift */,
 			);
 			path = Recommendations;
 			sourceTree = "<group>";

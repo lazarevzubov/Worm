@@ -41,7 +41,7 @@ final class RecommendationsDefaultManager: RecommendationsManager {
 
     // MARK: Private properties
 
-    private let bookDownloader: (_ id: String, @escaping (_ book: Book?) -> Void) -> Void
+    private let catalogueService: CatalogueService
     private var prioritizedRecommendations = [String: (priority: Int, book: Book?)]() {
         didSet {
             recommendations = prioritizedRecommendations
@@ -53,6 +53,7 @@ final class RecommendationsDefaultManager: RecommendationsManager {
 
     // MARK: - Initialization
 
+    // TODO: Update HeaderDoc.
     /**
      Creates a recommended books list handler.
      - Parameters:
@@ -60,8 +61,8 @@ final class RecommendationsDefaultManager: RecommendationsManager {
         - id: The ID of book to retrieve.
         - book: The retrieved book, or `nil` if not exists or failed to retrieve.
      */
-    init(bookDownloader: @escaping (_ id: String, @escaping (_ book: Book?) -> Void) -> Void) {
-        self.bookDownloader = bookDownloader
+    init(catalogueService: CatalogueService) {
+        self.catalogueService = catalogueService
     }
 
     // MARK: - Methods
@@ -73,11 +74,11 @@ final class RecommendationsDefaultManager: RecommendationsManager {
             prioritizedRecommendations[id] = (bookDescriptor.priority + 1, bookDescriptor.book)
         } else {
             prioritizedRecommendations[id] = (1, nil)
-            bookDownloader(id) { [weak self] in
+            catalogueService.getBook(by: id) { [weak self] in
                 guard let self = self,
                     let bookDescriptor = self.prioritizedRecommendations[id],
                     bookDescriptor.book == nil else {
-                    return
+                        return
                 }
                 self.prioritizedRecommendations[id] = (bookDescriptor.priority + 1, $0)
             }

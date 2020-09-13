@@ -42,7 +42,8 @@ enum ViewFactory {
                                                 favoritesService: FavoritesService) -> some View {
         let model = RecommendationsServiceBasedModel(catalogueService: catalogueService,
                                                      favoritesService: favoritesService)
-        let recommendationsManager = RecommendationsDefaultManager { model.getBook(by: $0, resultCompletion: $1) }
+        let recommendationsManager = RecommendationsDefaultManager(catalogueService: catalogueService)
+        
         let presenter = RecommendationsDefaultPresenter(model: model, recommendationsManager: recommendationsManager)
 
         return RecommendationsView(presenter: presenter)
