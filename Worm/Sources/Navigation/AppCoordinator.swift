@@ -22,12 +22,12 @@ final class AppCoordinator: Coordinator {
 
     // MARK: - Initialization
 
-    // TODO: Update HeaderDoc.
     /**
      Creates a coordinator.
      - Parameters:
         - window: The app's key window.
-        - context: An object space for manipulating and tracking changes to managed objects.
+        - catalogueService: The data service of the app.
+        - favoritesService: The favorite books list manager.
      */
     init(window: UIWindow, catalogueService: CatalogueService, favoritesService: FavoritesService) {
         self.window = window
