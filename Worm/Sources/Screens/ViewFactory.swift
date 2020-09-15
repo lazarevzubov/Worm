@@ -40,11 +40,9 @@ enum ViewFactory {
 
     private static func makeRecommendationsView(catalogueService: CatalogueService,
                                                 favoritesService: FavoritesService) -> some View {
-        let model = RecommendationsServiceBasedModel(catalogueService: catalogueService,
-                                                     favoritesService: favoritesService)
-        let recommendationsManager = RecommendationsDefaultManager(catalogueService: catalogueService)
-        
-        let presenter = RecommendationsDefaultPresenter(model: model, recommendationsManager: recommendationsManager)
+        let recommendationsManager = RecommendationsDefaultModel(catalogueService: catalogueService,
+                                                                   favoritesService: favoritesService)
+        let presenter = RecommendationsDefaultPresenter(recommendationsManager: recommendationsManager)
 
         return RecommendationsView(presenter: presenter)
     }

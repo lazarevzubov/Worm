@@ -16,21 +16,21 @@ final class RecommendationsDefaultManagerTests: XCTestCase {
     // MARK: - Methods
 
     func testRecommendationsInitiallyEmpty() {
-        let manager = RecommendationsDefaultManager { _, _ in
+        let manager = RecommendationsDefaultModel { _, _ in
             // Do nothing.
         }
         XCTAssertTrue(manager.recommendations.isEmpty)
     }
 
     func testAddNewRecommendationID() {
-        let manager = RecommendationsDefaultManager { $1(Book(authors: ["Author"], title: "Title", id: $0)) }
+        let manager = RecommendationsDefaultModel { $1(Book(authors: ["Author"], title: "Title", id: $0)) }
 
         manager.addRecommendation(id: "1")
         XCTAssertEqual(manager.recommendations.count, 1)
     }
 
     func testAddExistingRecommendationID() {
-        let manager = RecommendationsDefaultManager { $1(Book(authors: ["Author"], title: "Title", id: $0)) }
+        let manager = RecommendationsDefaultModel { $1(Book(authors: ["Author"], title: "Title", id: $0)) }
 
         let count = 2
         for _ in 0..<count {
@@ -40,7 +40,7 @@ final class RecommendationsDefaultManagerTests: XCTestCase {
     }
 
     func testIncreaseRecommendationIDPriority() {
-        let manager = RecommendationsDefaultManager { $1(Book(authors: ["Author"], title: "Title", id: $0)) }
+        let manager = RecommendationsDefaultModel { $1(Book(authors: ["Author"], title: "Title", id: $0)) }
 
         manager.addRecommendation(id: "1")
         manager.addRecommendation(id: "2")

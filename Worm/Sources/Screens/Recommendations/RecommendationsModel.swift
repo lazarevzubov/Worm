@@ -1,5 +1,5 @@
 //
-//  RecommendationsManager.swift
+//  RecommendationsModel.swift
 //  Worm
 //
 //  Created by Nikita Lazarev-Zubov on 9.7.2020.
@@ -9,28 +9,22 @@
 import Combine
 import GoodreadsService
 
+// TODO: Update HeaderDoc.
+
 /// Owns logic of maintaing a list of recommedations.
-protocol RecommendationsManager: ObservableObject {
+protocol RecommendationsModel: ObservableObject {
 
     // MARK: - Properties
 
     /// A list of recommended books in ready-to-display order.
     var recommendations: [Book] { get }
 
-    // MARK: - Methods
-
-    /**
-     Adds a recommendation to the list maintaining the latter's proper order.
-     - Parameter id: The ID of book to add.
-     */
-    func addRecommendation(id: String)
-
 }
 
 // MARK: -
 
 /// The default logic of the recommendations list maintenance.
-final class RecommendationsDefaultManager: RecommendationsManager {
+final class RecommendationsDefaultModel: RecommendationsModel {
 
     // MARK: - Properties
 
@@ -42,6 +36,7 @@ final class RecommendationsDefaultManager: RecommendationsManager {
     // MARK: Private properties
 
     private let catalogueService: CatalogueService
+    private let favoritesService: FavoritesService
     private var prioritizedRecommendations = [String: (priority: Int, book: Book?)]() {
         didSet {
             recommendations = prioritizedRecommendations
@@ -53,7 +48,6 @@ final class RecommendationsDefaultManager: RecommendationsManager {
 
     // MARK: - Initialization
 
-    // TODO: Update HeaderDoc.
     /**
      Creates a recommended books list handler.
      - Parameters:
@@ -61,15 +55,36 @@ final class RecommendationsDefaultManager: RecommendationsManager {
         - id: The ID of book to retrieve.
         - book: The retrieved book, or `nil` if not exists or failed to retrieve.
      */
-    init(catalogueService: CatalogueService) {
+    init(catalogueService: CatalogueService, favoritesService: FavoritesService) {
         self.catalogueService = catalogueService
+        self.favoritesService = favoritesService
+        
+        updateFavoriteBooks()
     }
 
     // MARK: - Methods
 
-    // MARK: RecommendationsManager protocol methods
+    // MARK: Private methods
 
-    func addRecommendation(id: String) {
+    private func updateFavoriteBooks() {
+        favoriteBookIDs().forEach { addSimilarBooksToRecommendations(from: $0) }
+    }
+
+    private func favoriteBookIDs() -> [String] {
+        return favoritesService.favoriteBooks.compactMap { $0.id }
+    }
+
+    private func addSimilarBooksToRecommendations(from bookID: String) {
+        catalogueService.getBook(by: bookID) { [weak self] in
+            self?.addSimilarBooksToRecommendations(from: $0?.similarBookIDs ?? [])
+        }
+    }
+
+    private func addSimilarBooksToRecommendations(from ids: [String]) {
+        ids.forEach { self.addRecommendation(id: $0) }
+    }
+
+    private func addRecommendation(id: String) {
         if let bookDescriptor = prioritizedRecommendations[id] {
             prioritizedRecommendations[id] = (bookDescriptor.priority + 1, bookDescriptor.book)
         } else {
