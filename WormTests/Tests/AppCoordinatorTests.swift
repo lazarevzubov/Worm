@@ -20,7 +20,8 @@ final class AppCoordinatorTests: XCTestCase {
         weak var weakWindow = window
 
         _ = AppCoordinator(window: window,
-                           context: CoreData.shared.managedObjectContext)
+                           catalogueService: CatalogueMockService(),
+                           favoritesService: FavoritesMockService())
         XCTAssertNotNil(weakWindow)
 
         window = UIWindow()
@@ -30,7 +31,8 @@ final class AppCoordinatorTests: XCTestCase {
     func testWindowHasRootViewControllerAfterStart() {
         let window = UIWindow()
         let coordinator = AppCoordinator(window: window,
-                                         context: CoreData.shared.managedObjectContext)
+                                         catalogueService: CatalogueMockService(),
+                                         favoritesService: FavoritesMockService())
         XCTAssertNil(window.rootViewController)
 
         coordinator.start()
@@ -40,7 +42,8 @@ final class AppCoordinatorTests: XCTestCase {
     func testWindowIsKeyAfterStart() {
         let window = UIWindow()
         let coordinator = AppCoordinator(window: window,
-                                         context: CoreData.shared.managedObjectContext)
+                                         catalogueService: CatalogueMockService(),
+                                         favoritesService: FavoritesMockService())
         XCTAssertFalse(window.isKeyWindow)
 
         coordinator.start()

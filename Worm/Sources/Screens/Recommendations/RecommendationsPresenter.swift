@@ -47,16 +47,14 @@ final class RecommendationsDefaultPresenter<Model: RecommendationsModel>: Recomm
 
     // MARK: - Initialization
 
-    // TODO: Update HeaderDoc.
     /**
      Creates a presenter object.
      - Parameters:
-        - model: Data providing object.
-        - recommendationsManager: Object that owns logic of maintaing a list of recommedations.
+        - recommendationsModel: Data providing object.
         - updateQueue: Queue on which presentation data is passed to view.
      */
-    init(recommendationsManager: Model, updateQueue: DispatchQueue = .main) {
-        self.model = recommendationsManager
+    init(recommendationsModel: Model, updateQueue: DispatchQueue = .main) {
+        self.model = recommendationsModel
         self.updateQueue = updateQueue
     }
 

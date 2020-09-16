@@ -16,79 +16,11 @@ final class RecommendationsDefaultPresenterTests: XCTestCase {
     // MARK: - Methods
 
     func testRecommendationsInitiallyEmpty() {
-        let presenter = RecommendationsDefaultPresenter(model: RecommendationsMockModel(),
-                                                        recommendationsManager: RecommendationsMockModel())
+        let presenter = RecommendationsDefaultPresenter(recommendationsModel: RecommendationsMockModel())
         XCTAssertTrue(presenter.recommendations.isEmpty)
     }
 
-    func testRocommendationsUpdateOnViewAppear() {
-        let bookID = "1"
-        let books = [Book(authors: [], title: "Title", id: bookID, similarBookIDs: [bookID])]
-        let model = RecommendationsMockModel(books: books)
-        let recommendationsManager = RecommendationsMockModel(books: books)
-
-        let queue = DispatchQueue(label: "com.LazarevZubov.Worm.RecommendationsDefaultPresenterTests")
-        let presenter = RecommendationsDefaultPresenter(model: model,
-                                                        recommendationsManager: recommendationsManager,
-                                                        updateQueue: queue)
-
-        presenter.onViewAppear()
-        queue.sync {
-            // Just sync the the presenter update.
-        }
-
-        XCTAssertEqual(presenter.recommendations, books.map { $0.asViewModel(favorite: true) })
-    }
-
-    func testRecommendationsUpdate() {
-        let bookID = "1"
-        let books = [Book(authors: [], title: "Title", id: bookID, similarBookIDs: [bookID])]
-        let recommendationsManager = RecommendationsMockModel(books: books)
-
-        let queue = DispatchQueue(label: "com.LazarevZubov.Worm.RecommendationsDefaultPresenterTests")
-        let presenter = RecommendationsDefaultPresenter(model: RecommendationsMockModel(),
-                                                        recommendationsManager: recommendationsManager,
-                                                        updateQueue: queue)
-        presenter.onViewAppear()
-
-        recommendationsManager.addRecommendation(id: bookID)
-        queue.sync {
-            // Just sync the the presenter update.
-        }
-        XCTAssertEqual(presenter.recommendations, books.map { $0.asViewModel(favorite: true) })
-    }
-
-}
-
-// MARK: -
-
-private struct RecommendationsMockModel: RecommendationsModel {
-
-    // MARK: - Properties
-
-    // MARK: RecommendationsModel protocol properties
-
-    var favoriteBookIDs: [String] {
-        return books.map { $0.id }
-    }
-
-    // MARK: Private properties
-
-    private let books: [Book]
-
-    // MARK: - Initiazliation
-
-    init(books: [Book] = [Book]()) {
-        self.books = books
-    }
-
-    // MARK: - Methods
-
-    // MARK: RecommendationsModel protocol methods
-
-    func getBook(by id: String, resultCompletion: @escaping (Book?) -> Void) {
-        resultCompletion(books.first { $0.id == id })
-    }
+    // TODO: Complement with proper tests.
 
 }
 
@@ -103,24 +35,10 @@ private final class RecommendationsMockModel: RecommendationsModel {
     @Published
     var recommendations = [Book]()
 
-    // MARK: Private properties
-
-    private let books: [Book]
-
     // MARK: - Initiazliation
 
-    init(books: [Book] = [Book]()) {
-        self.books = books
-    }
-
-    // MARK: - Methods
-
-    // MARK: RecommendationsManager protocol methods
-
-    func addRecommendation(id: String) {
-        if let recommendedBook = books.first(where: { $0.id == id }) {
-            recommendations.append(recommendedBook)
-        }
+    init(recommendations: [Book] = [Book]()) {
+        self.recommendations = recommendations
     }
 
 }
