@@ -145,7 +145,6 @@ final class SearchServiceBasedModel: SearchModel {
     }
 
     private func appendIfNeeded(book: Book) {
-        // TODO: Find a way to test it.
         if currentSearchResult.contains(book.id) {
             books.append(book)
         }
