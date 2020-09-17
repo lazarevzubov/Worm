@@ -41,4 +41,12 @@ private final class RecommendationsMockModel: RecommendationsModel {
         self.recommendations = recommendations
     }
 
+    // MARK: - Methods
+
+    // MARK: RecommendationsModel protocl methods
+
+    func fetchRecommendations() {
+        // Do nothing.
+    }
+
 }

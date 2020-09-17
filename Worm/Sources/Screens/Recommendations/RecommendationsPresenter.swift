@@ -63,18 +63,19 @@ final class RecommendationsDefaultPresenter<Model: RecommendationsModel>: Recomm
     // MARK: RecommendationsPresenter protocol methods
 
     func onViewAppear() {
-        bind(recommendationsManager: model)
+        bind(recommendationsModel: model)
+        model.fetchRecommendations() // TODO: Unit test fetching on appear.
     }
 
     // MARK: Private methods
 
-    private func bind(recommendationsManager: Model) {
-        recommendationsManager
+    private func bind(recommendationsModel: Model) {
+        recommendationsModel
             .objectWillChange
             .receive(on: updateQueue)
             .sink { [weak self] _ in
                 self?.objectWillChange.send()
-                self?.recommendations = recommendationsManager.recommendations.map { $0.asViewModel(favorite: true) }
+                self?.recommendations = recommendationsModel.recommendations.map { $0.asViewModel(favorite: true) }
         }
         .store(in: &cancellables)
     }

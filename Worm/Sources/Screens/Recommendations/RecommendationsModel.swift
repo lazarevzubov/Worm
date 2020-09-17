@@ -19,6 +19,11 @@ protocol RecommendationsModel: ObservableObject {
     /// A list of recommended books in ready-to-display order.
     var recommendations: [Book] { get }
 
+    // MARK: - Methods
+
+    // TODO: HeaderDoc.
+    func fetchRecommendations()
+
 }
 
 // MARK: -
@@ -30,6 +35,7 @@ final class RecommendationsDefaultModel: RecommendationsModel {
 
     // MARK: RecommendationsManager protocol properties
 
+    // TODO: Unit test initially empty.
     @Published
     var recommendations = [Book]()
 
@@ -59,17 +65,18 @@ final class RecommendationsDefaultModel: RecommendationsModel {
     init(catalogueService: CatalogueService, favoritesService: FavoritesService) {
         self.catalogueService = catalogueService
         self.favoritesService = favoritesService
-        
-        updateFavoriteBooks()
     }
 
     // MARK: - Methods
 
-    // MARK: Private methods
+    // MARK: RecommendationsModel protocol methods
 
-    private func updateFavoriteBooks() {
+    // TODO: Unit test.
+    func fetchRecommendations() {
         favoriteBookIDs().forEach { addSimilarBooksToRecommendations(from: $0) }
     }
+
+    // MARK: Private methods
 
     private func favoriteBookIDs() -> [String] {
         return favoritesService.favoriteBooks.compactMap { $0.id }
