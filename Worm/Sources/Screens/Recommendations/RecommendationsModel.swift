@@ -48,6 +48,7 @@ final class RecommendationsDefaultModel: RecommendationsModel {
 
     // MARK: - Initialization
 
+    // TODO: Update HeaderDoc.
     /**
      Creates a recommended books list handler.
      - Parameters:
@@ -95,7 +96,7 @@ final class RecommendationsDefaultModel: RecommendationsModel {
                     bookDescriptor.book == nil else {
                         return
                 }
-                self.prioritizedRecommendations[id] = (bookDescriptor.priority + 1, $0)
+                self.prioritizedRecommendations[id] = (bookDescriptor.priority, $0)
             }
         }
     }
