@@ -16,111 +16,46 @@ final class RecommendationsDefaultPresenterTests: XCTestCase {
     // MARK: - Methods
 
     func testRecommendationsInitiallyEmpty() {
-        let presenter = RecommendationsDefaultPresenter(model: RecommendationsMockModel(),
-                                                        recommendationsManager: RecommendationsMockManager())
+        let presenter = RecommendationsDefaultPresenter(recommendationsModel: RecommendationsMockModel())
         XCTAssertTrue(presenter.recommendations.isEmpty)
     }
 
-    func testRocommendationsUpdateOnViewAppear() {
-        let bookID = "1"
-        let books = [Book(authors: [], title: "Title", id: bookID, similarBookIDs: [bookID])]
-        let model = RecommendationsMockModel(books: books)
-        let recommendationsManager = RecommendationsMockManager(books: books)
+    func testRecommendationsFetchedOnViewAppear() {
+        let model = RecommendationsMockModel()
+        XCTAssertFalse(model.recommendationsFetched)
 
-        let queue = DispatchQueue(label: "com.LazarevZubov.Worm.RecommendationsDefaultPresenterTests")
-        let presenter = RecommendationsDefaultPresenter(model: model,
-                                                        recommendationsManager: recommendationsManager,
-                                                        updateQueue: queue)
-
+        let presenter = RecommendationsDefaultPresenter(recommendationsModel: model)
         presenter.onViewAppear()
-        queue.sync {
-            // Just sync the the presenter update.
-        }
-
-        XCTAssertEqual(presenter.recommendations, books.map { $0.asViewModel(favorite: true) })
-    }
-
-    func testRecommendationsUpdate() {
-        let bookID = "1"
-        let books = [Book(authors: [], title: "Title", id: bookID, similarBookIDs: [bookID])]
-        let recommendationsManager = RecommendationsMockManager(books: books)
-
-        let queue = DispatchQueue(label: "com.LazarevZubov.Worm.RecommendationsDefaultPresenterTests")
-        let presenter = RecommendationsDefaultPresenter(model: RecommendationsMockModel(),
-                                                        recommendationsManager: recommendationsManager,
-                                                        updateQueue: queue)
-        presenter.onViewAppear()
-
-        recommendationsManager.addRecommendation(id: bookID)
-        queue.sync {
-            // Just sync the the presenter update.
-        }
-        XCTAssertEqual(presenter.recommendations, books.map { $0.asViewModel(favorite: true) })
+        XCTAssertTrue(model.recommendationsFetched)
     }
 
 }
 
 // MARK: -
 
-private struct RecommendationsMockModel: RecommendationsModel {
+private final class RecommendationsMockModel: RecommendationsModel {
 
     // MARK: - Properties
 
-    // MARK: RecommendationsModel protocol properties
-
-    var favoriteBookIDs: [String] {
-        return books.map { $0.id }
-    }
-
-    // MARK: Private properties
-
-    private let books: [Book]
-
-    // MARK: - Initiazliation
-
-    init(books: [Book] = [Book]()) {
-        self.books = books
-    }
-
-    // MARK: - Methods
-
-    // MARK: RecommendationsModel protocol methods
-
-    func getBook(by id: String, resultCompletion: @escaping (Book?) -> Void) {
-        resultCompletion(books.first { $0.id == id })
-    }
-
-}
-
-// MARK: -
-
-private final class RecommendationsMockManager: RecommendationsManager {
-
-    // MARK: - Properties
+    private(set) var recommendationsFetched = false
 
     // MARK: RecommendationsManager protocol properties
 
     @Published
     var recommendations = [Book]()
 
-    // MARK: Private properties
-
-    private let books: [Book]
-
     // MARK: - Initiazliation
 
-    init(books: [Book] = [Book]()) {
-        self.books = books
+    init(recommendations: [Book] = []) {
+        self.recommendations = recommendations
     }
 
     // MARK: - Methods
 
-    // MARK: RecommendationsManager protocol methods
+    // MARK: RecommendationsModel protocl methods
 
-    func addRecommendation(id: String) {
-        if let recommendedBook = books.first(where: { $0.id == id }) {
-            recommendations.append(recommendedBook)
-        }
+    func fetchRecommendations() {
+        recommendationsFetched = true
     }
 
 }

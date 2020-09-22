@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		4E1ABCF024C2381D00237C88 /* BookTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E1ABCEF24C2381C00237C88 /* BookTests.swift */; };
 		4E1E3FBC24EDAC9300754A96 /* RecommendationsScreenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E1E3FBB24EDAC9300754A96 /* RecommendationsScreenTests.swift */; };
-		4E2BB74224B79D47006940A0 /* RecommendationsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E2BB74124B79D47006940A0 /* RecommendationsManager.swift */; };
+		4E2BB74224B79D47006940A0 /* RecommendationsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E2BB74124B79D47006940A0 /* RecommendationsModel.swift */; };
 		4E3093272451F86B00E1610E /* CatalogueService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E3093262451F86B00E1610E /* CatalogueService.swift */; };
 		4E42D20824448362002CAA4E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E42D20724448362002CAA4E /* AppDelegate.swift */; };
 		4E42D20A24448362002CAA4E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E42D20924448362002CAA4E /* SceneDelegate.swift */; };
@@ -36,7 +36,7 @@
 		4E78D97A2479AF5A00906542 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E78D9792479AF5A00906542 /* Settings.swift */; };
 		4E78D987247EE4D500906542 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4E78D989247EE4D500906542 /* Localizable.strings */; };
 		4E796BE02465CC2500C6543A /* ViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E796BDF2465CC2500C6543A /* ViewFactory.swift */; };
-		4E7DE9AF24CA1C8700518FCF /* RecommendationsDefaultManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E7DE9AE24CA1C8700518FCF /* RecommendationsDefaultManagerTests.swift */; };
+		4E82255225129D61007FAFD9 /* CoreDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E82255125129D61007FAFD9 /* CoreDataTests.swift */; };
 		4E9BEFAA248C28C3006B3AAD /* SearchViewListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E9BEFA9248C28C3006B3AAD /* SearchViewListCell.swift */; };
 		4EA637382496B1A900DF2936 /* Worm.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4E42D20B24448362002CAA4E /* Worm.xcdatamodeld */; };
 		4EAD35E924A5253200E6866A /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EAD35E824A5253200E6866A /* MainView.swift */; };
@@ -45,7 +45,6 @@
 		4EE8272E244CB51E00102B5D /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EE8272D244CB51E00102B5D /* AppCoordinator.swift */; };
 		4EE82746244DF0E700102B5D /* SearchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EE82745244DF0E700102B5D /* SearchModel.swift */; };
 		4EF858A524AA6C13007D7DF0 /* RecommendationsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EF858A424AA6C13007D7DF0 /* RecommendationsPresenter.swift */; };
-		4EF858A724AA6C22007D7DF0 /* RecommendationsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EF858A624AA6C22007D7DF0 /* RecommendationsModel.swift */; };
 		4EFD7E6024994142008A7606 /* Worm.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4E42D20B24448362002CAA4E /* Worm.xcdatamodeld */; };
 		4EFD7E61249A96DA008A7606 /* AppCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E4A384024758EE5008AB1C2 /* AppCoordinatorTests.swift */; };
 		4EFD7E62249A96DC008A7606 /* SearchServiceBasedModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ECAA5B924713A38003D3F8D /* SearchServiceBasedModelTests.swift */; };
@@ -72,7 +71,7 @@
 /* Begin PBXFileReference section */
 		4E1ABCEF24C2381C00237C88 /* BookTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookTests.swift; sourceTree = "<group>"; };
 		4E1E3FBB24EDAC9300754A96 /* RecommendationsScreenTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationsScreenTests.swift; sourceTree = "<group>"; };
-		4E2BB74124B79D47006940A0 /* RecommendationsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationsManager.swift; sourceTree = "<group>"; };
+		4E2BB74124B79D47006940A0 /* RecommendationsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationsModel.swift; sourceTree = "<group>"; };
 		4E3093262451F86B00E1610E /* CatalogueService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogueService.swift; sourceTree = "<group>"; };
 		4E42D20424448362002CAA4E /* Worm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Worm.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4E42D20724448362002CAA4E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -105,7 +104,7 @@
 		4E78D9792479AF5A00906542 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		4E78D988247EE4D500906542 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		4E796BDF2465CC2500C6543A /* ViewFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewFactory.swift; sourceTree = "<group>"; };
-		4E7DE9AE24CA1C8700518FCF /* RecommendationsDefaultManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationsDefaultManagerTests.swift; sourceTree = "<group>"; };
+		4E82255125129D61007FAFD9 /* CoreDataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataTests.swift; sourceTree = "<group>"; };
 		4E9BEFA9248C28C3006B3AAD /* SearchViewListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewListCell.swift; sourceTree = "<group>"; };
 		4EAD35E824A5253200E6866A /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		4EAD35EB24A91F4600E6866A /* RecommendationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationsView.swift; sourceTree = "<group>"; };
@@ -115,7 +114,6 @@
 		4EE8272D244CB51E00102B5D /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		4EE82745244DF0E700102B5D /* SearchModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchModel.swift; sourceTree = "<group>"; };
 		4EF858A424AA6C13007D7DF0 /* RecommendationsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationsPresenter.swift; sourceTree = "<group>"; };
-		4EF858A624AA6C22007D7DF0 /* RecommendationsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationsModel.swift; sourceTree = "<group>"; };
 		4EFD7E66249BE425008A7606 /* CatalogueTestingMockService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogueTestingMockService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -154,15 +152,6 @@
 				4E78D9792479AF5A00906542 /* Settings.swift */,
 			);
 			path = Catalogue;
-			sourceTree = "<group>";
-		};
-		4E2BB74024B79D2E006940A0 /* Presenter */ = {
-			isa = PBXGroup;
-			children = (
-				4EF858A424AA6C13007D7DF0 /* RecommendationsPresenter.swift */,
-				4E2BB74124B79D47006940A0 /* RecommendationsManager.swift */,
-			);
-			path = Presenter;
 			sourceTree = "<group>";
 		};
 		4E42D1FB24448362002CAA4E = {
@@ -303,9 +292,9 @@
 		4EAD35EA24A91F2B00E6866A /* Recommendations */ = {
 			isa = PBXGroup;
 			children = (
-				4E2BB74024B79D2E006940A0 /* Presenter */,
 				4E55D0F224BF6A5B00611EA7 /* View */,
-				4EF858A624AA6C22007D7DF0 /* RecommendationsModel.swift */,
+				4E2BB74124B79D47006940A0 /* RecommendationsModel.swift */,
+				4EF858A424AA6C13007D7DF0 /* RecommendationsPresenter.swift */,
 			);
 			path = Recommendations;
 			sourceTree = "<group>";
@@ -326,8 +315,8 @@
 				4E4A384024758EE5008AB1C2 /* AppCoordinatorTests.swift */,
 				4E1ABCEF24C2381C00237C88 /* BookTests.swift */,
 				4E59BE34249BE8490048DED6 /* BookViewModelTests.swift */,
+				4E82255125129D61007FAFD9 /* CoreDataTests.swift */,
 				4E59BE3A249D471F0048DED6 /* FavoritesPersistenceServiceTests.swift */,
-				4E7DE9AE24CA1C8700518FCF /* RecommendationsDefaultManagerTests.swift */,
 				4E56798E24D9E8BC00B0F41F /* RecommendationsDefaultModelTests.swift */,
 				4E56798C24D8903800B0F41F /* RecommendationsDefaultPresenterTests.swift */,
 				4E4A383E24745B56008AB1C2 /* SearchDefaultPresenterTests.swift */,
@@ -452,7 +441,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1140;
-				LastUpgradeCheck = 1140;
+				LastUpgradeCheck = 1200;
 				ORGANIZATIONNAME = "Nikita Lazarev-Zubov";
 				TargetAttributes = {
 					4E42D20324448362002CAA4E = {
@@ -528,7 +517,6 @@
 			files = (
 				4E42D20824448362002CAA4E /* AppDelegate.swift in Sources */,
 				4EF858A524AA6C13007D7DF0 /* RecommendationsPresenter.swift in Sources */,
-				4EF858A724AA6C22007D7DF0 /* RecommendationsModel.swift in Sources */,
 				4E5DD23F2489633F000D6D17 /* FavoritesService.swift in Sources */,
 				4E796BE02465CC2500C6543A /* ViewFactory.swift in Sources */,
 				4E59BE37249D41810048DED6 /* FavoriteBook.swift in Sources */,
@@ -539,7 +527,7 @@
 				4EAD35EC24A91F4600E6866A /* RecommendationsView.swift in Sources */,
 				4EE82746244DF0E700102B5D /* SearchModel.swift in Sources */,
 				4E42D20F24448362002CAA4E /* SearchView.swift in Sources */,
-				4E2BB74224B79D47006940A0 /* RecommendationsManager.swift in Sources */,
+				4E2BB74224B79D47006940A0 /* RecommendationsModel.swift in Sources */,
 				4E55D0F424BF6A9A00611EA7 /* RecommendationsViewListCell.swift in Sources */,
 				4EE8272E244CB51E00102B5D /* AppCoordinator.swift in Sources */,
 				4E78D97A2479AF5A00906542 /* Settings.swift in Sources */,
@@ -572,9 +560,9 @@
 				4EFD7E67249BE425008A7606 /* CatalogueTestingMockService.swift in Sources */,
 				4E59BE35249BE8490048DED6 /* BookViewModelTests.swift in Sources */,
 				4E56799124D9EA3300B0F41F /* FavoritesMockService.swift in Sources */,
+				4E82255225129D61007FAFD9 /* CoreDataTests.swift in Sources */,
 				4EFD7E6024994142008A7606 /* Worm.xcdatamodeld in Sources */,
 				4EFD7E61249A96DA008A7606 /* AppCoordinatorTests.swift in Sources */,
-				4E7DE9AF24CA1C8700518FCF /* RecommendationsDefaultManagerTests.swift in Sources */,
 				4E59BE3B249D471F0048DED6 /* FavoritesPersistenceServiceTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -640,6 +628,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -701,6 +690,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -836,6 +826,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;

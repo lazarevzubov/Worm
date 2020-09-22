@@ -8,7 +8,6 @@
 
 import Combine
 import Foundation
-import GoodreadsService
 
 // TODO: Marking favorites from this screen.
 // TODO: Blocking books from recommendations.
@@ -31,7 +30,7 @@ protocol RecommendationsPresenter: ObservableObject {
 // MARK: -
 
 /// The default implementation of the Recommendations screen presenter.
-final class RecommendationsDefaultPresenter<Manager: RecommendationsManager>: RecommendationsPresenter {
+final class RecommendationsDefaultPresenter<Model: RecommendationsModel>: RecommendationsPresenter {
 
     // MARK: - Properties
 
@@ -42,8 +41,7 @@ final class RecommendationsDefaultPresenter<Manager: RecommendationsManager>: Re
 
     // MARK: Private properties
 
-    private let model: RecommendationsModel
-    private let recommendationsManager: Manager
+    private let model: Model
     private let updateQueue: DispatchQueue
     private lazy var cancellables = Set<AnyCancellable>()
 
@@ -52,13 +50,11 @@ final class RecommendationsDefaultPresenter<Manager: RecommendationsManager>: Re
     /**
      Creates a presenter object.
      - Parameters:
-        - model: Data providing object.
-        - recommendationsManager: Object that owns logic of maintaing a list of recommedations.
+        - recommendationsModel: Data providing object.
         - updateQueue: Queue on which presentation data is passed to view.
      */
-    init(model: RecommendationsModel, recommendationsManager: Manager, updateQueue: DispatchQueue = .main) {
-        self.model = model
-        self.recommendationsManager = recommendationsManager
+    init(recommendationsModel: Model, updateQueue: DispatchQueue = .main) {
+        self.model = recommendationsModel
         self.updateQueue = updateQueue
     }
 
@@ -67,37 +63,21 @@ final class RecommendationsDefaultPresenter<Manager: RecommendationsManager>: Re
     // MARK: RecommendationsPresenter protocol methods
 
     func onViewAppear() {
-        bind(recommendationsManager: recommendationsManager)
-        updateFavoriteBooks()
+        bind(recommendationsModel: model)
+        model.fetchRecommendations()
     }
 
     // MARK: Private methods
 
-    private func bind(recommendationsManager: Manager) {
-        recommendationsManager
+    private func bind(recommendationsModel: Model) {
+        recommendationsModel
             .objectWillChange
             .receive(on: updateQueue)
             .sink { [weak self] _ in
                 self?.objectWillChange.send()
-
-                // FIXME: Favorite hardcoded-ness.
-                self?.recommendations = recommendationsManager.recommendations.map { $0.asViewModel(favorite: true) }
+                self?.recommendations = recommendationsModel.recommendations.map { $0.asViewModel(favorite: true) }
         }
         .store(in: &cancellables)
-    }
-
-    private func updateFavoriteBooks() {
-        model.favoriteBookIDs.forEach { addSimilarBooksToRecommendations(from: $0) }
-    }
-
-    private func addSimilarBooksToRecommendations(from bookID: String) {
-        model.getBook(by: bookID) { [weak self] in
-            self?.addSimilarBooksToRecommendations(from: $0?.similarBookIDs ?? [])
-        }
-    }
-
-    private func addSimilarBooksToRecommendations(from ids: [String]) {
-        ids.forEach { self.recommendationsManager.addRecommendation(id: $0) }
     }
 
 }

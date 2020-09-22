@@ -46,6 +46,7 @@ final class FavoritesPersistenceServiceTests: XCTestCase {
 
     func testAddingSameObjectIgnored() {
         // Core Data constraints don't work for in-memory storage.
+        // TODO: Find a way to test it.
     }
 
     func testRemove() {

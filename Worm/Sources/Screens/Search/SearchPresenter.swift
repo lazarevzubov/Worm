@@ -8,7 +8,6 @@
 
 import Combine
 import Foundation
-import GoodreadsService
 
 // FIXME: Same model objects for all layers.
 

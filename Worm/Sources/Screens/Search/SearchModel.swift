@@ -6,7 +6,8 @@
 //  Copyright © 2020 Nikita Lazarev-Zubov. All rights reserved.
 //
 
-import CoreData
+import Combine
+import Foundation
 import GoodreadsService
 
 /// The search screen model.
@@ -144,7 +145,6 @@ final class SearchServiceBasedModel: SearchModel {
     }
 
     private func appendIfNeeded(book: Book) {
-        // TODO: Find a way to test it.
         if currentSearchResult.contains(book.id) {
             books.append(book)
         }

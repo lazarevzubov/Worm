@@ -2,57 +2,59 @@
 //  RecommendationsModel.swift
 //  Worm
 //
-//  Created by Nikita Lazarev-Zubov on 29.6.2020.
+//  Created by Nikita Lazarev-Zubov on 9.7.2020.
 //  Copyright © 2020 Nikita Lazarev-Zubov. All rights reserved.
 //
 
+import Combine
 import GoodreadsService
 
-/// The Recommendations screen data providing object.
-protocol RecommendationsModel {
+/// Owns logic of maintaing a list of recommedations.
+protocol RecommendationsModel: ObservableObject {
 
     // MARK: - Properties
 
-    /// The list of favorite book IDs.
-    var favoriteBookIDs: [String] { get }
+    /// A list of recommended books in ready-to-display order.
+    var recommendations: [Book] { get }
 
     // MARK: - Methods
 
-    /**
-     Requests a book by its ID.
-     - Parameters:
-        - id: The book ID.
-        - resultCompletion: The block of code to execute when the result is ready.
-        - book: The retrieved book, or `nil`.
-     */
-    func getBook(by id: String, resultCompletion: @escaping (_ book: Book?) -> Void)
-    
+    /// Updates the recommendations list.
+    func fetchRecommendations()
+
 }
 
 // MARK: -
 
-/// The Recommendations screen data providing object based on a real service.
-struct RecommendationsServiceBasedModel: RecommendationsModel {
+/// The default logic of the recommendations list maintenance.
+final class RecommendationsDefaultModel: RecommendationsModel {
 
     // MARK: - Properties
 
-    // MARK: RecommendationsModel protocol properties
+    // MARK: RecommendationsManager protocol properties
 
-    var favoriteBookIDs: [String] {
-        return favoritesService.favoriteBooks.compactMap { $0.id }
-    }
+    @Published
+    var recommendations = [Book]()
 
     // MARK: Private properties
 
     private let catalogueService: CatalogueService
     private let favoritesService: FavoritesService
+    private var prioritizedRecommendations = [String: (priority: Int, book: Book?)]() {
+        didSet {
+            recommendations = prioritizedRecommendations
+                .map { $0.value }
+                .sorted { $0.priority > $1.priority }
+                .compactMap { $0.book }
+        }
+    }
 
     // MARK: - Initialization
 
     /**
-     Creates a model.
+     Creates a recommended books list handler.
      - Parameters:
-        - catalogueService: The main data service of the app.
+        - catalogueService: The data service of the app.
         - favoritesService: The favorite books list manager.
      */
     init(catalogueService: CatalogueService, favoritesService: FavoritesService) {
@@ -64,8 +66,40 @@ struct RecommendationsServiceBasedModel: RecommendationsModel {
 
     // MARK: RecommendationsModel protocol methods
 
-    func getBook(by id: String, resultCompletion: @escaping (_ book: Book?) -> Void) {
-        catalogueService.getBook(by: id, resultCompletion: resultCompletion)
+    func fetchRecommendations() {
+        favoriteBookIDs().forEach { addSimilarBooksToRecommendations(from: $0) }
+    }
+
+    // MARK: Private methods
+
+    private func favoriteBookIDs() -> [String] {
+        return favoritesService.favoriteBooks.compactMap { $0.id }
+    }
+
+    private func addSimilarBooksToRecommendations(from bookID: String) {
+        catalogueService.getBook(by: bookID) { [weak self] in
+            self?.addSimilarBooksToRecommendations(from: $0?.similarBookIDs ?? [])
+        }
+    }
+
+    private func addSimilarBooksToRecommendations(from ids: [String]) {
+        ids.forEach { self.addRecommendation(id: $0) }
+    }
+
+    private func addRecommendation(id: String) {
+        if let bookDescriptor = prioritizedRecommendations[id] {
+            prioritizedRecommendations[id] = (bookDescriptor.priority + 1, bookDescriptor.book)
+        } else {
+            prioritizedRecommendations[id] = (1, nil)
+            catalogueService.getBook(by: id) { [weak self] in
+                guard let self = self,
+                    let bookDescriptor = self.prioritizedRecommendations[id],
+                    bookDescriptor.book == nil else {
+                        return
+                }
+                self.prioritizedRecommendations[id] = (bookDescriptor.priority, $0)
+            }
+        }
     }
 
 }
