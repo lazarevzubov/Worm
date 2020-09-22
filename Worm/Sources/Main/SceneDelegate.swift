@@ -10,8 +10,6 @@ import Coordinator
 import GoodreadsService
 import UIKit
 
-// TODO: Check design layers (draw diagram maybe).
-
 /// Manages the life cycle of a scene.
 final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 

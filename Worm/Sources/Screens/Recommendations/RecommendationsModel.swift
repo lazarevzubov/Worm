@@ -9,8 +9,6 @@
 import Combine
 import GoodreadsService
 
-// TODO: Update HeaderDoc.
-
 /// Owns logic of maintaing a list of recommedations.
 protocol RecommendationsModel: ObservableObject {
 
@@ -21,7 +19,7 @@ protocol RecommendationsModel: ObservableObject {
 
     // MARK: - Methods
 
-    // TODO: HeaderDoc.
+    /// Updates the recommendations list.
     func fetchRecommendations()
 
 }
@@ -53,13 +51,11 @@ final class RecommendationsDefaultModel: RecommendationsModel {
 
     // MARK: - Initialization
 
-    // TODO: Update HeaderDoc.
     /**
      Creates a recommended books list handler.
      - Parameters:
-        - bookDownloader: The block of code for a book retrieval.
-        - id: The ID of book to retrieve.
-        - book: The retrieved book, or `nil` if not exists or failed to retrieve.
+        - catalogueService: The data service of the app.
+        - favoritesService: The favorite books list manager.
      */
     init(catalogueService: CatalogueService, favoritesService: FavoritesService) {
         self.catalogueService = catalogueService
