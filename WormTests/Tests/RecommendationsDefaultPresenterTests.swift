@@ -20,7 +20,14 @@ final class RecommendationsDefaultPresenterTests: XCTestCase {
         XCTAssertTrue(presenter.recommendations.isEmpty)
     }
 
-    // TODO: Complement with proper tests.
+    func testRecommendationsFetchedOnViewAppear() {
+        let model = RecommendationsMockModel()
+        XCTAssertFalse(model.recommendationsFetched)
+
+        let presenter = RecommendationsDefaultPresenter(recommendationsModel: model)
+        presenter.onViewAppear()
+        XCTAssertTrue(model.recommendationsFetched)
+    }
 
 }
 
@@ -30,6 +37,8 @@ private final class RecommendationsMockModel: RecommendationsModel {
 
     // MARK: - Properties
 
+    private(set) var recommendationsFetched = false
+
     // MARK: RecommendationsManager protocol properties
 
     @Published
@@ -37,7 +46,7 @@ private final class RecommendationsMockModel: RecommendationsModel {
 
     // MARK: - Initiazliation
 
-    init(recommendations: [Book] = [Book]()) {
+    init(recommendations: [Book] = []) {
         self.recommendations = recommendations
     }
 
@@ -46,7 +55,7 @@ private final class RecommendationsMockModel: RecommendationsModel {
     // MARK: RecommendationsModel protocl methods
 
     func fetchRecommendations() {
-        // Do nothing.
+        recommendationsFetched = true
     }
 
 }

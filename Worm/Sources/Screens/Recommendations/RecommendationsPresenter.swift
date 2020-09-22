@@ -64,7 +64,7 @@ final class RecommendationsDefaultPresenter<Model: RecommendationsModel>: Recomm
 
     func onViewAppear() {
         bind(recommendationsModel: model)
-        model.fetchRecommendations() // TODO: Unit test fetching on appear.
+        model.fetchRecommendations()
     }
 
     // MARK: Private methods

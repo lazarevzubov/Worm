@@ -35,7 +35,6 @@ final class RecommendationsDefaultModel: RecommendationsModel {
 
     // MARK: RecommendationsManager protocol properties
 
-    // TODO: Unit test initially empty.
     @Published
     var recommendations = [Book]()
 
@@ -71,7 +70,6 @@ final class RecommendationsDefaultModel: RecommendationsModel {
 
     // MARK: RecommendationsModel protocol methods
 
-    // TODO: Unit test.
     func fetchRecommendations() {
         favoriteBookIDs().forEach { addSimilarBooksToRecommendations(from: $0) }
     }
