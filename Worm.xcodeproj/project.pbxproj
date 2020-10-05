@@ -44,7 +44,6 @@
 		4EE82746244DF0E700102B5D /* SearchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EE82745244DF0E700102B5D /* SearchModel.swift */; };
 		4EF858A524AA6C13007D7DF0 /* RecommendationsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EF858A424AA6C13007D7DF0 /* RecommendationsPresenter.swift */; };
 		4EFD7E6024994142008A7606 /* Worm.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4E42D20B24448362002CAA4E /* Worm.xcdatamodeld */; };
-		4EFD7E61249A96DA008A7606 /* AppCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E4A384024758EE5008AB1C2 /* AppCoordinatorTests.swift */; };
 		4EFD7E62249A96DC008A7606 /* SearchServiceBasedModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ECAA5B924713A38003D3F8D /* SearchServiceBasedModelTests.swift */; };
 		4EFD7E67249BE425008A7606 /* CatalogueTestingMockService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EFD7E66249BE425008A7606 /* CatalogueTestingMockService.swift */; };
 /* End PBXBuildFile section */
@@ -81,7 +80,6 @@
 		4E42D24D24463AEE002CAA4E /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		4E42D24F24463C4A002CAA4E /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		4E4A383E24745B56008AB1C2 /* SearchDefaultPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDefaultPresenterTests.swift; sourceTree = "<group>"; };
-		4E4A384024758EE5008AB1C2 /* AppCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinatorTests.swift; sourceTree = "<group>"; };
 		4E4A3846247590F5008AB1C2 /* WormUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WormUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4E4A3848247590F5008AB1C2 /* SearchScreenTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchScreenTests.swift; sourceTree = "<group>"; };
 		4E4A384A247590F5008AB1C2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -306,7 +304,6 @@
 		4ECAA5BB24713A40003D3F8D /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				4E4A384024758EE5008AB1C2 /* AppCoordinatorTests.swift */,
 				4E1ABCEF24C2381C00237C88 /* BookTests.swift */,
 				4E59BE34249BE8490048DED6 /* BookViewModelTests.swift */,
 				4E82255125129D61007FAFD9 /* CoreDataTests.swift */,
@@ -546,7 +543,6 @@
 				4E56799124D9EA3300B0F41F /* FavoritesMockService.swift in Sources */,
 				4E82255225129D61007FAFD9 /* CoreDataTests.swift in Sources */,
 				4EFD7E6024994142008A7606 /* Worm.xcdatamodeld in Sources */,
-				4EFD7E61249A96DA008A7606 /* AppCoordinatorTests.swift in Sources */,
 				4E59BE3B249D471F0048DED6 /* FavoritesPersistenceServiceTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -750,7 +746,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = V42H29UY7B;
 				INFOPLIST_FILE = WormUITests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -770,7 +766,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = V42H29UY7B;
 				INFOPLIST_FILE = WormUITests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -874,7 +870,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = V42H29UY7B;
 				INFOPLIST_FILE = WormTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -894,7 +890,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = V42H29UY7B;
 				INFOPLIST_FILE = WormUITests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -915,7 +911,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = V42H29UY7B;
 				INFOPLIST_FILE = WormTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -936,7 +932,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = V42H29UY7B;
 				INFOPLIST_FILE = WormTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
