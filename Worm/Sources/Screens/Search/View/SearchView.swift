@@ -23,12 +23,7 @@ struct SearchView<Presenter: SearchPresenter>: View {
             VStack(spacing: 0.0) {
                 HStack {
                     SearchBar(text: $presenter.query, placeholder: "SearchScreenSearchFieldPlaceholder")
-                    Button(action: {
-                        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder),
-                                                        to: nil,
-                                                        from: nil,
-                                                        for: nil)
-                        }) { Text("CancelButtonTitle") }
+                    Button(action: hideKeyboard) { Text("CancelButtonTitle") }
                         .accessibility(identifier: "cancelSearchButton")
                     Spacer(minLength: 16.0)
                 }
@@ -67,6 +62,10 @@ struct SearchView<Presenter: SearchPresenter>: View {
 
         UINavigationBar.appearance().titleTextAttributes = [.foregroundColor : UIColor.black]
         UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor : UIColor.black]
+    }
+
+    private func hideKeyboard() {
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     }
 
 }
