@@ -20,7 +20,7 @@ struct SearchView<Presenter: SearchPresenter>: View {
 
     var body: some View {
         NavigationView {
-            VStack {
+            VStack(spacing: 0.0) {
                 HStack {
                     SearchBar(text: $presenter.query, placeholder: "SearchScreenSearchFieldPlaceholder")
                     Button(action: {
@@ -33,6 +33,7 @@ struct SearchView<Presenter: SearchPresenter>: View {
                     Spacer(minLength: 16.0)
                 }
                 List(presenter.books) { SearchViewListCell(book: $0, presenter: self.presenter) }
+                    .listStyle(PlainListStyle())
             }
             .navigationBarTitle("SearchScreenTitle")
         }

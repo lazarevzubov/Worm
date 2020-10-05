@@ -19,9 +19,7 @@ struct RecommendationsView<Presenter: RecommendationsPresenter>: View {
 
     var body: some View {
         NavigationView {
-            VStack {
-                List(presenter.recommendations) { RecommendationsViewListCell(book: $0) }
-            }
+            List(presenter.recommendations) { RecommendationsViewListCell(book: $0) }
             .navigationBarTitle("RecommendationsScreenTitle")
         }
         .onAppear {
