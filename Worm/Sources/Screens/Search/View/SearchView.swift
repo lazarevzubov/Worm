@@ -27,12 +27,12 @@ struct SearchView<Presenter: SearchPresenter>: View {
                         .accessibility(identifier: "cancelSearchButton")
                     Spacer(minLength: 16.0)
                 }
-                List(presenter.books) { SearchViewListCell(book: $0, presenter: self.presenter) }
+                List(presenter.books) { SearchViewListCell(book: $0, presenter: presenter) }
                     .listStyle(PlainListStyle())
             }
             .navigationBarTitle("SearchScreenTitle")
+            .onAppear { configureNavigationBar() }
         }
-        .onAppear { self.configureNavigationBar() }
     }
 
     // MARK: Private properties

@@ -20,11 +20,8 @@ struct RecommendationsView<Presenter: RecommendationsPresenter>: View {
     var body: some View {
         NavigationView {
             List(presenter.recommendations) { RecommendationsViewListCell(book: $0) }
-            .navigationBarTitle("RecommendationsScreenTitle")
-        }
-        .onAppear {
-            self.configureNavigationBar()
-            self.presenter.onViewAppear()
+                .navigationBarTitle("RecommendationsScreenTitle")
+                .onAppear { configureNavigationBar() }
         }
     }
 

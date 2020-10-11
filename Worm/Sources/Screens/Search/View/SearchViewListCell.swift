@@ -32,7 +32,9 @@ struct SearchViewListCell<Presenter: SearchPresenter>: View {
             .accessibilityElement()
             .accessibility(label: makeCellAccessibilityLabel(for: book))
             Spacer()
-            Button(action: { self.presenter.toggleFavoriteState(bookID: self.book.id) }) {
+            Button(action: {
+                    presenter.toggleFavoriteState(bookID: book.id)
+            }) {
                 Image(systemName: (book.favorite ? "heart.fill" : "heart")).foregroundColor(.primary)
             }
             .accessibilityElement()

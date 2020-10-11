@@ -20,11 +20,6 @@ protocol RecommendationsPresenter: ObservableObject {
     /// A list of view models represeting items on the Recommendations screen.
     var recommendations: [BookViewModel] { get }
 
-    // MARK: - Methods
-
-    /// Called on view became visible.
-    func onViewAppear()
-
 }
 
 // MARK: -
@@ -56,16 +51,11 @@ final class RecommendationsDefaultPresenter<Model: RecommendationsModel>: Recomm
     init(recommendationsModel: Model, updateQueue: DispatchQueue = .main) {
         self.model = recommendationsModel
         self.updateQueue = updateQueue
+
+        bind(recommendationsModel: model)
     }
 
     // MARK: - Methods
-
-    // MARK: RecommendationsPresenter protocol methods
-
-    func onViewAppear() {
-        bind(recommendationsModel: model)
-        model.fetchRecommendations()
-    }
 
     // MARK: Private methods
 
@@ -117,13 +107,5 @@ final class RecommendationsPreviewPresenter: RecommendationsPresenter {
         BookViewModel(authors: "Ken Kesey", favorite: true, id: "14", title: "Sometimes a Great Notion"),
         BookViewModel(authors: "Haruki Murakami", favorite: true, id: "15", title: "The Wind-Up Bird Chronicle")
     ]
-
-    // MARK: - Methods
-
-    // MARK: RecommendationsPresenter protocol methods
-
-    func onViewAppear() {
-        // Do nothing.
-    }
 
 }

@@ -38,7 +38,7 @@ protocol SearchModel: ObservableObject {
 // MARK: -
 
 /// The search screen model implemented on top of a data providing service.
-final class SearchServiceBasedModel: SearchModel {
+final class SearchServiceBasedModel<RecommendationsService: FavoritesService>: SearchModel {
 
     // MARK: - Properties
 
@@ -53,7 +53,7 @@ final class SearchServiceBasedModel: SearchModel {
 
     private let catalogueService: CatalogueService
     private let dispatchQueue: DispatchQueue
-    private let favoritesService: FavoritesService
+    private let favoritesService: RecommendationsService
     private let queryDelay: DispatchTimeInterval?
     private var currentSearchResult = [String]() {
         didSet { currentSearchResult.forEach { handleSearchResult($0) } }
@@ -72,7 +72,7 @@ final class SearchServiceBasedModel: SearchModel {
         - queryDelay: The delay after which the request is actually dispatched. This delay is useful to prevent too many request while typing a query.
      */
     init(catalogueService: CatalogueService,
-         favoritesService: FavoritesService,
+         favoritesService: RecommendationsService,
          dispatchQueue: DispatchQueue = DispatchQueue(label: "com.LazarevZubov.Worm.SearchDefaultModel"),
          queryDelay: DispatchTimeInterval? = .milliseconds(500)) {
         self.catalogueService = catalogueService

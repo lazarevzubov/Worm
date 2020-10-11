@@ -15,19 +15,7 @@ final class RecommendationsDefaultPresenterTests: XCTestCase {
 
     // MARK: - Methods
 
-    func testRecommendationsInitiallyEmpty() {
-        let presenter = RecommendationsDefaultPresenter(recommendationsModel: RecommendationsMockModel())
-        XCTAssertTrue(presenter.recommendations.isEmpty)
-    }
-
-    func testRecommendationsFetchedOnViewAppear() {
-        let model = RecommendationsMockModel()
-        XCTAssertFalse(model.recommendationsFetched)
-
-        let presenter = RecommendationsDefaultPresenter(recommendationsModel: model)
-        presenter.onViewAppear()
-        XCTAssertTrue(model.recommendationsFetched)
-    }
+    // TODO.
 
 }
 

@@ -15,19 +15,6 @@ final class RecommendationsDefaultModelTests: XCTestCase {
 
     // MARK: - Methods
 
-    func testRecommendationsInitiallyEmpty() {
-        let model = RecommendationsDefaultModel(catalogueService: CatalogueMockService(),
-                                                favoritesService: FavoritesMockService())
-        XCTAssertTrue(model.recommendations.isEmpty)
-    }
-
-    func testFetchRecommendations() {
-        let favorites = [MockFavoriteBook(id: "1")]
-        let model = RecommendationsDefaultModel(catalogueService: CatalogueMockService(),
-                                                favoritesService: FavoritesMockService(favoriteBooks: favorites))
-
-        model.fetchRecommendations()
-        XCTAssertFalse(model.recommendations.isEmpty)
-    }
+    // TODO.
 
 }
