@@ -28,7 +28,7 @@ struct BookViewModel {
 
 extension BookViewModel: Equatable { }
 
-// MARK: - Equatable
+// MARK: - Hashable
 
 extension BookViewModel: Hashable { }
 
