@@ -86,6 +86,8 @@ final class FavoritesPersistenceService: FavoritesService {
                 persistenceContext.delete($0)
                 try? persistenceContext.save()
 
+                objectWillChange.send()
+
                 return
             }
         }

@@ -15,6 +15,22 @@ final class RecommendationsDefaultModelTests: XCTestCase {
 
     // MARK: - Methods
 
-    // TODO.
+    func testRecommendations() {
+        let id1 = "1"
+        let id2 = "2"
+
+        let favoriteBooks = [MockFavoriteBook(id: id1),
+                             MockFavoriteBook(id: id2)]
+        let favoritesService = FavoritesMockService(favoriteBooks: favoriteBooks)
+
+        let books = [Book(authors: [], title: "Title1", id: id1, similarBookIDs: [id1]),
+                     Book(authors: [], title: "Title2", id: id2, similarBookIDs: [id2])]
+        let catalogueService = CatalogueTestingMockService(books: books)
+
+        let model = RecommendationsDefaultModel(catalogueService: catalogueService,
+                                                favoritesService: favoritesService)
+
+        XCTAssertEqual(model.recommendations, books)
+    }
 
 }

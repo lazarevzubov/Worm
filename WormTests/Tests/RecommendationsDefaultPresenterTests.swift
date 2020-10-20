@@ -15,7 +15,22 @@ final class RecommendationsDefaultPresenterTests: XCTestCase {
 
     // MARK: - Methods
 
-    // TODO.
+    func testRecommendationsUpdate() {
+        let model = RecommendationsMockModel()
+        let queue = DispatchQueue(label: "com.LazarevZubov.Worm.RecommendationsDefaultPresenterTests")
+        let presenter = RecommendationsDefaultPresenter(recommendationsModel: model, updateQueue: queue)
+
+        let books = [Book(authors: [], title: "Title1", id: "1"),
+                     Book(authors: [], title: "Title2", id: "2")]
+        model.recommendations = books
+
+        queue.sync {
+            // Wait for presenter update.
+        }
+
+        let bookVMsSet = Set(books.map { $0.asViewModel(favorite: true) })
+        XCTAssertEqual(Set(presenter.recommendations), bookVMsSet)
+    }
 
 }
 

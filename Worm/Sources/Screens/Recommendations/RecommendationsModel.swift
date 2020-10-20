@@ -58,6 +58,7 @@ final class RecommendationsDefaultModel<RecommendationsService: FavoritesService
         self.favoritesService = favoritesService
 
         bind(favoritesService: self.favoritesService)
+        updateFavorites()
     }
 
     // MARK: - Methods
@@ -69,9 +70,13 @@ final class RecommendationsDefaultModel<RecommendationsService: FavoritesService
             .objectWillChange
             .sink { [weak self] _ in
                 self?.objectWillChange.send()
-                self?.favoriteBookIDs().forEach { self?.addSimilarBooksToRecommendations(from: $0) }
+                self?.updateFavorites()
         }
         .store(in: &cancellables)
+    }
+
+    private func updateFavorites() {
+        favoriteBookIDs().forEach { addSimilarBooksToRecommendations(from: $0) }
     }
 
     private func favoriteBookIDs() -> [String] {
