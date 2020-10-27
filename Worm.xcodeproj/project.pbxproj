@@ -29,12 +29,12 @@
 		4E59BE3B249D471F0048DED6 /* FavoritesPersistenceServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E59BE3A249D471F0048DED6 /* FavoritesPersistenceServiceTests.swift */; };
 		4E59BE3D249FCC140048DED6 /* CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E59BE3C249FCC140048DED6 /* CoreData.swift */; };
 		4E5DD23F2489633F000D6D17 /* FavoritesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5DD23E2489633F000D6D17 /* FavoritesService.swift */; };
-		4E70639D248EC57000EA9144 /* UIKit2SwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 4E70639C248EC57000EA9144 /* UIKit2SwiftUI */; };
 		4E78D96D247592BC00906542 /* XCTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E78D96C247592BC00906542 /* XCTest.swift */; };
 		4E78D97A2479AF5A00906542 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E78D9792479AF5A00906542 /* Settings.swift */; };
 		4E78D987247EE4D500906542 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4E78D989247EE4D500906542 /* Localizable.strings */; };
 		4E796BE02465CC2500C6543A /* ViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E796BDF2465CC2500C6543A /* ViewFactory.swift */; };
 		4E82255225129D61007FAFD9 /* CoreDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E82255125129D61007FAFD9 /* CoreDataTests.swift */; };
+		4E823BCB2540BB0D004C3EA5 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E823BCA2540BB0D004C3EA5 /* SearchBar.swift */; };
 		4E9BEFAA248C28C3006B3AAD /* SearchViewListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E9BEFA9248C28C3006B3AAD /* SearchViewListCell.swift */; };
 		4EA5C33E251A841600AB4D8F /* WormApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EA5C33D251A841600AB4D8F /* WormApp.swift */; };
 		4EA637382496B1A900DF2936 /* Worm.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4E42D20B24448362002CAA4E /* Worm.xcdatamodeld */; };
@@ -99,6 +99,7 @@
 		4E78D988247EE4D500906542 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		4E796BDF2465CC2500C6543A /* ViewFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewFactory.swift; sourceTree = "<group>"; };
 		4E82255125129D61007FAFD9 /* CoreDataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataTests.swift; sourceTree = "<group>"; };
+		4E823BCA2540BB0D004C3EA5 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		4E9BEFA9248C28C3006B3AAD /* SearchViewListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewListCell.swift; sourceTree = "<group>"; };
 		4EA5C33D251A841600AB4D8F /* WormApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WormApp.swift; sourceTree = "<group>"; };
 		4EAD35E824A5253200E6866A /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -117,7 +118,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				4E42D24C24463A1E002CAA4E /* GoodreadsService in Frameworks */,
-				4E70639D248EC57000EA9144 /* UIKit2SwiftUI in Frameworks */,
 				4EE8272C244CA0AA00102B5D /* Coordinator in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -258,6 +258,7 @@
 		4E59BE38249D46D90048DED6 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				4E823BCA2540BB0D004C3EA5 /* SearchBar.swift */,
 				4E42D20E24448362002CAA4E /* SearchView.swift */,
 				4E9BEFA9248C28C3006B3AAD /* SearchViewListCell.swift */,
 			);
@@ -375,7 +376,6 @@
 			packageProductDependencies = (
 				4E42D24B24463A1E002CAA4E /* GoodreadsService */,
 				4EE8272B244CA0AA00102B5D /* Coordinator */,
-				4E70639C248EC57000EA9144 /* UIKit2SwiftUI */,
 			);
 			productName = Worm;
 			productReference = 4E42D20424448362002CAA4E /* Worm.app */;
@@ -452,7 +452,6 @@
 			packageReferences = (
 				4E42D24A24463A1E002CAA4E /* XCRemoteSwiftPackageReference "GoodreadsService" */,
 				4EE8272A244CA0AA00102B5D /* XCRemoteSwiftPackageReference "Coordinator" */,
-				4E70639B248EC57000EA9144 /* XCRemoteSwiftPackageReference "UIKit2SwiftUI" */,
 			);
 			productRefGroup = 4E42D20524448362002CAA4E /* Products */;
 			projectDirPath = "";
@@ -511,6 +510,7 @@
 				4E42D20F24448362002CAA4E /* SearchView.swift in Sources */,
 				4E2BB74224B79D47006940A0 /* RecommendationsModel.swift in Sources */,
 				4E55D0F424BF6A9A00611EA7 /* RecommendationsViewListCell.swift in Sources */,
+				4E823BCB2540BB0D004C3EA5 /* SearchBar.swift in Sources */,
 				4E78D97A2479AF5A00906542 /* Settings.swift in Sources */,
 				4EA5C33E251A841600AB4D8F /* WormApp.swift in Sources */,
 				4EA637382496B1A900DF2936 /* Worm.xcdatamodeld in Sources */,
@@ -1003,14 +1003,6 @@
 				kind = branch;
 			};
 		};
-		4E70639B248EC57000EA9144 /* XCRemoteSwiftPackageReference "UIKit2SwiftUI" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/lazarevzubov/UIKit2SwiftUI.git";
-			requirement = {
-				branch = master;
-				kind = branch;
-			};
-		};
 		4EE8272A244CA0AA00102B5D /* XCRemoteSwiftPackageReference "Coordinator" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/lazarevzubov/Coordinator.git";
@@ -1026,11 +1018,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 4E42D24A24463A1E002CAA4E /* XCRemoteSwiftPackageReference "GoodreadsService" */;
 			productName = GoodreadsService;
-		};
-		4E70639C248EC57000EA9144 /* UIKit2SwiftUI */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 4E70639B248EC57000EA9144 /* XCRemoteSwiftPackageReference "UIKit2SwiftUI" */;
-			productName = UIKit2SwiftUI;
 		};
 		4EE8272B244CA0AA00102B5D /* Coordinator */ = {
 			isa = XCSwiftPackageProductDependency;
