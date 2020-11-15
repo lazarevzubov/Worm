@@ -38,12 +38,15 @@ final class FavoritesMockService: FavoritesService {
 
     // MARK: FavoritesService protocol properties
 
-    private(set) var favoriteBooks: [FavoriteBook]
+    private(set) var favoriteBooks: [FavoriteBook] {
+        didSet { objectWillChange.send() }
+    }
 
     // MARK: - Initialization
 
     init(favoriteBooks: [FavoriteBook] = []) {
         self.favoriteBooks = favoriteBooks
+        objectWillChange.send()
     }
 
     // MARK: - Methods

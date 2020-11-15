@@ -33,6 +33,7 @@ struct RecommendationsViewListCell: View {
             .accessibility(label: makeCellAccessibilityLabel(for: book))
         }
         .buttonStyle(PlainButtonStyle())
+        .listRowInsets(EdgeInsets())
     }
 
     // MARK: Private properties

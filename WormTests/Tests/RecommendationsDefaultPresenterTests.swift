@@ -15,18 +15,21 @@ final class RecommendationsDefaultPresenterTests: XCTestCase {
 
     // MARK: - Methods
 
-    func testRecommendationsInitiallyEmpty() {
-        let presenter = RecommendationsDefaultPresenter(recommendationsModel: RecommendationsMockModel())
-        XCTAssertTrue(presenter.recommendations.isEmpty)
-    }
-
-    func testRecommendationsFetchedOnViewAppear() {
+    func testRecommendationsUpdate() {
         let model = RecommendationsMockModel()
-        XCTAssertFalse(model.recommendationsFetched)
+        let queue = DispatchQueue(label: "com.LazarevZubov.Worm.RecommendationsDefaultPresenterTests")
+        let presenter = RecommendationsDefaultPresenter(recommendationsModel: model, updateQueue: queue)
 
-        let presenter = RecommendationsDefaultPresenter(recommendationsModel: model)
-        presenter.onViewAppear()
-        XCTAssertTrue(model.recommendationsFetched)
+        let books = [Book(authors: [], title: "Title1", id: "1"),
+                     Book(authors: [], title: "Title2", id: "2")]
+        model.recommendations = books
+
+        queue.sync {
+            // Wait for presenter update.
+        }
+
+        let bookVMsSet = Set(books.map { $0.asViewModel(favorite: true) })
+        XCTAssertEqual(Set(presenter.recommendations), bookVMsSet)
     }
 
 }

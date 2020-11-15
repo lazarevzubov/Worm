@@ -73,9 +73,7 @@ final class RecommendationsScreenTests: XCTestCase {
         let cancelButton = app.buttons["cancelSearchButton"]
         cancelButton.tap()
 
-        let tabButton = app.buttons["Recommendations"]
-        wait(forElement: tabButton)
-        tabButton.tap()
+        app.tabBars.buttons.element(boundBy: 1).tap()
 
         // Wait for update.
         let recommendationsUpdated = NSPredicate(format: "count > 0")
@@ -91,7 +89,7 @@ final class RecommendationsScreenTests: XCTestCase {
         let app = XCUIApplication()
         app.launch()
 
-        let tabButton = app.buttons["Recommendations"]
+        let tabButton = app.tabBars.buttons.element(boundBy: 1)
         tabButton.tap()
 
         return app

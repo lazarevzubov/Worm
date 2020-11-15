@@ -6,10 +6,11 @@
 //  Copyright © 2020 Nikita Lazarev-Zubov. All rights reserved.
 //
 
+import Combine
 import CoreData
 
 /// Manages a favorite books list.
-protocol FavoritesService {
+protocol FavoritesService: ObservableObject {
 
     // MARK: - Properties
 
@@ -69,6 +70,7 @@ final class FavoritesPersistenceService: FavoritesService {
 
         do {
             try persistenceContext.save()
+            objectWillChange.send()
         } catch {
             // TODO: Handle errors.
             let nserror = error as NSError
@@ -83,6 +85,8 @@ final class FavoritesPersistenceService: FavoritesService {
             if $0.id == id {
                 persistenceContext.delete($0)
                 try? persistenceContext.save()
+
+                objectWillChange.send()
 
                 return
             }

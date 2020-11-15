@@ -32,14 +32,16 @@ struct SearchViewListCell<Presenter: SearchPresenter>: View {
             .accessibilityElement()
             .accessibility(label: makeCellAccessibilityLabel(for: book))
             Spacer()
-            Button(action: { self.presenter.toggleFavoriteState(bookID: self.book.id) }) {
-                Image(systemName: (book.favorite ? "heart.fill" : "heart"))
-                    .foregroundColor(.primary)
+            Button(action: {
+                    presenter.toggleFavoriteState(bookID: book.id)
+            }) {
+                Image(systemName: (book.favorite ? "heart.fill" : "heart")).foregroundColor(.primary)
             }
             .accessibilityElement()
             .accessibility(label: makeFavoriteButtonAccessibilityLabel(for: book))
         }
         .buttonStyle(PlainButtonStyle())
+        .listRowInsets(EdgeInsets())
     }
 
     // MARK: Private properties
