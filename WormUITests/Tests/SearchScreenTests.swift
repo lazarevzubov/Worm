@@ -10,6 +10,8 @@ import XCTest
 
 final class SearchScreenTests: XCTestCase {
 
+    // FIXME: Don't relay on hardcoded localizables.
+
     // MARK: - Properties
 
     // MARK: Private properties
@@ -42,14 +44,14 @@ final class SearchScreenTests: XCTestCase {
         let app = XCUIApplication()
         app.launch()
 
-        XCTAssert(app.staticTexts["Search"].exists) // FIXME: Don't relay on hardcoded localizables.
+        XCTAssert(app.staticTexts["Search"].exists)
     }
 
     func testSearchBarVisible() {
         let app = XCUIApplication()
         app.launch()
 
-        let searchBar = app.searchFields["searchBar"]
+        let searchBar = app.textFields["Search books"]
         wait(forElement: searchBar)
         XCTAssertTrue(searchBar.exists)
         XCTAssertTrue(searchBar.isHittable)
@@ -59,7 +61,7 @@ final class SearchScreenTests: XCTestCase {
         let app = XCUIApplication()
         app.launch()
 
-        let searchBar = app.searchFields["searchBar"]
+        let searchBar = app.textFields["Search books"]
         wait(forElement: searchBar)
         searchBar.tap()
 
@@ -72,7 +74,12 @@ final class SearchScreenTests: XCTestCase {
         let app = XCUIApplication()
         app.launch()
 
-        let cancelButton = app.buttons["cancelSearchButton"]
+        let searchBar = app.textFields["Search books"]
+        wait(forElement: searchBar)
+        searchBar.tap()
+
+        let cancelButton = app.buttons["Cancel"]
+        wait(forElement: cancelButton)
         XCTAssertTrue(cancelButton.exists)
         XCTAssertTrue(cancelButton.isHittable)
     }
@@ -81,15 +88,17 @@ final class SearchScreenTests: XCTestCase {
         let app = XCUIApplication()
         app.launch()
 
-        let searchBar = app.searchFields["searchBar"]
+        let searchBar = app.textFields["Search books"]
         wait(forElement: searchBar)
         searchBar.tap()
+
+        let cancelButton = app.buttons["Cancel"]
+        wait(forElement: searchBar)
 
         let keyboardActivated = NSPredicate(format: "count > 0")
         expectation(for: keyboardActivated, evaluatedWith: app.keyboards)
         waitForExpectations(timeout: 5.0)
 
-        let cancelButton = app.buttons["cancelSearchButton"]
         cancelButton.tap()
 
         let keyboardDeactivated = NSPredicate(format: "count == 0")
@@ -108,7 +117,7 @@ final class SearchScreenTests: XCTestCase {
         let app = XCUIApplication()
         app.launch()
 
-        let searchBar = app.searchFields["searchBar"]
+        let searchBar = app.textFields["Search books"]
         searchBar.tap()
         searchBar.typeText("Query")
 
@@ -138,7 +147,7 @@ final class SearchScreenTests: XCTestCase {
         let app = XCUIApplication()
         app.launch()
 
-        let searchBar = app.searchFields["searchBar"]
+        let searchBar = app.textFields["Search books"]
         searchBar.tap()
         searchBar.typeText("Query")
 
@@ -171,7 +180,7 @@ final class SearchScreenTests: XCTestCase {
         let app = XCUIApplication()
         app.launch()
 
-        let searchBar = app.searchFields["searchBar"]
+        let searchBar = app.textFields["Search books"]
         searchBar.tap()
         searchBar.typeText("Query")
 
@@ -200,7 +209,7 @@ final class SearchScreenTests: XCTestCase {
         let app = XCUIApplication()
         app.launch()
 
-        let searchBar = app.searchFields["searchBar"]
+        let searchBar = app.textFields["Search books"]
         wait(forElement: searchBar)
         searchBar.tap()
         searchBar.typeText("Query")

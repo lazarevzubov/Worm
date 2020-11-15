@@ -53,7 +53,7 @@ struct SearchView<Presenter: SearchPresenter>: View {
 
     // MARK: Private methods
 
-    private func configureNavigationBar() {
+    private func configureNavigationBar() { // FIXME: Navigation bar color change.
         UINavigationBar.appearance().backgroundColor = UIColor(red: (172.0 / 255.0),
                                                                green: (211.0 / 255.0),
                                                                blue: (214.0 / 255.0),

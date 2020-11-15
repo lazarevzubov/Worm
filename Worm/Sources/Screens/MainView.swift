@@ -22,11 +22,13 @@ struct MainView<SearchView: View, RecommendationsView: View>: View {
             searchView
                 .tabItem {
                     Image(systemName: "magnifyingglass")
+                        .accessibility(hidden: true)
                     Text("SearchScreenTitle")
             }
             recommendationsView
                 .tabItem {
                     Image(systemName: "checkmark")
+                        .accessibility(hidden: true)
                     Text("RecommendationsScreenTitle")
             }
         }

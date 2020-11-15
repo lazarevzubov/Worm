@@ -46,6 +46,7 @@ struct SearchBar: View {
                 .onTapGesture { isEditing = true }
                 .transition(.move(edge: .trailing))
                 .animation(.default)
+                .accessibility(label: Text("SearchScreenSearchFieldPlaceholder"))
             if isEditing {
                 Button {
                     isEditing = false
