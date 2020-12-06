@@ -238,5 +238,5 @@ final class SearchScreenTests: XCTestCase {
 
         XCTAssertTrue(uncheckedFavoriteButton.exists)
     }
-    
+
 }

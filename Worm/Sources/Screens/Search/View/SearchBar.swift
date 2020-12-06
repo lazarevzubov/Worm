@@ -21,6 +21,7 @@ struct SearchBar: View {
 
     var body: some View {
         HStack(spacing: 8.0) {
+            Spacer()
             TextField("SearchScreenSearchFieldPlaceholder", text: $text)
                 .padding(7.0)
                 .padding(.horizontal, 25.0)

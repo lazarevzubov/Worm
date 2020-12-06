@@ -2,15 +2,6 @@
   "object": {
     "pins": [
       {
-        "package": "Coordinator",
-        "repositoryURL": "https://github.com/lazarevzubov/Coordinator.git",
-        "state": {
-          "branch": "master",
-          "revision": "4b5cac9808bdde3454834dc75f5db6da9b15bf4c",
-          "version": null
-        }
-      },
-      {
         "package": "GoodreadsService",
         "repositoryURL": "https://github.com/lazarevzubov/GoodreadsService.git",
         "state": {

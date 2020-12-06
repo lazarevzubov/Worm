@@ -30,7 +30,7 @@ final class RecommendationsDefaultModelTests: XCTestCase {
         let model = RecommendationsDefaultModel(catalogueService: catalogueService,
                                                 favoritesService: favoritesService)
 
-        XCTAssertEqual(model.recommendations, books)
+        XCTAssertEqual(Set(model.recommendations), Set(books))
     }
 
 }

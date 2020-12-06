@@ -20,10 +20,9 @@ struct SearchView<Presenter: SearchPresenter>: View {
     var body: some View {
         NavigationView {
             VStack(spacing: 0.0) {
+                Spacer()
                 HStack {
-                    SearchBar(text: $presenter.query, placeholder: "SearchScreenSearchFieldPlaceholder")
-                    Button(action: hideKeyboard) { Text("CancelButtonTitle") }
-                        .accessibility(identifier: "cancelSearchButton")
+                    SearchBar(text: $presenter.query)
                     Spacer(minLength: 16.0)
                 }
                 List(presenter.books) { SearchViewListCell(book: $0, presenter: presenter) }
