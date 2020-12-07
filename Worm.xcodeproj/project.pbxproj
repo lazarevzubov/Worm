@@ -71,7 +71,6 @@
 		4E08266A257D63FC00278208 /* RecommendationsDefaultPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationsDefaultPresenterTests.swift; sourceTree = "<group>"; };
 		4E082670257D642300278208 /* SearchDefaultPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDefaultPresenterTests.swift; sourceTree = "<group>"; };
 		4E082678257D644200278208 /* SearchServiceBasedModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchServiceBasedModelTests.swift; sourceTree = "<group>"; };
-		4E082687257D648F00278208 /* WormUITests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WormUITests-Bridging-Header.h"; sourceTree = "<group>"; };
 		4E082688257D648F00278208 /* XCTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCTest.swift; sourceTree = "<group>"; };
 		4E08268E257D64D800278208 /* RecommendationsScreenTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationsScreenTests.swift; sourceTree = "<group>"; };
 		4E082696257D64F600278208 /* SearchScreenTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchScreenTests.swift; sourceTree = "<group>"; };
@@ -211,7 +210,6 @@
 				4E082680257D646F00278208 /* Helpers */,
 				4E08268D257D64BC00278208 /* Tests */,
 				4E5C6DBD2565BBB600DDB833 /* Info.plist */,
-				4E082687257D648F00278208 /* WormUITests-Bridging-Header.h */,
 			);
 			path = WormUITests;
 			sourceTree = "<group>";
@@ -778,7 +776,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.DreamBroker.WormUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "WormUITests/Helpers/WormUITests-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -801,7 +799,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.DreamBroker.WormUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "WormUITests/Helpers/WormUITests-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = Worm;

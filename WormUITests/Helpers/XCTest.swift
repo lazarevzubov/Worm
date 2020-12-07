@@ -10,6 +10,16 @@ import XCTest
 
 extension XCTestCase {
 
+    // MARK: - Properties
+
+    /// The application under test instance with the `TEST` flag added to the launch environment.
+    static var testApp: XCUIApplication {
+        let app = XCUIApplication()
+        app.launchEnvironment = ["TEST": "YES"]
+
+        return app
+    }
+
     // MARK: - Methods
 
     /**

@@ -51,7 +51,7 @@ final class RecommendationsScreenTests: XCTestCase {
     }
 
     func testList() {
-        let app = XCUIApplication()
+        let app = XCTestCase.testApp
         app.launch()
 
         let searchBar = app.textFields["Search books"]
@@ -86,7 +86,7 @@ final class RecommendationsScreenTests: XCTestCase {
     // MARK: Private properties
 
     private func openedRecommendationsTab() -> XCUIApplication {
-        let app = XCUIApplication()
+        let app = XCTestCase.testApp
         app.launch()
 
         let tabButton = app.tabBars.buttons["Recommendations"]

@@ -41,14 +41,14 @@ final class SearchScreenTests: XCTestCase {
     }
 
     func testSearchInitiallyShown() {
-        let app = XCUIApplication()
+        let app = XCTestCase.testApp
         app.launch()
 
         XCTAssert(app.staticTexts["Search"].exists)
     }
 
     func testSearchBarVisible() {
-        let app = XCUIApplication()
+        let app = XCTestCase.testApp
         app.launch()
 
         let searchBar = app.textFields["Search books"]
@@ -58,7 +58,7 @@ final class SearchScreenTests: XCTestCase {
     }
 
     func testKeyboardActivation() {
-        let app = XCUIApplication()
+        let app = XCTestCase.testApp
         app.launch()
 
         let searchBar = app.textFields["Search books"]
@@ -71,7 +71,7 @@ final class SearchScreenTests: XCTestCase {
     }
 
     func testCancelSearchButtonVisible() {
-        let app = XCUIApplication()
+        let app = XCTestCase.testApp
         app.launch()
 
         let searchBar = app.textFields["Search books"]
@@ -85,7 +85,7 @@ final class SearchScreenTests: XCTestCase {
     }
 
     func testCancelButtonHidesKeyboard() {
-        let app = XCUIApplication()
+        let app = XCTestCase.testApp
         app.launch()
 
         let searchBar = app.textFields["Search books"]
@@ -107,14 +107,14 @@ final class SearchScreenTests: XCTestCase {
     }
 
     func testResultsInitiallyEmpty() {
-        let app = XCUIApplication()
+        let app = XCTestCase.testApp
         app.launch()
 
         XCTAssertTrue(app.tables.staticTexts.count == 0)
     }
 
     func testResults() {
-        let app = XCUIApplication()
+        let app = XCTestCase.testApp
         app.launch()
 
         let searchBar = app.textFields["Search books"]
@@ -144,7 +144,7 @@ final class SearchScreenTests: XCTestCase {
     }
 
     func testFavoriteMarkInitiallyUnchecked() {
-        let app = XCUIApplication()
+        let app = XCTestCase.testApp
         app.launch()
 
         let searchBar = app.textFields["Search books"]
@@ -177,7 +177,7 @@ final class SearchScreenTests: XCTestCase {
     }
 
     func testCheckFavoriteMark() {
-        let app = XCUIApplication()
+        let app = XCTestCase.testApp
         app.launch()
 
         let searchBar = app.textFields["Search books"]
@@ -206,7 +206,7 @@ final class SearchScreenTests: XCTestCase {
     }
 
     func testUncheckFavoriteMark() {
-        let app = XCUIApplication()
+        let app = XCTestCase.testApp
         app.launch()
 
         let searchBar = app.textFields["Search books"]

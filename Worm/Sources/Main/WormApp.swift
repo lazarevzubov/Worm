@@ -26,11 +26,10 @@ struct WormApp: App {
     // MARK: Private properties
 
     private var catalogueService: CatalogueService = {
-        #if TEST
-        return CatalogueMockService()
-        #else
+        if ProcessInfo.processInfo.environment["TEST"] != nil {
+            return CatalogueMockService()
+        }
         return GoodreadsService(key: Settings.goodreadsAPIKey)
-        #endif
     }()
     private var favoritesService = FavoritesPersistenceService(persistenceContext: CoreData.shared.managedObjectContext)
 
