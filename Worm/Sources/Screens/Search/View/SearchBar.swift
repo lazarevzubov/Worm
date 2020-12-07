@@ -8,12 +8,12 @@
 
 import SwiftUI
 
-// TODO: HeaderDoc.
+/// The search bar view
 struct SearchBar: View {
 
     // MARK: - Properties
 
-    // TODO: HeaderDoc.
+    /// The search text binding.
     @Binding
     var text: String
 
