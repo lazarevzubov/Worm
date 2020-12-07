@@ -7,7 +7,6 @@
 //
 
 import SwiftUI
-import UIKit2SwiftUI
 
 // TODO: Check accessibility.
 
@@ -21,10 +20,9 @@ struct SearchView<Presenter: SearchPresenter>: View {
     var body: some View {
         NavigationView {
             VStack(spacing: 0.0) {
+                Spacer()
                 HStack {
-                    SearchBar(text: $presenter.query, placeholder: "SearchScreenSearchFieldPlaceholder")
-                    Button(action: hideKeyboard) { Text("CancelButtonTitle") }
-                        .accessibility(identifier: "cancelSearchButton")
+                    SearchBar(text: $presenter.query)
                     Spacer(minLength: 16.0)
                 }
                 List(presenter.books) { SearchViewListCell(book: $0, presenter: presenter) }
@@ -54,7 +52,7 @@ struct SearchView<Presenter: SearchPresenter>: View {
 
     // MARK: Private methods
 
-    private func configureNavigationBar() {
+    private func configureNavigationBar() { // FIXME: Navigation bar color change.
         UINavigationBar.appearance().backgroundColor = UIColor(red: (172.0 / 255.0),
                                                                green: (211.0 / 255.0),
                                                                blue: (214.0 / 255.0),

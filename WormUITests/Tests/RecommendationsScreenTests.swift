@@ -51,10 +51,10 @@ final class RecommendationsScreenTests: XCTestCase {
     }
 
     func testList() {
-        let app = XCUIApplication()
+        let app = XCTestCase.testApp
         app.launch()
 
-        let searchBar = app.searchFields["searchBar"]
+        let searchBar = app.textFields["Search books"]
         searchBar.tap()
         searchBar.typeText("Query")
 
@@ -70,7 +70,7 @@ final class RecommendationsScreenTests: XCTestCase {
         let uncheckedFavoriteButton = app.otherElements[uncheckedFavoriteButtonLabel].firstMatch
         uncheckedFavoriteButton.tap()
 
-        let cancelButton = app.buttons["cancelSearchButton"]
+        let cancelButton = app.buttons["Cancel"]
         cancelButton.tap()
 
         app.tabBars.buttons.element(boundBy: 1).tap()
@@ -86,10 +86,10 @@ final class RecommendationsScreenTests: XCTestCase {
     // MARK: Private properties
 
     private func openedRecommendationsTab() -> XCUIApplication {
-        let app = XCUIApplication()
+        let app = XCTestCase.testApp
         app.launch()
 
-        let tabButton = app.tabBars.buttons.element(boundBy: 1)
+        let tabButton = app.tabBars.buttons["Recommendations"]
         tabButton.tap()
 
         return app

@@ -24,7 +24,7 @@ enum ViewFactory<RecommendationsService: FavoritesService> {
         let searchView = makeSearchView(catalogueService: catalogueService, favoritesService: favoritesService)
         let recommendationsView = makeRecommendationsView(catalogueService: catalogueService,
                                                           favoritesService: favoritesService)
-        
+
         return MainView(searchView: searchView, recommendationsView: recommendationsView)
     }
 

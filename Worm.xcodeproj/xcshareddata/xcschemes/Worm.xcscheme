@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1200"
+   LastUpgradeVersion = "1220"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "4E42D20324448362002CAA4E"
+               BlueprintIdentifier = "4E5C6D952565BBB400DDB833"
                BuildableName = "Worm.app"
                BlueprintName = "Worm"
                ReferencedContainer = "container:Worm.xcodeproj">
@@ -23,7 +23,7 @@
       </BuildActionEntries>
    </BuildAction>
    <TestAction
-      buildConfiguration = "Test"
+      buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES"
@@ -32,7 +32,7 @@
       <CodeCoverageTargets>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "4E42D20324448362002CAA4E"
+            BlueprintIdentifier = "4E5C6D952565BBB400DDB833"
             BuildableName = "Worm.app"
             BlueprintName = "Worm"
             ReferencedContainer = "container:Worm.xcodeproj">
@@ -40,24 +40,20 @@
       </CodeCoverageTargets>
       <Testables>
          <TestableReference
-            skipped = "NO"
-            parallelizable = "YES"
-            testExecutionOrdering = "random">
+            skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "4ECAA5AE24713A0E003D3F8D"
+               BlueprintIdentifier = "4E5C6DAB2565BBB500DDB833"
                BuildableName = "WormTests.xctest"
                BlueprintName = "WormTests"
                ReferencedContainer = "container:Worm.xcodeproj">
             </BuildableReference>
          </TestableReference>
          <TestableReference
-            skipped = "NO"
-            parallelizable = "YES"
-            testExecutionOrdering = "random">
+            skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "4E4A3845247590F5008AB1C2"
+               BlueprintIdentifier = "4E5C6DB62565BBB600DDB833"
                BuildableName = "WormUITests.xctest"
                BlueprintName = "WormUITests"
                ReferencedContainer = "container:Worm.xcodeproj">
@@ -79,7 +75,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "4E42D20324448362002CAA4E"
+            BlueprintIdentifier = "4E5C6D952565BBB400DDB833"
             BuildableName = "Worm.app"
             BlueprintName = "Worm"
             ReferencedContainer = "container:Worm.xcodeproj">
@@ -96,7 +92,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "4E42D20324448362002CAA4E"
+            BlueprintIdentifier = "4E5C6D952565BBB400DDB833"
             BuildableName = "Worm.app"
             BlueprintName = "Worm"
             ReferencedContainer = "container:Worm.xcodeproj">

@@ -20,19 +20,16 @@ struct WormApp: App {
     // MARK: App protocol properties
 
     var body: some Scene {
-        WindowGroup {
-            ViewFactory.makeMainView(catalogueService: catalogueService, favoritesService: favoritesService)
-        }
+        WindowGroup { ViewFactory.makeMainView(catalogueService: catalogueService, favoritesService: favoritesService) }
     }
 
     // MARK: Private properties
 
     private var catalogueService: CatalogueService = {
-        #if TEST
-        return CatalogueMockService()
-        #else
+        if ProcessInfo.processInfo.environment["TEST"] != nil {
+            return CatalogueMockService()
+        }
         return GoodreadsService(key: Settings.goodreadsAPIKey)
-        #endif
     }()
     private var favoritesService = FavoritesPersistenceService(persistenceContext: CoreData.shared.managedObjectContext)
 

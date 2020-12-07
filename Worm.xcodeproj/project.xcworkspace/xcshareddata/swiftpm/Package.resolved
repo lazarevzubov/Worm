@@ -2,29 +2,11 @@
   "object": {
     "pins": [
       {
-        "package": "Coordinator",
-        "repositoryURL": "https://github.com/lazarevzubov/Coordinator.git",
-        "state": {
-          "branch": "master",
-          "revision": "4b5cac9808bdde3454834dc75f5db6da9b15bf4c",
-          "version": null
-        }
-      },
-      {
         "package": "GoodreadsService",
         "repositoryURL": "https://github.com/lazarevzubov/GoodreadsService.git",
         "state": {
           "branch": "master",
           "revision": "8667803df0f47a342ee4c61d90b65ba877fca732",
-          "version": null
-        }
-      },
-      {
-        "package": "UIKit2SwiftUI",
-        "repositoryURL": "https://github.com/lazarevzubov/UIKit2SwiftUI.git",
-        "state": {
-          "branch": "master",
-          "revision": "6d29d7e3f9be4cf635800a10c9a24a8c62ac16ac",
           "version": null
         }
       }
