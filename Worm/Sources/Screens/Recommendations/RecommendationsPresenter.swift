@@ -60,7 +60,7 @@ final class RecommendationsDefaultPresenter<Model: RecommendationsModel>: Recomm
     // MARK: BookListCellPresenter protocol methods
 
     func toggleFavoriteState(bookID: String) {
-        // TODO.
+        model.toggleFavoriteState(bookID: bookID)
     }
 
     // MARK: Private methods
