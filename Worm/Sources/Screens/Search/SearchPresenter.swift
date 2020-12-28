@@ -21,20 +21,12 @@ protocol SearchPresenter: ObservableObject {
     /// The list of books corresponding to the current search query.
     var books: [BookViewModel] { get }
 
-    // MARK: - Methods
-
-    /**
-    Toggles the favorite-ness state of a book.
-    - Parameter bookID: The ID of the book to manipulate.
-    */
-    func toggleFavoriteState(bookID: String)
-
 }
 
 // MARK: -
 
 /// The presentation logic of the book search screen relying on the default model implementation.
-final class SearchDefaultPresenter<Model: SearchModel>: SearchPresenter {
+final class SearchDefaultPresenter<Model: SearchModel>: SearchPresenter, BookListCellPresenter {
 
     // MARK: - Properties
 
@@ -79,9 +71,14 @@ final class SearchDefaultPresenter<Model: SearchModel>: SearchPresenter {
         model
             .objectWillChange
             .receive(on: updateQueue)
-            .sink { [weak self] _ in
-                self?.objectWillChange.send()
-                self?.books = model.books.map { $0.asViewModel(favorite: model.favoriteBookIDs.contains($0.id)) }
+            .sink { [weak self, weak model] _ in
+                guard let self = self,
+                      let model = model else {
+                    return
+                }
+
+                self.objectWillChange.send()
+                self.books = model.books.map { $0.asViewModel(favorite: model.favoriteBookIDs.contains($0.id)) }
         }
         .store(in: &cancellables)
     }
@@ -91,7 +88,7 @@ final class SearchDefaultPresenter<Model: SearchModel>: SearchPresenter {
 // MARK: -
 
 /// The mock presentation logic object for the book search screen preview.
-final class SearchPreviewPresenter: SearchPresenter {
+final class SearchPreviewPresenter: SearchPresenter, BookListCellPresenter {
 
     // MARK: - Properties
 

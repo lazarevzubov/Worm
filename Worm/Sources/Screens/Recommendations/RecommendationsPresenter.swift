@@ -9,7 +9,6 @@
 import Combine
 import Foundation
 
-// TODO: Marking favorites from this screen.
 // TODO: Blocking books from recommendations.
 
 /// Object responsible for Recommendations screen presentation logic.
@@ -25,7 +24,8 @@ protocol RecommendationsPresenter: ObservableObject {
 // MARK: -
 
 /// The default implementation of the Recommendations screen presenter.
-final class RecommendationsDefaultPresenter<Model: RecommendationsModel>: RecommendationsPresenter {
+final class RecommendationsDefaultPresenter<Model: RecommendationsModel>: RecommendationsPresenter,
+                                                                          BookListCellPresenter {
 
     // MARK: - Properties
 
@@ -52,20 +52,33 @@ final class RecommendationsDefaultPresenter<Model: RecommendationsModel>: Recomm
         self.model = recommendationsModel
         self.updateQueue = updateQueue
 
-        bind(recommendationsModel: model)
+        bind(model: model)
     }
 
     // MARK: - Methods
 
+    // MARK: BookListCellPresenter protocol methods
+
+    func toggleFavoriteState(bookID: String) {
+        // TODO.
+    }
+
     // MARK: Private methods
 
-    private func bind(recommendationsModel: Model) {
-        recommendationsModel
+    private func bind(model: Model) {
+        model
             .objectWillChange
             .receive(on: updateQueue)
-            .sink { [weak self] _ in
-                self?.objectWillChange.send()
-                self?.recommendations = recommendationsModel.recommendations.map { $0.asViewModel(favorite: true) }
+            .sink { [weak self, weak model] _ in
+                guard let self = self,
+                      let model = model else {
+                    return
+                }
+
+                self.objectWillChange.send()
+                self.recommendations = model.recommendations.map {
+                    $0.asViewModel(favorite: model.favoriteBookIDs.contains($0.id))
+                }
         }
         .store(in: &cancellables)
     }
@@ -75,7 +88,7 @@ final class RecommendationsDefaultPresenter<Model: RecommendationsModel>: Recomm
 // MARK: -
 
 /// The implementation of the Recommendations screen presenter that used for SwiftUI previews.
-final class RecommendationsPreviewPresenter: RecommendationsPresenter {
+final class RecommendationsPreviewPresenter: RecommendationsPresenter, BookListCellPresenter {
 
     // MARK: - Properties
 
@@ -107,5 +120,13 @@ final class RecommendationsPreviewPresenter: RecommendationsPresenter {
         BookViewModel(authors: "Ken Kesey", favorite: true, id: "14", title: "Sometimes a Great Notion"),
         BookViewModel(authors: "Haruki Murakami", favorite: true, id: "15", title: "The Wind-Up Bird Chronicle")
     ]
+
+    // MARK: - Methods
+
+    // MARK: BookListCellPresenter protocol methods
+
+    func toggleFavoriteState(bookID: String) {
+        // Do nothing.
+    }
 
 }

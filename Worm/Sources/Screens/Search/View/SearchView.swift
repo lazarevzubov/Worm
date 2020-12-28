@@ -11,7 +11,7 @@ import SwiftUI
 // TODO: Check accessibility.
 
 /// The book search screen.
-struct SearchView<Presenter: SearchPresenter>: View {
+struct SearchView<Presenter: SearchPresenter & BookListCellPresenter>: View {
 
     // MARK: - Properties
 
@@ -25,7 +25,7 @@ struct SearchView<Presenter: SearchPresenter>: View {
                     SearchBar(text: $presenter.query)
                     Spacer(minLength: 16.0)
                 }
-                List(presenter.books) { SearchViewListCell(book: $0, presenter: presenter) }
+                List(presenter.books) { BookListCell(book: $0, presenter: presenter) }
                     .listStyle(PlainListStyle())
             }
             .navigationBarTitle("SearchScreenTitle")

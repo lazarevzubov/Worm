@@ -1,5 +1,5 @@
 //
-//  SearchViewListCell.swift
+//  BookListCell.swift
 //  Worm
 //
 //  Created by Nikita Lazarev-Zubov on 6.6.2020.
@@ -8,8 +8,8 @@
 
 import SwiftUI
 
-/// Search screen list's cell.
-struct SearchViewListCell<Presenter: SearchPresenter>: View {
+/// The table call contaning a book info.
+struct BookListCell: View {
 
     // MARK: - Properties
 
@@ -47,7 +47,7 @@ struct SearchViewListCell<Presenter: SearchPresenter>: View {
     // MARK: Private properties
 
     private let book: BookViewModel
-    private let presenter: Presenter
+    private let presenter: BookListCellPresenter
 
     // MARK: - Initialization
 
@@ -55,9 +55,9 @@ struct SearchViewListCell<Presenter: SearchPresenter>: View {
      Creates a cell's displaying representation.
      - Parameters:
         - book: A book data for a visual representation.
-        - presenter: The presentation logic of the book search screen.
+        - presenter: The presentation logic of the book table cell.
      */
-    init(book: BookViewModel, presenter: Presenter) {
+    init(book: BookViewModel, presenter: BookListCellPresenter) {
         self.book = book
         self.presenter = presenter
     }

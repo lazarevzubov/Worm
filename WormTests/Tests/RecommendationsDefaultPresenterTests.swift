@@ -28,7 +28,7 @@ final class RecommendationsDefaultPresenterTests: XCTestCase {
             // Wait for presenter update.
         }
 
-        let bookVMsSet = Set(books.map { $0.asViewModel(favorite: true) })
+        let bookVMsSet = Set(books.map { $0.asViewModel(favorite: false) })
         XCTAssertEqual(Set(presenter.recommendations), bookVMsSet)
     }
 
@@ -46,6 +46,7 @@ private final class RecommendationsMockModel: RecommendationsModel {
 
     @Published
     var recommendations = [Book]()
+    private(set) var favoriteBookIDs = [String]()
 
     // MARK: - Initiazliation
 

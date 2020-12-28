@@ -14,6 +14,8 @@ protocol RecommendationsModel: ObservableObject {
 
     // MARK: - Properties
 
+    /// The list of favorite book IDs.
+    var favoriteBookIDs: [String] { get }
     /// A list of recommended books in ready-to-display order.
     var recommendations: [Book] { get }
 
@@ -28,6 +30,7 @@ final class RecommendationsDefaultModel<RecommendationsService: FavoritesService
 
     // MARK: RecommendationsManager protocol properties
 
+    private(set) lazy var favoriteBookIDs = favoritesService.favoriteBooks.compactMap { $0.id }
     @Published
     var recommendations = [Book]()
 
@@ -76,11 +79,7 @@ final class RecommendationsDefaultModel<RecommendationsService: FavoritesService
     }
 
     private func updateFavorites() {
-        favoriteBookIDs().forEach { addSimilarBooksToRecommendations(from: $0) }
-    }
-
-    private func favoriteBookIDs() -> [String] {
-        return favoritesService.favoriteBooks.compactMap { $0.id }
+        favoriteBookIDs.forEach { addSimilarBooksToRecommendations(from: $0) }
     }
 
     private func addSimilarBooksToRecommendations(from bookID: String) {
