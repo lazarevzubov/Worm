@@ -76,9 +76,10 @@ final class RecommendationsDefaultPresenter<Model: RecommendationsModel>: Recomm
                 }
 
                 self.objectWillChange.send()
-                self.recommendations = model.recommendations.map {
-                    $0.asViewModel(favorite: model.favoriteBookIDs.contains($0.id))
-                }
+                self.recommendations = model
+                    .recommendations
+                    .map { $0.asViewModel(favorite: model.favoriteBookIDs.contains($0.id)) }
+                    .filter { !$0.isFavorite }
         }
         .store(in: &cancellables)
     }
@@ -95,30 +96,30 @@ final class RecommendationsPreviewPresenter: RecommendationsPresenter, BookListC
     // MARK: RecommendationsPresenter protocol properties
 
     var recommendations = [
-        BookViewModel(authors: "J.R.R. Tolkien", favorite: true, id: "1", title: "The Lord of the Rings"),
-        BookViewModel(authors: "Michael Bond", favorite: true, id: "2", title: "Paddington Pop-Up London"),
+        BookViewModel(authors: "J.R.R. Tolkien", id: "1", isFavorite: true, title: "The Lord of the Rings"),
+        BookViewModel(authors: "Michael Bond", id: "2", isFavorite: true, title: "Paddington Pop-Up London"),
         BookViewModel(authors: "J.K. Rowling",
-                      favorite: true,
                       id: "3",
+                      isFavorite: true,
                       title: "Harry Potter and the Sorcecer's Stone"),
-        BookViewModel(authors: "George R.R. Martin", favorite: true, id: "4", title: "A Game of Thrones"),
-        BookViewModel(authors: "Frank Herbert", favorite: true, id: "5", title: "Dune I"),
-        BookViewModel(authors: "Mikhail Bulgakov", favorite: true, id: "6", title: "The Master and Margarita"),
-        BookViewModel(authors: "Alan Moore", favorite: true, id: "7", title: "Watchmen"),
-        BookViewModel(authors: "Steve McConnell", favorite: true, id: "8", title: "Code Complete"),
-        BookViewModel(authors: "Jane Austen", favorite: true, id: "9", title: "Pride and Prejudice"),
+        BookViewModel(authors: "George R.R. Martin", id: "4", isFavorite: true, title: "A Game of Thrones"),
+        BookViewModel(authors: "Frank Herbert", id: "5", isFavorite: true, title: "Dune I"),
+        BookViewModel(authors: "Mikhail Bulgakov", id: "6", isFavorite: true, title: "The Master and Margarita"),
+        BookViewModel(authors: "Alan Moore", id: "7", isFavorite: true, title: "Watchmen"),
+        BookViewModel(authors: "Steve McConnell", id: "8", isFavorite: true, title: "Code Complete"),
+        BookViewModel(authors: "Jane Austen", id: "9", isFavorite: true, title: "Pride and Prejudice"),
         BookViewModel(authors: "Martin Fowler",
-                      favorite: true,
                       id: "10",
+                      isFavorite: true,
                       title: "Refactoring: Improving the Design of Existing Code"),
-        BookViewModel(authors: "Stephen King", favorite: true, id: "11", title: "The Shining"),
+        BookViewModel(authors: "Stephen King", id: "11", isFavorite: true, title: "The Shining"),
         BookViewModel(authors: "Hannah Arendt",
-                      favorite: true,
                       id: "12",
+                      isFavorite: true,
                       title: "Eichmann in Jerusalem: A Report on the Banality of Evil"),
-        BookViewModel(authors: "Fyodor Dostoyevsky", favorite: true, id: "13", title: "The Idiot"),
-        BookViewModel(authors: "Ken Kesey", favorite: true, id: "14", title: "Sometimes a Great Notion"),
-        BookViewModel(authors: "Haruki Murakami", favorite: true, id: "15", title: "The Wind-Up Bird Chronicle")
+        BookViewModel(authors: "Fyodor Dostoyevsky", id: "13", isFavorite: true, title: "The Idiot"),
+        BookViewModel(authors: "Ken Kesey", id: "14", isFavorite: true, title: "Sometimes a Great Notion"),
+        BookViewModel(authors: "Haruki Murakami", id: "15", isFavorite: true, title: "The Wind-Up Bird Chronicle")
     ]
 
     // MARK: - Methods

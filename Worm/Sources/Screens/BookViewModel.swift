@@ -15,10 +15,10 @@ struct BookViewModel {
 
     /// Formatted authors list.
     let authors: String
-    /// Whether the book is in the favorites list.
-    let favorite: Bool
     /// The book ID.
     let id: String
+    /// Whether the book is in the favorites list.
+    let isFavorite: Bool
     /// The book title.
     let title: String
 
@@ -48,7 +48,7 @@ extension Book {
      - Returns: The book data for a visual representation.
      */
     func asViewModel(favorite: Bool) -> BookViewModel {
-        BookViewModel(authors: authors.joined(separator: ", "), favorite: favorite, id: id, title: title)
+        BookViewModel(authors: authors.joined(separator: ", "), id: id, isFavorite: favorite, title: title)
     }
 
 }

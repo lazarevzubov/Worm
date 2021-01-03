@@ -35,7 +35,7 @@ struct BookListCell: View {
             Button(action: {
                     presenter.toggleFavoriteState(bookID: book.id)
             }) {
-                Image(systemName: (book.favorite ? "heart.fill" : "heart")).foregroundColor(.primary)
+                Image(systemName: (book.isFavorite ? "heart.fill" : "heart")).foregroundColor(.primary)
             }
             .accessibilityElement()
             .accessibility(label: makeFavoriteButtonAccessibilityLabel(for: book))
@@ -71,7 +71,7 @@ struct BookListCell: View {
     }
 
     private func makeFavoriteButtonAccessibilityLabel(for book: BookViewModel) -> Text {
-        return book.favorite
+        return book.isFavorite
             ? Text(String(format: "SearchScreenFavoriteMarkCheckedHintFormat", book.title))
             : Text(String(format: "SearchScreenFavoriteMarkUncheckedHintFormat", book.title))
     }
