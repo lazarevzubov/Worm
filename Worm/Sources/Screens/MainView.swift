@@ -12,6 +12,7 @@ import SwiftUI
 struct MainView<SearchView: View, RecommendationsView: View>: View {
 
     // TODO: Check accessibility.
+    // TODO: Favorites screen (to edit them.)
 
     // MARK: - Properties
 

@@ -22,8 +22,9 @@ struct RecommendationsView<Presenter: RecommendationsPresenter & BookListCellPre
             List(presenter.recommendations) {
                 BookListCell(book: $0, presenter: presenter)
             }
-                .navigationBarTitle("RecommendationsScreenTitle")
-                .onAppear { configureNavigationBar() }
+            .animation(.easeIn)
+            .navigationBarTitle("RecommendationsScreenTitle")
+            .onAppear { configureNavigationBar() }
         }
     }
 
