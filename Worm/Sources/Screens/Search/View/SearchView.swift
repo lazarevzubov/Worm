@@ -11,7 +11,7 @@ import SwiftUI
 // TODO: Check accessibility.
 
 /// The book search screen.
-struct SearchView<Presenter: SearchPresenter & BookListCellPresenter>: View {
+struct SearchView<Presenter: SearchPresenter>: View {
 
     // MARK: - Properties
 

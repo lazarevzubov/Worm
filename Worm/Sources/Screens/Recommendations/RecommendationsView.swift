@@ -9,7 +9,7 @@
 import SwiftUI
 
 /// The visual representation of the Recommendations screen.
-struct RecommendationsView<Presenter: RecommendationsPresenter & BookListCellPresenter>: View {
+struct RecommendationsView<Presenter: RecommendationsPresenter>: View {
 
     // TODO: Check accessibility.
 
@@ -19,12 +19,10 @@ struct RecommendationsView<Presenter: RecommendationsPresenter & BookListCellPre
 
     var body: some View {
         NavigationView {
-            List(presenter.recommendations) {
-                BookListCell(book: $0, presenter: presenter)
-            }
-            .animation(.easeIn)
-            .navigationBarTitle("RecommendationsScreenTitle")
-            .onAppear { configureNavigationBar() }
+            List(presenter.recommendations) { BookListCell(book: $0, presenter: presenter) }
+                .animation(.easeIn)
+                .navigationBarTitle("RecommendationsScreenTitle")
+                .onAppear { configureNavigationBar() }
         }
     }
 

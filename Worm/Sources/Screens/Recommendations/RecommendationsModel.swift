@@ -12,7 +12,7 @@ import GoodreadsService
 /// Owns logic of maintaing a list of recommedations.
 protocol RecommendationsModel: ObservableObject {
 
-    // FIXME: Duplicartion with SearchModel?
+    // FIXME: Duplication with SearchModel?
 
     // MARK: - Properties
 

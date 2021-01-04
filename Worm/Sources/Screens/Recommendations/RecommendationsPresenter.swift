@@ -12,7 +12,7 @@ import Foundation
 // TODO: Blocking books from recommendations.
 
 /// Object responsible for Recommendations screen presentation logic.
-protocol RecommendationsPresenter: ObservableObject {
+protocol RecommendationsPresenter: BookListCellPresenter, ObservableObject {
 
     // MARK: - Properties
 
@@ -24,8 +24,7 @@ protocol RecommendationsPresenter: ObservableObject {
 // MARK: -
 
 /// The default implementation of the Recommendations screen presenter.
-final class RecommendationsDefaultPresenter<Model: RecommendationsModel>: RecommendationsPresenter,
-                                                                          BookListCellPresenter {
+final class RecommendationsDefaultPresenter<Model: RecommendationsModel>: RecommendationsPresenter {
 
     // MARK: - Properties
 

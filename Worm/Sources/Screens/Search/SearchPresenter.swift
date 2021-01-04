@@ -12,7 +12,7 @@ import Foundation
 // FIXME: Same model objects for all layers.
 
 /// The presentation logic of the book search screen.
-protocol SearchPresenter: ObservableObject {
+protocol SearchPresenter: BookListCellPresenter, ObservableObject {
 
     // MARK: - Properties
 
@@ -26,7 +26,7 @@ protocol SearchPresenter: ObservableObject {
 // MARK: -
 
 /// The presentation logic of the book search screen relying on the default model implementation.
-final class SearchDefaultPresenter<Model: SearchModel>: SearchPresenter, BookListCellPresenter {
+final class SearchDefaultPresenter<Model: SearchModel>: SearchPresenter {
 
     // MARK: - Properties
 
