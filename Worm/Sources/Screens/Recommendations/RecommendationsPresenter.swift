@@ -95,30 +95,30 @@ final class RecommendationsPreviewPresenter: RecommendationsPresenter, BookListC
     // MARK: RecommendationsPresenter protocol properties
 
     var recommendations = [
-        BookViewModel(authors: "J.R.R. Tolkien", id: "1", isFavorite: true, title: "The Lord of the Rings"),
-        BookViewModel(authors: "Michael Bond", id: "2", isFavorite: true, title: "Paddington Pop-Up London"),
+        BookViewModel(authors: "J.R.R. Tolkien", id: "1", isFavorite: false, title: "The Lord of the Rings"),
+        BookViewModel(authors: "Michael Bond", id: "2", isFavorite: false, title: "Paddington Pop-Up London"),
         BookViewModel(authors: "J.K. Rowling",
                       id: "3",
-                      isFavorite: true,
+                      isFavorite: false,
                       title: "Harry Potter and the Sorcecer's Stone"),
-        BookViewModel(authors: "George R.R. Martin", id: "4", isFavorite: true, title: "A Game of Thrones"),
-        BookViewModel(authors: "Frank Herbert", id: "5", isFavorite: true, title: "Dune I"),
-        BookViewModel(authors: "Mikhail Bulgakov", id: "6", isFavorite: true, title: "The Master and Margarita"),
-        BookViewModel(authors: "Alan Moore", id: "7", isFavorite: true, title: "Watchmen"),
-        BookViewModel(authors: "Steve McConnell", id: "8", isFavorite: true, title: "Code Complete"),
-        BookViewModel(authors: "Jane Austen", id: "9", isFavorite: true, title: "Pride and Prejudice"),
+        BookViewModel(authors: "George R.R. Martin", id: "4", isFavorite: false, title: "A Game of Thrones"),
+        BookViewModel(authors: "Frank Herbert", id: "5", isFavorite: false, title: "Dune I"),
+        BookViewModel(authors: "Mikhail Bulgakov", id: "6", isFavorite: false, title: "The Master and Margarita"),
+        BookViewModel(authors: "Alan Moore", id: "7", isFavorite: false, title: "Watchmen"),
+        BookViewModel(authors: "Steve McConnell", id: "8", isFavorite: false, title: "Code Complete"),
+        BookViewModel(authors: "Jane Austen", id: "9", isFavorite: false, title: "Pride and Prejudice"),
         BookViewModel(authors: "Martin Fowler",
                       id: "10",
-                      isFavorite: true,
+                      isFavorite: false,
                       title: "Refactoring: Improving the Design of Existing Code"),
-        BookViewModel(authors: "Stephen King", id: "11", isFavorite: true, title: "The Shining"),
+        BookViewModel(authors: "Stephen King", id: "11", isFavorite: false, title: "The Shining"),
         BookViewModel(authors: "Hannah Arendt",
                       id: "12",
-                      isFavorite: true,
+                      isFavorite: false,
                       title: "Eichmann in Jerusalem: A Report on the Banality of Evil"),
-        BookViewModel(authors: "Fyodor Dostoyevsky", id: "13", isFavorite: true, title: "The Idiot"),
-        BookViewModel(authors: "Ken Kesey", id: "14", isFavorite: true, title: "Sometimes a Great Notion"),
-        BookViewModel(authors: "Haruki Murakami", id: "15", isFavorite: true, title: "The Wind-Up Bird Chronicle")
+        BookViewModel(authors: "Fyodor Dostoyevsky", id: "13", isFavorite: false, title: "The Idiot"),
+        BookViewModel(authors: "Ken Kesey", id: "14", isFavorite: false, title: "Sometimes a Great Notion"),
+        BookViewModel(authors: "Haruki Murakami", id: "15", isFavorite: false, title: "The Wind-Up Bird Chronicle")
     ]
 
     // MARK: - Methods

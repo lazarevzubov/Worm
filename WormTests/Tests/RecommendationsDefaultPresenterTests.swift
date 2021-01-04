@@ -62,4 +62,8 @@ private final class RecommendationsMockModel: RecommendationsModel {
         recommendationsFetched = true
     }
 
+    func toggleFavoriteState(bookID: String) {
+        // Do nothing.
+    }
+
 }
