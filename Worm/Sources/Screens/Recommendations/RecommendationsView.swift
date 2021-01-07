@@ -19,7 +19,8 @@ struct RecommendationsView<Presenter: RecommendationsPresenter>: View {
 
     var body: some View {
         NavigationView {
-            List(presenter.recommendations) { RecommendationsViewListCell(book: $0) }
+            List(presenter.recommendations) { BookListCell(book: $0, presenter: presenter) }
+                .animation(.easeIn)
                 .navigationBarTitle("RecommendationsScreenTitle")
                 .onAppear { configureNavigationBar() }
         }

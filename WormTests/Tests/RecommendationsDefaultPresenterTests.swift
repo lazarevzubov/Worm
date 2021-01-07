@@ -18,7 +18,7 @@ final class RecommendationsDefaultPresenterTests: XCTestCase {
     func testRecommendationsUpdate() {
         let model = RecommendationsMockModel()
         let queue = DispatchQueue(label: "com.LazarevZubov.Worm.RecommendationsDefaultPresenterTests")
-        let presenter = RecommendationsDefaultPresenter(recommendationsModel: model, updateQueue: queue)
+        let presenter = RecommendationsDefaultPresenter(model: model, updateQueue: queue)
 
         let books = [Book(authors: [], title: "Title1", id: "1"),
                      Book(authors: [], title: "Title2", id: "2")]
@@ -28,8 +28,24 @@ final class RecommendationsDefaultPresenterTests: XCTestCase {
             // Wait for presenter update.
         }
 
-        let bookVMsSet = Set(books.map { $0.asViewModel(favorite: true) })
+        let bookVMsSet = Set(books.map { $0.asViewModel(favorite: false) })
         XCTAssertEqual(Set(presenter.recommendations), bookVMsSet)
+    }
+
+    func testToggleFavoriteState() {
+        let model = RecommendationsMockModel()
+
+        let bookID1 = "1"
+        let bookID2 = "2"
+        model.favoriteBookIDs = [bookID1, bookID2]
+
+        let presenter = RecommendationsDefaultPresenter(model: model)
+
+        presenter.toggleFavoriteState(bookID: bookID1)
+        XCTAssertEqual(model.favoriteBookIDs, [bookID2])
+
+        presenter.toggleFavoriteState(bookID: bookID1)
+        XCTAssertEqual(Set(model.favoriteBookIDs), Set([bookID2, bookID1]))
     }
 
 }
@@ -46,6 +62,7 @@ private final class RecommendationsMockModel: RecommendationsModel {
 
     @Published
     var recommendations = [Book]()
+    var favoriteBookIDs = [String]()
 
     // MARK: - Initiazliation
 
@@ -59,6 +76,14 @@ private final class RecommendationsMockModel: RecommendationsModel {
 
     func fetchRecommendations() {
         recommendationsFetched = true
+    }
+
+    func toggleFavoriteState(bookID: String) {
+        if favoriteBookIDs.contains(where: { $0 == bookID }) {
+            favoriteBookIDs.removeAll { $0 == bookID }
+        } else {
+            favoriteBookIDs.append(bookID)
+        }
     }
 
 }

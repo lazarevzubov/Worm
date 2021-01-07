@@ -1,5 +1,5 @@
 //
-//  SearchViewListCell.swift
+//  BookListCell.swift
 //  Worm
 //
 //  Created by Nikita Lazarev-Zubov on 6.6.2020.
@@ -8,8 +8,8 @@
 
 import SwiftUI
 
-/// Search screen list's cell.
-struct SearchViewListCell<Presenter: SearchPresenter>: View {
+/// The table call contaning a book info.
+struct BookListCell: View {
 
     // MARK: - Properties
 
@@ -35,7 +35,7 @@ struct SearchViewListCell<Presenter: SearchPresenter>: View {
             Button(action: {
                     presenter.toggleFavoriteState(bookID: book.id)
             }) {
-                Image(systemName: (book.favorite ? "heart.fill" : "heart")).foregroundColor(.primary)
+                Image(systemName: (book.isFavorite ? "heart.fill" : "heart")).foregroundColor(.primary)
             }
             .accessibilityElement()
             .accessibility(label: makeFavoriteButtonAccessibilityLabel(for: book))
@@ -47,7 +47,7 @@ struct SearchViewListCell<Presenter: SearchPresenter>: View {
     // MARK: Private properties
 
     private let book: BookViewModel
-    private let presenter: Presenter
+    private let presenter: BookListCellPresenter
 
     // MARK: - Initialization
 
@@ -55,9 +55,9 @@ struct SearchViewListCell<Presenter: SearchPresenter>: View {
      Creates a cell's displaying representation.
      - Parameters:
         - book: A book data for a visual representation.
-        - presenter: The presentation logic of the book search screen.
+        - presenter: The presentation logic of the book table cell.
      */
-    init(book: BookViewModel, presenter: Presenter) {
+    init(book: BookViewModel, presenter: BookListCellPresenter) {
         self.book = book
         self.presenter = presenter
     }
@@ -71,7 +71,7 @@ struct SearchViewListCell<Presenter: SearchPresenter>: View {
     }
 
     private func makeFavoriteButtonAccessibilityLabel(for book: BookViewModel) -> Text {
-        return book.favorite
+        return book.isFavorite
             ? Text(String(format: "SearchScreenFavoriteMarkCheckedHintFormat", book.title))
             : Text(String(format: "SearchScreenFavoriteMarkUncheckedHintFormat", book.title))
     }

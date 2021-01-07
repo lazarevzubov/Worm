@@ -11,7 +11,7 @@ import SwiftUI
 
 // TODO: Check iPads.
 
-// TODO: HeaderDoc.
+/// The main app structure and entry point.
 @main
 struct WormApp: App {
 

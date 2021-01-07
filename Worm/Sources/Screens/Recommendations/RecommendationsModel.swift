@@ -12,10 +12,22 @@ import GoodreadsService
 /// Owns logic of maintaing a list of recommedations.
 protocol RecommendationsModel: ObservableObject {
 
+    // FIXME: Duplication with SearchModel?
+
     // MARK: - Properties
 
+    /// The list of favorite book IDs.
+    var favoriteBookIDs: [String] { get }
     /// A list of recommended books in ready-to-display order.
     var recommendations: [Book] { get }
+
+    // MARK: - Methods
+
+    /**
+     Toggles the favorite-ness state of a book.
+     - Parameter bookID: The ID of the book to manipulate.
+     */
+    func toggleFavoriteState(bookID: String)
 
 }
 
@@ -28,6 +40,8 @@ final class RecommendationsDefaultModel<RecommendationsService: FavoritesService
 
     // MARK: RecommendationsManager protocol properties
 
+    @Published
+    private(set) var favoriteBookIDs = [String]()
     @Published
     var recommendations = [Book]()
 
@@ -63,6 +77,17 @@ final class RecommendationsDefaultModel<RecommendationsService: FavoritesService
 
     // MARK: - Methods
 
+    // MARK: RecommendationsModel protocol methods
+
+    func toggleFavoriteState(bookID: String) {
+        if favoriteBookIDs.contains(bookID) {
+            favoritesService.removeFromFavoriteBooks(bookID)
+        } else {
+            favoritesService.addToFavoriteBooks(bookID)
+        }
+        updateFavorites()
+    }
+
     // MARK: Private methods
 
     private func bind(favoritesService: RecommendationsService) {
@@ -76,11 +101,8 @@ final class RecommendationsDefaultModel<RecommendationsService: FavoritesService
     }
 
     private func updateFavorites() {
-        favoriteBookIDs().forEach { addSimilarBooksToRecommendations(from: $0) }
-    }
-
-    private func favoriteBookIDs() -> [String] {
-        return favoritesService.favoriteBooks.compactMap { $0.id }
+        favoriteBookIDs = favoritesService.favoriteBooks.compactMap { $0.id }
+        favoriteBookIDs.forEach { addSimilarBooksToRecommendations(from: $0) }
     }
 
     private func addSimilarBooksToRecommendations(from bookID: String) {
