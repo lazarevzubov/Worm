@@ -33,4 +33,18 @@ final class RecommendationsDefaultModelTests: XCTestCase {
         XCTAssertEqual(Set(model.recommendations), Set(books))
     }
 
+    func testToggleFavorite() {
+        let model = RecommendationsDefaultModel(catalogueService: CatalogueTestingMockService(),
+                                                favoritesService: FavoritesMockService())
+
+        let id = "id"
+        XCTAssertFalse(model.favoriteBookIDs.contains(id))
+
+        model.toggleFavoriteState(bookID: id)
+        XCTAssertTrue(model.favoriteBookIDs.contains(id))
+
+        model.toggleFavoriteState(bookID: id)
+        XCTAssertFalse(model.favoriteBookIDs.contains(id))
+    }
+
 }

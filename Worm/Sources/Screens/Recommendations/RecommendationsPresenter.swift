@@ -44,11 +44,11 @@ final class RecommendationsDefaultPresenter<Model: RecommendationsModel>: Recomm
     /**
      Creates a presenter object.
      - Parameters:
-        - recommendationsModel: Data providing object.
+        - model: Data providing object.
         - updateQueue: Queue on which presentation data is passed to view.
      */
-    init(recommendationsModel: Model, updateQueue: DispatchQueue = .main) {
-        self.model = recommendationsModel
+    init(model: Model, updateQueue: DispatchQueue = .main) {
+        self.model = model
         self.updateQueue = updateQueue
 
         bind(model: model)

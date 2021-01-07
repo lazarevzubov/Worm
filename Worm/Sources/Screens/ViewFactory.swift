@@ -43,7 +43,7 @@ enum ViewFactory<RecommendationsService: FavoritesService> {
                                                 favoritesService: RecommendationsService) -> some View {
         let recommendationsModel = RecommendationsDefaultModel(catalogueService: catalogueService,
                                                                favoritesService: favoritesService)
-        let presenter = RecommendationsDefaultPresenter(recommendationsModel: recommendationsModel)
+        let presenter = RecommendationsDefaultPresenter(model: recommendationsModel)
 
         return RecommendationsView(presenter: presenter)
     }
