@@ -79,8 +79,6 @@ final class FavoritesPersistenceService: FavoritesService {
     }
 
     func removeFromFavoriteBooks(_ id: String) {
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: FavoriteBook.entityName)
-        let favoriteBooks = (try? persistenceContext.fetch(fetchRequest) as? [FavoriteBook]) ?? []
         favoriteBooks.forEach {
             if $0.id == id {
                 persistenceContext.delete($0)

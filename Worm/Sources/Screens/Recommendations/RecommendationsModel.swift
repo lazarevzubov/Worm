@@ -38,7 +38,7 @@ final class RecommendationsDefaultModel<RecommendationsService: FavoritesService
 
     // MARK: - Properties
 
-    // MARK: RecommendationsManager protocol properties
+    // MARK: RecommendationsModel protocol properties
 
     @Published
     private(set) var favoriteBookIDs = [String]()

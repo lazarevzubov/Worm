@@ -1,37 +1,35 @@
 //
-//  RecommendationsPresenter.swift
+//  FavoritesPresenter.swift
 //  Worm
 //
-//  Created by Nikita Lazarev-Zubov on 29.6.2020.
-//  Copyright © 2020 Nikita Lazarev-Zubov. All rights reserved.
+//  Created by Nikita Lazarev-Zubov on 11.1.2021.
+//  Copyright © 2021 Nikita Lazarev-Zubov. All rights reserved.
 //
 
 import Combine
 import Foundation
 
-// TODO: Blocking books from recommendations.
-
-/// Object responsible for Recommendations screen presentation logic.
-protocol RecommendationsPresenter: BookListCellPresenter, ObservableObject {
+/// Object responsible for Favorites screen presentation logic.
+protocol FavoritesPresenter: BookListCellPresenter, ObservableObject {
 
     // MARK: - Properties
 
-    /// A list of view models represeting items on the Recommendations screen.
-    var recommendations: [BookViewModel] { get }
+    /// A list of view models represeting items on the Favorites screen.
+    var favorites: [BookViewModel] { get }
 
 }
 
 // MARK: -
 
-/// The default implementation of the Recommendations screen presenter.
-final class RecommendationsDefaultPresenter<Model: RecommendationsModel>: RecommendationsPresenter {
+/// The default implementation of the Favorites screen presenter.
+final class FavoritesDefaultPresenter<Model: FavoritesModel>: FavoritesPresenter {
 
     // MARK: - Properties
 
-    // MARK: RecommendationsPresenter protocol properties
+    // MARK: FavoritesPresenter protocol properties
 
     @Published
-    private(set) var recommendations = [BookViewModel]()
+    private(set) var favorites = [BookViewModel]()
 
     // MARK: Private properties
 
@@ -50,13 +48,13 @@ final class RecommendationsDefaultPresenter<Model: RecommendationsModel>: Recomm
     init(model: Model, updateQueue: DispatchQueue = .main) {
         self.model = model
         self.updateQueue = updateQueue
-
+        
         bind(model: model)
     }
 
     // MARK: - Methods
 
-    // MARK: BookListCellPresenter protocol methods
+    // MARK: FavoritesPresenter protocol methods
 
     func toggleFavoriteState(bookID: String) {
         model.toggleFavoriteState(bookID: bookID)
@@ -75,10 +73,7 @@ final class RecommendationsDefaultPresenter<Model: RecommendationsModel>: Recomm
                 }
 
                 self.objectWillChange.send()
-                self.recommendations = model
-                    .recommendations
-                    .map { $0.asViewModel(favorite: model.favoriteBookIDs.contains($0.id)) }
-                    .filter { !$0.isFavorite }
+                self.favorites = model.favorites.map { $0.asViewModel(favorite: true) }
         }
         .store(in: &cancellables)
     }
@@ -87,14 +82,14 @@ final class RecommendationsDefaultPresenter<Model: RecommendationsModel>: Recomm
 
 // MARK: -
 
-/// The implementation of the Recommendations screen presenter that used for SwiftUI previews.
-final class RecommendationsPreviewPresenter: RecommendationsPresenter {
+/// The implementation of the Favorites screen presenter that used for SwiftUI previews.
+final class FavoritesPreviewPresenter: FavoritesPresenter {
 
     // MARK: - Properties
 
-    // MARK: RecommendationsPresenter protocol properties
+    // MARK: FavoritesPresenter protocol properties
 
-    var recommendations = [
+    var favorites = [
         BookViewModel(authors: "J.R.R. Tolkien", id: "1", isFavorite: false, title: "The Lord of the Rings"),
         BookViewModel(authors: "Michael Bond", id: "2", isFavorite: false, title: "Paddington Pop-Up London"),
         BookViewModel(authors: "J.K. Rowling",
@@ -123,10 +118,10 @@ final class RecommendationsPreviewPresenter: RecommendationsPresenter {
 
     // MARK: - Methods
 
-    // MARK: BookListCellPresenter protocol methods
+    // MARK: FavoritesPresenter protocol methods
 
     func toggleFavoriteState(bookID: String) {
-        // Do nothing.
+        favorites.removeAll { $0.id == bookID }
     }
 
 }
