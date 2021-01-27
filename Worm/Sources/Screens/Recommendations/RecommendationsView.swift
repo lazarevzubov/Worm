@@ -11,8 +11,6 @@ import SwiftUI
 /// The visual representation of the Recommendations screen.
 struct RecommendationsView<Presenter: RecommendationsPresenter>: View {
 
-    // TODO: Check accessibility.
-
     // MARK: - Properties
 
     // MARK: View protocol properties

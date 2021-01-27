@@ -9,8 +9,6 @@
 import Combine
 import Foundation
 
-// TODO: Blocking books from recommendations.
-
 /// Object responsible for Recommendations screen presentation logic.
 protocol RecommendationsPresenter: BookListCellPresenter, ObservableObject {
 
