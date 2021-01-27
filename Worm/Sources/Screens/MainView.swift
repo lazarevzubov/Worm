@@ -9,10 +9,9 @@
 import SwiftUI
 
 /// The main screen visual representation.
-struct MainView<SearchView: View, RecommendationsView: View>: View {
+struct MainView<SearchView: View, RecommendationsView: View, FavoritesView: View>: View {
 
     // TODO: Check accessibility.
-    // TODO: Favorites screen (to edit them.)
 
     // MARK: - Properties
 
@@ -25,20 +24,27 @@ struct MainView<SearchView: View, RecommendationsView: View>: View {
                     Image(systemName: "magnifyingglass")
                         .accessibility(hidden: true)
                     Text("SearchScreenTitle")
-            }
+                }
             recommendationsView
                 .tabItem {
                     Image(systemName: "checkmark")
                         .accessibility(hidden: true)
                     Text("RecommendationsScreenTitle")
-            }
+                }
+            favoritesView
+                .tabItem {
+                    Image(systemName: "heart")
+                        .accessibility(hidden: true)
+                    Text("FavoritesScreenTitle")
+                }
         }
     }
 
     // MARK: Private properties
 
-    private let searchView: SearchView
+    private let favoritesView: FavoritesView
     private let recommendationsView: RecommendationsView
+    private let searchView: SearchView
 
     // MARK: - Initialization
 
@@ -47,10 +53,12 @@ struct MainView<SearchView: View, RecommendationsView: View>: View {
      - Parameters:
         - searchView: The Search tab visual representation.
         - recommendationsView: The Recommendations tab visual representation.
+        - favoritesView: The Favorites tab visual representation.
      */
-    init(searchView: SearchView, recommendationsView: RecommendationsView) {
+    init(searchView: SearchView, recommendationsView: RecommendationsView, favoritesView: FavoritesView) {
         self.searchView = searchView
         self.recommendationsView = recommendationsView
+        self.favoritesView = favoritesView
     }
 
 }
@@ -65,8 +73,11 @@ struct MainView_Previews: PreviewProvider {
     // MARK: PreviewProvider protocol properties
 
     static var previews: some View {
-        MainView(searchView: SearchView(presenter: SearchPreviewPresenter()),
-                 recommendationsView: RecommendationsView(presenter: RecommendationsPreviewPresenter()))
+        let searchView = SearchView(presenter: SearchPreviewPresenter())
+        let recommendationsView = RecommendationsView(presenter: RecommendationsPreviewPresenter())
+        let favoritesView = FavoritesView(presenter: FavoritesPreviewPresenter())
+        
+        return MainView(searchView: searchView, recommendationsView: recommendationsView, favoritesView: favoritesView)
     }
 
 }
