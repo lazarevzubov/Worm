@@ -17,19 +17,10 @@ struct FavoritesView<Presenter: FavoritesPresenter>: View {
 
     var body: some View {
         NavigationView {
-            List {
-                ForEach(presenter.favorites) { BookListCell(book: $0, presenter: presenter) }
-            }
-            .animation(.easeIn)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Text("FavoritesScreenTitle")
-                        .font(.largeTitle)
-                        .fontWeight(.bold)
-                        .foregroundColor(.black)
-                }
-            }
-            .onAppear { configureNavigationBar() }
+            List(presenter.favorites) { BookListCell(book: $0, presenter: presenter) }
+                .animation(.easeIn)
+                .navigationTitle("FavoritesScreenTitle")
+                .onAppear { configureNavigationBar() }
         }
     }
 

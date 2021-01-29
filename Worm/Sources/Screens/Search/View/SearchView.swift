@@ -23,19 +23,10 @@ struct SearchView<Presenter: SearchPresenter>: View {
                     SearchBar(text: $presenter.query)
                     Spacer(minLength: 16.0)
                 }
-                List {
-                    ForEach(presenter.books) { BookListCell(book: $0, presenter: presenter) }
-                }
-                .listStyle(PlainListStyle())
+                List(presenter.books) { BookListCell(book: $0, presenter: presenter) }
+                    .listStyle(PlainListStyle())
             }
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Text("SearchScreenTitle")
-                        .font(.largeTitle)
-                        .fontWeight(.bold)
-                        .foregroundColor(.black)
-                }
-            }
+            .navigationTitle("SearchScreenTitle")
             .onAppear { configureNavigationBar() }
         }
     }

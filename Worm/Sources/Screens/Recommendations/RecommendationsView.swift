@@ -23,14 +23,8 @@ struct RecommendationsView<Presenter: RecommendationsPresenter>: View {
             }
             .animation(.easeIn)
             .listStyle(PlainListStyle())
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Text("RecommendationsScreenTitle")
-                        .font(.largeTitle)
-                        .fontWeight(.bold)
-                        .foregroundColor(.black)
-                }
-            }
+            .navigationTitle("RecommendationsScreenTitle")
+            .navigationBarItems(trailing: EditButton())
             .onAppear { configureNavigationBar() }
         }
     }
