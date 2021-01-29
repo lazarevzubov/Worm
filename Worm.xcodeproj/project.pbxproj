@@ -17,6 +17,8 @@
 		4E08268F257D64D800278208 /* RecommendationsScreenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E08268E257D64D800278208 /* RecommendationsScreenTests.swift */; };
 		4E082697257D64F600278208 /* SearchScreenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E082696257D64F600278208 /* SearchScreenTests.swift */; };
 		4E4FD60F25BF59A9004A8F0C /* FavoritesDefaultPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E4FD60E25BF59A9004A8F0C /* FavoritesDefaultPresenterTests.swift */; };
+		4E4FD62525C41765004A8F0C /* BlockedBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E4FD62425C41765004A8F0C /* BlockedBook.swift */; };
+		4E4FD62E25C41ED6004A8F0C /* Entity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E4FD62D25C41ED6004A8F0C /* Entity.swift */; };
 		4E5AFB5C25ACC24A00DD73BF /* FavoritesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5AFB5B25ACC24A00DD73BF /* FavoritesView.swift */; };
 		4E5AFB6125ACC73400DD73BF /* FavoritesPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5AFB6025ACC73400DD73BF /* FavoritesPresenter.swift */; };
 		4E5AFB6625ACC74100DD73BF /* FavoritesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5AFB6525ACC74100DD73BF /* FavoritesModel.swift */; };
@@ -80,6 +82,8 @@
 		4E08268E257D64D800278208 /* RecommendationsScreenTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationsScreenTests.swift; sourceTree = "<group>"; };
 		4E082696257D64F600278208 /* SearchScreenTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchScreenTests.swift; sourceTree = "<group>"; };
 		4E4FD60E25BF59A9004A8F0C /* FavoritesDefaultPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesDefaultPresenterTests.swift; sourceTree = "<group>"; };
+		4E4FD62425C41765004A8F0C /* BlockedBook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockedBook.swift; sourceTree = "<group>"; };
+		4E4FD62D25C41ED6004A8F0C /* Entity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entity.swift; sourceTree = "<group>"; };
 		4E5AFB5B25ACC24A00DD73BF /* FavoritesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesView.swift; sourceTree = "<group>"; };
 		4E5AFB6025ACC73400DD73BF /* FavoritesPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesPresenter.swift; sourceTree = "<group>"; };
 		4E5AFB6525ACC74100DD73BF /* FavoritesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesModel.swift; sourceTree = "<group>"; };
@@ -160,6 +164,16 @@
 				4E082696257D64F600278208 /* SearchScreenTests.swift */,
 			);
 			path = Tests;
+			sourceTree = "<group>";
+		};
+		4E4FD62C25C41EC2004A8F0C /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+				4E4FD62425C41765004A8F0C /* BlockedBook.swift */,
+				4E4FD62D25C41ED6004A8F0C /* Entity.swift */,
+				4E5C6E4A2565C09A00DDB833 /* FavoriteBook.swift */,
+			);
+			path = Entities;
 			sourceTree = "<group>";
 		};
 		4E5AFB5A25ACC22900DD73BF /* Favorites */ = {
@@ -297,7 +311,7 @@
 		4E5C6DFE2565BE7D00DDB833 /* Favorites */ = {
 			isa = PBXGroup;
 			children = (
-				4E5C6E4A2565C09A00DDB833 /* FavoriteBook.swift */,
+				4E4FD62C25C41EC2004A8F0C /* Entities */,
 				4E5C6DFF2565BE8900DDB833 /* FavoritesService.swift */,
 			);
 			path = Favorites;
@@ -524,9 +538,11 @@
 				4E5C6E392565C00100DDB833 /* RecommendationsModel.swift in Sources */,
 				4E5C6DA62565BBB500DDB833 /* Worm.xcdatamodeld in Sources */,
 				4E5C6E5D2565C10D00DDB833 /* SearchBar.swift in Sources */,
+				4E4FD62E25C41ED6004A8F0C /* Entity.swift in Sources */,
 				4E5C6D9A2565BBB400DDB833 /* WormApp.swift in Sources */,
 				4E5C6E132565BF0900DDB833 /* RecommendationsView.swift in Sources */,
 				4E5C6E3E2565C02300DDB833 /* RecommendationsPresenter.swift in Sources */,
+				4E4FD62525C41765004A8F0C /* BlockedBook.swift in Sources */,
 				4E5AFB6125ACC73400DD73BF /* FavoritesPresenter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

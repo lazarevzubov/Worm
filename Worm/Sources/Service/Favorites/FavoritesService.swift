@@ -14,11 +14,18 @@ protocol FavoritesService: ObservableObject {
 
     // MARK: - Properties
 
+    /// The current list of blocked from recommendations books.
+    var blockedBooks: [BlockedBook] { get }
     /// The current list of favortite books.
     var favoriteBooks: [FavoriteBook] { get }
 
     // MARK: - Methods
 
+    /**
+     Blocks a book from recommendations..
+     - Parameter id: The ID of the book to block.
+     */
+    func addToBlockedBooks(_ id: String)
     /**
      Adds a favorite book to the current list.
      - Parameter id: The ID of the book to be added.
@@ -41,10 +48,8 @@ final class FavoritesPersistenceService: FavoritesService {
 
     // MARK: FavoritesService protocol properties
 
-    var favoriteBooks: [FavoriteBook] {
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: FavoriteBook.entityName)
-        return (try? persistenceContext.fetch(fetchRequest) as? [FavoriteBook]) ?? []
-    }
+    var blockedBooks: [BlockedBook] { fetch(BlockedBook.self) }
+    var favoriteBooks: [FavoriteBook] { fetch(FavoriteBook.self) }
 
     // MARK: Private properties
 
@@ -64,18 +69,18 @@ final class FavoritesPersistenceService: FavoritesService {
 
     // MARK: FavoritesService protocol methods
 
+    func addToBlockedBooks(_ id: String) {
+        let blockedBook = NSManagedObject(entity: BlockedBook.entity(), insertInto: persistenceContext)
+        blockedBook.setValue(id, forKey: "id") // TODO: Find out how to do that properly.
+
+        saveContextAndNotifyObservers()
+    }
+
     func addToFavoriteBooks(_ id: String) {
         let favoriteBook = NSManagedObject(entity: FavoriteBook.entity(), insertInto: persistenceContext)
         favoriteBook.setValue(id, forKey: "id") // TODO: Find out how to do that properly.
 
-        do {
-            try persistenceContext.save()
-            objectWillChange.send()
-        } catch {
-            // TODO: Handle errors.
-            let nserror = error as NSError
-            fatalError("Unresolved error \(nserror), \(nserror.userInfo).")
-        }
+        saveContextAndNotifyObservers()
     }
 
     func removeFromFavoriteBooks(_ id: String) {
@@ -88,6 +93,24 @@ final class FavoritesPersistenceService: FavoritesService {
 
                 return
             }
+        }
+    }
+
+    // MARK: Private methods
+
+    private func fetch<SpecificEntity: Entity>(_ entity: SpecificEntity.Type) -> [SpecificEntity] {
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entity.entityName)
+        return (try? persistenceContext.fetch(fetchRequest) as? [SpecificEntity]) ?? []
+    }
+
+    private func saveContextAndNotifyObservers() {
+        do {
+            try persistenceContext.save()
+            objectWillChange.send()
+        } catch {
+            // TODO: Handle errors.
+            let nserror = error as NSError
+            fatalError("Unresolved error \(nserror), \(nserror.userInfo).")
         }
     }
 

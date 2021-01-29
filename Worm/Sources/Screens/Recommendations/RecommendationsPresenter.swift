@@ -17,6 +17,14 @@ protocol RecommendationsPresenter: BookListCellPresenter, ObservableObject {
     /// A list of view models represeting items on the Recommendations screen.
     var recommendations: [BookViewModel] { get }
 
+    // MARK: - Methods
+
+    /**
+     Blocks a book from appearing as a recommendation.
+     - Parameter recommendation: The book to block.
+     */
+    func block(recommendation: BookViewModel)
+
 }
 
 // MARK: -
@@ -58,6 +66,10 @@ final class RecommendationsDefaultPresenter<Model: RecommendationsModel>: Recomm
 
     func toggleFavoriteState(bookID: String) {
         model.toggleFavoriteState(bookID: bookID)
+    }
+
+    func block(recommendation: BookViewModel) {
+        model.blockFromRecommendations(bookID: recommendation.id)
     }
 
     // MARK: Private methods
@@ -124,6 +136,10 @@ final class RecommendationsPreviewPresenter: RecommendationsPresenter {
     // MARK: BookListCellPresenter protocol methods
 
     func toggleFavoriteState(bookID: String) {
+        // Do nothing.
+    }
+
+    func block(recommendation: BookViewModel) {
         // Do nothing.
     }
 

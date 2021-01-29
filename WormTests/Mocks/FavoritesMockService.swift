@@ -38,6 +38,7 @@ final class FavoritesMockService: FavoritesService {
 
     // MARK: FavoritesService protocol properties
 
+    let blockedBooks: [BlockedBook] = []
     private(set) var favoriteBooks: [FavoriteBook] {
         didSet { objectWillChange.send() }
     }
@@ -52,6 +53,10 @@ final class FavoritesMockService: FavoritesService {
     // MARK: - Methods
 
     // MARK: FavoritesService protocol methods
+
+    func addToBlockedBooks(_ id: String) {
+        // Do nothing.
+    }
 
     func addToFavoriteBooks(_ id: String) {
         if !favoriteBooks.contains(where: { $0.id == id }) {

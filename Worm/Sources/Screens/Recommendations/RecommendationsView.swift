@@ -17,10 +17,21 @@ struct RecommendationsView<Presenter: RecommendationsPresenter>: View {
 
     var body: some View {
         NavigationView {
-            List(presenter.recommendations) { BookListCell(book: $0, presenter: presenter) }
-                .animation(.easeIn)
-                .navigationBarTitle("RecommendationsScreenTitle")
-                .onAppear { configureNavigationBar() }
+            List {
+                ForEach(presenter.recommendations) { BookListCell(book: $0, presenter: presenter) }
+                    .onDelete(perform: deleteItem)
+            }
+            .animation(.easeIn)
+            .listStyle(PlainListStyle())
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Text("RecommendationsScreenTitle")
+                        .font(.largeTitle)
+                        .fontWeight(.bold)
+                        .foregroundColor(.black)
+                }
+            }
+            .onAppear { configureNavigationBar() }
         }
     }
 
@@ -51,6 +62,10 @@ struct RecommendationsView<Presenter: RecommendationsPresenter>: View {
 
         UINavigationBar.appearance().titleTextAttributes = [.foregroundColor : UIColor.black]
         UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor : UIColor.black]
+    }
+
+    private func deleteItem(at indexSet: IndexSet) {
+        indexSet.forEach { presenter.block(recommendation: presenter.recommendations[$0]) }
     }
 
 }

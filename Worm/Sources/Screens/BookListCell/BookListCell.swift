@@ -41,7 +41,6 @@ struct BookListCell: View {
             .accessibility(label: makeFavoriteButtonAccessibilityLabel(for: book))
         }
         .buttonStyle(PlainButtonStyle())
-        .listRowInsets(EdgeInsets())
     }
 
     // MARK: Private properties
@@ -66,9 +65,7 @@ struct BookListCell: View {
 
     // MARK: Private methods
 
-    private func makeCellAccessibilityLabel(for book: BookViewModel) -> Text {
-        return Text("\(book.authors) – \(book.title)")
-    }
+    private func makeCellAccessibilityLabel(for book: BookViewModel) -> Text { Text("\(book.authors) – \(book.title)") }
 
     private func makeFavoriteButtonAccessibilityLabel(for book: BookViewModel) -> Text {
         return book.isFavorite
