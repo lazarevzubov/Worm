@@ -8,8 +8,6 @@
 
 import SwiftUI
 
-// TODO: Check accessibility.
-
 /// The book search screen.
 struct SearchView<Presenter: SearchPresenter>: View {
 
@@ -28,7 +26,7 @@ struct SearchView<Presenter: SearchPresenter>: View {
                 List(presenter.books) { BookListCell(book: $0, presenter: presenter) }
                     .listStyle(PlainListStyle())
             }
-            .navigationBarTitle("SearchScreenTitle")
+            .navigationTitle("SearchScreenTitle")
             .onAppear { configureNavigationBar() }
         }
     }

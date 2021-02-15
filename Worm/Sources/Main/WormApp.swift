@@ -9,8 +9,6 @@
 import GoodreadsService
 import SwiftUI
 
-// TODO: Check iPads.
-
 /// The main app structure and entry point.
 @main
 struct WormApp: App {

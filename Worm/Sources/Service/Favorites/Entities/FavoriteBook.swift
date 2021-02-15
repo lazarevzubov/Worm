@@ -9,16 +9,16 @@
 import CoreData
 
 /// A persisted object representing a favorite book.
-class FavoriteBook: NSManagedObject {
-
-    // Not final because it needs to be mocked within unit tests.
+class FavoriteBook: NSManagedObject, Entity { // Not final because it needs to be mocked within unit tests.
 
     // MARK: - Properties
 
-    /// The entity name for a Core Data database.
-    static let entityName = "FavoriteBook"
-    /// Th book's ID.
+    /// The book's ID.
     @NSManaged
     var id: String
+
+    // MARK: Entity protocol properties
+
+    static let entityName = "FavoriteBook"
 
 }

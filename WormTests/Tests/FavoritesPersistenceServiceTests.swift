@@ -33,7 +33,7 @@ final class FavoritesPersistenceServiceTests: XCTestCase {
         XCTAssertTrue(service.favoriteBooks.isEmpty)
     }
 
-    func testAdd() {
+    func testAddToFavorites() {
         let context = CoreData.shared.managedObjectContext
         let service = FavoritesPersistenceService(persistenceContext: context)
 
@@ -44,12 +44,12 @@ final class FavoritesPersistenceServiceTests: XCTestCase {
         XCTAssertEqual(ids, [id])
     }
 
-    func testAddingSameObjectIgnored() {
+    func testAddingSameFavoriteIgnored() {
         // Core Data constraints don't work for in-memory storage.
         // TODO: Find a way to test it.
     }
 
-    func testRemove() {
+    func testRemoveFromFavorites() {
         let context = CoreData.shared.managedObjectContext
         let service = FavoritesPersistenceService(persistenceContext: context)
 
@@ -62,6 +62,29 @@ final class FavoritesPersistenceServiceTests: XCTestCase {
         service.removeFromFavoriteBooks(id)
         ids = service.favoriteBooks.map { $0.id }
         XCTAssertEqual(ids, [])
+    }
+
+    func testBlockedBooksInitiallyEmpty() {
+        let context = CoreData.shared.managedObjectContext
+        let service = FavoritesPersistenceService(persistenceContext: context)
+
+        XCTAssertTrue(service.blockedBooks.isEmpty)
+    }
+
+    func testAddToBlockedBooks() {
+        let context = CoreData.shared.managedObjectContext
+        let service = FavoritesPersistenceService(persistenceContext: context)
+
+        let id = "1"
+        service.addToBlockedBooks(id)
+
+        let ids = service.blockedBooks.map { $0.id }
+        XCTAssertEqual(ids, [id])
+    }
+
+    func testAddingSameBlockedBookIgnored() {
+        // Core Data constraints don't work for in-memory storage.
+        // TODO: Find a way to test it.
     }
 
 }

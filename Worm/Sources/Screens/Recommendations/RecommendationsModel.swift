@@ -13,6 +13,7 @@ import GoodreadsService
 protocol RecommendationsModel: ObservableObject {
 
     // FIXME: Duplication with SearchModel?
+    // TODO: Unblock?
 
     // MARK: - Properties
 
@@ -28,6 +29,11 @@ protocol RecommendationsModel: ObservableObject {
      - Parameter bookID: The ID of the book to manipulate.
      */
     func toggleFavoriteState(bookID: String)
+    /**
+     Blocks a book ID from appearing as a recommendation.
+     - Parameter bookID: The ID of the book to manipulate.
+     */
+    func blockFromRecommendations(bookID: String)
 
 }
 
@@ -88,6 +94,11 @@ final class RecommendationsDefaultModel<RecommendationsService: FavoritesService
         updateFavorites()
     }
 
+    func blockFromRecommendations(bookID: String) {
+        prioritizedRecommendations[bookID] = nil
+        favoritesService.addToBlockedBooks(bookID)
+    }
+
     // MARK: Private methods
 
     private func bind(favoritesService: RecommendationsService) {
@@ -112,7 +123,11 @@ final class RecommendationsDefaultModel<RecommendationsService: FavoritesService
     }
 
     private func addSimilarBooksToRecommendations(from ids: [String]) {
-        ids.forEach { self.addRecommendation(id: $0) }
+        let blockedBooks = favoritesService.blockedBooks
+        let filteredIDs = ids.filter { id in
+            !blockedBooks.contains { $0.id == id } // Filter out blocked books from recommendations.
+        }
+        filteredIDs.forEach { self.addRecommendation(id: $0) }
     }
 
     private func addRecommendation(id: String) {

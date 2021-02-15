@@ -11,18 +11,21 @@ import SwiftUI
 /// The visual representation of the Recommendations screen.
 struct RecommendationsView<Presenter: RecommendationsPresenter>: View {
 
-    // TODO: Check accessibility.
-
     // MARK: - Properties
 
     // MARK: View protocol properties
 
     var body: some View {
         NavigationView {
-            List(presenter.recommendations) { BookListCell(book: $0, presenter: presenter) }
-                .animation(.easeIn)
-                .navigationBarTitle("RecommendationsScreenTitle")
-                .onAppear { configureNavigationBar() }
+            List {
+                ForEach(presenter.recommendations) { BookListCell(book: $0, presenter: presenter) }
+                    .onDelete(perform: deleteItem)
+            }
+            .animation(.easeIn)
+            .listStyle(PlainListStyle())
+            .navigationTitle("RecommendationsScreenTitle")
+            .navigationBarItems(trailing: EditButton())
+            .onAppear { configureNavigationBar() }
         }
     }
 
@@ -53,6 +56,10 @@ struct RecommendationsView<Presenter: RecommendationsPresenter>: View {
 
         UINavigationBar.appearance().titleTextAttributes = [.foregroundColor : UIColor.black]
         UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor : UIColor.black]
+    }
+
+    private func deleteItem(at indexSet: IndexSet) {
+        indexSet.forEach { presenter.block(recommendation: presenter.recommendations[$0]) }
     }
 
 }

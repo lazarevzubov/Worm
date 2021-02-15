@@ -48,6 +48,17 @@ final class RecommendationsDefaultPresenterTests: XCTestCase {
         XCTAssertEqual(Set(model.favoriteBookIDs), Set([bookID2, bookID1]))
     }
 
+    func testBlockRecommendation() {
+        let model = RecommendationsMockModel()
+
+        let presenter = RecommendationsDefaultPresenter(model: model)
+        XCTAssertTrue(model.blockedRecommendationIDs.isEmpty)
+
+        let id = "1"
+        presenter.block(recommendation: BookViewModel(authors: "Authors", id: id, isFavorite: false, title: "Title"))
+        XCTAssertEqual(model.blockedRecommendationIDs, [id])
+    }
+
 }
 
 // MARK: -
@@ -56,6 +67,7 @@ private final class RecommendationsMockModel: RecommendationsModel {
 
     // MARK: - Properties
 
+    private(set) var blockedRecommendationIDs = [String]()
     private(set) var recommendationsFetched = false
 
     // MARK: RecommendationsManager protocol properties
@@ -84,6 +96,10 @@ private final class RecommendationsMockModel: RecommendationsModel {
         } else {
             favoriteBookIDs.append(bookID)
         }
+    }
+
+    func blockFromRecommendations(bookID: String) {
+        blockedRecommendationIDs.append(bookID)
     }
 
 }

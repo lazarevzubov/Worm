@@ -8,10 +8,10 @@
 
 import SwiftUI
 
+// TODO: Check accessibility.
+
 /// The main screen visual representation.
 struct MainView<SearchView: View, RecommendationsView: View, FavoritesView: View>: View {
-
-    // TODO: Check accessibility.
 
     // MARK: - Properties
 

@@ -8,6 +8,8 @@
 
 import SwiftUI
 
+// TODO: UI tests.
+
 /// The visual representation of the Favorites screen.
 struct FavoritesView<Presenter: FavoritesPresenter>: View {
 
@@ -19,7 +21,7 @@ struct FavoritesView<Presenter: FavoritesPresenter>: View {
         NavigationView {
             List(presenter.favorites) { BookListCell(book: $0, presenter: presenter) }
                 .animation(.easeIn)
-                .navigationBarTitle("FavoritesScreenTitle")
+                .navigationTitle("FavoritesScreenTitle")
                 .onAppear { configureNavigationBar() }
         }
     }
