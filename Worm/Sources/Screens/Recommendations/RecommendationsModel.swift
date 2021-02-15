@@ -97,7 +97,6 @@ final class RecommendationsDefaultModel<RecommendationsService: FavoritesService
     func blockFromRecommendations(bookID: String) {
         prioritizedRecommendations[bookID] = nil
         favoritesService.addToBlockedBooks(bookID)
-        updateFavorites()
     }
 
     // MARK: Private methods

@@ -48,8 +48,8 @@ final class FavoritesPersistenceService: FavoritesService {
 
     // MARK: FavoritesService protocol properties
 
-    var blockedBooks: [BlockedBook] { fetch(BlockedBook.self) }
-    var favoriteBooks: [FavoriteBook] { fetch(FavoriteBook.self) }
+    var blockedBooks: [BlockedBook] { fetched(BlockedBook.self) }
+    var favoriteBooks: [FavoriteBook] { fetched(FavoriteBook.self) }
 
     // MARK: Private properties
 
@@ -98,7 +98,7 @@ final class FavoritesPersistenceService: FavoritesService {
 
     // MARK: Private methods
 
-    private func fetch<SpecificEntity: Entity>(_ entity: SpecificEntity.Type) -> [SpecificEntity] {
+    private func fetched<SpecificEntity: Entity>(_ entity: SpecificEntity.Type) -> [SpecificEntity] {
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entity.entityName)
         return (try? persistenceContext.fetch(fetchRequest) as? [SpecificEntity]) ?? []
     }

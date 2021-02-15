@@ -32,13 +32,36 @@ final class MockFavoriteBook: FavoriteBook {
 
 // MARK: -
 
+final class MockBlockedBook: BlockedBook {
+
+    // MARK: - Properties
+
+    override var id: String {
+        set {
+            // Do nothing.
+        }
+        get { return mockID }
+    }
+    var mockID: String = ""
+
+    // MARK: - Initialization
+
+    convenience init(id: String) {
+        self.init()
+        self.mockID = id
+    }
+
+}
+
+// MARK: -
+
 final class FavoritesMockService: FavoritesService {
 
     // MARK: - Properties
 
     // MARK: FavoritesService protocol properties
 
-    let blockedBooks: [BlockedBook] = []
+    private(set) var blockedBooks: [BlockedBook] = []
     private(set) var favoriteBooks: [FavoriteBook] {
         didSet { objectWillChange.send() }
     }
@@ -55,7 +78,8 @@ final class FavoritesMockService: FavoritesService {
     // MARK: FavoritesService protocol methods
 
     func addToBlockedBooks(_ id: String) {
-        // Do nothing.
+        let blockedBook = MockBlockedBook(id: id)
+        blockedBooks.append(blockedBook)
     }
 
     func addToFavoriteBooks(_ id: String) {
