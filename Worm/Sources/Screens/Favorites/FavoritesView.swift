@@ -19,15 +19,23 @@ struct FavoritesView<Presenter: FavoritesPresenter>: View {
 
     var body: some View {
         NavigationView {
-            List(presenter.favorites) { BookListCell(book: $0, presenter: presenter) }
-                .animation(.easeIn)
-                .navigationTitle("FavoritesScreenTitle")
-                .onAppear { configureNavigationBar() }
+            List(presenter.favorites) { book in
+                Button { detailsPresented = true }
+                    label: { BookListCell(book: book, presenter: presenter) }
+                    .sheet(isPresented: $detailsPresented) {
+                        BookDetailsView(presenter: presenter.makeDetailsPresenter(for: book))
+                    }
+            }
+            .animation(.easeIn)
+            .navigationTitle("FavoritesScreenTitle")
+            .onAppear { configureNavigationBar() }
         }
     }
 
     // MARK: Private properties
 
+    @State
+    private var detailsPresented = false
     @ObservedObject
     private var presenter: Presenter
 

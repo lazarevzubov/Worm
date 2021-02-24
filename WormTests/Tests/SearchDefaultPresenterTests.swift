@@ -45,8 +45,8 @@ final class SearchDefaultPresenterTests: XCTestCase {
         model.books = books
         queue.sync { }
 
-        let expectedBooks = [BookViewModel(authors: "", id: "1", isFavorite: false, title: "Title1"),
-                             BookViewModel(authors: "", id: "2", isFavorite: false, title: "Title2")]
+        let expectedBooks = [BookViewModel(authors: "", id: "1", imageURL: nil, isFavorite: false, title: "Title1"),
+                             BookViewModel(authors: "", id: "2", imageURL: nil, isFavorite: false, title: "Title2")]
         XCTAssertEqual(presenter.books, expectedBooks)
     }
 

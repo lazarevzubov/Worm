@@ -17,7 +17,7 @@ final class FavoritesDefaultPresenterTests: XCTestCase {
 
     func testToggleFavoriteState() {
         let model = FavoritesMockModel()
-        let presenter = FavoritesDefaultPresenter(model: model)
+        let presenter = FavoritesDefaultPresenter(model: model, imageService: ImageStubService())
 
         XCTAssertTrue(model.toggledBookIDs.isEmpty)
 
@@ -28,7 +28,7 @@ final class FavoritesDefaultPresenterTests: XCTestCase {
 
     func testFavoritesInitiallyEmpty() {
         let model = FavoritesMockModel()
-        let presenter = FavoritesDefaultPresenter(model: model)
+        let presenter = FavoritesDefaultPresenter(model: model, imageService: ImageStubService())
 
         XCTAssertTrue(presenter.favorites.isEmpty)
     }
@@ -36,7 +36,7 @@ final class FavoritesDefaultPresenterTests: XCTestCase {
     func testFavoritesUpdate() {
         let model = FavoritesMockModel()
         let queue = DispatchQueue(label: "com.LazarevZubov.Worm.FavoritesDefaultPresenterTests")
-        let presenter = FavoritesDefaultPresenter(model: model, updateQueue: queue)
+        let presenter = FavoritesDefaultPresenter(model: model, imageService: ImageStubService(), updateQueue: queue)
 
         XCTAssertTrue(presenter.favorites.isEmpty)
 
@@ -73,5 +73,19 @@ private class FavoritesMockModel: FavoritesModel {
         toggledBookIDs.append(bookID)
     }
 
+
+}
+
+// MARK: -
+
+private struct ImageStubService: ImageService {
+
+    // MARK: - Methods
+
+    // MARK: ImageService protocol methods
+
+    func getImage(for url: URL, resultCompletion: @escaping (UIImage?) -> Void) {
+        // Do nothing.
+    }
 
 }

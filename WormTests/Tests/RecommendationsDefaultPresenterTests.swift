@@ -55,7 +55,11 @@ final class RecommendationsDefaultPresenterTests: XCTestCase {
         XCTAssertTrue(model.blockedRecommendationIDs.isEmpty)
 
         let id = "1"
-        presenter.block(recommendation: BookViewModel(authors: "Authors", id: id, isFavorite: false, title: "Title"))
+        presenter.block(recommendation: BookViewModel(authors: "Authors",
+                                                      id: id,
+                                                      imageURL: nil,
+                                                      isFavorite: false,
+                                                      title: "Title"))
         XCTAssertEqual(model.blockedRecommendationIDs, [id])
     }
 
