@@ -10,7 +10,7 @@ import Combine
 import Foundation
 
 /// Object responsible for Recommendations screen presentation logic.
-protocol RecommendationsPresenter: BookListCellPresenter, ObservableObject {
+protocol RecommendationsPresenter: BookListCellPresenter, BookDetailsPresentable, ObservableObject {
 
     // MARK: - Properties
 
@@ -32,6 +32,8 @@ protocol RecommendationsPresenter: BookListCellPresenter, ObservableObject {
 /// The default implementation of the Recommendations screen presenter.
 final class RecommendationsDefaultPresenter<Model: RecommendationsModel>: RecommendationsPresenter {
 
+    typealias DetailsPresenter = BookDetailsDefaultPresenter
+
     // MARK: - Properties
 
     // MARK: RecommendationsPresenter protocol properties
@@ -41,6 +43,7 @@ final class RecommendationsDefaultPresenter<Model: RecommendationsModel>: Recomm
 
     // MARK: Private properties
 
+    private let imageService: ImageService
     private let model: Model
     private let updateQueue: DispatchQueue
     private lazy var cancellables = Set<AnyCancellable>()
@@ -51,10 +54,12 @@ final class RecommendationsDefaultPresenter<Model: RecommendationsModel>: Recomm
      Creates a presenter object.
      - Parameters:
         - model: Data providing object.
+        - imageService: The services that turns image URLs into images themselves.
         - updateQueue: Queue on which presentation data is passed to view.
      */
-    init(model: Model, updateQueue: DispatchQueue = .main) {
+    init(model: Model, imageService: ImageService, updateQueue: DispatchQueue = .main) {
         self.model = model
+        self.imageService = imageService
         self.updateQueue = updateQueue
 
         bind(model: model)
@@ -70,6 +75,13 @@ final class RecommendationsDefaultPresenter<Model: RecommendationsModel>: Recomm
 
     func block(recommendation: BookViewModel) {
         model.blockFromRecommendations(bookID: recommendation.id)
+    }
+
+    func makeDetailsPresenter(for book: BookViewModel) -> DetailsPresenter {
+        BookDetailsDefaultPresenter(authors: book.authors,
+                                    title: book.title,
+                                    imageURL: book.imageURL,
+                                    imageService: imageService)
     }
 
     // MARK: Private methods
@@ -99,6 +111,8 @@ final class RecommendationsDefaultPresenter<Model: RecommendationsModel>: Recomm
 
 /// The implementation of the Recommendations screen presenter that used for SwiftUI previews.
 final class RecommendationsPreviewPresenter: RecommendationsPresenter {
+
+    typealias DetailsPresenter = BookDetailsPreviewPresenter
 
     // MARK: - Properties
 
@@ -168,6 +182,10 @@ final class RecommendationsPreviewPresenter: RecommendationsPresenter {
 
     func block(recommendation: BookViewModel) {
         // Do nothing.
+    }
+
+    func makeDetailsPresenter(for favorite: BookViewModel) -> DetailsPresenter {
+        BookDetailsPreviewPresenter()
     }
 
 }

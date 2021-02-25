@@ -18,7 +18,9 @@ final class RecommendationsDefaultPresenterTests: XCTestCase {
     func testRecommendationsUpdate() {
         let model = RecommendationsMockModel()
         let queue = DispatchQueue(label: "com.LazarevZubov.Worm.RecommendationsDefaultPresenterTests")
-        let presenter = RecommendationsDefaultPresenter(model: model, updateQueue: queue)
+        let presenter = RecommendationsDefaultPresenter(model: model,
+                                                        imageService: ImageStubService(),
+                                                        updateQueue: queue)
 
         let books = [Book(authors: [], title: "Title1", id: "1"),
                      Book(authors: [], title: "Title2", id: "2")]
@@ -39,7 +41,7 @@ final class RecommendationsDefaultPresenterTests: XCTestCase {
         let bookID2 = "2"
         model.favoriteBookIDs = [bookID1, bookID2]
 
-        let presenter = RecommendationsDefaultPresenter(model: model)
+        let presenter = RecommendationsDefaultPresenter(model: model, imageService: ImageStubService())
 
         presenter.toggleFavoriteState(bookID: bookID1)
         XCTAssertEqual(model.favoriteBookIDs, [bookID2])
@@ -51,7 +53,7 @@ final class RecommendationsDefaultPresenterTests: XCTestCase {
     func testBlockRecommendation() {
         let model = RecommendationsMockModel()
 
-        let presenter = RecommendationsDefaultPresenter(model: model)
+        let presenter = RecommendationsDefaultPresenter(model: model, imageService: ImageStubService())
         XCTAssertTrue(model.blockedRecommendationIDs.isEmpty)
 
         let id = "1"
@@ -104,6 +106,20 @@ private final class RecommendationsMockModel: RecommendationsModel {
 
     func blockFromRecommendations(bookID: String) {
         blockedRecommendationIDs.append(bookID)
+    }
+
+}
+
+// MARK: -
+
+private struct ImageStubService: ImageService {
+
+    // MARK: - Methods
+
+    // MARK: ImageService protocol methods
+
+    func getImage(for url: URL, resultCompletion: @escaping (UIImage?) -> Void) {
+        // Do nothing.
     }
 
 }

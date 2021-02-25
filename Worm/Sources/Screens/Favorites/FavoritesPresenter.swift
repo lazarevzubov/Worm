@@ -10,23 +10,12 @@ import Combine
 import Foundation
 
 /// Object responsible for Favorites screen presentation logic.
-protocol FavoritesPresenter: BookListCellPresenter, ObservableObject {
-
-    /// The corresponding book details presenter type.
-    associatedtype DetailsPresenter: BookDetailsPresenter
+protocol FavoritesPresenter: BookListCellPresenter, BookDetailsPresentable, ObservableObject {
 
     // MARK: - Properties
 
     /// A list of view models represeting items on the Favorites screen.
     var favorites: [BookViewModel] { get }
-
-    // MARK: - Methods
-
-    /**
-     Creates a details presenter for corresponding to presented books.
-     - Parameter favorite: The book to present details for.
-     */
-    func makeDetailsPresenter(for favorite: BookViewModel) -> DetailsPresenter
 
 }
 
@@ -76,10 +65,10 @@ final class FavoritesDefaultPresenter<Model: FavoritesModel>: FavoritesPresenter
         model.toggleFavoriteState(bookID: bookID)
     }
 
-    func makeDetailsPresenter(for favorite: BookViewModel) -> DetailsPresenter {
-        BookDetailsDefaultPresenter(authors: favorite.authors,
-                                    title: favorite.title,
-                                    imageURL: favorite.imageURL,
+    func makeDetailsPresenter(for book: BookViewModel) -> DetailsPresenter {
+        BookDetailsDefaultPresenter(authors: book.authors,
+                                    title: book.title,
+                                    imageURL: book.imageURL,
                                     imageService: imageService)
     }
 
