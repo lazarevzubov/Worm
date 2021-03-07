@@ -12,7 +12,7 @@ import Foundation
 // FIXME: Same model objects for all layers.
 
 /// The presentation logic of the book search screen.
-protocol SearchPresenter: BookListCellPresenter, ObservableObject {
+protocol SearchPresenter: BookListCellPresenter, BookDetailsPresentable, ObservableObject {
 
     // MARK: - Properties
 
@@ -28,6 +28,8 @@ protocol SearchPresenter: BookListCellPresenter, ObservableObject {
 /// The presentation logic of the book search screen relying on the default model implementation.
 final class SearchDefaultPresenter<Model: SearchModel>: SearchPresenter {
 
+    typealias DetailsPresenter = BookDetailsDefaultPresenter
+
     // MARK: - Properties
 
     // MARK: SearchPresenter protocol properties
@@ -40,6 +42,7 @@ final class SearchDefaultPresenter<Model: SearchModel>: SearchPresenter {
 
     // MARK: Private methods
 
+    private let imageService: ImageService
     private let model: Model
     private let updateQueue: DispatchQueue
     private lazy var cancellables = Set<AnyCancellable>()
@@ -48,10 +51,14 @@ final class SearchDefaultPresenter<Model: SearchModel>: SearchPresenter {
 
     /**
      Creates the presentation logic object.
-     - Parameter model: The search screen model.
+     - Parameters:
+        - model: The search screen model.
+        - imageService: The services that turns image URLs into images themselves.
+        - updateQueue: Queue on which presentation data is passed to view.
      */
-    init(model: Model, updateQueue: DispatchQueue = .main) {
+    init(model: Model, imageService: ImageService, updateQueue: DispatchQueue = .main) {
         self.model = model
+        self.imageService = imageService
         self.updateQueue = updateQueue
 
         bind(model: self.model)
@@ -63,6 +70,13 @@ final class SearchDefaultPresenter<Model: SearchModel>: SearchPresenter {
 
     func toggleFavoriteState(bookID: String) {
         model.toggleFavoriteState(bookID: bookID)
+    }
+
+    func makeDetailsPresenter(for book: BookViewModel) -> DetailsPresenter {
+        BookDetailsDefaultPresenter(authors: book.authors,
+                                    title: book.title,
+                                    imageURL: book.imageURL,
+                                    imageService: imageService)
     }
 
     // MARK: Private methods
@@ -89,6 +103,8 @@ final class SearchDefaultPresenter<Model: SearchModel>: SearchPresenter {
 
 /// The mock presentation logic object for the book search screen preview.
 final class SearchPreviewPresenter: SearchPresenter, BookListCellPresenter {
+
+    typealias DetailsPresenter = BookDetailsPreviewPresenter
 
     // MARK: - Properties
 
@@ -164,6 +180,10 @@ final class SearchPreviewPresenter: SearchPresenter, BookListCellPresenter {
                           title: $0.title)
 
         }
+    }
+
+    func makeDetailsPresenter(for favorite: BookViewModel) -> DetailsPresenter {
+        BookDetailsPreviewPresenter()
     }
 
 }

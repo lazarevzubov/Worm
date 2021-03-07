@@ -16,13 +16,13 @@ final class SearchDefaultPresenterTests: XCTestCase {
     // MARK: - Methods
 
     func testQueryInitiallyEmpty() {
-        let presenter = SearchDefaultPresenter(model: SearchMockModel())
+        let presenter = SearchDefaultPresenter(model: SearchMockModel(), imageService: ImageStubService())
         XCTAssertTrue(presenter.query.isEmpty)
     }
 
     func testSetQueryActivatesSearch() {
         let model = SearchMockModel()
-        let presenter = SearchDefaultPresenter(model: model)
+        let presenter = SearchDefaultPresenter(model: model, imageService: ImageStubService())
         XCTAssertNil(model.lastQuery)
 
         let query = "Query"
@@ -31,14 +31,14 @@ final class SearchDefaultPresenterTests: XCTestCase {
     }
 
     func testBookInitiallyEmpty() {
-        let presenter = SearchDefaultPresenter(model: SearchMockModel())
+        let presenter = SearchDefaultPresenter(model: SearchMockModel(), imageService: ImageStubService())
         XCTAssertTrue(presenter.books.isEmpty)
     }
 
     func testUpdate() {
         let model = SearchMockModel()
         let queue = DispatchQueue(label: "com.LazarevZubov.Worm.SearchDefaultPresenterTests")
-        let presenter = SearchDefaultPresenter(model: model, updateQueue: queue)
+        let presenter = SearchDefaultPresenter(model: model, imageService: ImageStubService(), updateQueue: queue)
 
         let books = [Book(authors: [], title: "Title1", id: "1"),
                      Book(authors: [], title: "Title2", id: "2")]
@@ -57,7 +57,7 @@ final class SearchDefaultPresenterTests: XCTestCase {
         let bookID2 = "2"
         model.favoriteBookIDs = [bookID1, bookID2]
 
-        let presenter = SearchDefaultPresenter(model: model)
+        let presenter = SearchDefaultPresenter(model: model, imageService: ImageStubService())
 
         presenter.toggleFavoriteState(bookID: bookID1)
         XCTAssertEqual(model.favoriteBookIDs, [bookID2])

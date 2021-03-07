@@ -109,17 +109,3 @@ private final class RecommendationsMockModel: RecommendationsModel {
     }
 
 }
-
-// MARK: -
-
-private struct ImageStubService: ImageService {
-
-    // MARK: - Methods
-
-    // MARK: ImageService protocol methods
-
-    func getImage(for url: URL, resultCompletion: @escaping (UIImage?) -> Void) {
-        // Do nothing.
-    }
-
-}

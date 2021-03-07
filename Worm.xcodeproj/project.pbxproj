@@ -54,6 +54,7 @@
 		4E62031A25E2EB6100671369 /* ImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E62031925E2EB6100671369 /* ImageService.swift */; };
 		4E6760502593CAA9001ABB42 /* BookListCellPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E67604F2593CAA9001ABB42 /* BookListCellPresenter.swift */; };
 		4EAD6D2425E6EEA800D1879A /* BookDetailsPresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EAD6D2325E6EEA800D1879A /* BookDetailsPresentable.swift */; };
+		4EBAF2E725F56B3000592DE0 /* ImageStubService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EBAF2E625F56B3000592DE0 /* ImageStubService.swift */; };
 		4EBE277525B237170067949C /* FavoritesServiceBasedModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EBE277425B237170067949C /* FavoritesServiceBasedModelTests.swift */; };
 /* End PBXBuildFile section */
 
@@ -128,6 +129,7 @@
 		4E62031925E2EB6100671369 /* ImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageService.swift; sourceTree = "<group>"; };
 		4E67604F2593CAA9001ABB42 /* BookListCellPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookListCellPresenter.swift; sourceTree = "<group>"; };
 		4EAD6D2325E6EEA800D1879A /* BookDetailsPresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookDetailsPresentable.swift; sourceTree = "<group>"; };
+		4EBAF2E625F56B3000592DE0 /* ImageStubService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageStubService.swift; sourceTree = "<group>"; };
 		4EBE277425B237170067949C /* FavoritesServiceBasedModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesServiceBasedModelTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -241,6 +243,7 @@
 			children = (
 				4E5C6E6C2565C17200DDB833 /* Mocks */,
 				4E5C6E7A2565C1E400DDB833 /* Tests */,
+				4EBAF2E525F56B2000592DE0 /* Stubs */,
 				4E5C6DB22565BBB500DDB833 /* Info.plist */,
 			);
 			path = WormTests;
@@ -399,6 +402,14 @@
 				4E1AE61525DC47F5000D7DF2 /* BookDetailsView.swift */,
 			);
 			path = Details;
+			sourceTree = "<group>";
+		};
+		4EBAF2E525F56B2000592DE0 /* Stubs */ = {
+			isa = PBXGroup;
+			children = (
+				4EBAF2E625F56B3000592DE0 /* ImageStubService.swift */,
+			);
+			path = Stubs;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -575,6 +586,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4EBAF2E725F56B3000592DE0 /* ImageStubService.swift in Sources */,
 				4E5C6E6E2565C1A600DDB833 /* CatalogueTestingMockService.swift in Sources */,
 				4E5C6E842565C21000DDB833 /* BookViewModelTests.swift in Sources */,
 				4E5C6E762565C1C900DDB833 /* FavoritesMockService.swift in Sources */,

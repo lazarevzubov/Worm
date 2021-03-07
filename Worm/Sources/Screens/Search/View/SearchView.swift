@@ -23,7 +23,13 @@ struct SearchView<Presenter: SearchPresenter>: View {
                     SearchBar(text: $presenter.query)
                     Spacer(minLength: 16.0)
                 }
-                List(presenter.books) { BookListCell(book: $0, presenter: presenter) }
+                List(presenter.books) { book in
+                    Button { detailsPresented = true }
+                        label: { BookListCell(book: book, presenter: presenter) }
+                        .sheet(isPresented: $detailsPresented) {
+                            BookDetailsView(presenter: presenter.makeDetailsPresenter(for: book))
+                        }
+                }
                     .listStyle(PlainListStyle())
             }
             .navigationTitle("SearchScreenTitle")
@@ -33,6 +39,8 @@ struct SearchView<Presenter: SearchPresenter>: View {
 
     // MARK: Private properties
 
+    @State
+    private var detailsPresented = false
     @ObservedObject
     private var presenter: Presenter
 
@@ -50,7 +58,7 @@ struct SearchView<Presenter: SearchPresenter>: View {
 
     // MARK: Private methods
 
-    private func configureNavigationBar() { // FIXME: Navigation bar color change.
+    private func configureNavigationBar() {
         UINavigationBar.appearance().backgroundColor = UIColor(red: (172.0 / 255.0),
                                                                green: (211.0 / 255.0),
                                                                blue: (214.0 / 255.0),

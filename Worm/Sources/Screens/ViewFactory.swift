@@ -23,7 +23,9 @@ enum ViewFactory<RecommendationsService: FavoritesService> {
     static func makeMainView(catalogueService: CatalogueService,
                              favoritesService: RecommendationsService,
                              imageService: ImageService) -> some View {
-        let searchView = makeSearchView(catalogueService: catalogueService, favoritesService: favoritesService)
+        let searchView = makeSearchView(catalogueService: catalogueService,
+                                        favoritesService: favoritesService,
+                                        imageService: imageService)
         let recommendationsView = makeRecommendationsView(catalogueService: catalogueService,
                                                           favoritesService: favoritesService,
                                                           imageService: imageService)
@@ -37,9 +39,10 @@ enum ViewFactory<RecommendationsService: FavoritesService> {
     // MARK: Private methods
 
     private static func makeSearchView(catalogueService: CatalogueService,
-                                       favoritesService: RecommendationsService) -> some View {
+                                       favoritesService: RecommendationsService,
+                                       imageService: ImageService) -> some View {
         let model = SearchServiceBasedModel(catalogueService: catalogueService, favoritesService: favoritesService)
-        let presenter = SearchDefaultPresenter(model: model)
+        let presenter = SearchDefaultPresenter(model: model, imageService: imageService)
 
         return SearchView<SearchDefaultPresenter<SearchServiceBasedModel>>(presenter: presenter)
     }
