@@ -32,9 +32,7 @@ struct BookListCell: View {
             .accessibilityElement()
             .accessibility(label: makeCellAccessibilityLabel(for: book))
             Spacer()
-            Button(action: {
-                    presenter.toggleFavoriteState(bookID: book.id)
-            }) {
+            Button(action: { presenter.toggleFavoriteState(bookID: book.id) }) {
                 Image(systemName: (book.isFavorite ? "heart.fill" : "heart")).foregroundColor(.primary)
             }
             .accessibilityElement()
