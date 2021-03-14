@@ -21,7 +21,8 @@ struct RecommendationsView<Presenter: RecommendationsPresenter>: View {
                 ForEach(presenter.recommendations) { book in
                     Button(action: { detailsPresented = true }) { BookListCell(book: book, presenter: presenter) }
                         .sheet(isPresented: $detailsPresented) {
-                            BookDetailsView(presenter: presenter.makeDetailsPresenter(for: book))
+                            BookDetailsView(presenter: presenter.makeDetailsPresenter(for: book),
+                                            presented: $detailsPresented)
                         }
                 }
                 .onDelete(perform: deleteItem)

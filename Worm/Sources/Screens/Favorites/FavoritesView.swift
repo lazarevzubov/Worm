@@ -21,7 +21,8 @@ struct FavoritesView<Presenter: FavoritesPresenter>: View {
                 Button { detailsPresented = true }
                     label: { BookListCell(book: book, presenter: presenter) }
                     .sheet(isPresented: $detailsPresented) {
-                        BookDetailsView(presenter: presenter.makeDetailsPresenter(for: book))
+                        BookDetailsView(presenter: presenter.makeDetailsPresenter(for: book),
+                                        presented: $detailsPresented)
                     }
             }
             .animation(.easeIn)

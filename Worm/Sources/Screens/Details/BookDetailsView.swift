@@ -15,6 +15,11 @@ struct BookDetailsView<Presenter: BookDetailsPresenter>: View {
     // MARK: View protocol properties
 
     var body: some View {
+        HStack {
+            Spacer()
+            Button("CloseModalViewButtonTitle") { presented.toggle() }
+                .padding()
+        }
         Spacer()
         if let image = presenter.image {
             Image(uiImage: image)
@@ -33,17 +38,21 @@ struct BookDetailsView<Presenter: BookDetailsPresenter>: View {
 
     // MARK: Private properties
 
+    @Binding
+    private var presented: Bool
     @ObservedObject
     private var presenter: Presenter
 
     // MARK: - Initialization
 
+    // TODO: Update HeaderDoc.
     /**
      Creates the view.
      - Parameter presenter: The presentation data provider.
      */
-    init(presenter: Presenter) {
+    init(presenter: Presenter, presented: Binding<Bool>) {
         self.presenter = presenter
+        self._presented = presented
     }
 
 }
@@ -57,6 +66,7 @@ struct BookDetailsView_Previews: PreviewProvider {
 
     // MARK: PreviewProvider protocol properties
 
-    static var previews: some View { BookDetailsView(presenter: BookDetailsPreviewPresenter()) }
+    static var previews: some View { BookDetailsView(presenter: BookDetailsPreviewPresenter(),
+                                                     presented: .constant(true)) }
 
 }
