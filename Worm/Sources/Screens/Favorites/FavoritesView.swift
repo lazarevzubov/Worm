@@ -8,8 +8,6 @@
 
 import SwiftUI
 
-// TODO: UI tests.
-
 /// The visual representation of the Favorites screen.
 struct FavoritesView<Presenter: FavoritesPresenter>: View {
 

@@ -74,7 +74,7 @@ final class BookDetailsDefaultPresenter: BookDetailsPresenter {
 
 // MARK: -
 
-// TODO: HeaderDoc.
+/// The implementation of the book details screen presenter that used for SwiftUI previews.
 final class BookDetailsPreviewPresenter: BookDetailsPresenter {
 
     // MARK: - Properties

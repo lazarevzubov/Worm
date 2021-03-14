@@ -6,7 +6,7 @@
 //  Copyright © 2021 Nikita Lazarev-Zubov. All rights reserved.
 //
 
-// TODO: HeaderDoc.
+/// Manages book details presentation.
 protocol BookDetailsPresentable {
 
     /// The corresponding book details presenter type.
