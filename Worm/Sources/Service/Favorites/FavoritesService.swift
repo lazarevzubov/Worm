@@ -70,17 +70,11 @@ final class FavoritesPersistenceService: FavoritesService {
     // MARK: FavoritesService protocol methods
 
     func addToBlockedBooks(_ id: String) {
-        let blockedBook = NSManagedObject(entity: BlockedBook.entity(), insertInto: persistenceContext)
-        blockedBook.setValue(id, forKey: "id") // TODO: Find out how to do that properly.
-
-        saveContextAndNotifyObservers()
+        add(id, toManagedType: BlockedBook.self)
     }
 
     func addToFavoriteBooks(_ id: String) {
-        let favoriteBook = NSManagedObject(entity: FavoriteBook.entity(), insertInto: persistenceContext)
-        favoriteBook.setValue(id, forKey: "id") // TODO: Find out how to do that properly.
-
-        saveContextAndNotifyObservers()
+        add(id, toManagedType: FavoriteBook.self)
     }
 
     func removeFromFavoriteBooks(_ id: String) {
@@ -101,6 +95,13 @@ final class FavoritesPersistenceService: FavoritesService {
     private func fetched<SpecificEntity: Entity>(_ entity: SpecificEntity.Type) -> [SpecificEntity] {
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entity.entityName)
         return (try? persistenceContext.fetch(fetchRequest) as? [SpecificEntity]) ?? []
+    }
+
+    private func add(_ id: String, toManagedType managedType: NSManagedObject.Type) {
+        let favoriteBook = NSManagedObject(entity: managedType.entity(), insertInto: persistenceContext)
+        favoriteBook.setValue(id, forKey: "id") // TODO: Find out how to do that properly.
+
+        saveContextAndNotifyObservers()
     }
 
     private func saveContextAndNotifyObservers() {
