@@ -18,7 +18,11 @@ struct WormApp: App {
     // MARK: App protocol properties
 
     var body: some Scene {
-        WindowGroup { ViewFactory.makeMainView(catalogueService: catalogueService, favoritesService: favoritesService) }
+        WindowGroup {
+            ViewFactory.makeMainView(catalogueService: catalogueService,
+                                     favoritesService: favoritesService,
+                                     imageService: imageService)
+        }
     }
 
     // MARK: Private properties
@@ -30,5 +34,6 @@ struct WormApp: App {
         return GoodreadsService(key: Settings.goodreadsAPIKey)
     }()
     private var favoritesService = FavoritesPersistenceService(persistenceContext: CoreData.shared.managedObjectContext)
+    private var imageService = ImageWebService(webService: URLSession.shared)
 
 }

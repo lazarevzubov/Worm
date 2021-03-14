@@ -18,7 +18,9 @@ final class RecommendationsDefaultPresenterTests: XCTestCase {
     func testRecommendationsUpdate() {
         let model = RecommendationsMockModel()
         let queue = DispatchQueue(label: "com.LazarevZubov.Worm.RecommendationsDefaultPresenterTests")
-        let presenter = RecommendationsDefaultPresenter(model: model, updateQueue: queue)
+        let presenter = RecommendationsDefaultPresenter(model: model,
+                                                        imageService: ImageStubService(),
+                                                        updateQueue: queue)
 
         let books = [Book(authors: [], title: "Title1", id: "1"),
                      Book(authors: [], title: "Title2", id: "2")]
@@ -39,7 +41,7 @@ final class RecommendationsDefaultPresenterTests: XCTestCase {
         let bookID2 = "2"
         model.favoriteBookIDs = [bookID1, bookID2]
 
-        let presenter = RecommendationsDefaultPresenter(model: model)
+        let presenter = RecommendationsDefaultPresenter(model: model, imageService: ImageStubService())
 
         presenter.toggleFavoriteState(bookID: bookID1)
         XCTAssertEqual(model.favoriteBookIDs, [bookID2])
@@ -51,11 +53,15 @@ final class RecommendationsDefaultPresenterTests: XCTestCase {
     func testBlockRecommendation() {
         let model = RecommendationsMockModel()
 
-        let presenter = RecommendationsDefaultPresenter(model: model)
+        let presenter = RecommendationsDefaultPresenter(model: model, imageService: ImageStubService())
         XCTAssertTrue(model.blockedRecommendationIDs.isEmpty)
 
         let id = "1"
-        presenter.block(recommendation: BookViewModel(authors: "Authors", id: id, isFavorite: false, title: "Title"))
+        presenter.block(recommendation: BookViewModel(authors: "Authors",
+                                                      id: id,
+                                                      imageURL: nil,
+                                                      isFavorite: false,
+                                                      title: "Title"))
         XCTAssertEqual(model.blockedRecommendationIDs, [id])
     }
 

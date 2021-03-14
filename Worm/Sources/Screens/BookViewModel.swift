@@ -6,6 +6,7 @@
 //  Copyright © 2020 Nikita Lazarev-Zubov. All rights reserved.
 //
 
+import Foundation
 import GoodreadsService
 
 /// A book data for a visual representation.
@@ -17,16 +18,14 @@ struct BookViewModel {
     let authors: String
     /// The book ID.
     let id: String
+    /// The URL of the book image.
+    let imageURL: URL?
     /// Whether the book is in the favorites list.
     let isFavorite: Bool
     /// The book title.
     let title: String
 
 }
-
-// MARK: - Equatable
-
-extension BookViewModel: Equatable { }
 
 // MARK: - Hashable
 
@@ -48,7 +47,12 @@ extension Book {
      - Returns: The book data for a visual representation.
      */
     func asViewModel(favorite: Bool) -> BookViewModel {
-        BookViewModel(authors: authors.joined(separator: ", "), id: id, isFavorite: favorite, title: title)
+        let authors = self.authors.joined(separator: ", ")
+        return BookViewModel(authors: authors,
+                             id: id,
+                             imageURL: imageURL,
+                             isFavorite: favorite,
+                             title: title)
     }
 
 }

@@ -18,8 +18,14 @@ struct RecommendationsView<Presenter: RecommendationsPresenter>: View {
     var body: some View {
         NavigationView {
             List {
-                ForEach(presenter.recommendations) { BookListCell(book: $0, presenter: presenter) }
-                    .onDelete(perform: deleteItem)
+                ForEach(presenter.recommendations) { book in
+                    Button(action: { detailsPresented = true }) { BookListCell(book: book, presenter: presenter) }
+                        .sheet(isPresented: $detailsPresented) {
+                            BookDetailsView(presenter: presenter.makeDetailsPresenter(for: book),
+                                            presented: $detailsPresented)
+                        }
+                }
+                .onDelete(perform: deleteItem)
             }
             .animation(.easeIn)
             .listStyle(PlainListStyle())
@@ -31,6 +37,8 @@ struct RecommendationsView<Presenter: RecommendationsPresenter>: View {
 
     // MARK: Private properties
 
+    @State
+    private var detailsPresented = false
     @ObservedObject
     private var presenter: Presenter
 
