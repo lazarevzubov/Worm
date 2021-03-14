@@ -10,6 +10,7 @@ import SwiftUI
 
 // TODO: Accessibility.
 // TODO: UI tests. Hardly possible with SwiftUI for now.
+// TODO: iPads.
 
 /// The main screen visual representation.
 struct MainView<SearchView: View, RecommendationsView: View, FavoritesView: View>: View {
