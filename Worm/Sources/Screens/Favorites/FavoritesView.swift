@@ -25,9 +25,9 @@ struct FavoritesView<Presenter: FavoritesPresenter>: View {
                                         presented: $detailsPresented)
                     }
             }
-            .animation(.easeIn)
-            .navigationTitle("FavoritesScreenTitle")
-            .onAppear { configureNavigationBar() }
+                .animation(.easeIn, value: presenter.favorites)
+                .navigationTitle("FavoritesScreenTitle")
+                .onAppear { configureNavigationBar() }
         }
     }
 

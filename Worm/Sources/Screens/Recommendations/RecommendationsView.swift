@@ -27,11 +27,11 @@ struct RecommendationsView<Presenter: RecommendationsPresenter>: View {
                 }
                 .onDelete(perform: deleteItem)
             }
-            .animation(.easeIn)
-            .listStyle(PlainListStyle())
-            .navigationTitle("RecommendationsScreenTitle")
-            .navigationBarItems(trailing: EditButton())
-            .onAppear { configureNavigationBar() }
+                .animation(.easeIn, value: presenter.recommendations)
+                .listStyle(PlainListStyle())
+                .navigationTitle("RecommendationsScreenTitle")
+                .navigationBarItems(trailing: EditButton())
+                .onAppear { configureNavigationBar() }
         }
     }
 
