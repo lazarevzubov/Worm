@@ -25,10 +25,10 @@ struct RecommendationsView<Presenter: RecommendationsPresenter>: View {
                                             presented: $detailsPresented)
                         }
                 }
-                .onDelete(perform: deleteItem)
+                    .onDelete(perform: deleteItem)
             }
                 .animation(.easeIn, value: presenter.recommendations)
-                .listStyle(PlainListStyle())
+                .listStyle(.plain)
                 .navigationTitle("RecommendationsScreenTitle")
                 .navigationBarItems(trailing: EditButton())
                 .onAppear { configureNavigationBar() }

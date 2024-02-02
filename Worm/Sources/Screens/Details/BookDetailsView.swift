@@ -32,7 +32,7 @@ struct BookDetailsView<Presenter: BookDetailsPresenter>: View {
         Text(presenter.authors)
             .font(.subheadline)
             .multilineTextAlignment(.center)
-            .padding([.top, .leading, .trailing])
+            .padding([.top, .horizontal])
         Spacer()
     }
 
