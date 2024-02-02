@@ -79,15 +79,15 @@ final class FavoritesDefaultPresenter<Model: FavoritesModel>: FavoritesPresenter
             .objectWillChange
             .receive(on: updateQueue)
             .sink { [weak self, weak model] _ in
-                guard let self = self,
-                      let model = model else {
+                guard let self,
+                      let model else {
                     return
                 }
 
                 self.objectWillChange.send()
                 self.favorites = model.favorites.map { $0.asViewModel(favorite: true) }
-        }
-        .store(in: &cancellables)
+            }
+            .store(in: &cancellables)
     }
 
 }

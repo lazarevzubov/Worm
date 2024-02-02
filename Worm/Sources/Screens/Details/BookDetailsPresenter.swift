@@ -31,9 +31,9 @@ final class BookDetailsDefaultPresenter: BookDetailsPresenter {
     // MARK: BookDetailsPresenter protocol properties
 
     let authors: String
+    let title: String
     @Published
     private(set) var image: UIImage?
-    let title: String
 
     // MARK: Private properties
 
@@ -62,7 +62,7 @@ final class BookDetailsDefaultPresenter: BookDetailsPresenter {
     // MARK: Private methods
 
     private func retrieveImage(from url: URL?, using service: ImageService) {
-        guard let url = url else {
+        guard let url else {
             return
         }
         service.getImage(for: url) { [weak self] image in

@@ -31,15 +31,14 @@ struct SearchBar: View {
                     HStack {
                         Image(systemName: "magnifyingglass")
                             .foregroundColor(.gray)
-                            .frame(minWidth: 0.0, maxWidth: .infinity, alignment: .leading)
+                            .frame(minWidth: .zero, maxWidth: .infinity, alignment: .leading)
                             .padding(.leading, 8.0)
                         if isEditing {
-                            Button { text = "" }
-                                label: {
-                                    Image(systemName: "multiply.circle.fill")
-                                        .foregroundColor(.gray)
-                                        .padding(.trailing, 8.0)
-                                }
+                            Button { text = "" } label: {
+                                Image(systemName: "multiply.circle.fill")
+                                    .foregroundColor(.gray)
+                                    .padding(.trailing, 8.0)
+                            }
                                 .accessibility(identifier: "cancelSearchButton")
                         }
                     }
@@ -79,6 +78,8 @@ struct SearchBar_Previews: PreviewProvider {
 
     // MARK: PreviewProvider protocol properties
 
-    static var previews: some View { SearchBar(text: .constant("")) }
+    static var previews: some View {
+        SearchBar(text: .constant(""))
+    }
 
 }

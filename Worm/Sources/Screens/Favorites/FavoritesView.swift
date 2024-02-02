@@ -18,8 +18,7 @@ struct FavoritesView<Presenter: FavoritesPresenter>: View {
     var body: some View {
         NavigationView {
             List(presenter.favorites) { book in
-                Button { detailsPresented = true }
-                    label: { BookListCell(book: book, presenter: presenter) }
+                Button { detailsPresented = true } label: { BookListCell(book: book, presenter: presenter) }
                     .sheet(isPresented: $detailsPresented) {
                         BookDetailsView(presenter: presenter.makeDetailsPresenter(for: book),
                                         presented: $detailsPresented)
@@ -73,6 +72,8 @@ struct FavoritesView_Previews: PreviewProvider {
 
     // MARK: PreviewProvider protocol properties
 
-    static var previews: some View { FavoritesView(presenter: FavoritesPreviewPresenter()) }
-    
+    static var previews: some View {
+        FavoritesView(presenter: FavoritesPreviewPresenter())
+    }
+
 }

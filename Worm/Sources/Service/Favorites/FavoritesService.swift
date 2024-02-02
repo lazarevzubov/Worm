@@ -110,8 +110,8 @@ final class FavoritesPersistenceService: FavoritesService {
             objectWillChange.send()
         } catch {
             // TODO: Handle errors.
-            let nserror = error as NSError
-            fatalError("Unresolved error \(nserror), \(nserror.userInfo).")
+            let error = error as NSError
+            fatalError("Unresolved error \(error), \(error.userInfo).")
         }
     }
 

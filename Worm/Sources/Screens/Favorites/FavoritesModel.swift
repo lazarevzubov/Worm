@@ -82,8 +82,8 @@ final class FavoritesServiceBasedModel<FavoriteBooksService: FavoritesService>: 
             .sink { [weak self] _ in
                 self?.objectWillChange.send()
                 self?.updateFavorites()
-        }
-        .store(in: &cancellables)
+            }
+            .store(in: &cancellables)
     }
 
     private func updateFavorites() {

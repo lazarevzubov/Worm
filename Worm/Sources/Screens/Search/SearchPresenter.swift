@@ -86,15 +86,15 @@ final class SearchDefaultPresenter<Model: SearchModel>: SearchPresenter {
             .objectWillChange
             .receive(on: updateQueue)
             .sink { [weak self, weak model] _ in
-                guard let self = self,
-                      let model = model else {
+                guard let self,
+                      let model else {
                     return
                 }
 
                 self.objectWillChange.send()
                 self.books = model.books.map { $0.asViewModel(favorite: model.favoriteBookIDs.contains($0.id)) }
-        }
-        .store(in: &cancellables)
+            }
+            .store(in: &cancellables)
     }
 
 }
@@ -174,9 +174,9 @@ final class SearchPreviewPresenter: SearchPresenter, BookListCellPresenter {
             BookViewModel(authors: $0.authors,
                           id: $0.id,
                           imageURL: nil,
-                          isFavorite: (($0.id == bookID)
-                                        ? !$0.isFavorite
-                                        : $0.isFavorite),
+                          isFavorite: ($0.id == bookID)
+                                          ? !$0.isFavorite
+                                          : $0.isFavorite,
                           title: $0.title)
 
         }

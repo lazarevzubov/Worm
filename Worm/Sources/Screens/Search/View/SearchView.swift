@@ -17,15 +17,14 @@ struct SearchView<Presenter: SearchPresenter>: View {
 
     var body: some View {
         NavigationView {
-            VStack(spacing: 0.0) {
+            VStack(spacing: .zero) {
                 Spacer()
                 HStack {
                     SearchBar(text: $presenter.query)
                     Spacer(minLength: 16.0)
                 }
                 List(presenter.books) { book in
-                    Button { detailsPresented = true }
-                        label: { BookListCell(book: book, presenter: presenter) }
+                    Button { detailsPresented = true } label: { BookListCell(book: book, presenter: presenter) }
                         .sheet(isPresented: $detailsPresented) {
                             BookDetailsView(presenter: presenter.makeDetailsPresenter(for: book),
                                             presented: $detailsPresented)
@@ -33,8 +32,8 @@ struct SearchView<Presenter: SearchPresenter>: View {
                 }
                     .listStyle(PlainListStyle())
             }
-            .navigationTitle("SearchScreenTitle")
-            .onAppear { configureNavigationBar() }
+                .navigationTitle("SearchScreenTitle")
+                .onAppear { configureNavigationBar() }
         }
     }
 
@@ -84,6 +83,8 @@ struct SearchView_Previews: PreviewProvider {
 
     // MARK: PreviewProvider protocol properties
 
-    static var previews: some View { SearchView(presenter: SearchPreviewPresenter()) }
+    static var previews: some View {
+        SearchView(presenter: SearchPreviewPresenter())
+    }
 
 }

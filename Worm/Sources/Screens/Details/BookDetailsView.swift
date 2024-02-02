@@ -66,7 +66,8 @@ struct BookDetailsView_Previews: PreviewProvider {
 
     // MARK: PreviewProvider protocol properties
 
-    static var previews: some View { BookDetailsView(presenter: BookDetailsPreviewPresenter(),
-                                                     presented: .constant(true)) }
+    static var previews: some View {
+        BookDetailsView(presenter: BookDetailsPreviewPresenter(), presented: .constant(true))
+    }
 
 }

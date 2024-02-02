@@ -107,8 +107,8 @@ final class RecommendationsDefaultModel<RecommendationsService: FavoritesService
             .sink { [weak self] _ in
                 self?.objectWillChange.send()
                 self?.updateFavorites()
-        }
-        .store(in: &cancellables)
+            }
+            .store(in: &cancellables)
     }
 
     private func updateFavorites() {
@@ -141,7 +141,7 @@ final class RecommendationsDefaultModel<RecommendationsService: FavoritesService
 
             let book = await catalogueService.getBook(by: id)
             if let bookDescriptor = prioritizedRecommendations[id], 
-                bookDescriptor.book == nil {
+               bookDescriptor.book == nil {
                 prioritizedRecommendations[id] = (bookDescriptor.priority, book)
             }
         }
