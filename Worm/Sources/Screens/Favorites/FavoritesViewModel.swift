@@ -21,7 +21,7 @@ protocol FavoritesViewModel: BookListCellViewModel, BookDetailsPresentable, Obse
 
 // MARK: -
 
-/// The default implementation of the Favorites screen viewModel.
+/// The default implementation of the Favorites screen view model.
 final class FavoritesDefaultViewModel<Model: FavoritesModel>: FavoritesViewModel {
 
     typealias DetailsViewModel = BookDetailsDefaultViewModel
@@ -42,7 +42,7 @@ final class FavoritesDefaultViewModel<Model: FavoritesModel>: FavoritesViewModel
 
     // MARK: - Initialization
 
-    /// Creates a viewModel object.
+    /// Creates a view model object.
     /// - Parameters:
     ///   - model: Data providing object.
     ///   - imageService: The services that turns image URLs into images themselves.
@@ -92,7 +92,7 @@ final class FavoritesDefaultViewModel<Model: FavoritesModel>: FavoritesViewModel
 
 // MARK: -
 
-/// The implementation of the Favorites screen viewModel that used for SwiftUI previews.
+/// The implementation of the Favorites screen view model that used for SwiftUI previews.
 final class FavoritesPreviewsViewModel: FavoritesViewModel {
 
     typealias DetailsViewModel = BookDetailsPreviewViewModel

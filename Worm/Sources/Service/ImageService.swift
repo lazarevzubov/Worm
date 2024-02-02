@@ -12,13 +12,11 @@ protocol ImageService {
 
     // MARK: - Methods
 
-    /**
-     Retrieves the image from an URL.
-     - Parameters:
-        - url: The image URL.
-        - resultCompletion: The block of code to run on result.
-            - image: The retrieved image.
-     */
+    /// Retrieves the image from an URL.
+    /// - Parameters:
+    ///   - url: The image URL.
+    ///   - resultCompletion: The block of code to run on result.
+    ///     - image: The retrieved image.
     func getImage(for url: URL, resultCompletion: @escaping (_ image: UIImage?) -> Void)
 
 }
@@ -71,10 +69,8 @@ final class ImageWebService<DownloadService: WebService>: ImageService {
 
     // MARK: - Initialization
 
-    /**
-     Creates the service,
-     - Parameter webService: The web service for making network requests.
-     */
+    /// Creates the service.
+    /// - Parameter webService: The web service for making network requests.
     init(webService: DownloadService) {
         self.webService = webService
     }

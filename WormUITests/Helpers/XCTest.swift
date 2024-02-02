@@ -22,13 +22,10 @@ extension XCTestCase {
 
     // MARK: - Methods
 
-    /**
-     Waits for an UI element to appear.
-
-     - Parameters:
-        - element: UI element that is waited to appear.
-        - timeout: Maximum amount of time in seconds to wait.
-     */
+    /// Waits for an UI element to appear.
+    /// - Parameters:
+    ///   - element: UI element that is waited to appear.
+    ///   - timeout: Maximum amount of time in seconds to wait.
     func wait(forElement element: XCUIElement, timeout: TimeInterval = 5.0) {
         let predicate = NSPredicate(format: "exists == 1")
         expectation(for: predicate, evaluatedWith: element)

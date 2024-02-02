@@ -24,15 +24,11 @@ protocol RecommendationsModel: ObservableObject {
 
     // MARK: - Methods
 
-    /**
-     Toggles the favorite-ness state of a book.
-     - Parameter bookID: The ID of the book to manipulate.
-     */
+    /// Toggles the favorite-ness state of a book.
+    /// - Parameter bookID: The ID of the book to manipulate.
     func toggleFavoriteState(bookID: String)
-    /**
-     Blocks a book ID from appearing as a recommendation.
-     - Parameter bookID: The ID of the book to manipulate.
-     */
+    /// Blocks a book ID from appearing as a recommendation.
+    /// - Parameter bookID: The ID of the book to manipulate.
     func blockFromRecommendations(bookID: String)
 
 }
@@ -67,12 +63,10 @@ final class RecommendationsDefaultModel<RecommendationsService: FavoritesService
 
     // MARK: - Initialization
 
-    /**
-     Creates a recommended books list handler.
-     - Parameters:
-        - catalogueService: The data service of the app.
-        - favoritesService: The favorite books list manager.
-     */
+    /// Creates a recommended books list handler.
+    /// - Parameters:
+    ///   - catalogueService: The data service of the app.
+    ///   - favoritesService: The favorite books list manager.
     init(catalogueService: CatalogueService, favoritesService: RecommendationsService) {
         self.catalogueService = catalogueService
         self.favoritesService = favoritesService

@@ -11,10 +11,8 @@ protocol BookListCellViewModel {
 
     // MARK: - Methods
 
-    /**
-     Toggles a favorite state of the book.
-     - Parameter bookID: The book ID.
-     */
+    /// Toggles a favorite state of the book.
+    /// - Parameter bookID: The book ID.
     func toggleFavoriteState(bookID: String)
 
 }

@@ -22,15 +22,11 @@ protocol SearchModel: ObservableObject {
 
     // MARK: - Methods
 
-    /**
-     Queries the book search engine.
-     - Parameter query: The query to search.
-     */
+    /// Queries the book search engine.
+    /// - Parameter query: The query to search.
     func searchBooks(by query: String)
-    /**
-     Toggles the favorite-ness state of a book.
-     - Parameter bookID: The ID of the book to manipulate.
-     */
+    /// Toggles the favorite-ness state of a book.
+    /// - Parameter bookID: The ID of the book to manipulate.
     func toggleFavoriteState(bookID: String)
 
 }
@@ -66,15 +62,12 @@ final class SearchServiceBasedModel<RecommendationsService: FavoritesService>: S
 
     // MARK: - Initialization
 
-    /**
-     Creates a model.
-
-     - Parameters:
-        - catalogueService: The data providing service.
-        - favoritesService: A service providing an interface to track and manipulate the list of favorite books.
-        - dispatchQueue: The queue to dispatch search requests.
-        - queryDelay: The delay after which the request is actually dispatched. This delay is useful to prevent too many request while typing a query.
-     */
+    /// Creates a model.
+    /// - Parameters:
+    ///   - catalogueService: The data providing service.
+    ///   - favoritesService: A service providing an interface to track and manipulate the list of favorite books.
+    ///   - dispatchQueue: The queue to dispatch search requests.
+    ///   - queryDelay: The delay after which the request is actually dispatched. This delay is useful to prevent too many request while typing a query.
     init(catalogueService: CatalogueService,
          favoritesService: RecommendationsService,
          dispatchQueue: DispatchQueue = DispatchQueue(label: "com.LazarevZubov.Worm.SearchDefaultModel"),

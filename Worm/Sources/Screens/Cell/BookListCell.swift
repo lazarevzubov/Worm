@@ -51,12 +51,10 @@ struct BookListCell: View {
 
     // MARK: - Initialization
 
-    /**
-     Creates a cell's displaying representation.
-     - Parameters:
-        - book: A book data for a visual representation.
-        - viewModel: The presentation logic of the book table cell.
-     */
+    /// Creates a cell's displaying representation.
+    /// - Parameters:
+    ///   - book: A book data for a visual representation.
+    ///   - viewModel: The presentation logic of the book table cell.
     init(book: BookViewModel, viewModel: BookListCellViewModel) {
         self.book = book
         self.viewModel = viewModel

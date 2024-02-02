@@ -49,13 +49,11 @@ final class SearchDefaultViewModel<Model: SearchModel>: SearchViewModel {
 
     // MARK: - Initialization
 
-    /**
-     Creates the presentation logic object.
-     - Parameters:
-        - model: The search screen model.
-        - imageService: The services that turns image URLs into images themselves.
-        - updateQueue: Queue on which presentation data is passed to view.
-     */
+    /// Creates the presentation logic object.
+    /// - Parameters:
+    ///   - model: The search screen model.
+    ///   - imageService: The services that turns image URLs into images themselves.
+    ///   - updateQueue: Queue on which presentation data is passed to view.
     init(model: Model, imageService: ImageService, updateQueue: DispatchQueue = .main) {
         self.model = model
         self.imageService = imageService
