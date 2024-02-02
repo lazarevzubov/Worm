@@ -44,26 +44,13 @@ extension URLSessionTask: WebServiceTask { }
 /// Coordinates a group of web service tasks.
 protocol WebService {
 
-    associatedtype Task: WebServiceTask
-
     // MARK: - Methods
 
-    /**
-     Creates a task that retrieves the contents of the specified URL, then calls a handler upon completion.
-
-     - Parameters:
-        - url: The URL to be retrieved.
-        - completionHandler: The completion handler to call when the load request is complete.
-        - data: The data returned by the server.
-        - response: An object that provides response metadata, such as HTTP headers and status code.
-        - error: An error object that indicates why the request failed, or `nil` if the request was successful.
-
-     - Returns: The new session data task.
-     */
-    func dataTask(with url: URL,
-                  completionHandler: @escaping (_ data: Data?,
-                                                _ response: URLResponse?,
-                                                _ error: Error?) -> Void) -> Task
+    /// Retrieves the contents of the specified URL.
+    /// - Parameters:
+    ///   - url: The URL the data is to be retrieved from.
+    /// - Returns: The data returned by the server and an object that provides response metadata, such as HTTP headers and status code.
+    func data(from url: URL) async throws -> (Data, URLResponse)
 
 }
 
@@ -97,14 +84,14 @@ final class ImageWebService<DownloadService: WebService>: ImageService {
     // MARK: ImageService protocol methods
 
     func getImage(for url: URL, resultCompletion: @escaping (_ book: UIImage?) -> Void) {
-        webService.dataTask(with: url) { data, _, _ in
-            if let data = data {
+        Task {
+            if let (data, _) = try? await webService.data(from: url) {
                 let image = UIImage(data: data)
                 resultCompletion(image)
             } else {
                 resultCompletion(nil)
             }
-        }.resume()
+        }
     }
 
 }

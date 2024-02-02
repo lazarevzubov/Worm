@@ -21,7 +21,7 @@ protocol CatalogueService {
         - resultCompletion: The block of code to run upon the query completion.
         - ids: The result of the query consisting of book IDs.
      */
-    func searchBooks(_ query: String, resultCompletion: @escaping (_ ids: [String]) -> Void)
+    func searchBooks(_ query: String) async -> [String]
     /**
      Dispatches a request of a book info.
 
@@ -30,7 +30,7 @@ protocol CatalogueService {
         - resultCompletion: The block of code to run upon the request completion.
         - book: The result of the request.
      */
-    func getBook(by id: String, resultCompletion: @escaping (_ book: Book?) -> Void)
+    func getBook(by id: String) async -> Book?
 
 }
 
@@ -107,14 +107,12 @@ final class CatalogueMockService: CatalogueService {
 
     // MARK: Service protocol methods
 
-    func searchBooks(_ query: String, resultCompletion: @escaping ([String]) -> Void) {
-        let ids = CatalogueMockService.books.map { $0.id }
-        resultCompletion(ids)
+    func searchBooks(_ query: String) async -> [String] {
+        CatalogueMockService.books.map { $0.id }
     }
 
-    func getBook(by id: String, resultCompletion: @escaping (Book?) -> Void) {
-        let book = CatalogueMockService.books.first { $0.id == id }
-        resultCompletion(book)
+    func getBook(by id: String) async -> Book? {
+        CatalogueMockService.books.first { $0.id == id }
     }
 
 }
