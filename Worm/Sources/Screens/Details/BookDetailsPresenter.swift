@@ -16,7 +16,7 @@ protocol BookDetailsPresenter: ObservableObject {
     var authors: String { get }
     /// The book's image.
     var image: UIImage? { get }
-    /// The book's titiel.
+    /// The book's title.
     var title: String { get }
 
 }

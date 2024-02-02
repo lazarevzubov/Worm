@@ -41,7 +41,7 @@ struct FavoritesView<Presenter: FavoritesPresenter>: View {
     // MARK: - Initialization
 
     /**
-     Creares the view.
+     Creates the view.
      - Parameter presenter: The object responsible for Favorites screen presentation logic.
      */
     init(presenter: Presenter) {

@@ -9,7 +9,7 @@
 import Combine
 import GoodreadsService
 
-/// Owns logic of maintaing a list of favorite books.
+/// Owns logic of maintaining a list of favorite books.
 protocol FavoritesModel: ObservableObject {
 
     // MARK: - Properties
@@ -48,7 +48,7 @@ final class FavoritesServiceBasedModel<FavoriteBooksService: FavoritesService>: 
     // MARK: - Initialization
 
     /**
-     Creates a favortite books list handler.
+     Creates a favorite books list handler.
      - Parameters:
         - catalogueService: The data service of the app.
         - favoritesService: The favorite books list manager.
