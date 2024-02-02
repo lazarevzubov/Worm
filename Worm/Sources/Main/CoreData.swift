@@ -17,11 +17,11 @@ final class CoreData {
     static let shared = CoreData()
     /// An object space for manipulating and tracking changes to managed objects.
     private(set) lazy var managedObjectContext: NSManagedObjectContext = {
-        #if TEST
+#if TEST
         return makeInMemoryContext()
-        #else
+#else
         return persistentContainer.viewContext
-        #endif
+#endif
     }()
 
     // MARK: Private properties
@@ -54,8 +54,8 @@ final class CoreData {
                 try context.save()
             } catch {
                 // TODO: Handle errors.
-                let nserror = error as NSError
-                fatalError("Unresolved error \(nserror), \(nserror.userInfo).")
+                let error = error as NSError
+                fatalError("Unresolved error \(error), \(error.userInfo).")
             }
         }
     }

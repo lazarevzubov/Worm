@@ -97,7 +97,7 @@ final class SearchServiceBasedModel<RecommendationsService: FavoritesService>: S
         let newSearchWorkItem = makeSearchWorkItem(query: query)
         currentSearchWorkItem = newSearchWorkItem
 
-        if let queryDelay = queryDelay {
+        if let queryDelay {
             dispatchQueue.asyncAfter(deadline: .now() + queryDelay, execute: newSearchWorkItem)
         } else {
             dispatchQueue.async(execute: newSearchWorkItem)

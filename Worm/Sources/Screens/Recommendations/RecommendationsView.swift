@@ -19,7 +19,7 @@ struct RecommendationsView<Presenter: RecommendationsPresenter>: View {
         NavigationView {
             List {
                 ForEach(presenter.recommendations) { book in
-                    Button(action: { detailsPresented = true }) { BookListCell(book: book, presenter: presenter) }
+                    Button { detailsPresented = true } label: { BookListCell(book: book, presenter: presenter) }
                         .sheet(isPresented: $detailsPresented) {
                             BookDetailsView(presenter: presenter.makeDetailsPresenter(for: book),
                                             presented: $detailsPresented)
@@ -81,6 +81,8 @@ struct RecommendationsView_Previews: PreviewProvider {
 
     // MARK: PreviewProvider protocol properties
 
-    static var previews: some View { RecommendationsView(presenter: RecommendationsPreviewPresenter()) }
+    static var previews: some View {
+        RecommendationsView(presenter: RecommendationsPreviewPresenter())
+    }
 
 }

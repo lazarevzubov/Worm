@@ -29,16 +29,19 @@ struct BookListCell: View {
                     .foregroundColor(.primary)
                     .accessibility(hidden: true)
             }
-            .accessibilityElement()
-            .accessibility(label: makeCellAccessibilityLabel(for: book))
+                .accessibilityElement()
+                .accessibility(label: makeCellAccessibilityLabel(for: book))
             Spacer()
             Button(action: { presenter.toggleFavoriteState(bookID: book.id) }) {
-                Image(systemName: (book.isFavorite ? "heart.fill" : "heart")).foregroundColor(.primary)
+                Image(systemName: (book.isFavorite 
+                                       ? "heart.fill"
+                                       : "heart"))
+                    .foregroundColor(.primary)
             }
-            .accessibilityElement()
-            .accessibility(label: makeFavoriteButtonAccessibilityLabel(for: book))
+                .accessibilityElement()
+                .accessibility(label: makeFavoriteButtonAccessibilityLabel(for: book))
         }
-        .buttonStyle(PlainButtonStyle())
+            .buttonStyle(PlainButtonStyle())
     }
 
     // MARK: Private properties
@@ -63,10 +66,12 @@ struct BookListCell: View {
 
     // MARK: Private methods
 
-    private func makeCellAccessibilityLabel(for book: BookViewModel) -> Text { Text("\(book.authors) – \(book.title)") }
+    private func makeCellAccessibilityLabel(for book: BookViewModel) -> Text {
+        Text("\(book.authors) – \(book.title)")
+    }
 
     private func makeFavoriteButtonAccessibilityLabel(for book: BookViewModel) -> Text {
-        return book.isFavorite
+        book.isFavorite
             ? Text(String(format: "SearchScreenFavoriteMarkCheckedHintFormat", book.title))
             : Text(String(format: "SearchScreenFavoriteMarkUncheckedHintFormat", book.title))
     }

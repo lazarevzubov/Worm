@@ -91,8 +91,8 @@ final class RecommendationsDefaultPresenter<Model: RecommendationsModel>: Recomm
             .objectWillChange
             .receive(on: updateQueue)
             .sink { [weak self, weak model] _ in
-                guard let self = self,
-                      let model = model else {
+                guard let self,
+                      let model else {
                     return
                 }
 
@@ -101,8 +101,8 @@ final class RecommendationsDefaultPresenter<Model: RecommendationsModel>: Recomm
                     .recommendations
                     .map { $0.asViewModel(favorite: model.favoriteBookIDs.contains($0.id)) }
                     .filter { !$0.isFavorite }
-        }
-        .store(in: &cancellables)
+            }
+            .store(in: &cancellables)
     }
 
 }
