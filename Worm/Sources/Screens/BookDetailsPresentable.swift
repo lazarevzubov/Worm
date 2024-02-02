@@ -9,12 +9,12 @@
 /// Manages book details presentation.
 protocol BookDetailsPresentable {
 
-    /// The corresponding book details viewModel type.
+    /// The corresponding book details view model type.
     associatedtype DetailsViewModel: BookDetailsViewModel
 
     // MARK: - Methods
 
-    /// Creates a details viewModel for corresponding to presented books.
+    /// Creates a details view model for corresponding to presented books.
     /// - Parameter favorite: The book to present details for.
     func makeDetailsViewModel(for book: BookViewModel) -> DetailsViewModel
 

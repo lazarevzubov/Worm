@@ -19,10 +19,8 @@ protocol FavoritesModel: ObservableObject {
 
     // MARK: - Methods
 
-    /**
-     Toggles the favorite-ness state of a book.
-     - Parameter bookID: The ID of the book to manipulate.
-     */
+    /// Toggles the favorite-ness state of a book.
+    /// - Parameter bookID: The ID of the book to manipulate.
     func toggleFavoriteState(bookID: String)
     
 }
@@ -47,12 +45,10 @@ final class FavoritesServiceBasedModel<FavoriteBooksService: FavoritesService>: 
 
     // MARK: - Initialization
 
-    /**
-     Creates a favorite books list handler.
-     - Parameters:
-        - catalogueService: The data service of the app.
-        - favoritesService: The favorite books list manager.
-     */
+    /// Creates a favorite books list handler.
+    /// - Parameters:
+    ///   - catalogueService: The data service of the app.
+    ///   - favoritesService: The favorite books list manager.
     init(catalogueService: CatalogueService, favoritesService: FavoriteBooksService) {
         self.catalogueService = catalogueService
         self.favoritesService = favoritesService

@@ -21,20 +21,14 @@ protocol FavoritesService: ObservableObject {
 
     // MARK: - Methods
 
-    /**
-     Blocks a book from recommendations..
-     - Parameter id: The ID of the book to block.
-     */
+    /// Blocks a book from recommendations.
+    /// - Parameter id: The ID of the book to block.
     func addToBlockedBooks(_ id: String)
-    /**
-     Adds a favorite book to the current list.
-     - Parameter id: The ID of the book to be added.
-     */
+    /// Adds a favorite book to the current list.
+    /// - Parameter id: The ID of the book to be added.
     func addToFavoriteBooks(_ id: String)
-    /**
-     Removes a favorite book from the current list.
-     - Parameter id: The ID of the book to be removed.
-     */
+    /// Removes a favorite book from the current list.
+    /// - Parameter id: The ID of the book to be removed.
     func removeFromFavoriteBooks(_ id: String)
 
 }
@@ -57,10 +51,8 @@ final class FavoritesPersistenceService: FavoritesService {
 
     // MARK: - Initialization
 
-    /**
-     Creates a service instance.
-     - Parameter persistenceContext: An object space to manipulate and track changes to the app's Core Data persistent storage.
-     */
+    /// Creates a service instance.
+    /// - Parameter persistenceContext: An object space to manipulate and track changes to the app's Core Data persistent storage.
     init(persistenceContext: NSManagedObjectContext) {
         self.persistenceContext = persistenceContext
     }

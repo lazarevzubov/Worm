@@ -19,17 +19,15 @@ protocol RecommendationsViewModel: BookListCellViewModel, BookDetailsPresentable
 
     // MARK: - Methods
 
-    /**
-     Blocks a book from appearing as a recommendation.
-     - Parameter recommendation: The book to block.
-     */
+    /// Blocks a book from appearing as a recommendation.
+    /// - Parameter recommendation: The book to block.
     func block(recommendation: BookViewModel)
 
 }
 
 // MARK: -
 
-/// The default implementation of the Recommendations screen viewModel.
+/// The default implementation of the Recommendations screen view model.
 final class RecommendationsDefaultViewModel<Model: RecommendationsModel>: RecommendationsViewModel {
 
     typealias DetailsViewModel = BookDetailsDefaultViewModel
@@ -50,7 +48,7 @@ final class RecommendationsDefaultViewModel<Model: RecommendationsModel>: Recomm
 
     // MARK: - Initialization
 
-    /// Creates a viewModel object.
+    /// Creates a view model object.
     /// - Parameters:
     ///   - model: Data providing object.
     ///   - imageService: The services that turns image URLs into images themselves.
@@ -107,7 +105,7 @@ final class RecommendationsDefaultViewModel<Model: RecommendationsModel>: Recomm
 
 // MARK: -
 
-/// The implementation of the Recommendations screen viewModel that used for SwiftUI previews.
+/// The implementation of the Recommendations screen view model that used for SwiftUI previews.
 final class RecommendationsPreviewViewModel: RecommendationsViewModel {
 
     typealias DetailsViewModel = BookDetailsPreviewViewModel

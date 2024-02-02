@@ -27,7 +27,7 @@ final class RecommendationsDefaultViewModelTests: XCTestCase {
         model.recommendations = books
 
         queue.sync {
-            // Wait for viewModel update.
+            // Wait for view model update.
         }
 
         let bookVMsSet = Set(books.map { $0.asViewModel(favorite: false) })

@@ -13,13 +13,11 @@ enum ViewFactory<RecommendationsService: FavoritesService> {
 
     // MARK: - Methods
 
-    /**
-     Creates the main view of the app.
-     - Parameters:
-        - catalogueService: The main data service of the app.
-        - favoritesService: The favorite books list manager.
-     - Returns: The main view of the app.
-     */
+    /// Creates the main view of the app.
+    /// - Parameters:
+    ///   - catalogueService: The main data service of the app.
+    ///   - favoritesService: The favorite books list manager.
+    /// - Returns: The main view of the app.
     static func makeMainView(catalogueService: CatalogueService,
                              favoritesService: RecommendationsService,
                              imageService: ImageService) -> some View {

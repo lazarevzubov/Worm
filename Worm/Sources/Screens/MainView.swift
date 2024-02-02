@@ -50,13 +50,11 @@ struct MainView<SearchView: View, RecommendationsView: View, FavoritesView: View
 
     // MARK: - Initialization
 
-    /**
-     Creates a view object.
-     - Parameters:
-        - searchView: The Search tab visual representation.
-        - recommendationsView: The Recommendations tab visual representation.
-        - favoritesView: The Favorites tab visual representation.
-     */
+    /// Creates a view object.
+    /// - Parameters:
+    ///   - searchView: The Search tab visual representation.
+    ///   - recommendationsView: The Recommendations tab visual representation.
+    ///   - favoritesView: The Favorites tab visual representation.
     init(searchView: SearchView, recommendationsView: RecommendationsView, favoritesView: FavoritesView) {
         self.searchView = searchView
         self.recommendationsView = recommendationsView

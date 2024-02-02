@@ -41,14 +41,12 @@ final class BookDetailsDefaultViewModel: BookDetailsViewModel {
 
     // MARK: - Initialization
 
-    /**
-     Creates the provider.
-     - Parameters:
-        - authors: The authors string.
-        - title: The title string.
-        - imageURL: The URL of the image.
-        - imageService: The service that magically turns image URL into image.
-     */
+    /// Creates the provider.
+    /// - Parameters:
+    ///   - authors: The authors string.
+    ///   - title: The title string.
+    ///   - imageURL: The URL of the image.
+    ///   - imageService: The service that magically turns image URL into image.
     init(authors: String, title: String, imageURL: URL?, imageService: ImageService) {
         self.authors = authors
         self.title = title
@@ -74,7 +72,7 @@ final class BookDetailsDefaultViewModel: BookDetailsViewModel {
 
 // MARK: -
 
-/// The implementation of the book details screen viewModel that used for SwiftUI previews.
+/// The implementation of the book details screen view model that used for SwiftUI previews.
 final class BookDetailsPreviewViewModel: BookDetailsViewModel {
 
     // MARK: - Properties
