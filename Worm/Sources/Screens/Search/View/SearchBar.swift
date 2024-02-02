@@ -44,10 +44,10 @@ struct SearchBar: View {
                         }
                     }
                 )
-                .onTapGesture { isEditing = true }
-                .transition(.move(edge: .trailing))
-                .animation(.default)
-                .accessibility(label: Text("SearchScreenSearchFieldPlaceholder"))
+                    .onTapGesture { isEditing = true }
+                    .transition(.move(edge: .trailing))
+                    .animation(.default, value: isEditing)
+                    .accessibility(label: Text("SearchScreenSearchFieldPlaceholder"))
             if isEditing {
                 Button {
                     isEditing = false
@@ -57,9 +57,9 @@ struct SearchBar: View {
                                                     from: nil,
                                                     for: nil)
                 } label: { Text("CancelButtonTitle") }
-                .padding(.trailing, 8.0)
-                .transition(.move(edge: .trailing))
-                .animation(.default)
+                    .padding(.trailing, 8.0)
+                    .transition(.move(edge: .trailing))
+                    .animation(.default, value: isEditing)
             }
         }
     }
