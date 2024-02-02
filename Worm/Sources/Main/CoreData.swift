@@ -8,12 +8,12 @@
 
 import CoreData
 
-/// The app's Core Data database enrty point.
+/// The app's Core Data database entry point.
 final class CoreData {
 
     // MARK: - Properties
 
-    /// The shared instane of the Core Data database.
+    /// The shared instance of the Core Data database.
     static let shared = CoreData()
     /// An object space for manipulating and tracking changes to managed objects.
     private(set) lazy var managedObjectContext: NSManagedObjectContext = {

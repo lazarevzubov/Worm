@@ -14,7 +14,7 @@ protocol FavoritesPresenter: BookListCellPresenter, BookDetailsPresentable, Obse
 
     // MARK: - Properties
 
-    /// A list of view models represeting items on the Favorites screen.
+    /// A list of view models representing items on the Favorites screen.
     var favorites: [BookViewModel] { get }
 
 }

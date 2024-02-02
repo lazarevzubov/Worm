@@ -14,7 +14,7 @@ protocol RecommendationsPresenter: BookListCellPresenter, BookDetailsPresentable
 
     // MARK: - Properties
 
-    /// A list of view models represeting items on the Recommendations screen.
+    /// A list of view models representing items on the Recommendations screen.
     var recommendations: [BookViewModel] { get }
 
     // MARK: - Methods

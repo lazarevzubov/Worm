@@ -16,7 +16,7 @@ protocol FavoritesService: ObservableObject {
 
     /// The current list of blocked from recommendations books.
     var blockedBooks: [BlockedBook] { get }
-    /// The current list of favortite books.
+    /// The current list of favorite books.
     var favoriteBooks: [FavoriteBook] { get }
 
     // MARK: - Methods

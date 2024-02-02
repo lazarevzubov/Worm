@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-/// The table call contaning a book info.
+/// The table call containing a book info.
 struct BookListCell: View {
 
     // MARK: - Properties
