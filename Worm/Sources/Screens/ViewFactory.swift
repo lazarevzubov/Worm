@@ -42,9 +42,9 @@ enum ViewFactory<RecommendationsService: FavoritesService> {
                                        favoritesService: RecommendationsService,
                                        imageService: ImageService) -> some View {
         let model = SearchServiceBasedModel(catalogueService: catalogueService, favoritesService: favoritesService)
-        let presenter = SearchDefaultPresenter(model: model, imageService: imageService)
+        let viewModel = SearchDefaultViewModel(model: model, imageService: imageService)
 
-        return SearchView<SearchDefaultPresenter<SearchServiceBasedModel>>(presenter: presenter)
+        return SearchView<SearchDefaultViewModel<SearchServiceBasedModel>>(viewModel: viewModel)
     }
 
     private static func makeRecommendationsView(catalogueService: CatalogueService,
@@ -52,18 +52,18 @@ enum ViewFactory<RecommendationsService: FavoritesService> {
                                                 imageService: ImageService) -> some View {
         let recommendationsModel = RecommendationsDefaultModel(catalogueService: catalogueService,
                                                                favoritesService: favoritesService)
-        let presenter = RecommendationsDefaultPresenter(model: recommendationsModel, imageService: imageService)
+        let viewModel = RecommendationsDefaultViewModel(model: recommendationsModel, imageService: imageService)
 
-        return RecommendationsView(presenter: presenter)
+        return RecommendationsView(viewModel: viewModel)
     }
 
     private static func makeFavoritesView(catalogueService: CatalogueService,
                                           favoritesService: RecommendationsService,
                                           imageService: ImageService) -> some View {
         let model = FavoritesServiceBasedModel(catalogueService: catalogueService, favoritesService: favoritesService)
-        let presenter = FavoritesDefaultPresenter(model: model, imageService: imageService)
+        let viewModel = FavoritesDefaultViewModel(model: model, imageService: imageService)
 
-        return FavoritesView(presenter: presenter)
+        return FavoritesView(viewModel: viewModel)
     }
 
 }

@@ -32,7 +32,7 @@ struct BookListCell: View {
                 .accessibilityElement()
                 .accessibility(label: makeCellAccessibilityLabel(for: book))
             Spacer()
-            Button(action: { presenter.toggleFavoriteState(bookID: book.id) }) {
+            Button(action: { viewModel.toggleFavoriteState(bookID: book.id) }) {
                 Image(systemName: (book.isFavorite 
                                        ? "heart.fill"
                                        : "heart"))
@@ -47,7 +47,7 @@ struct BookListCell: View {
     // MARK: Private properties
 
     private let book: BookViewModel
-    private let presenter: BookListCellPresenter
+    private let viewModel: BookListCellViewModel
 
     // MARK: - Initialization
 
@@ -55,11 +55,11 @@ struct BookListCell: View {
      Creates a cell's displaying representation.
      - Parameters:
         - book: A book data for a visual representation.
-        - presenter: The presentation logic of the book table cell.
+        - viewModel: The presentation logic of the book table cell.
      */
-    init(book: BookViewModel, presenter: BookListCellPresenter) {
+    init(book: BookViewModel, viewModel: BookListCellViewModel) {
         self.book = book
-        self.presenter = presenter
+        self.viewModel = viewModel
     }
 
     // MARK: - Methods

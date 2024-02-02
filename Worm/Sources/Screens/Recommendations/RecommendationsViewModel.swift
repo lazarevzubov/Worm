@@ -1,5 +1,5 @@
 //
-//  RecommendationsPresenter.swift
+//  RecommendationsViewModel.swift
 //  Worm
 //
 //  Created by Nikita Lazarev-Zubov on 29.6.2020.
@@ -10,7 +10,7 @@ import Combine
 import Foundation
 
 /// Object responsible for Recommendations screen presentation logic.
-protocol RecommendationsPresenter: BookListCellPresenter, BookDetailsPresentable, ObservableObject {
+protocol RecommendationsViewModel: BookListCellViewModel, BookDetailsPresentable, ObservableObject {
 
     // MARK: - Properties
 
@@ -29,14 +29,14 @@ protocol RecommendationsPresenter: BookListCellPresenter, BookDetailsPresentable
 
 // MARK: -
 
-/// The default implementation of the Recommendations screen presenter.
-final class RecommendationsDefaultPresenter<Model: RecommendationsModel>: RecommendationsPresenter {
+/// The default implementation of the Recommendations screen viewModel.
+final class RecommendationsDefaultViewModel<Model: RecommendationsModel>: RecommendationsViewModel {
 
-    typealias DetailsPresenter = BookDetailsDefaultPresenter
+    typealias DetailsViewModel = BookDetailsDefaultViewModel
 
     // MARK: - Properties
 
-    // MARK: RecommendationsPresenter protocol properties
+    // MARK: RecommendationsViewModel protocol properties
 
     @Published
     private(set) var recommendations = [BookViewModel]()
@@ -50,13 +50,11 @@ final class RecommendationsDefaultPresenter<Model: RecommendationsModel>: Recomm
 
     // MARK: - Initialization
 
-    /**
-     Creates a presenter object.
-     - Parameters:
-        - model: Data providing object.
-        - imageService: The services that turns image URLs into images themselves.
-        - updateQueue: Queue on which presentation data is passed to view.
-     */
+    /// Creates a viewModel object.
+    /// - Parameters:
+    ///   - model: Data providing object.
+    ///   - imageService: The services that turns image URLs into images themselves.
+    ///   - updateQueue: Queue on which presentation data is passed to view.
     init(model: Model, imageService: ImageService, updateQueue: DispatchQueue = .main) {
         self.model = model
         self.imageService = imageService
@@ -67,7 +65,7 @@ final class RecommendationsDefaultPresenter<Model: RecommendationsModel>: Recomm
 
     // MARK: - Methods
 
-    // MARK: BookListCellPresenter protocol methods
+    // MARK: BookListCellViewModel protocol methods
 
     func toggleFavoriteState(bookID: String) {
         model.toggleFavoriteState(bookID: bookID)
@@ -77,8 +75,8 @@ final class RecommendationsDefaultPresenter<Model: RecommendationsModel>: Recomm
         model.blockFromRecommendations(bookID: recommendation.id)
     }
 
-    func makeDetailsPresenter(for book: BookViewModel) -> DetailsPresenter {
-        BookDetailsDefaultPresenter(authors: book.authors,
+    func makeDetailsViewModel(for book: BookViewModel) -> DetailsViewModel {
+        BookDetailsDefaultViewModel(authors: book.authors,
                                     title: book.title,
                                     imageURL: book.imageURL,
                                     imageService: imageService)
@@ -109,14 +107,14 @@ final class RecommendationsDefaultPresenter<Model: RecommendationsModel>: Recomm
 
 // MARK: -
 
-/// The implementation of the Recommendations screen presenter that used for SwiftUI previews.
-final class RecommendationsPreviewPresenter: RecommendationsPresenter {
+/// The implementation of the Recommendations screen viewModel that used for SwiftUI previews.
+final class RecommendationsPreviewViewModel: RecommendationsViewModel {
 
-    typealias DetailsPresenter = BookDetailsPreviewPresenter
+    typealias DetailsViewModel = BookDetailsPreviewViewModel
 
     // MARK: - Properties
 
-    // MARK: RecommendationsPresenter protocol properties
+    // MARK: RecommendationsViewModel protocol properties
 
     var recommendations = [
         BookViewModel(authors: "J.R.R. Tolkien",
@@ -174,7 +172,7 @@ final class RecommendationsPreviewPresenter: RecommendationsPresenter {
 
     // MARK: - Methods
 
-    // MARK: BookListCellPresenter protocol methods
+    // MARK: BookListCellViewModel protocol methods
 
     func toggleFavoriteState(bookID: String) {
         // Do nothing.
@@ -184,8 +182,8 @@ final class RecommendationsPreviewPresenter: RecommendationsPresenter {
         // Do nothing.
     }
 
-    func makeDetailsPresenter(for favorite: BookViewModel) -> DetailsPresenter {
-        BookDetailsPreviewPresenter()
+    func makeDetailsViewModel(for favorite: BookViewModel) -> DetailsViewModel {
+        BookDetailsPreviewViewModel()
     }
 
 }

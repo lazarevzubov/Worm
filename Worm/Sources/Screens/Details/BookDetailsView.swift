@@ -8,7 +8,7 @@
 import SwiftUI
 
 /// The view with detailed information on a book.
-struct BookDetailsView<Presenter: BookDetailsPresenter>: View {
+struct BookDetailsView<ViewModel: BookDetailsViewModel>: View {
 
     // MARK: - Properties
 
@@ -21,15 +21,15 @@ struct BookDetailsView<Presenter: BookDetailsPresenter>: View {
                 .padding()
         }
         Spacer()
-        if let image = presenter.image {
+        if let image = viewModel.image {
             Image(uiImage: image)
             Spacer()
         }
-        Text(presenter.title)
+        Text(viewModel.title)
             .font(.headline)
             .multilineTextAlignment(.center)
             .padding(.horizontal)
-        Text(presenter.authors)
+        Text(viewModel.authors)
             .font(.subheadline)
             .multilineTextAlignment(.center)
             .padding([.top, .horizontal])
@@ -41,17 +41,15 @@ struct BookDetailsView<Presenter: BookDetailsPresenter>: View {
     @Binding
     private var presented: Bool
     @ObservedObject
-    private var presenter: Presenter
+    private var viewModel: ViewModel
 
     // MARK: - Initialization
 
     // TODO: Update HeaderDoc.
-    /**
-     Creates the view.
-     - Parameter presenter: The presentation data provider.
-     */
-    init(presenter: Presenter, presented: Binding<Bool>) {
-        self.presenter = presenter
+    /// Creates the view.
+    /// - Parameter viewModel: The presentation data provider.
+    init(viewModel: ViewModel, presented: Binding<Bool>) {
+        self.viewModel = viewModel
         self._presented = presented
     }
 
@@ -67,7 +65,7 @@ struct BookDetailsView_Previews: PreviewProvider {
     // MARK: PreviewProvider protocol properties
 
     static var previews: some View {
-        BookDetailsView(presenter: BookDetailsPreviewPresenter(), presented: .constant(true))
+        BookDetailsView(viewModel: BookDetailsPreviewViewModel(), presented: .constant(true))
     }
 
 }

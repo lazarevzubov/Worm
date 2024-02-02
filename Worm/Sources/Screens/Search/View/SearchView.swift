@@ -9,7 +9,7 @@
 import SwiftUI
 
 /// The book search screen.
-struct SearchView<Presenter: SearchPresenter>: View {
+struct SearchView<ViewModel: SearchViewModel>: View {
 
     // MARK: - Properties
 
@@ -20,13 +20,13 @@ struct SearchView<Presenter: SearchPresenter>: View {
             VStack(spacing: .zero) {
                 Spacer()
                 HStack {
-                    SearchBar(text: $presenter.query)
+                    SearchBar(text: $viewModel.query)
                     Spacer(minLength: 16.0)
                 }
-                List(presenter.books) { book in
-                    Button { detailsPresented = true } label: { BookListCell(book: book, presenter: presenter) }
+                List(viewModel.books) { book in
+                    Button { detailsPresented = true } label: { BookListCell(book: book, viewModel: viewModel) }
                         .sheet(isPresented: $detailsPresented) {
-                            BookDetailsView(presenter: presenter.makeDetailsPresenter(for: book),
+                            BookDetailsView(viewModel: viewModel.makeDetailsViewModel(for: book),
                                             presented: $detailsPresented)
                         }
                 }
@@ -42,16 +42,14 @@ struct SearchView<Presenter: SearchPresenter>: View {
     @State
     private var detailsPresented = false
     @ObservedObject
-    private var presenter: Presenter
+    private var viewModel: ViewModel
 
     // MARK: - Initialization
 
-    /**
-     Creates the screen.
-     - Parameter presenter: The presentation logic handler.
-     */
-    init(presenter: Presenter) {
-        self.presenter = presenter
+    /// Creates the screen.
+    /// - Parameter viewModel: The presentation logic handler.
+    init(viewModel: ViewModel) {
+        self.viewModel = viewModel
     }
 
     // MARK: - Methods
@@ -84,7 +82,7 @@ struct SearchView_Previews: PreviewProvider {
     // MARK: PreviewProvider protocol properties
 
     static var previews: some View {
-        SearchView(presenter: SearchPreviewPresenter())
+        SearchView(viewModel: SearchPreviewViewModel())
     }
 
 }
