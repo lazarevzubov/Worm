@@ -56,7 +56,11 @@ final class SearchServiceBasedModel<RecommendationsService: FavoritesService>: S
     private let favoritesService: RecommendationsService
     private let queryDelay: DispatchTimeInterval?
     private var currentSearchResult = [String]() {
-        didSet { currentSearchResult.forEach { handleSearchResult($0) } }
+        didSet {
+            currentSearchResult.forEach { result in
+                Task { await handleSearchResult(result) }
+            }
+        }
     }
     private var currentSearchWorkItem: DispatchWorkItem?
 
@@ -130,17 +134,12 @@ final class SearchServiceBasedModel<RecommendationsService: FavoritesService>: S
     }
 
     private func handle(searchQuery: String) {
-        catalogueService.searchBooks(searchQuery) { [weak self] in
-            self?.currentSearchResult = $0
-        }
+        Task { currentSearchResult = await catalogueService.searchBooks(searchQuery) }
     }
 
-    private func handleSearchResult(_ result: String) {
-        catalogueService.getBook(by: result) { [weak self] book in
-            guard let book = book else {
-                return
-            }
-            self?.appendIfNeeded(book: book)
+    private func handleSearchResult(_ result: String) async {
+        if let book = await catalogueService.getBook(by: result) {
+            await MainActor.run { appendIfNeeded(book: book) }
         }
     }
 

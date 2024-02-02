@@ -1,16 +1,14 @@
 {
-  "object": {
-    "pins": [
-      {
-        "package": "GoodreadsService",
-        "repositoryURL": "https://github.com/lazarevzubov/GoodreadsService.git",
-        "state": {
-          "branch": "master",
-          "revision": "87c319ea0a21590ca0842a5ce119d5108948acda",
-          "version": null
-        }
+  "pins" : [
+    {
+      "identity" : "goodreadsservice",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/lazarevzubov/GoodreadsService.git",
+      "state" : {
+        "revision" : "66a143df8ec03ff31d2e2ab305ce8ad0a9d5891e",
+        "version" : "1.0.0"
       }
-    ]
-  },
-  "version": 1
+    }
+  ],
+  "version" : 2
 }

@@ -113,13 +113,14 @@ final class RecommendationsDefaultModel<RecommendationsService: FavoritesService
 
     private func updateFavorites() {
         favoriteBookIDs = favoritesService.favoriteBooks.compactMap { $0.id }
-        favoriteBookIDs.forEach { addSimilarBooksToRecommendations(from: $0) }
+        favoriteBookIDs.forEach { id in
+            Task { await addSimilarBooksToRecommendations(from: id) }
+        }
     }
 
-    private func addSimilarBooksToRecommendations(from bookID: String) {
-        catalogueService.getBook(by: bookID) { [weak self] in
-            self?.addSimilarBooksToRecommendations(from: $0?.similarBookIDs ?? [])
-        }
+    private func addSimilarBooksToRecommendations(from bookID: String) async {
+        let book = await catalogueService.getBook(by: bookID)
+        addSimilarBooksToRecommendations(from: book?.similarBookIDs ?? [])
     }
 
     private func addSimilarBooksToRecommendations(from ids: [String]) {
@@ -127,21 +128,21 @@ final class RecommendationsDefaultModel<RecommendationsService: FavoritesService
         let filteredIDs = ids.filter { id in
             !blockedBooks.contains { $0.id == id } // Filter out blocked books from recommendations.
         }
-        filteredIDs.forEach { self.addRecommendation(id: $0) }
+        filteredIDs.forEach { id in
+            Task { await addRecommendation(id: id) }
+        }
     }
 
-    private func addRecommendation(id: String) {
+    private func addRecommendation(id: String) async {
         if let bookDescriptor = prioritizedRecommendations[id] {
             prioritizedRecommendations[id] = (bookDescriptor.priority + 1, bookDescriptor.book)
         } else {
             prioritizedRecommendations[id] = (1, nil)
-            catalogueService.getBook(by: id) { [weak self] in
-                guard let self = self,
-                    let bookDescriptor = self.prioritizedRecommendations[id],
-                    bookDescriptor.book == nil else {
-                        return
-                }
-                self.prioritizedRecommendations[id] = (bookDescriptor.priority, $0)
+
+            let book = await catalogueService.getBook(by: id)
+            if let bookDescriptor = prioritizedRecommendations[id], 
+                bookDescriptor.book == nil {
+                prioritizedRecommendations[id] = (bookDescriptor.priority, book)
             }
         }
     }
