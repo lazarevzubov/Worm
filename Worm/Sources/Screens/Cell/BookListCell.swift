@@ -41,7 +41,7 @@ struct BookListCell: View {
                 .accessibilityElement()
                 .accessibility(label: makeFavoriteButtonAccessibilityLabel(for: book))
         }
-            .buttonStyle(PlainButtonStyle())
+            .buttonStyle(.plain)
     }
 
     // MARK: Private properties

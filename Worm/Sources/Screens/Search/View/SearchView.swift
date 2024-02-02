@@ -30,7 +30,7 @@ struct SearchView<Presenter: SearchPresenter>: View {
                                             presented: $detailsPresented)
                         }
                 }
-                    .listStyle(PlainListStyle())
+                    .listStyle(.plain)
             }
                 .navigationTitle("SearchScreenTitle")
                 .onAppear { configureNavigationBar() }
