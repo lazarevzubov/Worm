@@ -9,7 +9,7 @@
 import SwiftUI
 
 /// The visual representation of the Recommendations screen.
-struct RecommendationsView<Presenter: RecommendationsPresenter>: View {
+struct RecommendationsView<ViewModel: RecommendationsViewModel>: View {
 
     // MARK: - Properties
 
@@ -18,16 +18,16 @@ struct RecommendationsView<Presenter: RecommendationsPresenter>: View {
     var body: some View {
         NavigationView {
             List {
-                ForEach(presenter.recommendations) { book in
-                    Button { detailsPresented = true } label: { BookListCell(book: book, presenter: presenter) }
+                ForEach(viewModel.recommendations) { book in
+                    Button { detailsPresented = true } label: { BookListCell(book: book, viewModel: viewModel) }
                         .sheet(isPresented: $detailsPresented) {
-                            BookDetailsView(presenter: presenter.makeDetailsPresenter(for: book),
+                            BookDetailsView(viewModel: viewModel.makeDetailsViewModel(for: book),
                                             presented: $detailsPresented)
                         }
                 }
                     .onDelete(perform: deleteItem)
             }
-                .animation(.easeIn, value: presenter.recommendations)
+                .animation(.easeIn, value: viewModel.recommendations)
                 .listStyle(.plain)
                 .navigationTitle("RecommendationsScreenTitle")
                 .navigationBarItems(trailing: EditButton())
@@ -40,16 +40,14 @@ struct RecommendationsView<Presenter: RecommendationsPresenter>: View {
     @State
     private var detailsPresented = false
     @ObservedObject
-    private var presenter: Presenter
+    private var viewModel: ViewModel
 
     // MARK: - Initialization
 
-    /**
-     Creates the view object.
-     - Parameter presenter: The object responsible for Recommendations screen presentation logic.
-     */
-    init(presenter: Presenter) {
-        self.presenter = presenter
+    /// Creates the view object.
+    /// - Parameter viewModel: The object responsible for Recommendations screen presentation logic.
+    init(viewModel: ViewModel) {
+        self.viewModel = viewModel
     }
 
     // MARK: - Methods
@@ -67,7 +65,7 @@ struct RecommendationsView<Presenter: RecommendationsPresenter>: View {
     }
 
     private func deleteItem(at indexSet: IndexSet) {
-        indexSet.forEach { presenter.block(recommendation: presenter.recommendations[$0]) }
+        indexSet.forEach { viewModel.block(recommendation: viewModel.recommendations[$0]) }
     }
 
 }
@@ -82,7 +80,7 @@ struct RecommendationsView_Previews: PreviewProvider {
     // MARK: PreviewProvider protocol properties
 
     static var previews: some View {
-        RecommendationsView(presenter: RecommendationsPreviewPresenter())
+        RecommendationsView(viewModel: RecommendationsPreviewViewModel())
     }
 
 }

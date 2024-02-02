@@ -1,5 +1,5 @@
 //
-//  FavoritesDefaultPresenterTests.swift
+//  FavoritesDefaultViewModelTests.swift
 //  WormTests
 //
 //  Created by Nikita Lazarev-Zubov on 25.1.2021.
@@ -11,34 +11,34 @@ import GoodreadsService
 import Worm
 import XCTest
 
-final class FavoritesDefaultPresenterTests: XCTestCase {
+final class FavoritesDefaultViewModelTests: XCTestCase {
 
     // MARK: - Methods
 
     func testToggleFavoriteState() {
         let model = FavoritesMockModel()
-        let presenter = FavoritesDefaultPresenter(model: model, imageService: ImageStubService())
+        let viewModel = FavoritesDefaultViewModel(model: model, imageService: ImageStubService())
 
         XCTAssertTrue(model.toggledBookIDs.isEmpty)
 
         let bookID = "1"
-        presenter.toggleFavoriteState(bookID: bookID)
+        viewModel.toggleFavoriteState(bookID: bookID)
         XCTAssertEqual(model.toggledBookIDs, [bookID])
     }
 
     func testFavoritesInitiallyEmpty() {
         let model = FavoritesMockModel()
-        let presenter = FavoritesDefaultPresenter(model: model, imageService: ImageStubService())
+        let viewModel = FavoritesDefaultViewModel(model: model, imageService: ImageStubService())
 
-        XCTAssertTrue(presenter.favorites.isEmpty)
+        XCTAssertTrue(viewModel.favorites.isEmpty)
     }
 
     func testFavoritesUpdate() {
         let model = FavoritesMockModel()
-        let queue = DispatchQueue(label: "com.LazarevZubov.Worm.FavoritesDefaultPresenterTests")
-        let presenter = FavoritesDefaultPresenter(model: model, imageService: ImageStubService(), updateQueue: queue)
+        let queue = DispatchQueue(label: "com.LazarevZubov.Worm.FavoritesDefaultViewModelTests")
+        let viewModel = FavoritesDefaultViewModel(model: model, imageService: ImageStubService(), updateQueue: queue)
 
-        XCTAssertTrue(presenter.favorites.isEmpty)
+        XCTAssertTrue(viewModel.favorites.isEmpty)
 
         let book = Book(authors: ["Author"], title: "Title", id: "1")
         model.favorites.append(book)
@@ -47,7 +47,7 @@ final class FavoritesDefaultPresenterTests: XCTestCase {
             // Wait for update.
         }
 
-        XCTAssertEqual(presenter.favorites, [book.asViewModel(favorite: true)])
+        XCTAssertEqual(viewModel.favorites, [book.asViewModel(favorite: true)])
     }
 
 }

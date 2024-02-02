@@ -9,7 +9,7 @@
 import SwiftUI
 
 /// The visual representation of the Favorites screen.
-struct FavoritesView<Presenter: FavoritesPresenter>: View {
+struct FavoritesView<ViewModel: FavoritesViewModel>: View {
 
     // MARK: - Properties
 
@@ -17,14 +17,14 @@ struct FavoritesView<Presenter: FavoritesPresenter>: View {
 
     var body: some View {
         NavigationView {
-            List(presenter.favorites) { book in
-                Button { detailsPresented = true } label: { BookListCell(book: book, presenter: presenter) }
+            List(viewModel.favorites) { book in
+                Button { detailsPresented = true } label: { BookListCell(book: book, viewModel: viewModel) }
                     .sheet(isPresented: $detailsPresented) {
-                        BookDetailsView(presenter: presenter.makeDetailsPresenter(for: book),
+                        BookDetailsView(viewModel: viewModel.makeDetailsViewModel(for: book),
                                         presented: $detailsPresented)
                     }
             }
-                .animation(.easeIn, value: presenter.favorites)
+                .animation(.easeIn, value: viewModel.favorites)
                 .navigationTitle("FavoritesScreenTitle")
                 .onAppear { configureNavigationBar() }
         }
@@ -35,16 +35,14 @@ struct FavoritesView<Presenter: FavoritesPresenter>: View {
     @State
     private var detailsPresented = false
     @ObservedObject
-    private var presenter: Presenter
+    private var viewModel: ViewModel
 
     // MARK: - Initialization
 
-    /**
-     Creates the view.
-     - Parameter presenter: The object responsible for Favorites screen presentation logic.
-     */
-    init(presenter: Presenter) {
-        self.presenter = presenter
+    /// Creates the view.
+    /// - Parameter viewModel: The object responsible for Favorites screen presentation logic.
+    init(viewModel: ViewModel) {
+        self.viewModel = viewModel
     }
 
     // MARK: - Methods
@@ -73,7 +71,7 @@ struct FavoritesView_Previews: PreviewProvider {
     // MARK: PreviewProvider protocol properties
 
     static var previews: some View {
-        FavoritesView(presenter: FavoritesPreviewPresenter())
+        FavoritesView(viewModel: FavoritesPreviewsViewModel())
     }
 
 }

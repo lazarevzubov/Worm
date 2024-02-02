@@ -1,5 +1,5 @@
 //
-//  BookListCellPresenter.swift
+//  BookListCellViewModel.swift
 //  Worm
 //
 //  Created by Nikita Lazarev-Zubov on 23.12.2020.
@@ -7,7 +7,7 @@
 //
 
 /// The presentation logic of the table cell representing a book info.
-protocol BookListCellPresenter {
+protocol BookListCellViewModel {
 
     // MARK: - Methods
 

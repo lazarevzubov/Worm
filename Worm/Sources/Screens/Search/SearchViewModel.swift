@@ -1,39 +1,46 @@
 //
-//  FavoritesPresenter.swift
+//  SearchViewModel.swift
 //  Worm
 //
-//  Created by Nikita Lazarev-Zubov on 11.1.2021.
-//  Copyright © 2021 Nikita Lazarev-Zubov. All rights reserved.
+//  Created by Nikita Lazarev-Zubov on 7.5.2020.
+//  Copyright © 2020 Nikita Lazarev-Zubov. All rights reserved.
 //
 
 import Combine
 import Foundation
 
-/// Object responsible for Favorites screen presentation logic.
-protocol FavoritesPresenter: BookListCellPresenter, BookDetailsPresentable, ObservableObject {
+// FIXME: Same model objects for all layers.
+
+/// The presentation logic of the book search screen.
+protocol SearchViewModel: BookListCellViewModel, BookDetailsPresentable, ObservableObject {
 
     // MARK: - Properties
 
-    /// A list of view models representing items on the Favorites screen.
-    var favorites: [BookViewModel] { get }
+    /// The current search query.
+    var query: String { get set }
+    /// The list of books corresponding to the current search query.
+    var books: [BookViewModel] { get }
 
 }
 
 // MARK: -
 
-/// The default implementation of the Favorites screen presenter.
-final class FavoritesDefaultPresenter<Model: FavoritesModel>: FavoritesPresenter {
+/// The presentation logic of the book search screen relying on the default model implementation.
+final class SearchDefaultViewModel<Model: SearchModel>: SearchViewModel {
 
-    typealias DetailsPresenter = BookDetailsDefaultPresenter
+    typealias DetailsViewModel = BookDetailsDefaultViewModel
 
     // MARK: - Properties
 
-    // MARK: FavoritesPresenter protocol properties
+    // MARK: SearchViewModel protocol properties
 
+    var query: String = "" {
+        didSet { model.searchBooks(by: query) }
+    }
     @Published
-    private(set) var favorites = [BookViewModel]()
+    private(set) var books = [BookViewModel]()
 
-    // MARK: Private properties
+    // MARK: Private methods
 
     private let imageService: ImageService
     private let model: Model
@@ -43,9 +50,9 @@ final class FavoritesDefaultPresenter<Model: FavoritesModel>: FavoritesPresenter
     // MARK: - Initialization
 
     /**
-     Creates a presenter object.
+     Creates the presentation logic object.
      - Parameters:
-        - model: Data providing object.
+        - model: The search screen model.
         - imageService: The services that turns image URLs into images themselves.
         - updateQueue: Queue on which presentation data is passed to view.
      */
@@ -53,20 +60,20 @@ final class FavoritesDefaultPresenter<Model: FavoritesModel>: FavoritesPresenter
         self.model = model
         self.imageService = imageService
         self.updateQueue = updateQueue
-        
-        bind(model: model)
+
+        bind(model: self.model)
     }
 
     // MARK: - Methods
 
-    // MARK: FavoritesPresenter protocol methods
+    // MARK: SearchViewModel protocol methods
 
     func toggleFavoriteState(bookID: String) {
         model.toggleFavoriteState(bookID: bookID)
     }
 
-    func makeDetailsPresenter(for book: BookViewModel) -> DetailsPresenter {
-        BookDetailsDefaultPresenter(authors: book.authors,
+    func makeDetailsViewModel(for book: BookViewModel) -> DetailsViewModel {
+        BookDetailsDefaultViewModel(authors: book.authors,
                                     title: book.title,
                                     imageURL: book.imageURL,
                                     imageService: imageService)
@@ -85,7 +92,7 @@ final class FavoritesDefaultPresenter<Model: FavoritesModel>: FavoritesPresenter
                 }
 
                 self.objectWillChange.send()
-                self.favorites = model.favorites.map { $0.asViewModel(favorite: true) }
+                self.books = model.books.map { $0.asViewModel(favorite: model.favoriteBookIDs.contains($0.id)) }
             }
             .store(in: &cancellables)
     }
@@ -94,16 +101,16 @@ final class FavoritesDefaultPresenter<Model: FavoritesModel>: FavoritesPresenter
 
 // MARK: -
 
-/// The implementation of the Favorites screen presenter that used for SwiftUI previews.
-final class FavoritesPreviewPresenter: FavoritesPresenter {
+/// The mock presentation logic object for the book search screen preview.
+final class SearchPreviewViewModel: SearchViewModel, BookListCellViewModel {
 
-    typealias DetailsPresenter = BookDetailsPreviewPresenter
+    typealias DetailsViewModel = BookDetailsPreviewViewModel
 
     // MARK: - Properties
 
-    // MARK: FavoritesPresenter protocol properties
+    // MARK: SearchViewModel protocol properties
 
-    var favorites = [
+    private(set) var books = [
         BookViewModel(authors: "J.R.R. Tolkien",
                       id: "1",
                       imageURL: nil,
@@ -156,17 +163,27 @@ final class FavoritesPreviewPresenter: FavoritesPresenter {
                       isFavorite: false,
                       title: "The Wind-Up Bird Chronicle")
     ]
+    var query = ""
 
     // MARK: - Methods
 
-    // MARK: FavoritesPresenter protocol methods
+    // MARK: SearchViewModel protocol methods
 
     func toggleFavoriteState(bookID: String) {
-        favorites.removeAll { $0.id == bookID }
+        books = books.map {
+            BookViewModel(authors: $0.authors,
+                          id: $0.id,
+                          imageURL: nil,
+                          isFavorite: ($0.id == bookID)
+                                          ? !$0.isFavorite
+                                          : $0.isFavorite,
+                          title: $0.title)
+
+        }
     }
 
-    func makeDetailsPresenter(for favorite: BookViewModel) -> DetailsPresenter {
-        BookDetailsPreviewPresenter()
+    func makeDetailsViewModel(for favorite: BookViewModel) -> DetailsViewModel {
+        BookDetailsPreviewViewModel()
     }
 
 }

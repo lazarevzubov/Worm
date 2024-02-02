@@ -75,9 +75,9 @@ struct MainView_Previews: PreviewProvider {
     // MARK: PreviewProvider protocol properties
 
     static var previews: some View {
-        let searchView = SearchView(presenter: SearchPreviewPresenter())
-        let recommendationsView = RecommendationsView(presenter: RecommendationsPreviewPresenter())
-        let favoritesView = FavoritesView(presenter: FavoritesPreviewPresenter())
+        let searchView = SearchView(viewModel: SearchPreviewViewModel())
+        let recommendationsView = RecommendationsView(viewModel: RecommendationsPreviewViewModel())
+        let favoritesView = FavoritesView(viewModel: FavoritesPreviewsViewModel())
         
         return MainView(searchView: searchView, recommendationsView: recommendationsView, favoritesView: favoritesView)
     }

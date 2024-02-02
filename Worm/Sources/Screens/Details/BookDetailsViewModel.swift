@@ -1,5 +1,5 @@
 //
-//  BookDetailsPresenter.swift
+//  BookDetailsViewModel.swift
 //  Worm
 //
 //  Created by Nikita Lazarev-Zubov on 21.2.2021.
@@ -8,7 +8,7 @@
 import UIKit
 
 /// Provides presentation data for a book details.
-protocol BookDetailsPresenter: ObservableObject {
+protocol BookDetailsViewModel: ObservableObject {
 
     // MARK: - Properties
 
@@ -24,11 +24,11 @@ protocol BookDetailsPresenter: ObservableObject {
 // MARK: -
 
 /// The default provider of presentation data for a book details.
-final class BookDetailsDefaultPresenter: BookDetailsPresenter {
+final class BookDetailsDefaultViewModel: BookDetailsViewModel {
 
     // MARK: - Properties
 
-    // MARK: BookDetailsPresenter protocol properties
+    // MARK: BookDetailsViewModel protocol properties
 
     let authors: String
     let title: String
@@ -74,12 +74,12 @@ final class BookDetailsDefaultPresenter: BookDetailsPresenter {
 
 // MARK: -
 
-/// The implementation of the book details screen presenter that used for SwiftUI previews.
-final class BookDetailsPreviewPresenter: BookDetailsPresenter {
+/// The implementation of the book details screen viewModel that used for SwiftUI previews.
+final class BookDetailsPreviewViewModel: BookDetailsViewModel {
 
     // MARK: - Properties
 
-    // MARK: BookDetailsPresenter protocol properties
+    // MARK: BookDetailsViewModel protocol properties
 
     let authors = "J.R.R. Tolkien"
     let image = UIImage(systemName: "scribble.variable")

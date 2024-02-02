@@ -1,5 +1,5 @@
 //
-//  RecommendationsDefaultPresenterTests.swift
+//  RecommendationsDefaultViewModelTests.swift
 //  WormTests
 //
 //  Created by Nikita Lazarev-Zubov on 3.8.2020.
@@ -11,14 +11,14 @@ import GoodreadsService
 import Worm
 import XCTest
 
-final class RecommendationsDefaultPresenterTests: XCTestCase {
+final class RecommendationsDefaultViewModelTests: XCTestCase {
 
     // MARK: - Methods
 
     func testRecommendationsUpdate() {
         let model = RecommendationsMockModel()
-        let queue = DispatchQueue(label: "com.LazarevZubov.Worm.RecommendationsDefaultPresenterTests")
-        let presenter = RecommendationsDefaultPresenter(model: model,
+        let queue = DispatchQueue(label: "com.LazarevZubov.Worm.RecommendationsDefaultViewModelTests")
+        let viewModel = RecommendationsDefaultViewModel(model: model,
                                                         imageService: ImageStubService(),
                                                         updateQueue: queue)
 
@@ -27,11 +27,11 @@ final class RecommendationsDefaultPresenterTests: XCTestCase {
         model.recommendations = books
 
         queue.sync {
-            // Wait for presenter update.
+            // Wait for viewModel update.
         }
 
         let bookVMsSet = Set(books.map { $0.asViewModel(favorite: false) })
-        XCTAssertEqual(Set(presenter.recommendations), bookVMsSet)
+        XCTAssertEqual(Set(viewModel.recommendations), bookVMsSet)
     }
 
     func testToggleFavoriteState() {
@@ -41,23 +41,23 @@ final class RecommendationsDefaultPresenterTests: XCTestCase {
         let bookID2 = "2"
         model.favoriteBookIDs = [bookID1, bookID2]
 
-        let presenter = RecommendationsDefaultPresenter(model: model, imageService: ImageStubService())
+        let viewModel = RecommendationsDefaultViewModel(model: model, imageService: ImageStubService())
 
-        presenter.toggleFavoriteState(bookID: bookID1)
+        viewModel.toggleFavoriteState(bookID: bookID1)
         XCTAssertEqual(model.favoriteBookIDs, [bookID2])
 
-        presenter.toggleFavoriteState(bookID: bookID1)
+        viewModel.toggleFavoriteState(bookID: bookID1)
         XCTAssertEqual(Set(model.favoriteBookIDs), Set([bookID2, bookID1]))
     }
 
     func testBlockRecommendation() {
         let model = RecommendationsMockModel()
 
-        let presenter = RecommendationsDefaultPresenter(model: model, imageService: ImageStubService())
+        let viewModel = RecommendationsDefaultViewModel(model: model, imageService: ImageStubService())
         XCTAssertTrue(model.blockedRecommendationIDs.isEmpty)
 
         let id = "1"
-        presenter.block(recommendation: BookViewModel(authors: "Authors",
+        viewModel.block(recommendation: BookViewModel(authors: "Authors",
                                                       id: id,
                                                       imageURL: nil,
                                                       isFavorite: false,
