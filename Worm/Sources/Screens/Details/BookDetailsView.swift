@@ -59,16 +59,8 @@ struct BookDetailsView<ViewModel: BookDetailsViewModel>: View {
 
 // MARK: -
 
-struct BookDetailsView_Previews: PreviewProvider {
-
-    // MARK: - Properties
-
-    // MARK: PreviewProvider protocol properties
-
-    static var previews: some View {
-        BookDetailsView(viewModel: BookDetailsPreviewViewModel(), presented: .constant(true))
-    }
-
+#Preview {
+    BookDetailsView(viewModel: BookDetailsPreviewViewModel(), presented: .constant(true))
 }
 
 #endif

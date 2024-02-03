@@ -65,16 +65,8 @@ struct FavoritesView<ViewModel: FavoritesViewModel>: View {
 
 #if DEBUG
 
-struct FavoritesView_Previews: PreviewProvider {
-
-    // MARK: - Properties
-
-    // MARK: PreviewProvider protocol properties
-
-    static var previews: some View {
-        FavoritesView(viewModel: FavoritesPreviewsViewModel())
-    }
-
+#Preview {
+    FavoritesView(viewModel: FavoritesPreviewsViewModel())
 }
 
 #endif

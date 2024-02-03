@@ -67,20 +67,12 @@ struct MainView<SearchView: View, RecommendationsView: View, FavoritesView: View
 
 // MARK: -
 
-struct MainView_Previews: PreviewProvider {
+#Preview {
+    let searchView = SearchView(viewModel: SearchPreviewViewModel())
+    let recommendationsView = RecommendationsView(viewModel: RecommendationsPreviewViewModel())
+    let favoritesView = FavoritesView(viewModel: FavoritesPreviewsViewModel())
 
-    // MARK: - Properties
-
-    // MARK: PreviewProvider protocol properties
-
-    static var previews: some View {
-        let searchView = SearchView(viewModel: SearchPreviewViewModel())
-        let recommendationsView = RecommendationsView(viewModel: RecommendationsPreviewViewModel())
-        let favoritesView = FavoritesView(viewModel: FavoritesPreviewsViewModel())
-        
-        return MainView(searchView: searchView, recommendationsView: recommendationsView, favoritesView: favoritesView)
-    }
-
+    return MainView(searchView: searchView, recommendationsView: recommendationsView, favoritesView: favoritesView)
 }
 
 #endif

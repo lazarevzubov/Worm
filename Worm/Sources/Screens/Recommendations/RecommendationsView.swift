@@ -74,16 +74,8 @@ struct RecommendationsView<ViewModel: RecommendationsViewModel>: View {
 
 #if DEBUG
 
-struct RecommendationsView_Previews: PreviewProvider {
-
-    // MARK: - Properties
-
-    // MARK: PreviewProvider protocol properties
-
-    static var previews: some View {
-        RecommendationsView(viewModel: RecommendationsPreviewViewModel())
-    }
-
+#Preview {
+    RecommendationsView(viewModel: RecommendationsPreviewViewModel())
 }
 
 #endif

@@ -76,16 +76,8 @@ struct SearchView<ViewModel: SearchViewModel>: View {
 
 // MARK: -
 
-struct SearchView_Previews: PreviewProvider {
-
-    // MARK: - Properties
-
-    // MARK: PreviewProvider protocol properties
-
-    static var previews: some View {
-        SearchView(viewModel: SearchPreviewViewModel())
-    }
-
+#Preview {
+    SearchView(viewModel: SearchPreviewViewModel())
 }
 
 #endif
