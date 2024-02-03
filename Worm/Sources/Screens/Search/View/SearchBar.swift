@@ -74,16 +74,8 @@ struct SearchBar: View {
 
 // MARK: -
 
-struct SearchBar_Previews: PreviewProvider {
-
-    // MARK: - Properties
-
-    // MARK: PreviewProvider protocol properties
-
-    static var previews: some View {
-        SearchBar(text: .constant(""))
-    }
-
+#Preview {
+    SearchBar(text: .constant(""))
 }
 
 #endif
