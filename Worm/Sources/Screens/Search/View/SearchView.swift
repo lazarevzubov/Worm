@@ -72,9 +72,10 @@ struct SearchView<ViewModel: SearchViewModel>: View {
 
 }
 
+#if DEBUG
+
 // MARK: -
 
-/// Produces the book search screen preview for Xcode.
 struct SearchView_Previews: PreviewProvider {
 
     // MARK: - Properties
@@ -86,3 +87,5 @@ struct SearchView_Previews: PreviewProvider {
     }
 
 }
+
+#endif

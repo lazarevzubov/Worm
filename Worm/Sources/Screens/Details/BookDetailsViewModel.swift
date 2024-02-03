@@ -70,9 +70,10 @@ final class BookDetailsDefaultViewModel: BookDetailsViewModel {
 
 }
 
+#if DEBUG
+
 // MARK: -
 
-/// The implementation of the book details screen view model that used for SwiftUI previews.
 final class BookDetailsPreviewViewModel: BookDetailsViewModel {
 
     // MARK: - Properties
@@ -84,3 +85,5 @@ final class BookDetailsPreviewViewModel: BookDetailsViewModel {
     let title = "The Lord of the Rings"
 
 }
+
+#endif

@@ -99,9 +99,10 @@ final class SearchDefaultViewModel<Model: SearchModel>: SearchViewModel {
 
 }
 
+#if DEBUG
+
 // MARK: -
 
-/// The mock presentation logic object for the book search screen preview.
 final class SearchPreviewViewModel: SearchViewModel, BookListCellViewModel {
 
     typealias DetailsViewModel = BookDetailsPreviewViewModel
@@ -187,3 +188,5 @@ final class SearchPreviewViewModel: SearchViewModel, BookListCellViewModel {
     }
 
 }
+
+#endif

@@ -63,7 +63,8 @@ struct FavoritesView<ViewModel: FavoritesViewModel>: View {
 
 // MARK: -
 
-/// Produces the Favorites screen preview for Xcode.
+#if DEBUG
+
 struct FavoritesView_Previews: PreviewProvider {
 
     // MARK: - Properties
@@ -75,3 +76,5 @@ struct FavoritesView_Previews: PreviewProvider {
     }
 
 }
+
+#endif

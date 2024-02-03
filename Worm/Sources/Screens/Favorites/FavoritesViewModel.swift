@@ -92,7 +92,8 @@ final class FavoritesDefaultViewModel<Model: FavoritesModel>: FavoritesViewModel
 
 // MARK: -
 
-/// The implementation of the Favorites screen view model that used for SwiftUI previews.
+#if DEBUG
+
 final class FavoritesPreviewsViewModel: FavoritesViewModel {
 
     typealias DetailsViewModel = BookDetailsPreviewViewModel
@@ -168,3 +169,5 @@ final class FavoritesPreviewsViewModel: FavoritesViewModel {
     }
 
 }
+
+#endif

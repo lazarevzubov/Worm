@@ -103,9 +103,10 @@ final class RecommendationsDefaultViewModel<Model: RecommendationsModel>: Recomm
 
 }
 
+#if DEBUG
+
 // MARK: -
 
-/// The implementation of the Recommendations screen view model that used for SwiftUI previews.
 final class RecommendationsPreviewViewModel: RecommendationsViewModel {
 
     typealias DetailsViewModel = BookDetailsPreviewViewModel
@@ -185,3 +186,5 @@ final class RecommendationsPreviewViewModel: RecommendationsViewModel {
     }
 
 }
+
+#endif

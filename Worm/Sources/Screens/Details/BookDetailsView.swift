@@ -55,9 +55,10 @@ struct BookDetailsView<ViewModel: BookDetailsViewModel>: View {
 
 }
 
+#if DEBUG
+
 // MARK: -
 
-/// Produces the book details view preview for Xcode.
 struct BookDetailsView_Previews: PreviewProvider {
 
     // MARK: - Properties
@@ -69,3 +70,5 @@ struct BookDetailsView_Previews: PreviewProvider {
     }
 
 }
+
+#endif
