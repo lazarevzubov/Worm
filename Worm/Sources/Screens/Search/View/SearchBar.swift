@@ -70,6 +70,8 @@ struct SearchBar: View {
 
 }
 
+#if DEBUG
+
 // MARK: -
 
 struct SearchBar_Previews: PreviewProvider {
@@ -83,3 +85,5 @@ struct SearchBar_Previews: PreviewProvider {
     }
 
 }
+
+#endif

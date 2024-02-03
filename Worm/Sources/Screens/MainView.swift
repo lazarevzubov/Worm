@@ -63,9 +63,10 @@ struct MainView<SearchView: View, RecommendationsView: View, FavoritesView: View
 
 }
 
+#if DEBUG
+
 // MARK: -
 
-/// The main screen visual representation for the SwiftUI Previews.
 struct MainView_Previews: PreviewProvider {
 
     // MARK: - Properties
@@ -81,3 +82,5 @@ struct MainView_Previews: PreviewProvider {
     }
 
 }
+
+#endif

@@ -72,7 +72,8 @@ struct RecommendationsView<ViewModel: RecommendationsViewModel>: View {
 
 // MARK: -
 
-/// Produces the Recommendations screen preview for Xcode.
+#if DEBUG
+
 struct RecommendationsView_Previews: PreviewProvider {
 
     // MARK: - Properties
@@ -84,3 +85,5 @@ struct RecommendationsView_Previews: PreviewProvider {
     }
 
 }
+
+#endif
