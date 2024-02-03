@@ -33,7 +33,7 @@ struct SearchBar: View {
                             .foregroundColor(.gray)
                             .frame(minWidth: .zero, maxWidth: .infinity, alignment: .leading)
                             .padding(.leading, 8.0)
-                        if isEditing {
+                        if editing {
                             Button { text = "" } label: {
                                 Image(systemName: "multiply.circle.fill")
                                     .foregroundColor(.gray)
@@ -43,13 +43,13 @@ struct SearchBar: View {
                         }
                     }
                 )
-                    .onTapGesture { isEditing = true }
+                    .onTapGesture { editing = true }
                     .transition(.move(edge: .trailing))
-                    .animation(.default, value: isEditing)
+                    .animation(.default, value: editing)
                     .accessibility(label: Text("SearchScreenSearchFieldPlaceholder"))
-            if isEditing {
+            if editing {
                 Button {
-                    isEditing = false
+                    editing = false
                     text = ""
                     UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder),
                                                     to: nil,
@@ -58,7 +58,7 @@ struct SearchBar: View {
                 } label: { Text("CancelButtonTitle") }
                     .padding(.trailing, 8.0)
                     .transition(.move(edge: .trailing))
-                    .animation(.default, value: isEditing)
+                    .animation(.default, value: editing)
             }
         }
     }
@@ -66,7 +66,7 @@ struct SearchBar: View {
     // MARK: Private properties
 
     @State
-    private var isEditing = false
+    private var editing = false
 
 }
 

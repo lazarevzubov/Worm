@@ -25,25 +25,25 @@ final class RecommendationsDefaultModelTests: XCTestCase {
 
         let books = [Book(authors: [], title: "Title1", id: id1, similarBookIDs: [id1]),
                      Book(authors: [], title: "Title2", id: id2, similarBookIDs: [id2])]
-        let catalogueService = CatalogueTestingMockService(books: books)
+        let catalogService = CatalogTestingMockService(books: books)
 
-        let model = RecommendationsDefaultModel(catalogueService: catalogueService,
+        let model = RecommendationsDefaultModel(catalogService: catalogService,
                                                 favoritesService: favoritesService)
 
         XCTAssertEqual(Set(model.recommendations), Set(books))
     }
 
     func testToggleFavorite() {
-        let model = RecommendationsDefaultModel(catalogueService: CatalogueTestingMockService(),
+        let model = RecommendationsDefaultModel(catalogService: CatalogTestingMockService(),
                                                 favoritesService: FavoritesMockService())
 
         let id = "id"
         XCTAssertFalse(model.favoriteBookIDs.contains(id))
 
-        model.toggleFavoriteState(bookID: id)
+        model.toggleFavoriteStateOfBook(withID id: id)
         XCTAssertTrue(model.favoriteBookIDs.contains(id))
 
-        model.toggleFavoriteState(bookID: id)
+        model.toggleFavoriteStateOfBook(withID id: id)
         XCTAssertFalse(model.favoriteBookIDs.contains(id))
     }
 
@@ -57,15 +57,15 @@ final class RecommendationsDefaultModelTests: XCTestCase {
 
         let books = [Book(authors: [], title: "Title1", id: id1, similarBookIDs: [id1]),
                      Book(authors: [], title: "Title2", id: id2, similarBookIDs: [id2])]
-        let catalogueService = CatalogueTestingMockService(books: books)
+        let catalogService = CatalogTestingMockService(books: books)
 
-        let model = RecommendationsDefaultModel(catalogueService: catalogueService,
+        let model = RecommendationsDefaultModel(catalogService: catalogService,
                                                 favoritesService: favoritesService)
 
         XCTAssertEqual(Set(model.recommendations), Set(books))
         XCTAssertTrue(favoritesService.blockedBooks.isEmpty)
 
-        model.blockFromRecommendations(bookID: id1)
+        model.blockFromRecommendationsBook(withID id: id1)
         XCTAssertEqual(Set(model.recommendations), Set(books.filter({ $0.id != id1 })))
         XCTAssertEqual(favoritesService.blockedBooks.map { $0.id }, [id1])
     }
@@ -81,15 +81,15 @@ final class RecommendationsDefaultModelTests: XCTestCase {
         let book2 = Book(authors: [], title: "Title2", id: id2, similarBookIDs: [id2])
         let books = [book1,
                      book2]
-        let catalogueService = CatalogueTestingMockService(books: books)
+        let catalogService = CatalogTestingMockService(books: books)
 
-        let model = RecommendationsDefaultModel(catalogueService: catalogueService,
+        let model = RecommendationsDefaultModel(catalogService: catalogService,
                                                 favoritesService: favoritesService)
-        model.blockFromRecommendations(bookID: id2)
+        model.blockFromRecommendationsBook(withID id: id2)
 
         XCTAssertEqual(model.recommendations, [book1])
 
-        favoritesService.addToFavoriteBooks(id2)
+        favoritesService.addToFavoritesBook(withID: id2)
         XCTAssertEqual(model.recommendations, [book1])
     }
 

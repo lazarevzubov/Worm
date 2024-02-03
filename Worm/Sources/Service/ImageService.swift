@@ -17,25 +17,9 @@ protocol ImageService {
     ///   - url: The image URL.
     ///   - resultCompletion: The block of code to run on result.
     ///     - image: The retrieved image.
-    func getImage(for url: URL, resultCompletion: @escaping (_ image: UIImage?) -> Void)
+    func getImage(from url: URL, resultCompletion: @escaping (_ image: UIImage?) -> Void)
 
 }
-
-// MARK: -
-
-/// Represents a single web service task.
-protocol WebServiceTask {
-
-    // MARK: - Methods
-
-    /// Starts the task.
-    func resume()
-
-}
-
-// MARK: - WebServiceTask
-
-extension URLSessionTask: WebServiceTask { }
 
 // MARK: -
 
@@ -79,7 +63,7 @@ final class ImageWebService<DownloadService: WebService>: ImageService {
 
     // MARK: ImageService protocol methods
 
-    func getImage(for url: URL, resultCompletion: @escaping (_ book: UIImage?) -> Void) {
+    func getImage(from url: URL, resultCompletion: @escaping (_ book: UIImage?) -> Void) {
         Task {
             if let (data, _) = try? await webService.data(from: url) {
                 let image = UIImage(data: data)

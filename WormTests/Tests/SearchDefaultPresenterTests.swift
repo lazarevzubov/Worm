@@ -59,10 +59,10 @@ final class SearchDefaultViewModelTests: XCTestCase {
 
         let viewModel = SearchDefaultViewModel(model: model, imageService: ImageStubService())
 
-        viewModel.toggleFavoriteState(bookID: bookID1)
+        viewModel.toggleFavoriteStateOfBook(withID id: bookID1)
         XCTAssertEqual(model.favoriteBookIDs, [bookID2])
 
-        viewModel.toggleFavoriteState(bookID: bookID1)
+        viewModel.toggleFavoriteStateOfBook(withID id: bookID1)
         XCTAssertEqual(model.favoriteBookIDs, [bookID2, bookID1])
     }
 
@@ -90,11 +90,11 @@ private final class SearchMockModel: SearchModel {
         lastQuery = query
     }
 
-    func toggleFavoriteState(bookID: String) {
-        if favoriteBookIDs.contains(where: { $0 == bookID }) {
-            favoriteBookIDs.removeAll { $0 == bookID }
+    func toggleFavoriteStateOfBook(withID id: String) {
+        if favoriteBookIDs.contains(where: { $0 == withID id }) {
+            favoriteBookIDs.removeAll { $0 == withID id }
         } else {
-            favoriteBookIDs.append(bookID)
+            favoriteBookIDs.append(withID id)
         }
     }
 

@@ -21,7 +21,7 @@ protocol FavoritesModel: ObservableObject {
 
     /// Toggles the favorite-ness state of a book.
     /// - Parameter bookID: The ID of the book to manipulate.
-    func toggleFavoriteState(bookID: String)
+    func toggleFavoriteStateOfBook(withID id: String)
     
 }
 
@@ -39,7 +39,7 @@ final class FavoritesServiceBasedModel<FavoriteBooksService: FavoritesService>: 
 
     // MARK: Private properties
 
-    private let catalogueService: CatalogueService
+    private let catalogService: CatalogService
     private let favoritesService: FavoriteBooksService
     private lazy var cancellables = Set<AnyCancellable>()
 
@@ -47,10 +47,10 @@ final class FavoritesServiceBasedModel<FavoriteBooksService: FavoritesService>: 
 
     /// Creates a favorite books list handler.
     /// - Parameters:
-    ///   - catalogueService: The data service of the app.
+    ///   - catalogService: The data service of the app.
     ///   - favoritesService: The favorite books list manager.
-    init(catalogueService: CatalogueService, favoritesService: FavoriteBooksService) {
-        self.catalogueService = catalogueService
+    init(catalogService: CatalogService, favoritesService: FavoriteBooksService) {
+        self.catalogService = catalogService
         self.favoritesService = favoritesService
 
         bind(favoritesService: self.favoritesService)
@@ -61,12 +61,12 @@ final class FavoritesServiceBasedModel<FavoriteBooksService: FavoritesService>: 
 
     // MARK: FavoritesModel protocol methods
 
-    func toggleFavoriteState(bookID: String) {
-        if favorites.contains(where: { $0.id == bookID }) {
-            favorites.removeAll { $0.id == bookID }
-            favoritesService.removeFromFavoriteBooks(bookID)
+    func toggleFavoriteStateOfBook(withID id: String) {
+        if favorites.contains(where: { $0.id == id }) {
+            favorites.removeAll { $0.id == id }
+            favoritesService.removeFromFavoriteBook(withID: id)
         } else {
-            favoritesService.addToFavoriteBooks(bookID)
+            favoritesService.addToFavoritesBook(withID: id)
         }
     }
 
@@ -85,7 +85,7 @@ final class FavoritesServiceBasedModel<FavoriteBooksService: FavoritesService>: 
     private func updateFavorites() {
         favoritesService.favoriteBooks.forEach { book in
             Task {
-                if let book = await catalogueService.getBook(by: book.id),
+                if let book = await catalogService.getBook(by: book.id),
                    favorites.contains(where: { $0.id == book.id }) != true {
                     await MainActor.run { favorites.append(book) }
                 }

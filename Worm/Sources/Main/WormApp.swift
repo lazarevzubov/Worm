@@ -19,7 +19,7 @@ struct WormApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ViewFactory.makeMainView(catalogueService: catalogueService,
+            ViewFactory.makeMainView(catalogService: catalogService,
                                      favoritesService: favoritesService,
                                      imageService: imageService)
         }
@@ -27,9 +27,9 @@ struct WormApp: App {
 
     // MARK: Private properties
 
-    private var catalogueService: CatalogueService = {
+    private var catalogService: CatalogService = {
         if ProcessInfo.processInfo.environment["TEST"] != nil {
-            return CatalogueMockService()
+            return CatalogMockService()
         }
         return GoodreadsService(key: Settings.goodreadsAPIKey)
     }()

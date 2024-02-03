@@ -35,14 +35,14 @@ final class BookTests: XCTestCase {
         let book = Book(authors: [], title: "Title", id: "id")
 
         let vm = book.asViewModel(favorite: true)
-        XCTAssertTrue(vm.isFavorite)
+        XCTAssertTrue(vm.favorite)
     }
 
     func testViewModelNotFavorite() {
         let book = Book(authors: [], title: "Title", id: "id")
 
         let vm = book.asViewModel(favorite: false)
-        XCTAssertFalse(vm.isFavorite)
+        XCTAssertFalse(vm.favorite)
     }
 
     func testViewModelID() {

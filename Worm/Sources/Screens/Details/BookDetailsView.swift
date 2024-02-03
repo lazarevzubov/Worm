@@ -50,7 +50,7 @@ struct BookDetailsView<ViewModel: BookDetailsViewModel>: View {
     /// - Parameter viewModel: The presentation data provider.
     init(viewModel: ViewModel, presented: Binding<Bool>) {
         self.viewModel = viewModel
-        self._presented = presented
+        _presented = presented
     }
 
 }

@@ -43,10 +43,10 @@ final class RecommendationsDefaultViewModelTests: XCTestCase {
 
         let viewModel = RecommendationsDefaultViewModel(model: model, imageService: ImageStubService())
 
-        viewModel.toggleFavoriteState(bookID: bookID1)
+        viewModel.toggleFavoriteStateOfBook(withID id: bookID1)
         XCTAssertEqual(model.favoriteBookIDs, [bookID2])
 
-        viewModel.toggleFavoriteState(bookID: bookID1)
+        viewModel.toggleFavoriteStateOfBook(withID id: bookID1)
         XCTAssertEqual(Set(model.favoriteBookIDs), Set([bookID2, bookID1]))
     }
 
@@ -96,16 +96,16 @@ private final class RecommendationsMockModel: RecommendationsModel {
         recommendationsFetched = true
     }
 
-    func toggleFavoriteState(bookID: String) {
-        if favoriteBookIDs.contains(where: { $0 == bookID }) {
-            favoriteBookIDs.removeAll { $0 == bookID }
+    func toggleFavoriteStateOfBook(withID id: String) {
+        if favoriteBookIDs.contains(where: { $0 == withID id }) {
+            favoriteBookIDs.removeAll { $0 == withID id }
         } else {
-            favoriteBookIDs.append(bookID)
+            favoriteBookIDs.append(withID id)
         }
     }
 
-    func blockFromRecommendations(bookID: String) {
-        blockedRecommendationIDs.append(bookID)
+    func blockFromRecommendationsBook(withID id: String) {
+        blockedRecommendationIDs.append(withID id)
     }
 
 }

@@ -26,8 +26,8 @@ protocol SearchModel: ObservableObject {
     /// - Parameter query: The query to search.
     func searchBooks(by query: String)
     /// Toggles the favorite-ness state of a book.
-    /// - Parameter bookID: The ID of the book to manipulate.
-    func toggleFavoriteState(bookID: String)
+    /// - Parameter id: The ID of the book to manipulate.
+    func toggleFavoriteStateOfBook(withID id: String)
 
 }
 
@@ -47,7 +47,7 @@ final class SearchServiceBasedModel<RecommendationsService: FavoritesService>: S
 
     // MARK: Private properties
 
-    private let catalogueService: CatalogueService
+    private let catalogService: CatalogService
     private let dispatchQueue: DispatchQueue
     private let favoritesService: RecommendationsService
     private let queryDelay: DispatchTimeInterval?
@@ -64,15 +64,15 @@ final class SearchServiceBasedModel<RecommendationsService: FavoritesService>: S
 
     /// Creates a model.
     /// - Parameters:
-    ///   - catalogueService: The data providing service.
+    ///   - catalogService: The data providing service.
     ///   - favoritesService: A service providing an interface to track and manipulate the list of favorite books.
     ///   - dispatchQueue: The queue to dispatch search requests.
     ///   - queryDelay: The delay after which the request is actually dispatched. This delay is useful to prevent too many request while typing a query.
-    init(catalogueService: CatalogueService,
+    init(catalogService: CatalogService,
          favoritesService: RecommendationsService,
          dispatchQueue: DispatchQueue = DispatchQueue(label: "com.LazarevZubov.Worm.SearchDefaultModel"),
          queryDelay: DispatchTimeInterval? = .milliseconds(500)) {
-        self.catalogueService = catalogueService
+        self.catalogService = catalogService
         self.favoritesService = favoritesService
         self.dispatchQueue = dispatchQueue
         self.queryDelay = queryDelay
@@ -97,11 +97,11 @@ final class SearchServiceBasedModel<RecommendationsService: FavoritesService>: S
         }
     }
 
-    func toggleFavoriteState(bookID: String) {
-        if favoriteBookIDs.contains(bookID) {
-            favoritesService.removeFromFavoriteBooks(bookID)
+    func toggleFavoriteStateOfBook(withID id: String) {
+        if favoriteBookIDs.contains(id) {
+            favoritesService.removeFromFavoriteBook(withID: id)
         } else {
-            favoritesService.addToFavoriteBooks(bookID)
+            favoritesService.addToFavoritesBook(withID: id)
         }
         updateFavorites()
     }
@@ -127,11 +127,11 @@ final class SearchServiceBasedModel<RecommendationsService: FavoritesService>: S
     }
 
     private func handle(searchQuery: String) {
-        Task { currentSearchResult = await catalogueService.searchBooks(searchQuery) }
+        Task { currentSearchResult = await catalogService.searchBooks(searchQuery) }
     }
 
     private func handleSearchResult(_ result: String) async {
-        if let book = await catalogueService.getBook(by: result) {
+        if let book = await catalogService.getBook(by: result) {
             await MainActor.run { appendIfNeeded(book: book) }
         }
     }
