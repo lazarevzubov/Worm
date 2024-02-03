@@ -66,8 +66,8 @@ final class SearchDefaultViewModel<Model: SearchModel>: SearchViewModel {
 
     // MARK: SearchViewModel protocol methods
 
-    func toggleFavoriteState(bookID: String) {
-        model.toggleFavoriteState(bookID: bookID)
+    func toggleFavoriteStateOfBook(withID id: String) {
+        model.toggleFavoriteStateOfBook(withID: id)
     }
 
     func makeDetailsViewModel(for book: BookViewModel) -> DetailsViewModel {
@@ -90,7 +90,9 @@ final class SearchDefaultViewModel<Model: SearchModel>: SearchViewModel {
                 }
 
                 self.objectWillChange.send()
-                self.books = model.books.map { $0.asViewModel(favorite: model.favoriteBookIDs.contains($0.id)) }
+                self.books = model.books.map {
+                    BookViewModel(book: $0, favorite: model.favoriteBookIDs.contains($0.id))
+                }
             }
             .store(in: &cancellables)
     }
@@ -112,53 +114,53 @@ final class SearchPreviewViewModel: SearchViewModel, BookListCellViewModel {
         BookViewModel(authors: "J.R.R. Tolkien",
                       id: "1",
                       imageURL: nil,
-                      isFavorite: false,
+                      favorite: false,
                       title: "The Lord of the Rings"),
         BookViewModel(authors: "Michael Bond",
                       id: "2",
                       imageURL: nil,
-                      isFavorite: false,
+                      favorite: false,
                       title: "Paddington Pop-Up London"),
         BookViewModel(authors: "J.K. Rowling",
                       id: "3",
                       imageURL: nil,
-                      isFavorite: false,
+                      favorite: false,
                       title: "Harry Potter and the Sorcecer's Stone"),
         BookViewModel(authors: "George R.R. Martin",
                       id: "4",
                       imageURL: nil,
-                      isFavorite: false,
+                      favorite: false,
                       title: "A Game of Thrones"),
-        BookViewModel(authors: "Frank Herbert", id: "5", imageURL: nil, isFavorite: false, title: "Dune I"),
+        BookViewModel(authors: "Frank Herbert", id: "5", imageURL: nil, favorite: false, title: "Dune I"),
         BookViewModel(authors: "Mikhail Bulgakov",
                       id: "6",
                       imageURL: nil,
-                      isFavorite: false,
+                      favorite: false,
                       title: "The Master and Margarita"),
-        BookViewModel(authors: "Alan Moore", id: "7", imageURL: nil, isFavorite: false, title: "Watchmen"),
-        BookViewModel(authors: "Steve McConnell", id: "8", imageURL: nil, isFavorite: false, title: "Code Complete"),
-        BookViewModel(authors: "Jane Austen", id: "9", imageURL: nil, isFavorite: false, title: "Pride and Prejudice"),
+        BookViewModel(authors: "Alan Moore", id: "7", imageURL: nil, favorite: false, title: "Watchmen"),
+        BookViewModel(authors: "Steve McConnell", id: "8", imageURL: nil, favorite: false, title: "Code Complete"),
+        BookViewModel(authors: "Jane Austen", id: "9", imageURL: nil, favorite: false, title: "Pride and Prejudice"),
         BookViewModel(authors: "Martin Fowler",
                       id: "10",
                       imageURL: nil,
-                      isFavorite: false,
+                      favorite: false,
                       title: "Refactoring: Improving the Design of Existing Code"),
-        BookViewModel(authors: "Stephen King", id: "11", imageURL: nil, isFavorite: false, title: "The Shining"),
+        BookViewModel(authors: "Stephen King", id: "11", imageURL: nil, favorite: false, title: "The Shining"),
         BookViewModel(authors: "Hannah Arendt",
                       id: "12",
                       imageURL: nil,
-                      isFavorite: false,
+                      favorite: false,
                       title: "Eichmann in Jerusalem: A Report on the Banality of Evil"),
-        BookViewModel(authors: "Fyodor Dostoyevsky", id: "13", imageURL: nil, isFavorite: false, title: "The Idiot"),
+        BookViewModel(authors: "Fyodor Dostoyevsky", id: "13", imageURL: nil, favorite: false, title: "The Idiot"),
         BookViewModel(authors: "Ken Kesey",
                       id: "14",
                       imageURL: nil,
-                      isFavorite: false,
+                      favorite: false,
                       title: "Sometimes a Great Notion"),
         BookViewModel(authors: "Haruki Murakami",
                       id: "15",
                       imageURL: nil,
-                      isFavorite: false,
+                      favorite: false,
                       title: "The Wind-Up Bird Chronicle")
     ]
     var query = ""
@@ -167,14 +169,14 @@ final class SearchPreviewViewModel: SearchViewModel, BookListCellViewModel {
 
     // MARK: SearchViewModel protocol methods
 
-    func toggleFavoriteState(bookID: String) {
+    func toggleFavoriteStateOfBook(withID id: String) {
         books = books.map {
             BookViewModel(authors: $0.authors,
                           id: $0.id,
                           imageURL: nil,
-                          isFavorite: ($0.id == bookID)
-                                          ? !$0.isFavorite
-                                          : $0.isFavorite,
+                          favorite: ($0.id == id)
+                                          ? !$0.favorite
+                                          : $0.favorite,
                           title: $0.title)
 
         }

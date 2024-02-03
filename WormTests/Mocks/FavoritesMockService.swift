@@ -77,19 +77,19 @@ final class FavoritesMockService: FavoritesService {
 
     // MARK: FavoritesService protocol methods
 
-    func addToBlockedBooks(_ id: String) {
+    func addToBlockedBook(withID id: String) {
         let blockedBook = MockBlockedBook(id: id)
         blockedBooks.append(blockedBook)
     }
 
-    func addToFavoriteBooks(_ id: String) {
+    func addToFavoritesBook(withID id: String) {
         if !favoriteBooks.contains(where: { $0.id == id }) {
             let book = MockFavoriteBook(id: id)
             favoriteBooks.append(book)
         }
     }
 
-    func removeFromFavoriteBooks(_ id: String) {
+    func removeFromFavoriteBook(withID id: String) {
         favoriteBooks.removeAll { $0.id == id }
     }
 

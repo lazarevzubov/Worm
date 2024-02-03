@@ -25,11 +25,11 @@ protocol RecommendationsModel: ObservableObject {
     // MARK: - Methods
 
     /// Toggles the favorite-ness state of a book.
-    /// - Parameter bookID: The ID of the book to manipulate.
-    func toggleFavoriteState(bookID: String)
+    /// - Parameter id: The ID of the book to manipulate.
+    func toggleFavoriteStateOfBook(withID id: String)
     /// Blocks a book ID from appearing as a recommendation.
     /// - Parameter bookID: The ID of the book to manipulate.
-    func blockFromRecommendations(bookID: String)
+    func blockFromRecommendationsBook(withID id: String)
 
 }
 
@@ -49,7 +49,7 @@ final class RecommendationsDefaultModel<RecommendationsService: FavoritesService
 
     // MARK: Private properties
 
-    private let catalogueService: CatalogueService
+    private let catalogService: CatalogService
     private let favoritesService: RecommendationsService
     private lazy var cancellables = Set<AnyCancellable>()
     private var prioritizedRecommendations = [String: (priority: Int, book: Book?)]() {
@@ -65,10 +65,10 @@ final class RecommendationsDefaultModel<RecommendationsService: FavoritesService
 
     /// Creates a recommended books list handler.
     /// - Parameters:
-    ///   - catalogueService: The data service of the app.
+    ///   - catalogService: The data service of the app.
     ///   - favoritesService: The favorite books list manager.
-    init(catalogueService: CatalogueService, favoritesService: RecommendationsService) {
-        self.catalogueService = catalogueService
+    init(catalogService: CatalogService, favoritesService: RecommendationsService) {
+        self.catalogService = catalogService
         self.favoritesService = favoritesService
 
         bind(favoritesService: self.favoritesService)
@@ -79,18 +79,18 @@ final class RecommendationsDefaultModel<RecommendationsService: FavoritesService
 
     // MARK: RecommendationsModel protocol methods
 
-    func toggleFavoriteState(bookID: String) {
-        if favoriteBookIDs.contains(bookID) {
-            favoritesService.removeFromFavoriteBooks(bookID)
+    func toggleFavoriteStateOfBook(withID id: String) {
+        if favoriteBookIDs.contains(id) {
+            favoritesService.removeFromFavoriteBook(withID: id)
         } else {
-            favoritesService.addToFavoriteBooks(bookID)
+            favoritesService.addToFavoritesBook(withID: id)
         }
         updateFavorites()
     }
 
-    func blockFromRecommendations(bookID: String) {
-        prioritizedRecommendations[bookID] = nil
-        favoritesService.addToBlockedBooks(bookID)
+    func blockFromRecommendationsBook(withID id: String) {
+        prioritizedRecommendations[id] = nil
+        favoritesService.addToBlockedBook(withID: id)
     }
 
     // MARK: Private methods
@@ -108,33 +108,33 @@ final class RecommendationsDefaultModel<RecommendationsService: FavoritesService
     private func updateFavorites() {
         favoriteBookIDs = favoritesService.favoriteBooks.compactMap { $0.id }
         favoriteBookIDs.forEach { id in
-            Task { await addSimilarBooksToRecommendations(from: id) }
+            Task { await addSimilarBooksToRecommendationsFromBook(withID: id) }
         }
     }
 
-    private func addSimilarBooksToRecommendations(from bookID: String) async {
-        let book = await catalogueService.getBook(by: bookID)
-        addSimilarBooksToRecommendations(from: book?.similarBookIDs ?? [])
+    private func addSimilarBooksToRecommendationsFromBook(withID id: String) async {
+        let book = await catalogService.getBook(by: id)
+        addSimilarToRecommendationsBooks(withIDs: book?.similarBookIDs ?? [])
     }
 
-    private func addSimilarBooksToRecommendations(from ids: [String]) {
+    private func addSimilarToRecommendationsBooks(withIDs ids: [String]) {
         let blockedBooks = favoritesService.blockedBooks
         let filteredIDs = ids.filter { id in
             !blockedBooks.contains { $0.id == id } // Filter out blocked books from recommendations.
         }
         filteredIDs.forEach { id in
-            Task { await addRecommendation(id: id) }
+            Task { await addToRecommendationsBook(withID: id) }
         }
     }
 
-    private func addRecommendation(id: String) async {
+    private func addToRecommendationsBook(withID id: String) async {
         if let bookDescriptor = prioritizedRecommendations[id] {
             prioritizedRecommendations[id] = (bookDescriptor.priority + 1, bookDescriptor.book)
         } else {
             prioritizedRecommendations[id] = (1, nil)
 
-            let book = await catalogueService.getBook(by: id)
-            if let bookDescriptor = prioritizedRecommendations[id], 
+            let book = await catalogService.getBook(by: id)
+            if let bookDescriptor = prioritizedRecommendations[id],
                bookDescriptor.book == nil {
                 prioritizedRecommendations[id] = (bookDescriptor.priority, book)
             }

@@ -38,7 +38,7 @@ final class FavoritesPersistenceServiceTests: XCTestCase {
         let service = FavoritesPersistenceService(persistenceContext: context)
 
         let id = "1"
-        service.addToFavoriteBooks(id)
+        service.addToFavoritesBook(withID: id)
 
         let ids = service.favoriteBooks.map { $0.id }
         XCTAssertEqual(ids, [id])
@@ -55,11 +55,11 @@ final class FavoritesPersistenceServiceTests: XCTestCase {
 
         let id = "1"
 
-        service.addToFavoriteBooks(id)
+        service.addToFavoritesBook(withID: id)
         var ids = service.favoriteBooks.map { $0.id }
         XCTAssertEqual(ids, [id])
 
-        service.removeFromFavoriteBooks(id)
+        service.removeFromFavoriteBook(withID: id)
         ids = service.favoriteBooks.map { $0.id }
         XCTAssertEqual(ids, [])
     }
@@ -76,7 +76,7 @@ final class FavoritesPersistenceServiceTests: XCTestCase {
         let service = FavoritesPersistenceService(persistenceContext: context)
 
         let id = "1"
-        service.addToBlockedBooks(id)
+        service.addToBlockedBook(withID: id)
 
         let ids = service.blockedBooks.map { $0.id }
         XCTAssertEqual(ids, [id])

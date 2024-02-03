@@ -23,13 +23,13 @@ protocol FavoritesService: ObservableObject {
 
     /// Blocks a book from recommendations.
     /// - Parameter id: The ID of the book to block.
-    func addToBlockedBooks(_ id: String)
+    func addToBlockedBook(withID id: String)
     /// Adds a favorite book to the current list.
     /// - Parameter id: The ID of the book to be added.
-    func addToFavoriteBooks(_ id: String)
+    func addToFavoritesBook(withID id: String)
     /// Removes a favorite book from the current list.
     /// - Parameter id: The ID of the book to be removed.
-    func removeFromFavoriteBooks(_ id: String)
+    func removeFromFavoriteBook(withID id: String)
 
 }
 
@@ -61,15 +61,15 @@ final class FavoritesPersistenceService: FavoritesService {
 
     // MARK: FavoritesService protocol methods
 
-    func addToBlockedBooks(_ id: String) {
+    func addToBlockedBook(withID id: String) {
         add(id, toManagedType: BlockedBook.self)
     }
 
-    func addToFavoriteBooks(_ id: String) {
+    func addToFavoritesBook(withID id: String) {
         add(id, toManagedType: FavoriteBook.self)
     }
 
-    func removeFromFavoriteBooks(_ id: String) {
+    func removeFromFavoriteBook(withID id: String) {
         favoriteBooks.forEach {
             if $0.id == id {
                 persistenceContext.delete($0)

@@ -16,7 +16,7 @@ struct ImageStubService: ImageService {
 
     // MARK: ImageService protocol methods
 
-    func getImage(for url: URL, resultCompletion: @escaping (UIImage?) -> Void) {
+    func getImage(from url: URL, resultCompletion: @escaping (UIImage?) -> Void) {
         // Do nothing.
     }
 

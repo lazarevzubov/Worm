@@ -17,21 +17,21 @@ final class SearchServiceBasedModelTests: XCTestCase {
     // MARK: - Methods
 
     func testBooksInitiallyEmpty() {
-        let model = SearchServiceBasedModel(catalogueService: CatalogueTestingMockService(),
+        let model = SearchServiceBasedModel(catalogService: CatalogTestingMockService(),
                                             favoritesService: FavoritesMockService())
         XCTAssertTrue(model.books.isEmpty)
     }
 
     func testFavoriteBookIDsInitiallyEmpty() {
-        let model = SearchServiceBasedModel(catalogueService: CatalogueTestingMockService(),
+        let model = SearchServiceBasedModel(catalogService: CatalogTestingMockService(),
                                             favoritesService: FavoritesMockService())
         XCTAssertTrue(model.favoriteBookIDs.isEmpty)
     }
 
     func testSeachBook() {
-        let catalogueService = CatalogueTestingMockService()
+        let catalogService = CatalogTestingMockService()
         let queue = DispatchQueue(label: "com.LazarevZubov.Worm.SearchDefaultModelTests")
-        let model = SearchServiceBasedModel(catalogueService: catalogueService,
+        let model = SearchServiceBasedModel(catalogService: catalogService,
                                             favoritesService: FavoritesMockService(),
                                             dispatchQueue: queue,
                                             queryDelay: nil)
@@ -40,15 +40,15 @@ final class SearchServiceBasedModelTests: XCTestCase {
         model.searchBooks(by: query)
         queue.sync { }
 
-        XCTAssertEqual(catalogueService.handledQueries.count, 1)
-        XCTAssertEqual(catalogueService.handledQueries.first!, query)
+        XCTAssertEqual(catalogService.handledQueries.count, 1)
+        XCTAssertEqual(catalogService.handledQueries.first!, query)
     }
 
     func testCancelPreviousQuery() {
         let expectation = XCTestExpectation()
-        let catalogueService = CatalogueTestingMockService(searchExpectation: expectation)
+        let catalogService = CatalogTestingMockService(searchExpectation: expectation)
 
-        let model = SearchServiceBasedModel(catalogueService: catalogueService,
+        let model = SearchServiceBasedModel(catalogService: catalogService,
                                             favoritesService: FavoritesMockService(),
                                             queryDelay: .milliseconds(100))
 
@@ -59,8 +59,8 @@ final class SearchServiceBasedModelTests: XCTestCase {
         model.searchBooks(by: query2)
 
         wait(for: [expectation], timeout: 1.0)
-        XCTAssertEqual(catalogueService.handledQueries.count, 1)
-        XCTAssertEqual(catalogueService.handledQueries.first!, query2)
+        XCTAssertEqual(catalogService.handledQueries.count, 1)
+        XCTAssertEqual(catalogService.handledQueries.first!, query2)
     }
 
     func testSearchResultFiresBookRequest() {
@@ -69,30 +69,30 @@ final class SearchServiceBasedModelTests: XCTestCase {
         let expectation = XCTestExpectation()
         expectation.expectedFulfillmentCount = result.count
 
-        let catalogueService = CatalogueTestingMockService(searchBookResult: result,
+        let catalogService = CatalogTestingMockService(searchBookResult: result,
                                                            bookRequestExpectation: expectation)
 
-        let model = SearchServiceBasedModel(catalogueService: catalogueService,
+        let model = SearchServiceBasedModel(catalogService: catalogService,
                                             favoritesService: FavoritesMockService(),
                                             queryDelay: nil)
 
         model.searchBooks(by: "Query")
         wait(for: [expectation], timeout: 1.0)
-        XCTAssertEqual(catalogueService.handledBookRequests, result)
+        XCTAssertEqual(catalogService.handledBookRequests, result)
     }
 
     func testToggleFavorite() {
-        let model = SearchServiceBasedModel(catalogueService: CatalogueTestingMockService(),
+        let model = SearchServiceBasedModel(catalogService: CatalogTestingMockService(),
                                             favoritesService: FavoritesMockService(),
                                             queryDelay: nil)
 
         let id = "id"
         XCTAssertFalse(model.favoriteBookIDs.contains(id))
 
-        model.toggleFavoriteState(bookID: id)
+        model.toggleFavoriteStateOfBook(withID id: id)
         XCTAssertTrue(model.favoriteBookIDs.contains(id))
 
-        model.toggleFavoriteState(bookID: id)
+        model.toggleFavoriteStateOfBook(withID id: id)
         XCTAssertFalse(model.favoriteBookIDs.contains(id))
     }
 

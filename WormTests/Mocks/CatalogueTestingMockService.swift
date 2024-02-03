@@ -1,5 +1,5 @@
 //
-//  CatalogueTestingMockService.swift
+//  CatalogTestingMockService.swift
 //  WormTests
 //
 //  Created by Nikita Lazarev-Zubov on 18.6.2020.
@@ -11,7 +11,7 @@ import GoodreadsService
 import Worm
 import XCTest
 
-final class CatalogueTestingMockService: CatalogueService {
+final class CatalogTestingMockService: CatalogService {
 
     // MARK: - Properties
 

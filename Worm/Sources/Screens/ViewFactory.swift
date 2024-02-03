@@ -15,19 +15,19 @@ enum ViewFactory<RecommendationsService: FavoritesService> {
 
     /// Creates the main view of the app.
     /// - Parameters:
-    ///   - catalogueService: The main data service of the app.
+    ///   - catalogService: The main data service of the app.
     ///   - favoritesService: The favorite books list manager.
     /// - Returns: The main view of the app.
-    static func makeMainView(catalogueService: CatalogueService,
+    static func makeMainView(catalogService: CatalogService,
                              favoritesService: RecommendationsService,
                              imageService: ImageService) -> some View {
-        let searchView = makeSearchView(catalogueService: catalogueService,
+        let searchView = makeSearchView(catalogService: catalogService,
                                         favoritesService: favoritesService,
                                         imageService: imageService)
-        let recommendationsView = makeRecommendationsView(catalogueService: catalogueService,
+        let recommendationsView = makeRecommendationsView(catalogService: catalogService,
                                                           favoritesService: favoritesService,
                                                           imageService: imageService)
-        let favoritesView = makeFavoritesView(catalogueService: catalogueService,
+        let favoritesView = makeFavoritesView(catalogService: catalogService,
                                               favoritesService: favoritesService,
                                               imageService: imageService)
 
@@ -36,29 +36,29 @@ enum ViewFactory<RecommendationsService: FavoritesService> {
 
     // MARK: Private methods
 
-    private static func makeSearchView(catalogueService: CatalogueService,
+    private static func makeSearchView(catalogService: CatalogService,
                                        favoritesService: RecommendationsService,
                                        imageService: ImageService) -> some View {
-        let model = SearchServiceBasedModel(catalogueService: catalogueService, favoritesService: favoritesService)
+        let model = SearchServiceBasedModel(catalogService: catalogService, favoritesService: favoritesService)
         let viewModel = SearchDefaultViewModel(model: model, imageService: imageService)
 
         return SearchView<SearchDefaultViewModel<SearchServiceBasedModel>>(viewModel: viewModel)
     }
 
-    private static func makeRecommendationsView(catalogueService: CatalogueService,
+    private static func makeRecommendationsView(catalogService: CatalogService,
                                                 favoritesService: RecommendationsService,
                                                 imageService: ImageService) -> some View {
-        let recommendationsModel = RecommendationsDefaultModel(catalogueService: catalogueService,
+        let recommendationsModel = RecommendationsDefaultModel(catalogService: catalogService,
                                                                favoritesService: favoritesService)
         let viewModel = RecommendationsDefaultViewModel(model: recommendationsModel, imageService: imageService)
 
         return RecommendationsView(viewModel: viewModel)
     }
 
-    private static func makeFavoritesView(catalogueService: CatalogueService,
+    private static func makeFavoritesView(catalogService: CatalogService,
                                           favoritesService: RecommendationsService,
                                           imageService: ImageService) -> some View {
-        let model = FavoritesServiceBasedModel(catalogueService: catalogueService, favoritesService: favoritesService)
+        let model = FavoritesServiceBasedModel(catalogService: catalogService, favoritesService: favoritesService)
         let viewModel = FavoritesDefaultViewModel(model: model, imageService: imageService)
 
         return FavoritesView(viewModel: viewModel)

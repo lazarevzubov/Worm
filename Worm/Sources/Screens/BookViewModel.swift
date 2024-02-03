@@ -21,7 +21,7 @@ struct BookViewModel {
     /// The URL of the book image.
     let imageURL: URL?
     /// Whether the book is in the favorites list.
-    let isFavorite: Bool
+    let favorite: Bool
     /// The book title.
     let title: String
 
@@ -37,20 +37,20 @@ extension BookViewModel: Identifiable { }
 
 // MARK: -
 
-extension Book {
+extension BookViewModel {
 
-    // MARK: - Methods
+    // MARK: - Initialization
 
     /// Creates a visual representation data object from the model representation of book.
-    /// - Parameter favorite: Whether the book is a favorite.
-    /// - Returns: The book data for a visual representation.
-    func asViewModel(favorite: Bool) -> BookViewModel {
-        let authors = self.authors.joined(separator: ", ")
-        return BookViewModel(authors: authors,
-                             id: id,
-                             imageURL: imageURL,
-                             isFavorite: favorite,
-                             title: title)
+    /// - Parameters:
+    ///   - book: A book meta-data object.
+    ///   - favorite: Whether the book is a favorite.
+    init(book: Book, favorite: Bool) {
+        self.init(authors: book.authors.joined(separator: ", "),
+                  id: book.id,
+                  imageURL: book.imageURL,
+                  favorite: favorite,
+                  title: book.title)
     }
 
 }

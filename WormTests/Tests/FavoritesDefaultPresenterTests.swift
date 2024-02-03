@@ -22,7 +22,7 @@ final class FavoritesDefaultViewModelTests: XCTestCase {
         XCTAssertTrue(model.toggledBookIDs.isEmpty)
 
         let bookID = "1"
-        viewModel.toggleFavoriteState(bookID: bookID)
+        viewModel.toggleFavoriteStateOfBook(withID id: bookID)
         XCTAssertEqual(model.toggledBookIDs, [bookID])
     }
 
@@ -69,8 +69,8 @@ private class FavoritesMockModel: FavoritesModel {
 
     // MARK: FavoritesModel protocol methods
 
-    func toggleFavoriteState(bookID: String) {
-        toggledBookIDs.append(bookID)
+    func toggleFavoriteStateOfBook(withID id: String) {
+        toggledBookIDs.append(withID id)
     }
 
 
