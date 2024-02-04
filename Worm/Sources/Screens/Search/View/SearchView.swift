@@ -33,7 +33,10 @@ struct SearchView<ViewModel: SearchViewModel>: View {
                     .listStyle(.plain)
             }
                 .navigationTitle("SearchScreenTitle")
-                .onAppear { configureNavigationBar() }
+                .toolbarColorScheme(.light, for: .navigationBar)
+                .toolbarBackground(Color(red: (172.0 / 255.0), green: (211.0 / 255.0), blue: (214.0 / 255.0)),
+                                   for: .navigationBar)
+                .toolbarBackground(.visible, for: .navigationBar)
         }
     }
 
@@ -55,16 +58,6 @@ struct SearchView<ViewModel: SearchViewModel>: View {
     // MARK: - Methods
 
     // MARK: Private methods
-
-    private func configureNavigationBar() {
-        UINavigationBar.appearance().backgroundColor = UIColor(red: (172.0 / 255.0),
-                                                               green: (211.0 / 255.0),
-                                                               blue: (214.0 / 255.0),
-                                                               alpha: 1.0)
-
-        UINavigationBar.appearance().titleTextAttributes = [.foregroundColor : UIColor.black]
-        UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor : UIColor.black]
-    }
 
     private func hideKeyboard() {
         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)

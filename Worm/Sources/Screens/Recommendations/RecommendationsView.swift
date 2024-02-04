@@ -30,8 +30,11 @@ struct RecommendationsView<ViewModel: RecommendationsViewModel>: View {
                 .animation(.easeIn, value: viewModel.recommendations)
                 .listStyle(.plain)
                 .navigationTitle("RecommendationsScreenTitle")
+                .toolbarColorScheme(.light, for: .navigationBar)
+                .toolbarBackground(Color(red: (190.0 / 255.0), green: (142.0 / 255.0), blue: (155.0 / 255.0)),
+                                   for: .navigationBar)
+                .toolbarBackground(.visible, for: .navigationBar)
                 .navigationBarItems(trailing: EditButton())
-                .onAppear { configureNavigationBar() }
         }
     }
 
@@ -53,16 +56,6 @@ struct RecommendationsView<ViewModel: RecommendationsViewModel>: View {
     // MARK: - Methods
 
     // MARK: Private methods
-
-    private func configureNavigationBar() {
-        UINavigationBar.appearance().backgroundColor = UIColor(red: (190.0 / 255.0),
-                                                               green: (142.0 / 255.0),
-                                                               blue: (155.0 / 255.0),
-                                                               alpha: 1.0)
-
-        UINavigationBar.appearance().titleTextAttributes = [.foregroundColor : UIColor.black]
-        UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor : UIColor.black]
-    }
 
     private func deleteItem(at indexSet: IndexSet) {
         indexSet.forEach { viewModel.block(recommendation: viewModel.recommendations[$0]) }
