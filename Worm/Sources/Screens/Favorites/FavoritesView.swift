@@ -26,7 +26,10 @@ struct FavoritesView<ViewModel: FavoritesViewModel>: View {
             }
                 .animation(.easeIn, value: viewModel.favorites)
                 .navigationTitle("FavoritesScreenTitle")
-                .onAppear { configureNavigationBar() }
+                .toolbarColorScheme(.light, for: .navigationBar)
+                .toolbarBackground(Color(red: (249.0 / 255.0), green: (231.0 / 255.0), blue: (132.0 / 255.0)),
+                                   for: .navigationBar)
+                .toolbarBackground(.visible, for: .navigationBar)
         }
     }
 
@@ -43,20 +46,6 @@ struct FavoritesView<ViewModel: FavoritesViewModel>: View {
     /// - Parameter viewModel: The object responsible for Favorites screen presentation logic.
     init(viewModel: ViewModel) {
         self.viewModel = viewModel
-    }
-
-    // MARK: - Methods
-
-    // MARK: Private methods
-
-    private func configureNavigationBar() {
-        UINavigationBar.appearance().backgroundColor = UIColor(red: (249.0 / 255.0),
-                                                               green: (231.0 / 255.0),
-                                                               blue: (132 / 255.0),
-                                                               alpha: 1.0)
-
-        UINavigationBar.appearance().titleTextAttributes = [.foregroundColor : UIColor.black]
-        UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor : UIColor.black]
     }
 
 }
