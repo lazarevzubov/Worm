@@ -63,8 +63,9 @@ final class BookDetailsDefaultViewModel: BookDetailsViewModel {
         guard let url else {
             return
         }
-        service.getImage(from: url) { [weak self] image in
-            DispatchQueue.main.async { self?.image = image }
+        Task {
+            let image = await service.getImage(from: url)
+            await MainActor.run { self.image = image }
         }
     }
 
