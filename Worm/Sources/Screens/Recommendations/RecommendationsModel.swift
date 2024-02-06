@@ -75,6 +75,10 @@ final class RecommendationsDefaultModel<RecommendationsService: FavoritesService
         updateFavorites()
     }
 
+    deinit {
+        cancellables.forEach { $0.cancel() }
+    }
+
     // MARK: - Methods
 
     // MARK: RecommendationsModel protocol methods

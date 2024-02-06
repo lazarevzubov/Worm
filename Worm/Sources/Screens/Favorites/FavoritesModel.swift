@@ -57,6 +57,10 @@ final class FavoritesServiceBasedModel<FavoriteBooksService: FavoritesService>: 
         updateFavorites()
     }
 
+    deinit {
+        cancellables.forEach { $0.cancel() }
+    }
+
     // MARK: - Methods
 
     // MARK: FavoritesModel protocol methods
