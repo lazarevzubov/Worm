@@ -51,6 +51,10 @@ final class FavoritesDefaultViewModel<Model: FavoritesModel>: FavoritesViewModel
         bind(model: model)
     }
 
+    deinit {
+        cancellables.forEach { $0.cancel() }
+    }
+
     // MARK: - Methods
 
     // MARK: FavoritesViewModel protocol methods

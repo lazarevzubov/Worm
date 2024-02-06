@@ -58,6 +58,10 @@ final class SearchDefaultViewModel<Model: SearchModel>: SearchViewModel {
         bind(model: self.model)
     }
 
+    deinit {
+        cancellables.forEach { $0.cancel() }
+    }
+
     // MARK: - Methods
 
     // MARK: SearchViewModel protocol methods

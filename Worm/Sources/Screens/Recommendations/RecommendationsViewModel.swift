@@ -57,6 +57,10 @@ final class RecommendationsDefaultViewModel<Model: RecommendationsModel>: Recomm
         bind(model: model)
     }
 
+    deinit {
+        cancellables.forEach { $0.cancel() }
+    }
+
     // MARK: - Methods
 
     // MARK: BookListCellViewModel protocol methods
