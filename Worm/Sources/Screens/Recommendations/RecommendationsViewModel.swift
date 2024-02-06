@@ -7,7 +7,6 @@
 //
 
 import Combine
-import Foundation
 
 /// Object responsible for Recommendations screen presentation logic.
 protocol RecommendationsViewModel: BookListCellViewModel, BookDetailsPresentable, ObservableObject {
@@ -43,7 +42,6 @@ final class RecommendationsDefaultViewModel<Model: RecommendationsModel>: Recomm
 
     private let imageService: ImageService
     private let model: Model
-    private let updateQueue: DispatchQueue
     private lazy var cancellables = Set<AnyCancellable>()
 
     // MARK: - Initialization
@@ -52,11 +50,9 @@ final class RecommendationsDefaultViewModel<Model: RecommendationsModel>: Recomm
     /// - Parameters:
     ///   - model: Data providing object.
     ///   - imageService: The services that turns image URLs into images themselves.
-    ///   - updateQueue: Queue on which presentation data is passed to view.
-    init(model: Model, imageService: ImageService, updateQueue: DispatchQueue = .main) {
+    init(model: Model, imageService: ImageService) {
         self.model = model
         self.imageService = imageService
-        self.updateQueue = updateQueue
 
         bind(model: model)
     }
@@ -85,18 +81,16 @@ final class RecommendationsDefaultViewModel<Model: RecommendationsModel>: Recomm
     private func bind(model: Model) {
         model
             .objectWillChange
-            .receive(on: updateQueue)
-            .sink { [weak self, weak model] _ in
-                guard let self,
-                      let model else {
-                    return
+            .sink { _ in
+                Task {
+                    await MainActor.run {
+                        self.objectWillChange.send()
+                        self.recommendations = model
+                            .recommendations
+                            .map { BookViewModel(book: $0, favorite: model.favoriteBookIDs.contains($0.id)) }
+                            .filter { !$0.favorite }
+                    }
                 }
-
-                self.objectWillChange.send()
-                self.recommendations = model
-                    .recommendations
-                    .map { BookViewModel(book: $0, favorite: model.favoriteBookIDs.contains($0.id)) }
-                    .filter { !$0.favorite }
             }
             .store(in: &cancellables)
     }

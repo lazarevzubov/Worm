@@ -7,7 +7,6 @@
 //
 
 import Combine
-import Foundation
 
 // FIXME: Same model objects for all layers.
 
@@ -44,7 +43,6 @@ final class SearchDefaultViewModel<Model: SearchModel>: SearchViewModel {
 
     private let imageService: ImageService
     private let model: Model
-    private let updateQueue: DispatchQueue
     private lazy var cancellables = Set<AnyCancellable>()
 
     // MARK: - Initialization
@@ -53,11 +51,9 @@ final class SearchDefaultViewModel<Model: SearchModel>: SearchViewModel {
     /// - Parameters:
     ///   - model: The search screen model.
     ///   - imageService: The services that turns image URLs into images themselves.
-    ///   - updateQueue: Queue on which presentation data is passed to view.
-    init(model: Model, imageService: ImageService, updateQueue: DispatchQueue = .main) {
+    init(model: Model, imageService: ImageService) {
         self.model = model
         self.imageService = imageService
-        self.updateQueue = updateQueue
 
         bind(model: self.model)
     }
@@ -82,16 +78,14 @@ final class SearchDefaultViewModel<Model: SearchModel>: SearchViewModel {
     private func bind(model: Model) {
         model
             .objectWillChange
-            .receive(on: updateQueue)
-            .sink { [weak self, weak model] _ in
-                guard let self,
-                      let model else {
-                    return
-                }
-
-                self.objectWillChange.send()
-                self.books = model.books.map {
-                    BookViewModel(book: $0, favorite: model.favoriteBookIDs.contains($0.id))
+            .sink { _ in
+                Task {
+                    await MainActor.run {
+                        self.objectWillChange.send()
+                        self.books = model.books.map {
+                            BookViewModel(book: $0, favorite: model.favoriteBookIDs.contains($0.id))
+                        }
+                    }
                 }
             }
             .store(in: &cancellables)
