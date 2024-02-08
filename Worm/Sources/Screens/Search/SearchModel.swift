@@ -94,9 +94,7 @@ final class SearchServiceBasedModel<RecommendationsService: FavoritesService>: S
         currentSearchTask = newSearchTask
 
         Task {
-            if let queryDelay {
-                try? await Task.sleep(for: .milliseconds(500))
-            }
+            try? await Task.sleep(for: .milliseconds(500))
             await newSearchTask.value
         }
     }

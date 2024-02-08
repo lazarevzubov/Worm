@@ -17,21 +17,21 @@ struct SearchView<ViewModel: SearchViewModel>: View {
 
     var body: some View {
         NavigationView {
-            VStack(spacing: .zero) {
-                Spacer()
-                HStack {
-                    SearchBar(text: $viewModel.query)
-                    Spacer(minLength: 16.0)
-                }
-                List(viewModel.books) { book in
-                    Button { detailsPresented = true } label: { BookListCell(book: book, viewModel: viewModel) }
-                        .sheet(isPresented: $detailsPresented) {
-                            BookDetailsView(viewModel: viewModel.makeDetailsViewModel(for: book),
-                                            presented: $detailsPresented)
-                        }
-                }
-                    .listStyle(.plain)
+            List(viewModel.books) { book in
+                Button {
+                    searchActive = false
+                    detailsPresented = true
+                } label: { BookListCell(book: book, viewModel: viewModel) }
+                    .sheet(isPresented: $detailsPresented) {
+                        BookDetailsView(viewModel: viewModel.makeDetailsViewModel(for: book),
+                                        presented: $detailsPresented)
+                    }
             }
+                .listStyle(.plain)
+                .searchable(text: $viewModel.query,
+                            isPresented: $searchActive,
+                            placement: .navigationBarDrawer(displayMode: .always),
+                            prompt: "SearchScreenSearchFieldPlaceholder")
                 .navigationTitle("SearchScreenTitle")
                 .toolbarColorScheme(.light, for: .navigationBar)
                 .toolbarBackground(Color(red: (172.0 / 255.0), green: (211.0 / 255.0), blue: (214.0 / 255.0)),
@@ -44,6 +44,8 @@ struct SearchView<ViewModel: SearchViewModel>: View {
 
     @State
     private var detailsPresented = false
+    @State
+    private var searchActive = false
     @ObservedObject
     private var viewModel: ViewModel
 
@@ -53,14 +55,6 @@ struct SearchView<ViewModel: SearchViewModel>: View {
     /// - Parameter viewModel: The presentation logic handler.
     init(viewModel: ViewModel) {
         self.viewModel = viewModel
-    }
-
-    // MARK: - Methods
-
-    // MARK: Private methods
-
-    private func hideKeyboard() {
-        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     }
 
 }
