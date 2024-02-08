@@ -43,7 +43,6 @@
 		4E5C6E432565C06000DDB833 /* BookViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5C6E422565C05F00DDB833 /* BookViewModel.swift */; };
 		4E5C6E4B2565C09A00DDB833 /* FavoriteBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5C6E4A2565C09A00DDB833 /* FavoriteBook.swift */; };
 		4E5C6E582565C0EF00DDB833 /* BookListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5C6E572565C0EF00DDB833 /* BookListCell.swift */; };
-		4E5C6E5D2565C10D00DDB833 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5C6E5C2565C10D00DDB833 /* SearchBar.swift */; };
 		4E5C6E652565C14400DDB833 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4E5C6E642565C14400DDB833 /* Localizable.strings */; };
 		4E5C6E6E2565C1A600DDB833 /* CatalogueTestingMockService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5C6E6D2565C1A600DDB833 /* CatalogueTestingMockService.swift */; };
 		4E5C6E762565C1C900DDB833 /* FavoritesMockService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5C6E752565C1C900DDB833 /* FavoritesMockService.swift */; };
@@ -118,7 +117,6 @@
 		4E5C6E422565C05F00DDB833 /* BookViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookViewModel.swift; sourceTree = "<group>"; };
 		4E5C6E4A2565C09A00DDB833 /* FavoriteBook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteBook.swift; sourceTree = "<group>"; };
 		4E5C6E572565C0EF00DDB833 /* BookListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookListCell.swift; sourceTree = "<group>"; };
-		4E5C6E5C2565C10D00DDB833 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		4E5C6E642565C14400DDB833 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		4E5C6E6D2565C1A600DDB833 /* CatalogueTestingMockService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogueTestingMockService.swift; sourceTree = "<group>"; };
 		4E5C6E752565C1C900DDB833 /* FavoritesMockService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesMockService.swift; sourceTree = "<group>"; };
@@ -344,20 +342,11 @@
 		4E5C6E1A2565BF3F00DDB833 /* Search */ = {
 			isa = PBXGroup;
 			children = (
-				4E5C6E282565BF7C00DDB833 /* View */,
+				4E5C6E2A2565BF9800DDB833 /* SearchView.swift */,
 				4E5C6E1B2565BF4800DDB833 /* SearchModel.swift */,
 				4E5C6E232565BF6900DDB833 /* SearchViewModel.swift */,
 			);
 			path = Search;
-			sourceTree = "<group>";
-		};
-		4E5C6E282565BF7C00DDB833 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				4E5C6E5C2565C10D00DDB833 /* SearchBar.swift */,
-				4E5C6E2A2565BF9800DDB833 /* SearchView.swift */,
-			);
-			path = View;
 			sourceTree = "<group>";
 		};
 		4E5C6E6C2565C17200DDB833 /* Mocks */ = {
@@ -571,7 +560,6 @@
 				4E5C6E582565C0EF00DDB833 /* BookListCell.swift in Sources */,
 				4E5C6E392565C00100DDB833 /* RecommendationsModel.swift in Sources */,
 				4E5C6DA62565BBB500DDB833 /* Worm.xcdatamodeld in Sources */,
-				4E5C6E5D2565C10D00DDB833 /* SearchBar.swift in Sources */,
 				4E4FD62E25C41ED6004A8F0C /* Entity.swift in Sources */,
 				4E1AE61625DC47F5000D7DF2 /* BookDetailsView.swift in Sources */,
 				4E5C6D9A2565BBB400DDB833 /* WormApp.swift in Sources */,
