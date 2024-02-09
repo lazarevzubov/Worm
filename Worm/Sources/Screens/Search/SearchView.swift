@@ -31,8 +31,8 @@ struct SearchView<ViewModel: SearchViewModel>: View {
                 .searchable(text: $viewModel.query,
                             isPresented: $searchActive,
                             placement: .navigationBarDrawer(displayMode: .always),
-                            prompt: "SearchScreenSearchFieldPlaceholder")
-                .navigationTitle("SearchScreenTitle")
+                            prompt: "Search books")
+                .navigationTitle("Search")
                 .toolbarColorScheme(.light, for: .navigationBar)
                 .toolbarBackground(Color(red: (172.0 / 255.0), green: (211.0 / 255.0), blue: (214.0 / 255.0)),
                                    for: .navigationBar)
