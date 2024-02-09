@@ -31,7 +31,7 @@ struct WormApp: App {
         if ProcessInfo.processInfo.environment["TEST"] != nil {
             return CatalogMockService()
         }
-        return GoodreadsService(key: Settings.goodreadsAPIKey)
+        return GoodreadsService(key: "JQfiS9k0doIho3vm13Qxdg")
     }()
     private var favoritesService = FavoritesPersistenceService(persistenceContext: CoreData.shared.managedObjectContext)
     private var imageService = ImageWebService(webService: URLSession.shared)
