@@ -27,14 +27,14 @@ struct SearchView<ViewModel: SearchViewModel>: View {
                 .listStyle(.plain)
                 .searchable(text: $viewModel.query,
                             placement: .navigationBarDrawer(displayMode: .always),
-                            prompt: "SearchScreenSearchFieldPlaceholder")
+                            prompt: "Search books")
                 .simultaneousGesture(
                     DragGesture()
                         .onChanged { _ in
                             dismissSearch()
                         }
                 )
-                .navigationTitle("SearchScreenTitle")
+                .navigationTitle("Search")
                 .toolbarColorScheme(.light, for: .navigationBar)
                 .toolbarBackground(Color(red: (172.0 / 255.0), green: (211.0 / 255.0), blue: (214.0 / 255.0)),
                                    for: .navigationBar)

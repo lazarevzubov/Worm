@@ -17,7 +17,7 @@ struct BookDetailsView<ViewModel: BookDetailsViewModel>: View {
     var body: some View {
         HStack {
             Spacer()
-            Button("CloseModalViewButtonTitle") { presented.toggle() }
+            Button("Close") { presented.toggle() }
                 .padding()
         }
         Spacer()

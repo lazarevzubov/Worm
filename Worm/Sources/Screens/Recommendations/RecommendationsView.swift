@@ -29,7 +29,7 @@ struct RecommendationsView<ViewModel: RecommendationsViewModel>: View {
             }
                 .animation(.easeIn, value: viewModel.recommendations)
                 .listStyle(.plain)
-                .navigationTitle("RecommendationsScreenTitle")
+                .navigationTitle("Recommendations")
                 .toolbarColorScheme(.light, for: .navigationBar)
                 .toolbarBackground(Color(red: (190.0 / 255.0), green: (142.0 / 255.0), blue: (155.0 / 255.0)),
                                    for: .navigationBar)
