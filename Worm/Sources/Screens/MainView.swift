@@ -25,19 +25,19 @@ struct MainView<SearchView: View, RecommendationsView: View, FavoritesView: View
                 .tabItem {
                     Image(systemName: "magnifyingglass")
                         .accessibility(hidden: true)
-                    Text("SearchScreenTitle")
+                    Text("Search")
                 }
             recommendationsView
                 .tabItem {
                     Image(systemName: "checkmark")
                         .accessibility(hidden: true)
-                    Text("RecommendationsScreenTitle")
+                    Text("Recommendations")
                 }
             favoritesView
                 .tabItem {
                     Image(systemName: "heart")
                         .accessibility(hidden: true)
-                    Text("FavoritesScreenTitle")
+                    Text("Favorites")
                 }
         }
     }

@@ -70,8 +70,8 @@ struct BookListCell: View {
 
     private func makeFavoriteButtonAccessibilityLabel(for book: BookViewModel) -> Text {
         book.favorite
-            ? Text(String(format: "SearchScreenFavoriteMarkCheckedHintFormat", book.title))
-            : Text(String(format: "SearchScreenFavoriteMarkUncheckedHintFormat", book.title))
+            ? Text("\(book.title) favorite checked")
+            : Text("(book.title) favorite unchecked")
     }
 
 }
