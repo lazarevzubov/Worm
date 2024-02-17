@@ -6,19 +6,24 @@
 //  Copyright © 2020 Nikita Lazarev-Zubov. All rights reserved.
 //
 
-import CoreData
+import SwiftData
 
 /// A persisted object representing a favorite book.
-class FavoriteBook: NSManagedObject, Entity { // Not final because it needs to be mocked within unit tests.
+@Model
+final class FavoriteBook {
 
     // MARK: - Properties
 
     /// The book's ID.
-    @NSManaged
+    @Attribute(.unique)
     var id: String
 
-    // MARK: Entity protocol properties
+    // MARK: - Initialization
 
-    static let entityName = "FavoriteBook"
+    /// Creates a persisted object representing a favorite book.
+    /// - Parameter id: The book's ID.
+    init(id: String) {
+        self.id = id
+    }
 
 }

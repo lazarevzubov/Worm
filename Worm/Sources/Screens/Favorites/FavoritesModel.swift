@@ -87,9 +87,9 @@ final class FavoritesServiceBasedModel<FavoriteBooksService: FavoritesService>: 
     }
 
     private func updateFavorites() {
-        favoritesService.favoriteBooks.forEach { book in
+        favoritesService.favoriteBookIDs.forEach { bookID in
             Task {
-                if let book = await catalogService.getBook(by: book.id),
+                if let book = await catalogService.getBook(by: bookID),
                    favorites.contains(where: { $0.id == book.id }) != true {
                     await MainActor.run { favorites.append(book) }
                 }

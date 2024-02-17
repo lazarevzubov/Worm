@@ -24,6 +24,7 @@ struct FavoritesView<ViewModel: FavoritesViewModel>: View {
                                         presented: $detailsPresented)
                     }
             }
+                .listStyle(.plain)
                 .animation(.easeIn, value: viewModel.favorites)
                 .navigationTitle("Favorites")
                 .toolbarColorScheme(.light, for: .navigationBar)

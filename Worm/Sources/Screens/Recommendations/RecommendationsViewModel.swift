@@ -63,14 +63,10 @@ final class RecommendationsDefaultViewModel<Model: RecommendationsModel>: Recomm
 
     // MARK: - Methods
 
-    // MARK: BookListCellViewModel protocol methods
+    // MARK: RecommendationsViewModel protocol methods
 
     func toggleFavoriteStateOfBook(withID id: String) {
         model.toggleFavoriteStateOfBook(withID: id)
-    }
-
-    func block(recommendation: BookViewModel) {
-        model.blockFromRecommendationsBook(withID: recommendation.id)
     }
 
     func makeDetailsViewModel(for book: BookViewModel) -> DetailsViewModel {
@@ -79,6 +75,12 @@ final class RecommendationsDefaultViewModel<Model: RecommendationsModel>: Recomm
                                     imageURL: book.imageURL,
                                     imageService: imageService)
     }
+
+    func block(recommendation: BookViewModel) {
+        model.blockFromRecommendationsBook(withID: recommendation.id)
+    }
+
+
 
     // MARK: Private methods
 
@@ -172,15 +174,15 @@ final class RecommendationsPreviewViewModel: RecommendationsViewModel {
     // MARK: BookListCellViewModel protocol methods
 
     func toggleFavoriteStateOfBook(withID id: String) {
-        // Do nothing.
-    }
-
-    func block(recommendation: BookViewModel) {
-        // Do nothing.
+        // Do nothing in previews.
     }
 
     func makeDetailsViewModel(for favorite: BookViewModel) -> DetailsViewModel {
         BookDetailsPreviewViewModel()
+    }
+
+    func block(recommendation: BookViewModel) {
+        // Do nothing in previews.
     }
 
 }
