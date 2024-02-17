@@ -113,7 +113,7 @@ final class SearchServiceBasedModel<RecommendationsService: FavoritesService>: S
     // MARK: Private methods
 
     private func updateFavorites() {
-        favoriteBookIDs = favoritesService.favoriteBooks.compactMap { $0.id }
+        favoriteBookIDs = favoritesService.favoriteBookIDs
     }
 
     private func handleSearchResult(_ result: String) async {

@@ -6,19 +6,24 @@
 //  Copyright © 2021 Nikita Lazarev-Zubov. All rights reserved.
 //
 
-import CoreData
+import SwiftData
 
 /// A persisted object representing a blocked from recommendations book.
-class BlockedBook: NSManagedObject, Entity { // Not final because it needs to be mocked within unit tests.
+@Model
+final class BlockedBook {
 
     // MARK: - Properties
 
     /// The book's ID.
-    @NSManaged
+    @Attribute(.unique)
     var id: String
 
-    // MARK: Entity protocol properties
+    // MARK: - Initialization
 
-    static let entityName = "BlockedBook"
+    /// Creates a persisted object representing a blocked from recommendations book.
+    /// - Parameter id: The book's ID.
+    init(id: String) {
+        self.id = id
+    }
 
 }

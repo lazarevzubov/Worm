@@ -8,6 +8,7 @@
 
 import Combine
 import GoodreadsService
+import OrderedCollections
 
 /// Owns logic of maintaining a list of recommendations.
 protocol RecommendationsModel: ObservableObject {
@@ -52,12 +53,16 @@ final class RecommendationsDefaultModel<RecommendationsService: FavoritesService
     private let catalogService: CatalogService
     private let favoritesService: RecommendationsService
     private lazy var cancellables = Set<AnyCancellable>()
-    private var prioritizedRecommendations = [String: (priority: Int, book: Book?)]() {
+    private var prioritizedRecommendations = OrderedDictionary<String, (book: Book, sourceIDs: Set<String>)>() {
         didSet {
-            recommendations = prioritizedRecommendations
-                .map { $0.value }
-                .sorted { $0.priority > $1.priority }
-                .compactMap { $0.book }
+            Task {
+                await MainActor.run {
+                    recommendations = prioritizedRecommendations
+                        .values
+                        .stableSorted { $0.sourceIDs.count > $1.sourceIDs.count }
+                        .compactMap { $0.book }
+                }
+            }
         }
     }
 
@@ -71,8 +76,8 @@ final class RecommendationsDefaultModel<RecommendationsService: FavoritesService
         self.catalogService = catalogService
         self.favoritesService = favoritesService
 
-        bind(favoritesService: self.favoritesService)
-        updateFavorites()
+        bind(favoritesService: favoritesService)
+        update()
     }
 
     deinit {
@@ -85,15 +90,20 @@ final class RecommendationsDefaultModel<RecommendationsService: FavoritesService
 
     func toggleFavoriteStateOfBook(withID id: String) {
         if favoriteBookIDs.contains(id) {
+            favoriteBookIDs.removeAll { $0 == id }
             favoritesService.removeFromFavoriteBook(withID: id)
+            
+            removeRecommendedBooksForBook(withID: id)
         } else {
+            favoriteBookIDs.append(id)
             favoritesService.addToFavoritesBook(withID: id)
+            
+            Task { await addRecommendedBooksForBook(withID: id) }
         }
-        updateFavorites()
     }
 
     func blockFromRecommendationsBook(withID id: String) {
-        prioritizedRecommendations[id] = nil
+        prioritizedRecommendations.removeValue(forKey: id)
         favoritesService.addToBlockedBook(withID: id)
     }
 
@@ -103,44 +113,70 @@ final class RecommendationsDefaultModel<RecommendationsService: FavoritesService
         favoritesService
             .objectWillChange
             .sink { [weak self] _ in
-                self?.objectWillChange.send()
-                self?.updateFavorites()
+                self?.update()
             }
             .store(in: &cancellables)
     }
 
-    private func updateFavorites() {
-        favoriteBookIDs = favoritesService.favoriteBooks.compactMap { $0.id }
-        favoriteBookIDs.forEach { id in
-            Task { await addSimilarBooksToRecommendationsFromBook(withID: id) }
+    private func update() {
+        favoriteBookIDs = favoritesService.favoriteBookIDs
+        addRecommendedBooksForBooks(withIDs: favoritesService.favoriteBookIDs)
+    }
+
+    private func addRecommendedBooksForBooks(withIDs ids: [String]) {
+        ids.forEach { id in
+            Task { await addRecommendedBooksForBook(withID: id) }
         }
     }
 
-    private func addSimilarBooksToRecommendationsFromBook(withID id: String) async {
+    private func addRecommendedBooksForBook(withID id: String) async {
         let book = await catalogService.getBook(by: id)
-        addSimilarToRecommendationsBooks(withIDs: book?.similarBookIDs ?? [])
+        await addRecommendedBooks(withIDs: book?.similarBookIDs ?? [], for: id)
     }
 
-    private func addSimilarToRecommendationsBooks(withIDs ids: [String]) {
-        let blockedBooks = favoritesService.blockedBooks
+    private func addRecommendedBooks(withIDs ids: [String], for sourceID: String) async {
+        let blockedBooks = favoritesService.blockedBookIDs
         let filteredIDs = ids.filter { id in
-            !blockedBooks.contains { $0.id == id } // Filter out blocked books from recommendations.
+            !blockedBooks.contains(id)
         }
-        filteredIDs.forEach { id in
-            Task { await addToRecommendationsBook(withID: id) }
+
+        for id in filteredIDs {
+            await addRecommendedBook(withID: id, for: sourceID)
         }
     }
 
-    private func addToRecommendationsBook(withID id: String) async {
+    private func addRecommendedBook(withID id: String, for sourceID: String) async {
         if let bookDescriptor = prioritizedRecommendations[id] {
-            prioritizedRecommendations[id] = (bookDescriptor.priority + 1, bookDescriptor.book)
-        } else {
-            prioritizedRecommendations[id] = (1, nil)
+            var sourceIDs = bookDescriptor.sourceIDs
+            sourceIDs.insert(sourceID)
 
-            let book = await catalogService.getBook(by: id)
-            if let bookDescriptor = prioritizedRecommendations[id],
-               bookDescriptor.book == nil {
-                prioritizedRecommendations[id] = (bookDescriptor.priority, book)
+            prioritizedRecommendations[id] = (bookDescriptor.book, sourceIDs)
+        }
+
+        guard let book = await catalogService.getBook(by: id) else {
+            return
+        }
+
+        // This needs re-checking, because the situation might've changed while the book was being fetched.
+        if favoritesService.blockedBookIDs.contains(id) {
+            prioritizedRecommendations.removeValue(forKey: id)
+        } else {
+            prioritizedRecommendations[id] = (book, [sourceID])
+        }
+    }
+
+    private func removeRecommendedBooksForBook(withID id: String) {
+        for bookDescriptor in prioritizedRecommendations {
+            var sourceIDs = bookDescriptor.value.sourceIDs
+            guard sourceIDs.contains(id) else {
+                continue
+            }
+
+            if sourceIDs.count == 1 {
+                prioritizedRecommendations.removeValue(forKey: bookDescriptor.key)
+            } else {
+                sourceIDs.remove(id)
+                prioritizedRecommendations[bookDescriptor.key] = (bookDescriptor.value.book, sourceIDs)
             }
         }
     }

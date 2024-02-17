@@ -32,11 +32,10 @@ protocol CatalogService {
 
 extension GoodreadsService: CatalogService { }
 
+#if DEBUG
+
 // MARK: -
 
-/// A mock implementation of the service.
-///
-/// Useful for testing.
 final class CatalogMockService: CatalogService {
 
     // MARK: - Properties
@@ -108,3 +107,5 @@ final class CatalogMockService: CatalogService {
     }
 
 }
+
+#endif

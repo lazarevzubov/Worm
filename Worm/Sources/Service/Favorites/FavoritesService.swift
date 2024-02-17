@@ -7,17 +7,18 @@
 //
 
 import Combine
-import CoreData
+import SwiftData
+import SwiftUI
 
 /// Manages a favorite books list.
 protocol FavoritesService: ObservableObject {
 
     // MARK: - Properties
 
-    /// The current list of blocked from recommendations books.
-    var blockedBooks: [BlockedBook] { get }
-    /// The current list of favorite books.
-    var favoriteBooks: [FavoriteBook] { get }
+    /// The list of IDs of books blocked from recommendations.
+    var blockedBookIDs: [String] { get }
+    /// The list of IDs of favorite books.
+    var favoriteBookIDs: [String] { get }
 
     // MARK: - Methods
 
@@ -42,19 +43,31 @@ final class FavoritesPersistenceService: FavoritesService {
 
     // MARK: FavoritesService protocol properties
 
-    var blockedBooks: [BlockedBook] { fetched(BlockedBook.self) }
-    var favoriteBooks: [FavoriteBook] { fetched(FavoriteBook.self) }
+    var blockedBookIDs: [String] {
+        blockedBooks.map { $0.id }
+    }
+    var favoriteBookIDs: [String] {
+        favoriteBooks.map { $0.id }
+    }
 
     // MARK: Private properties
 
-    private let persistenceContext: NSManagedObjectContext
+    private var blockedBooks: [BlockedBook] {
+        let descriptor = FetchDescriptor<BlockedBook>()
+        return (try? modelContext.fetch(descriptor)) ?? []
+    }
+    var favoriteBooks: [FavoriteBook] {
+        let descriptor = FetchDescriptor<FavoriteBook>()
+        return (try? modelContext.fetch(descriptor)) ?? []
+    }
+    private let modelContext: ModelContext
 
     // MARK: - Initialization
 
     /// Creates a service instance.
-    /// - Parameter persistenceContext: An object space to manipulate and track changes to the app's Core Data persistent storage.
-    init(persistenceContext: NSManagedObjectContext) {
-        self.persistenceContext = persistenceContext
+    /// - Parameter modelContainer: An object that manages an app’s schema and model storage configuration.
+    init(modelContainer: ModelContainer) {
+        self.modelContext = ModelContext(modelContainer)
     }
 
     // MARK: - Methods
@@ -62,48 +75,41 @@ final class FavoritesPersistenceService: FavoritesService {
     // MARK: FavoritesService protocol methods
 
     func addToBlockedBook(withID id: String) {
-        add(id, toManagedType: BlockedBook.self)
+        do {
+            let blockedBook = BlockedBook(id: id)
+
+            modelContext.insert(blockedBook)
+            try modelContext.save()
+
+            objectWillChange.send()
+        } catch {
+            // TODO: Proper error handling.
+            print("Could not save context: \(error)")
+        }
     }
 
     func addToFavoritesBook(withID id: String) {
-        add(id, toManagedType: FavoriteBook.self)
+        do {
+            let favoriteBook = FavoriteBook(id: id)
+
+            modelContext.insert(favoriteBook)
+            try modelContext.save()
+
+            objectWillChange.send()
+        } catch {
+            // TODO: Proper error handling.
+            print("Could not save context: \(error)")
+        }
     }
 
     func removeFromFavoriteBook(withID id: String) {
         favoriteBooks.forEach {
             if $0.id == id {
-                persistenceContext.delete($0)
-                try? persistenceContext.save()
-
+                modelContext.delete($0)
                 objectWillChange.send()
 
                 return
             }
-        }
-    }
-
-    // MARK: Private methods
-
-    private func fetched<SpecificEntity: Entity>(_ entity: SpecificEntity.Type) -> [SpecificEntity] {
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entity.entityName)
-        return (try? persistenceContext.fetch(fetchRequest) as? [SpecificEntity]) ?? []
-    }
-
-    private func add(_ id: String, toManagedType managedType: NSManagedObject.Type) {
-        let favoriteBook = NSManagedObject(entity: managedType.entity(), insertInto: persistenceContext)
-        favoriteBook.setValue(id, forKey: "id") // TODO: Find out how to do that properly.
-
-        saveContextAndNotifyObservers()
-    }
-
-    private func saveContextAndNotifyObservers() {
-        do {
-            try persistenceContext.save()
-            objectWillChange.send()
-        } catch {
-            // TODO: Handle errors.
-            let error = error as NSError
-            fatalError("Unresolved error \(error), \(error.userInfo).")
         }
     }
 

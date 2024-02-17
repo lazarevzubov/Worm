@@ -1,5 +1,6 @@
 # Worm
 
-A book recommendations app for iOS/iPadOS being built 100% natively. Plain SwiftUI, Swift Packages and a little of CoreData.
+A 100% native book recommendations app for iOS/iPadOS. Plain SwiftUI, structured concurrency, Combine, SwiftData, and 
+Swift packages.
 
 W.I.P.
