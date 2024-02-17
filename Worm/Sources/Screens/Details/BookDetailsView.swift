@@ -45,9 +45,10 @@ struct BookDetailsView<ViewModel: BookDetailsViewModel>: View {
 
     // MARK: - Initialization
 
-    // TODO: Update HeaderDoc.
     /// Creates the view.
-    /// - Parameter viewModel: The presentation data provider.
+    /// - Parameters:
+    ///   - viewModel: The presentation data provider.
+    ///   - presented: A binding that indicates whether the view is presented on the screen.
     init(viewModel: ViewModel, presented: Binding<Bool>) {
         self.viewModel = viewModel
         _presented = presented

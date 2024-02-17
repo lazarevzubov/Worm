@@ -15,7 +15,7 @@ protocol BookDetailsPresentable {
     // MARK: - Methods
 
     /// Creates a details view model for corresponding to presented books.
-    /// - Parameter favorite: The book to present details for.
+    /// - Parameter book: The book to present details for.
     func makeDetailsViewModel(for book: BookViewModel) -> DetailsViewModel
 
 }

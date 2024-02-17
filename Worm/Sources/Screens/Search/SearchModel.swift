@@ -7,7 +7,6 @@
 //
 
 import Combine
-import Foundation
 import GoodreadsService
 
 /// The search screen model.

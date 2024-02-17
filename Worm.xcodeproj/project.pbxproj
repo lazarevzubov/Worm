@@ -314,8 +314,8 @@
 		4E5C6E1A2565BF3F00DDB833 /* Search */ = {
 			isa = PBXGroup;
 			children = (
-				4E5C6E2A2565BF9800DDB833 /* SearchView.swift */,
 				4E5C6E1B2565BF4800DDB833 /* SearchModel.swift */,
+				4E5C6E2A2565BF9800DDB833 /* SearchView.swift */,
 				4E5C6E232565BF6900DDB833 /* SearchViewModel.swift */,
 			);
 			path = Search;
