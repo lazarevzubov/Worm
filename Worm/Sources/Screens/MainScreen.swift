@@ -1,5 +1,5 @@
 //
-//  MainView.swift
+//  MainScreen.swift
 //  Worm
 //
 //  Created by Nikita Lazarev-Zubov on 25.6.2020.
@@ -13,7 +13,7 @@ import SwiftUI
 // TODO: iPads.
 
 /// The main screen visual representation.
-struct MainView<SearchView: View, RecommendationsView: View, FavoritesView: View>: View {
+struct MainScreen<SearchView: View, RecommendationsView: View, FavoritesView: View>: View {
 
     // MARK: - Properties
 
@@ -72,7 +72,7 @@ struct MainView<SearchView: View, RecommendationsView: View, FavoritesView: View
     let recommendationsView = RecommendationsView(viewModel: RecommendationsPreviewViewModel())
     let favoritesView = FavoritesView(viewModel: FavoritesPreviewsViewModel())
 
-    return MainView(searchView: searchView, recommendationsView: recommendationsView, favoritesView: favoritesView)
+    return MainScreen(searchView: searchView, recommendationsView: recommendationsView, favoritesView: favoritesView)
 }
 
 #endif

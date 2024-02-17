@@ -31,7 +31,7 @@ enum ViewFactory<RecommendationsService: FavoritesService> {
                                               favoritesService: favoritesService,
                                               imageService: imageService)
 
-        return MainView(searchView: searchView, recommendationsView: recommendationsView, favoritesView: favoritesView)
+        return MainScreen(searchView: searchView, recommendationsView: recommendationsView, favoritesView: favoritesView)
     }
 
     // MARK: Private methods
