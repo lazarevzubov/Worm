@@ -8,8 +8,6 @@
 
 import Combine
 
-// FIXME: Same model objects for all layers.
-
 /// The presentation logic of the book search screen.
 protocol SearchViewModel: BookListCellViewModel, BookDetailsPresentable, ObservableObject {
 

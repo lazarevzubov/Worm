@@ -13,10 +13,8 @@ protocol ImageService {
     // MARK: - Methods
 
     /// Retrieves the image from an URL.
-    /// - Parameters:
-    ///   - url: The image URL.
-    ///   - resultCompletion: The block of code to run on result.
-    ///     - image: The retrieved image.
+    /// - Parameter url: The image URL.
+    /// - Returns: The retrieved image.
     func getImage(from url: URL) async -> UIImage?
 
 }
@@ -29,8 +27,7 @@ protocol WebService {
     // MARK: - Methods
 
     /// Retrieves the contents of the specified URL.
-    /// - Parameters:
-    ///   - url: The URL the data is to be retrieved from.
+    /// - Parameter url: The URL the data is to be retrieved from.
     /// - Returns: The data returned by the server and an object that provides response metadata, such as HTTP headers and status code.
     func data(from url: URL) async throws -> (Data, URLResponse)
 
