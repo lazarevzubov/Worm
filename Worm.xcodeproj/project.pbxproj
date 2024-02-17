@@ -29,7 +29,7 @@
 		4E5C6DE32565BD5500DDB833 /* ViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5C6DE22565BD5500DDB833 /* ViewFactory.swift */; };
 		4E5C6DEA2565BDF500DDB833 /* CatalogService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5C6DE92565BDF500DDB833 /* CatalogService.swift */; };
 		4E5C6E002565BE8900DDB833 /* FavoritesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5C6DFF2565BE8900DDB833 /* FavoritesService.swift */; };
-		4E5C6E082565BEB700DDB833 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5C6E072565BEB700DDB833 /* MainView.swift */; };
+		4E5C6E082565BEB700DDB833 /* MainScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5C6E072565BEB700DDB833 /* MainScreen.swift */; };
 		4E5C6E132565BF0900DDB833 /* RecommendationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5C6E122565BF0900DDB833 /* RecommendationsView.swift */; };
 		4E5C6E1C2565BF4800DDB833 /* SearchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5C6E1B2565BF4800DDB833 /* SearchModel.swift */; };
 		4E5C6E242565BF6900DDB833 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5C6E232565BF6900DDB833 /* SearchViewModel.swift */; };
@@ -99,7 +99,7 @@
 		4E5C6DE22565BD5500DDB833 /* ViewFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewFactory.swift; sourceTree = "<group>"; };
 		4E5C6DE92565BDF500DDB833 /* CatalogService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogService.swift; sourceTree = "<group>"; };
 		4E5C6DFF2565BE8900DDB833 /* FavoritesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesService.swift; sourceTree = "<group>"; };
-		4E5C6E072565BEB700DDB833 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		4E5C6E072565BEB700DDB833 /* MainScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreen.swift; sourceTree = "<group>"; };
 		4E5C6E122565BF0900DDB833 /* RecommendationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationsView.swift; sourceTree = "<group>"; };
 		4E5C6E1B2565BF4800DDB833 /* SearchModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchModel.swift; sourceTree = "<group>"; };
 		4E5C6E232565BF6900DDB833 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
@@ -276,7 +276,7 @@
 				4E5C6E1A2565BF3F00DDB833 /* Search */,
 				4EAD6D2325E6EEA800D1879A /* BookDetailsPresentable.swift */,
 				4E5C6E422565C05F00DDB833 /* BookViewModel.swift */,
-				4E5C6E072565BEB700DDB833 /* MainView.swift */,
+				4E5C6E072565BEB700DDB833 /* MainScreen.swift */,
 				4E5C6DE22565BD5500DDB833 /* ViewFactory.swift */,
 			);
 			path = Screens;
@@ -526,7 +526,7 @@
 				DDB4B7A62B933155001A3172 /* Sequence.swift in Sources */,
 				4E62031A25E2EB6100671369 /* ImageService.swift in Sources */,
 				4E5C6E1C2565BF4800DDB833 /* SearchModel.swift in Sources */,
-				4E5C6E082565BEB700DDB833 /* MainView.swift in Sources */,
+				4E5C6E082565BEB700DDB833 /* MainScreen.swift in Sources */,
 				4E62030C25E2E49000671369 /* BookDetailsViewModel.swift in Sources */,
 				4E5C6DE32565BD5500DDB833 /* ViewFactory.swift in Sources */,
 				4E5AFB6625ACC74100DD73BF /* FavoritesModel.swift in Sources */,
@@ -721,7 +721,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Worm/Preview Content\"";
-				DEVELOPMENT_TEAM = V42H29UY7B;
+				DEVELOPMENT_TEAM = 5P57GECZ2K;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Worm/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
@@ -746,7 +746,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Worm/Preview Content\"";
-				DEVELOPMENT_TEAM = V42H29UY7B;
+				DEVELOPMENT_TEAM = 5P57GECZ2K;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Worm/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
