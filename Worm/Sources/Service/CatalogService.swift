@@ -14,16 +14,12 @@ protocol CatalogService {
     // MARK: - Methods
 
     /// Dispatches a book search query.
-    /// - Parameters:
-    ///   - query: The search query.
-    ///   - resultCompletion: The block of code to run upon the query completion.
-    ///   - ids: The result of the query consisting of book IDs.
+    /// - Parameter query: The search query.
+    /// - Returns: The result of the query consisting of book IDs.
     func searchBooks(_ query: String) async -> [String]
     /// Dispatches a request of a book info.
-    /// - Parameters:
-    ///   - id: The ID of the book.
-    ///   - resultCompletion: The block of code to run upon the request completion.
-    ///   - book: The result of the request.
+    /// - Parameter id: The ID of the book.
+    /// - Returns: The result of the request.
     func getBook(by id: String) async -> Book?
 
 }
