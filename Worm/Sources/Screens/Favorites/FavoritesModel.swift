@@ -10,12 +10,14 @@ import Combine
 import GoodreadsService
 
 /// Owns logic of maintaining a list of favorite books.
-protocol FavoritesModel: ObservableObject {
+protocol FavoritesModel: AnyObject {
 
     // MARK: - Properties
 
-    /// The list of favorite book.
+    // TODO: HeaderDoc.
     var favorites: [Book] { get }
+    // TODO: HeaderDoc.
+    var favoritesPublisher: Published<[Book]>.Publisher { get }
 
     // MARK: - Methods
 
@@ -34,8 +36,9 @@ final class FavoritesServiceBasedModel<FavoriteBooksService: FavoritesService>: 
 
     // MARK: FavoritesModel protocol properties
 
+    var favoritesPublisher: Published<[Book]>.Publisher { $favorites }
     @Published
-    var favorites = [Book]()
+    private(set) var favorites = [Book]()
 
     // MARK: Private properties
 
@@ -54,7 +57,6 @@ final class FavoritesServiceBasedModel<FavoriteBooksService: FavoritesService>: 
         self.favoritesService = favoritesService
 
         bind(favoritesService: self.favoritesService)
-        updateFavorites()
     }
 
     deinit {
@@ -67,7 +69,6 @@ final class FavoritesServiceBasedModel<FavoriteBooksService: FavoritesService>: 
 
     func toggleFavoriteStateOfBook(withID id: String) {
         if favorites.contains(where: { $0.id == id }) {
-            favorites.removeAll { $0.id == id }
             favoritesService.removeFromFavoriteBook(withID: id)
         } else {
             favoritesService.addToFavoritesBook(withID: id)
@@ -78,23 +79,24 @@ final class FavoritesServiceBasedModel<FavoriteBooksService: FavoritesService>: 
 
     private func bind(favoritesService: FavoriteBooksService) {
         favoritesService
-            .objectWillChange
-            .sink { [weak self] _ in
-                self?.objectWillChange.send()
-                self?.updateFavorites()
+            .favoriteBookIDsPublisher
+            .removeDuplicates()
+            .sink { [weak self] in
+                self?.updateFavorites(with: $0)
             }
             .store(in: &cancellables)
     }
 
-    private func updateFavorites() {
-        favoritesService.favoriteBookIDs.forEach { bookID in
+    private func updateFavorites(with favoriteBookIDs: Set<String>) {
+        favoriteBookIDs.forEach { bookID in
             Task {
                 if let book = await catalogService.getBook(by: bookID),
-                   favorites.contains(where: { $0.id == book.id }) != true {
-                    await MainActor.run { favorites.append(book) }
+                   !favorites.contains(where: { $0.id == book.id }) {
+                    favorites.append(book)
                 }
             }
         }
+        favorites.removeAll { !favoriteBookIDs.contains($0.id) }
     }
 
 }

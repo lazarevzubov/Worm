@@ -7,18 +7,22 @@
 //
 
 import Combine
+import Foundation
 import SwiftData
-import SwiftUI
 
 /// Manages a favorite books list.
-protocol FavoritesService: ObservableObject {
+protocol FavoritesService {
 
     // MARK: - Properties
 
     /// The list of IDs of books blocked from recommendations.
-    var blockedBookIDs: [String] { get }
+    var blockedBookIDs: Set<String> { get }
+    // TODO: HeaderDoc.
+    var blockedBookIDsPublisher: Published<Set<String>>.Publisher { get }
     /// The list of IDs of favorite books.
-    var favoriteBookIDs: [String] { get }
+    var favoriteBookIDs: Set<String> { get }
+    // TODO: HeaderDoc.
+    var favoriteBookIDsPublisher: Published<Set<String>>.Publisher { get }
 
     // MARK: - Methods
 
@@ -43,31 +47,36 @@ final class FavoritesPersistenceService: FavoritesService {
 
     // MARK: FavoritesService protocol properties
 
-    var blockedBookIDs: [String] {
-        blockedBooks.map { $0.id }
-    }
-    var favoriteBookIDs: [String] {
-        favoriteBooks.map { $0.id }
-    }
+    var blockedBookIDsPublisher: Published<Set<String>>.Publisher { $blockedBookIDs }
+    var favoriteBookIDsPublisher: Published<Set<String>>.Publisher { $favoriteBookIDs }
+    @Published
+    private(set) var blockedBookIDs = Set<String>()
+    @Published
+    private(set) var favoriteBookIDs = Set<String>()
 
     // MARK: Private properties
 
+    private let container: ModelContainer
     private var blockedBooks: [BlockedBook] {
+        let context = ModelContext(container)
         let descriptor = FetchDescriptor<BlockedBook>()
-        return (try? modelContext.fetch(descriptor)) ?? []
+
+        return (try? context.fetch(descriptor)) ?? []
     }
-    var favoriteBooks: [FavoriteBook] {
+    private var favoriteBooks: [FavoriteBook] {
+        let context = ModelContext(container)
         let descriptor = FetchDescriptor<FavoriteBook>()
-        return (try? modelContext.fetch(descriptor)) ?? []
+
+        return (try? context.fetch(descriptor)) ?? []
     }
-    private let modelContext: ModelContext
 
     // MARK: - Initialization
 
     /// Creates a service instance.
     /// - Parameter modelContainer: An object that manages an app’s schema and model storage configuration.
     init(modelContainer: ModelContainer) {
-        self.modelContext = ModelContext(modelContainer)
+        container = modelContainer
+        update()
     }
 
     // MARK: - Methods
@@ -78,10 +87,11 @@ final class FavoritesPersistenceService: FavoritesService {
         do {
             let blockedBook = BlockedBook(id: id)
 
-            modelContext.insert(blockedBook)
-            try modelContext.save()
+            let context = ModelContext(container)
+            context.insert(blockedBook)
+            try context.save()
 
-            objectWillChange.send()
+            updateBlockedBooks()
         } catch {
             // TODO: Proper error handling.
             print("Could not save context: \(error)")
@@ -92,10 +102,11 @@ final class FavoritesPersistenceService: FavoritesService {
         do {
             let favoriteBook = FavoriteBook(id: id)
 
-            modelContext.insert(favoriteBook)
-            try modelContext.save()
+            let context = ModelContext(container)
+            context.insert(favoriteBook)
+            try context.save()
 
-            objectWillChange.send()
+            updateFavoriteBooks()
         } catch {
             // TODO: Proper error handling.
             print("Could not save context: \(error)")
@@ -103,14 +114,28 @@ final class FavoritesPersistenceService: FavoritesService {
     }
 
     func removeFromFavoriteBook(withID id: String) {
-        favoriteBooks.forEach {
-            if $0.id == id {
-                modelContext.delete($0)
-                objectWillChange.send()
-
-                return
-            }
+        do {
+            try ModelContext(container).delete(model: FavoriteBook.self, where: #Predicate { $0.id == id })
+            updateFavoriteBooks()
+        } catch {
+            // TODO: Proper error handling.
+            print("Could not save context: \(error)")
         }
+    }
+
+    // MARK: Private methods
+
+    private func update() {
+        updateBlockedBooks()
+        updateFavoriteBooks()
+    }
+
+    private func updateBlockedBooks() {
+        blockedBookIDs = Set(blockedBooks.map { $0.id })
+    }
+
+    private func updateFavoriteBooks() {
+        favoriteBookIDs = Set(favoriteBooks.map { $0.id })
     }
 
 }

@@ -55,8 +55,6 @@ struct FavoritesView<ViewModel: FavoritesViewModel>: View {
 
 #if DEBUG
 
-#Preview {
-    FavoritesView(viewModel: FavoritesPreviewsViewModel())
-}
+#Preview { FavoritesView(viewModel: FavoritesPreviewsViewModel()) }
 
 #endif

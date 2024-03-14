@@ -20,7 +20,7 @@ protocol RecommendationsViewModel: BookListCellViewModel, BookDetailsPresentable
 
     /// Blocks a book from appearing as a recommendation.
     /// - Parameter recommendation: The book to block.
-    func block(recommendation: BookViewModel)
+    func blockRecommendation(_ recommendation: BookViewModel)
 
 }
 
@@ -76,23 +76,19 @@ final class RecommendationsDefaultViewModel<Model: RecommendationsModel>: Recomm
                                     imageService: imageService)
     }
 
-    func block(recommendation: BookViewModel) {
+    func blockRecommendation(_ recommendation: BookViewModel) {
         model.blockFromRecommendationsBook(withID: recommendation.id)
     }
-
-
 
     // MARK: Private methods
 
     private func bind(model: Model) {
         model
-            .objectWillChange
-            .sink { _ in
+            .recommendationsPublisher
+            .sink { recommendations in
                 Task {
                     await MainActor.run {
-                        self.objectWillChange.send()
-                        self.recommendations = model
-                            .recommendations
+                        self.recommendations = recommendations
                             .map { BookViewModel(book: $0, favorite: model.favoriteBookIDs.contains($0.id)) }
                             .filter { !$0.favorite }
                     }
@@ -181,7 +177,7 @@ final class RecommendationsPreviewViewModel: RecommendationsViewModel {
         BookDetailsPreviewViewModel()
     }
 
-    func block(recommendation: BookViewModel) {
+    func blockRecommendation(_ recommendation: BookViewModel) {
         // Do nothing in previews.
     }
 

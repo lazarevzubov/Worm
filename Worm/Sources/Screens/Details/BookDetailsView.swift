@@ -21,7 +21,7 @@ struct BookDetailsView<ViewModel: BookDetailsViewModel>: View {
                 .padding()
         }
         Spacer()
-        if let image = viewModel.image {
+        if let image = viewModel.image { // TODO: Update if downloaded later.
             Image(uiImage: image)
             Spacer()
         }
@@ -60,8 +60,6 @@ struct BookDetailsView<ViewModel: BookDetailsViewModel>: View {
 
 // MARK: -
 
-#Preview {
-    BookDetailsView(viewModel: BookDetailsPreviewViewModel(), presented: .constant(true))
-}
+#Preview { BookDetailsView(viewModel: BookDetailsPreviewViewModel(), presented: .constant(true)) }
 
 #endif

@@ -2,58 +2,12 @@
 //  FavoritesMockService.swift
 //  WormTests
 //
-//  Created by Nikita Lazarev-Zubov on 4.8.2020.
-//  Copyright © 2020 Nikita Lazarev-Zubov. All rights reserved.
+//  Created by Lazarev-Zubov, Nikita on 6.4.2024.
 //
 
+import Combine
 @testable
 import Worm
-
-final class MockFavoriteBook: FavoriteBook {
-
-    // MARK: - Properties
-
-    override var id: String {
-        set {
-            // Do nothing.
-        }
-        get { return mockID }
-    }
-    var mockID: String = ""
-
-    // MARK: - Initialization
-
-    convenience init(id: String) {
-        self.init()
-        self.mockID = id
-    }
-
-}
-
-// MARK: -
-
-final class MockBlockedBook: BlockedBook {
-
-    // MARK: - Properties
-
-    override var id: String {
-        set {
-            // Do nothing.
-        }
-        get { return mockID }
-    }
-    var mockID: String = ""
-
-    // MARK: - Initialization
-
-    convenience init(id: String) {
-        self.init()
-        self.mockID = id
-    }
-
-}
-
-// MARK: -
 
 final class FavoritesMockService: FavoritesService {
 
@@ -61,16 +15,17 @@ final class FavoritesMockService: FavoritesService {
 
     // MARK: FavoritesService protocol properties
 
-    private(set) var blockedBooks: [BlockedBook] = []
-    private(set) var favoriteBooks: [FavoriteBook] {
-        didSet { objectWillChange.send() }
-    }
+    var blockedBookIDsPublisher: Published<Set<String>>.Publisher { $blockedBookIDs }
+    var favoriteBookIDsPublisher: Published<Set<String>>.Publisher { $favoriteBookIDs }
+    @Published
+    private(set) var blockedBookIDs = Set<String>()
+    @Published
+    private(set) var favoriteBookIDs: Set<String>
 
     // MARK: - Initialization
 
-    init(favoriteBooks: [FavoriteBook] = []) {
-        self.favoriteBooks = favoriteBooks
-        objectWillChange.send()
+    init(favoriteBookIDs: Set<String> = []) {
+        self.favoriteBookIDs = favoriteBookIDs
     }
 
     // MARK: - Methods
@@ -78,19 +33,15 @@ final class FavoritesMockService: FavoritesService {
     // MARK: FavoritesService protocol methods
 
     func addToBlockedBook(withID id: String) {
-        let blockedBook = MockBlockedBook(id: id)
-        blockedBooks.append(blockedBook)
+        blockedBookIDs.insert(id)
     }
 
     func addToFavoritesBook(withID id: String) {
-        if !favoriteBooks.contains(where: { $0.id == id }) {
-            let book = MockFavoriteBook(id: id)
-            favoriteBooks.append(book)
-        }
+        favoriteBookIDs.insert(id)
     }
 
     func removeFromFavoriteBook(withID id: String) {
-        favoriteBooks.removeAll { $0.id == id }
+        favoriteBookIDs.remove(id)
     }
 
 }

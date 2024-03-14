@@ -32,7 +32,7 @@ extension GoodreadsService: CatalogService { }
 
 // MARK: -
 
-final class CatalogMockService: CatalogService {
+final class CatalogPreviewsService: CatalogService {
 
     // MARK: - Properties
 
@@ -95,11 +95,11 @@ final class CatalogMockService: CatalogService {
     // MARK: Service protocol methods
 
     func searchBooks(_ query: String) async -> [String] {
-        CatalogMockService.books.map { $0.id }
+        Self.books.map { $0.id }
     }
 
     func getBook(by id: String) async -> Book? {
-        CatalogMockService.books.first { $0.id == id }
+        Self.books.first { $0.id == id }
     }
 
 }

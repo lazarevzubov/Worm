@@ -63,8 +63,6 @@ struct SearchView<ViewModel: SearchViewModel>: View {
 
 // MARK: -
 
-#Preview {
-    SearchView(viewModel: SearchPreviewViewModel())
-}
+#Preview { SearchView(viewModel: SearchPreviewViewModel()) }
 
 #endif
