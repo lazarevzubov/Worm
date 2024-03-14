@@ -79,14 +79,11 @@ final class SearchDefaultViewModel<Model: SearchModel>: SearchViewModel {
 
     private func bind(model: Model) {
         model
-            .objectWillChange
-            .sink { _ in
-                Task {
-                    await MainActor.run {
-                        self.objectWillChange.send()
-                        self.books = model.books.map {
-                            BookViewModel(book: $0, favorite: model.favoriteBookIDs.contains($0.id))
-                        }
+            .booksPublisher
+            .sink { books in
+                Task { @MainActor [weak self] in
+                    self?.books = books.map {
+                        BookViewModel(book: $0, favorite: model.favoriteBookIDs.contains($0.id))
                     }
                 }
             }

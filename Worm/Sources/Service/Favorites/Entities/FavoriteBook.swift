@@ -16,7 +16,7 @@ final class FavoriteBook {
 
     /// The book's ID.
     @Attribute(.unique)
-    var id: String
+    let id: String // TODO: Check if can be let.
 
     // MARK: - Initialization
 

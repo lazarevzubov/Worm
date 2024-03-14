@@ -74,12 +74,14 @@ final class FavoritesDefaultViewModel<Model: FavoritesModel>: FavoritesViewModel
 
     private func bind(model: Model) {
         model
-            .objectWillChange
+            .favoritesPublisher
             .sink { book in
                 Task {
-                    await MainActor.run {
-                        self.objectWillChange.send()
-                        self.favorites = model.favorites.map { BookViewModel(book: $0, favorite: true) }
+                    await MainActor.run { [weak self, weak model] in
+                        guard let model else {
+                            return
+                        }
+                        self?.favorites = model.favorites.map { BookViewModel(book: $0, favorite: true) }
                     }
                 }
             }

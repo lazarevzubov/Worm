@@ -58,7 +58,7 @@ struct RecommendationsView<ViewModel: RecommendationsViewModel>: View {
     // MARK: Private methods
 
     private func deleteItem(at indexSet: IndexSet) {
-        indexSet.forEach { viewModel.block(recommendation: viewModel.recommendations[$0]) }
+        indexSet.forEach { viewModel.blockRecommendation(viewModel.recommendations[$0]) }
     }
 
 }
@@ -67,8 +67,6 @@ struct RecommendationsView<ViewModel: RecommendationsViewModel>: View {
 
 #if DEBUG
 
-#Preview {
-    RecommendationsView(viewModel: RecommendationsPreviewViewModel())
-}
+#Preview { RecommendationsView(viewModel: RecommendationsPreviewViewModel()) }
 
 #endif

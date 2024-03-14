@@ -31,7 +31,7 @@ struct WormApp: App {
     private let favoritesService = {
         let modelContainer: ModelContainer = {
 #if DEBUG
-            let isStoredInMemoryOnly = if ProcessInfo.processInfo.environment["TEST"] != nil {
+            let storedInMemory = if ProcessInfo.processInfo.environment["TEST"] != nil {
                 true
             } else {
                 false
@@ -42,9 +42,9 @@ struct WormApp: App {
             let schema = Schema([BlockedBook.self,
                                  FavoriteBook.self],
                                 version: Schema.Version(1, 0, 0))
-            let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: isStoredInMemoryOnly)
+            let configuration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: storedInMemory)
             do {
-                return try ModelContainer(for: schema, configurations: [modelConfiguration])
+                return try ModelContainer(for: schema, configurations: configuration)
             } catch {
                 // TODO: Proper error handling.
                 fatalError("Could not create ModelContainer: \(error)")
@@ -56,7 +56,7 @@ struct WormApp: App {
     private var catalogService: CatalogService = {
 #if DEBUG
         if ProcessInfo.processInfo.environment["TEST"] != nil {
-            return CatalogMockService()
+            return CatalogPreviewsService()
         }
 #endif
         return GoodreadsService(key: "JQfiS9k0doIho3vm13Qxdg")

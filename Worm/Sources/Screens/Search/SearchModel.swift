@@ -10,14 +10,18 @@ import Combine
 import GoodreadsService
 
 /// The search screen model.
-protocol SearchModel: ObservableObject {
+protocol SearchModel {
 
     // MARK: - Properties
 
     /// The list of books corresponding to the current search query.
-    var books: [Book] { get }
+    var books: Set<Book> { get }
+    // TODO: HeaderDoc.
+    var booksPublisher: Published<Set<Book>>.Publisher { get }
     /// The list of favorite book IDs.
-    var favoriteBookIDs: [String] { get }
+    var favoriteBookIDs: Set<String> { get }
+    // TODO: HeaderDoc.
+    var favoriteBookIDsPublisher: Published<Set<String>>.Publisher { get }
 
     // MARK: - Methods
 
@@ -39,16 +43,19 @@ final class SearchServiceBasedModel<RecommendationsService: FavoritesService>: S
 
     // MARK: SearchModel protocol properties
 
+    var booksPublisher: Published<Set<Book>>.Publisher { $books }
+    var favoriteBookIDsPublisher: Published<Set<String>>.Publisher { $favoriteBookIDs }
     @Published
-    private(set) var books = [Book]()
+    private(set) var books = Set<Book>()
     @Published
-    private(set) var favoriteBookIDs = [String]()
+    private(set) var favoriteBookIDs = Set<String>()
 
     // MARK: Private properties
 
     private let catalogService: CatalogService
     private let favoritesService: RecommendationsService
     private let queryDelay: Duration?
+    private lazy var cancellables = Set<AnyCancellable>()
     private var currentSearchResult = [String]() {
         didSet {
             currentSearchResult.forEach { result in
@@ -72,7 +79,11 @@ final class SearchServiceBasedModel<RecommendationsService: FavoritesService>: S
         self.favoritesService = favoritesService
         self.queryDelay = queryDelay
 
-        updateFavorites()
+        bind(favoritesService: favoritesService)
+    }
+
+    deinit {
+        cancellables.forEach { $0.cancel() }
     }
 
     // MARK: - Methods
@@ -106,13 +117,18 @@ final class SearchServiceBasedModel<RecommendationsService: FavoritesService>: S
         } else {
             favoritesService.addToFavoritesBook(withID: id)
         }
-        updateFavorites()
     }
 
     // MARK: Private methods
 
-    private func updateFavorites() {
-        favoriteBookIDs = favoritesService.favoriteBookIDs
+    private func bind(favoritesService: RecommendationsService) {
+        favoritesService
+            .favoriteBookIDsPublisher
+            .sink { [weak self] in
+                self?.favoriteBookIDs = $0
+
+            }
+            .store(in: &cancellables)
     }
 
     private func handleSearchResult(_ result: String) async {
@@ -123,7 +139,7 @@ final class SearchServiceBasedModel<RecommendationsService: FavoritesService>: S
 
     private func appendIfNeeded(book: Book) {
         if currentSearchResult.contains(book.id) {
-            books.append(book)
+            books.insert(book)
         }
     }
 

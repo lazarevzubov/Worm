@@ -11,7 +11,7 @@ import GoodreadsService
 import OrderedCollections
 
 /// Owns logic of maintaining a list of recommendations.
-protocol RecommendationsModel: ObservableObject {
+protocol RecommendationsModel {
 
     // FIXME: Duplication with SearchModel?
     // TODO: Unblock?
@@ -19,9 +19,13 @@ protocol RecommendationsModel: ObservableObject {
     // MARK: - Properties
 
     /// The list of favorite book IDs.
-    var favoriteBookIDs: [String] { get }
+    var favoriteBookIDs: Set<String> { get }
+    // TODO: HeaderDoc.
+    var favoriteBookIDsPublisher: Published<Set<String>>.Publisher { get }
     /// A list of recommended books in ready-to-display order.
-    var recommendations: [Book] { get }
+    var recommendations: Set<Book> { get }
+    // TODO: HeaderDoc.
+    var recommendationsPublisher: Published<Set<Book>>.Publisher { get }
 
     // MARK: - Methods
 
@@ -43,10 +47,12 @@ final class RecommendationsDefaultModel<RecommendationsService: FavoritesService
 
     // MARK: RecommendationsModel protocol properties
 
+    var favoriteBookIDsPublisher: Published<Set<String>>.Publisher { $favoriteBookIDs }
+    var recommendationsPublisher: Published<Set<Book>>.Publisher { $recommendations }
     @Published
-    private(set) var favoriteBookIDs = [String]()
+    private(set) var favoriteBookIDs = Set<String>()
     @Published
-    var recommendations = [Book]()
+    private(set) var recommendations = Set<Book>()
 
     // MARK: Private properties
 
@@ -55,13 +61,13 @@ final class RecommendationsDefaultModel<RecommendationsService: FavoritesService
     private lazy var cancellables = Set<AnyCancellable>()
     private var prioritizedRecommendations = OrderedDictionary<String, (book: Book, sourceIDs: Set<String>)>() {
         didSet {
-            Task {
-                await MainActor.run {
-                    recommendations = prioritizedRecommendations
+            Task { @MainActor in
+                recommendations = Set(
+                    prioritizedRecommendations
                         .values
                         .stableSorted { $0.sourceIDs.count > $1.sourceIDs.count }
                         .compactMap { $0.book }
-                }
+                )
             }
         }
     }
@@ -77,7 +83,6 @@ final class RecommendationsDefaultModel<RecommendationsService: FavoritesService
         self.favoritesService = favoritesService
 
         bind(favoritesService: favoritesService)
-        update()
     }
 
     deinit {
@@ -90,14 +95,10 @@ final class RecommendationsDefaultModel<RecommendationsService: FavoritesService
 
     func toggleFavoriteStateOfBook(withID id: String) {
         if favoriteBookIDs.contains(id) {
-            favoriteBookIDs.removeAll { $0 == id }
             favoritesService.removeFromFavoriteBook(withID: id)
-            
             removeRecommendedBooksForBook(withID: id)
         } else {
-            favoriteBookIDs.append(id)
             favoritesService.addToFavoritesBook(withID: id)
-            
             Task { await addRecommendedBooksForBook(withID: id) }
         }
     }
@@ -111,19 +112,19 @@ final class RecommendationsDefaultModel<RecommendationsService: FavoritesService
 
     private func bind(favoritesService: RecommendationsService) {
         favoritesService
-            .objectWillChange
-            .sink { [weak self] _ in
-                self?.update()
+            .favoriteBookIDsPublisher
+            .sink { [weak self] in
+                self?.update(with: $0)
             }
             .store(in: &cancellables)
     }
 
-    private func update() {
-        favoriteBookIDs = favoritesService.favoriteBookIDs
-        addRecommendedBooksForBooks(withIDs: favoritesService.favoriteBookIDs)
+    private func update(with favoriteBookIDs: Set<String>) {
+        self.favoriteBookIDs = favoriteBookIDs
+        addRecommendedBooksForBooks(withIDs: favoriteBookIDs)
     }
 
-    private func addRecommendedBooksForBooks(withIDs ids: [String]) {
+    private func addRecommendedBooksForBooks(withIDs ids: Set<String>) {
         ids.forEach { id in
             Task { await addRecommendedBooksForBook(withID: id) }
         }
