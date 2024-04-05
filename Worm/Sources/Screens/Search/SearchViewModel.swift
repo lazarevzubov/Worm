@@ -25,8 +25,6 @@ protocol SearchViewModel: BookListCellViewModel, BookDetailsPresentable, Observa
 /// The presentation logic of the book search screen relying on the default model implementation.
 final class SearchDefaultViewModel<Model: SearchModel>: SearchViewModel {
 
-    typealias DetailsViewModel = BookDetailsDefaultViewModel
-
     // MARK: - Properties
 
     // MARK: SearchViewModel protocol properties
@@ -68,7 +66,7 @@ final class SearchDefaultViewModel<Model: SearchModel>: SearchViewModel {
         model.toggleFavoriteStateOfBook(withID: id)
     }
 
-    func makeDetailsViewModel(for book: BookViewModel) -> DetailsViewModel {
+    func makeDetailsViewModel(for book: BookViewModel) -> some BookDetailsViewModel {
         BookDetailsDefaultViewModel(authors: book.authors,
                                     title: book.title,
                                     imageURL: book.imageURL,
@@ -97,8 +95,6 @@ final class SearchDefaultViewModel<Model: SearchModel>: SearchViewModel {
 // MARK: -
 
 final class SearchPreviewViewModel: SearchViewModel, BookListCellViewModel {
-
-    typealias DetailsViewModel = BookDetailsPreviewViewModel
 
     // MARK: - Properties
 
@@ -176,7 +172,7 @@ final class SearchPreviewViewModel: SearchViewModel, BookListCellViewModel {
         }
     }
 
-    func makeDetailsViewModel(for favorite: BookViewModel) -> DetailsViewModel {
+    func makeDetailsViewModel(for favorite: BookViewModel) -> some BookDetailsViewModel {
         BookDetailsPreviewViewModel()
     }
 

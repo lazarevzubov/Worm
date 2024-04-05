@@ -29,8 +29,6 @@ protocol RecommendationsViewModel: BookListCellViewModel, BookDetailsPresentable
 /// The default implementation of the Recommendations screen view model.
 final class RecommendationsDefaultViewModel<Model: RecommendationsModel>: RecommendationsViewModel {
 
-    typealias DetailsViewModel = BookDetailsDefaultViewModel
-
     // MARK: - Properties
 
     // MARK: RecommendationsViewModel protocol properties
@@ -69,7 +67,7 @@ final class RecommendationsDefaultViewModel<Model: RecommendationsModel>: Recomm
         model.toggleFavoriteStateOfBook(withID: id)
     }
 
-    func makeDetailsViewModel(for book: BookViewModel) -> DetailsViewModel {
+    func makeDetailsViewModel(for book: BookViewModel) -> some BookDetailsViewModel {
         BookDetailsDefaultViewModel(authors: book.authors,
                                     title: book.title,
                                     imageURL: book.imageURL,
@@ -104,8 +102,6 @@ final class RecommendationsDefaultViewModel<Model: RecommendationsModel>: Recomm
 // MARK: -
 
 final class RecommendationsPreviewViewModel: RecommendationsViewModel {
-
-    typealias DetailsViewModel = BookDetailsPreviewViewModel
 
     // MARK: - Properties
 
@@ -173,7 +169,7 @@ final class RecommendationsPreviewViewModel: RecommendationsViewModel {
         // Do nothing in previews.
     }
 
-    func makeDetailsViewModel(for favorite: BookViewModel) -> DetailsViewModel {
+    func makeDetailsViewModel(for favorite: BookViewModel) -> some BookDetailsViewModel {
         BookDetailsPreviewViewModel()
     }
 
