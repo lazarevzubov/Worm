@@ -154,7 +154,6 @@ final class FavoritesDefaultViewModelTests: XCTestCase {
                 favorites.append(Book(authors: [], title: "", id: id))
             }
         }
-
     }
 
 }

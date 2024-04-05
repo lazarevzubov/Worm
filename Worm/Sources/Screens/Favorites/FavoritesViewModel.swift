@@ -23,8 +23,6 @@ protocol FavoritesViewModel: BookListCellViewModel, BookDetailsPresentable, Obse
 /// The default implementation of the Favorites screen view model.
 final class FavoritesDefaultViewModel<Model: FavoritesModel>: FavoritesViewModel {
 
-    typealias DetailsViewModel = BookDetailsDefaultViewModel
-
     // MARK: - Properties
 
     // MARK: FavoritesViewModel protocol properties
@@ -63,7 +61,7 @@ final class FavoritesDefaultViewModel<Model: FavoritesModel>: FavoritesViewModel
         model.toggleFavoriteStateOfBook(withID: id)
     }
 
-    func makeDetailsViewModel(for book: BookViewModel) -> DetailsViewModel {
+    func makeDetailsViewModel(for book: BookViewModel) -> some BookDetailsViewModel {
         BookDetailsDefaultViewModel(authors: book.authors,
                                     title: book.title,
                                     imageURL: book.imageURL,
@@ -95,8 +93,6 @@ final class FavoritesDefaultViewModel<Model: FavoritesModel>: FavoritesViewModel
 #if DEBUG
 
 final class FavoritesPreviewsViewModel: FavoritesViewModel {
-
-    typealias DetailsViewModel = BookDetailsPreviewViewModel
 
     // MARK: - Properties
 
@@ -164,7 +160,7 @@ final class FavoritesPreviewsViewModel: FavoritesViewModel {
         favorites.removeAll { $0.id == id }
     }
 
-    func makeDetailsViewModel(for favorite: BookViewModel) -> DetailsViewModel {
+    func makeDetailsViewModel(for favorite: BookViewModel) -> some BookDetailsViewModel {
         BookDetailsPreviewViewModel()
     }
 
