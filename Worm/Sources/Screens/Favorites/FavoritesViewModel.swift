@@ -74,13 +74,11 @@ final class FavoritesDefaultViewModel<Model: FavoritesModel>: FavoritesViewModel
         model
             .favoritesPublisher
             .sink { book in
-                Task {
-                    await MainActor.run { [weak self, weak model] in
-                        guard let model else {
-                            return
-                        }
-                        self?.favorites = model.favorites.map { BookViewModel(book: $0, favorite: true) }
+                Task { @MainActor [weak self, weak model] in
+                    guard let model else {
+                        return
                     }
+                    self?.favorites = model.favorites.map { BookViewModel(book: $0, favorite: true) }
                 }
             }
             .store(in: &cancellables)

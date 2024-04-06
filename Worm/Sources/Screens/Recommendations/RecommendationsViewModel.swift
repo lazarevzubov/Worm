@@ -84,12 +84,10 @@ final class RecommendationsDefaultViewModel<Model: RecommendationsModel>: Recomm
         model
             .recommendationsPublisher
             .sink { recommendations in
-                Task {
-                    await MainActor.run {
-                        self.recommendations = recommendations
-                            .map { BookViewModel(book: $0, favorite: model.favoriteBookIDs.contains($0.id)) }
-                            .filter { !$0.favorite }
-                    }
+                Task { @MainActor in
+                    self.recommendations = recommendations
+                        .map { BookViewModel(book: $0, favorite: model.favoriteBookIDs.contains($0.id)) }
+                        .filter { !$0.favorite }
                 }
             }
             .store(in: &cancellables)
