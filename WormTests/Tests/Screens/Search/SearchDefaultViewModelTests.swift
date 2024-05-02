@@ -76,6 +76,24 @@ final class SearchDefaultViewModelTests: XCTestCase {
         wait(for: [expectation], timeout: 2.0)
     }
 
+    func testBooks_update_afterTogglingFavorite() async {
+        let id = "1"
+        let books: Set = [Book(authors: [], title: "", id: id)]
+        let vm: any SearchViewModel = SearchDefaultViewModel(model: SearchMockModel(books: books),
+                                                             imageService: ImageMockService())
+
+        let predicate = NSPredicate { vm, _ in
+            guard let vm = vm as? any SearchViewModel else {
+                return false
+            }
+            return vm.books == [BookViewModel(book: Book(authors: [], title: "", id: id), favorite: true)]
+        }
+        let expectation = XCTNSPredicateExpectation(predicate: predicate, object: vm)
+
+        await vm.toggleFavoriteStateOfBook(withID: id)
+        await fulfillment(of: [expectation], timeout: 2.0)
+    }
+
     func testTogglingFavorite_togglesModel() async {
         let model = SearchMockModel()
         let vm: any SearchViewModel = SearchDefaultViewModel(model: model, imageService: ImageMockService())
