@@ -18,14 +18,11 @@ struct FavoritesView<ViewModel: FavoritesViewModel>: View {
     var body: some View {
         NavigationView {
             List(viewModel.favorites) { book in
-                Button { detailsPresented = true } label: { BookListCell(book: book, viewModel: viewModel) }
-                    .sheet(isPresented: $detailsPresented) {
-                        BookDetailsView(viewModel: viewModel.makeDetailsViewModel(for: book),
-                                        presented: $detailsPresented)
-                    }
+                Button { selectedBook = book } label: { BookListCell(book: book, viewModel: viewModel) }
             }
                 .listStyle(.plain)
                 .animation(.easeIn, value: viewModel.favorites)
+                .sheet(item: $selectedBook) { BookDetailsView(viewModel: viewModel.makeDetailsViewModel(for: $0)) }
                 .navigationTitle("Favorites")
                 .toolbarColorScheme(.light, for: .navigationBar)
                 .toolbarBackground(Color(red: (249.0 / 255.0), green: (231.0 / 255.0), blue: (132.0 / 255.0)),
@@ -37,7 +34,7 @@ struct FavoritesView<ViewModel: FavoritesViewModel>: View {
     // MARK: Private properties
 
     @State
-    private var detailsPresented = false
+    private var selectedBook: BookViewModel?
     @ObservedObject
     private var viewModel: ViewModel
 

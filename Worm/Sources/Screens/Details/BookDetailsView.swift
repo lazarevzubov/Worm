@@ -17,7 +17,7 @@ struct BookDetailsView<ViewModel: BookDetailsViewModel>: View {
     var body: some View {
         HStack {
             Spacer()
-            Button("Close") { presented.toggle() }
+            Button("Close") { dismiss() }
                 .padding()
         }
         Spacer()
@@ -38,20 +38,17 @@ struct BookDetailsView<ViewModel: BookDetailsViewModel>: View {
 
     // MARK: Private properties
 
-    @Binding
-    private var presented: Bool
+    @Environment(\.dismiss) 
+    private var dismiss
     @ObservedObject
     private var viewModel: ViewModel
 
     // MARK: - Initialization
 
     /// Creates the view.
-    /// - Parameters:
-    ///   - viewModel: The presentation data provider.
-    ///   - presented: A binding that indicates whether the view is presented on the screen.
-    init(viewModel: ViewModel, presented: Binding<Bool>) {
+    /// - Parameter viewModel: The presentation data provider.
+    init(viewModel: ViewModel) {
         self.viewModel = viewModel
-        _presented = presented
     }
 
 }
@@ -60,6 +57,6 @@ struct BookDetailsView<ViewModel: BookDetailsViewModel>: View {
 
 // MARK: -
 
-#Preview { BookDetailsView(viewModel: BookDetailsPreviewViewModel(), presented: .constant(true)) }
+#Preview { BookDetailsView(viewModel: BookDetailsPreviewViewModel()) }
 
 #endif
