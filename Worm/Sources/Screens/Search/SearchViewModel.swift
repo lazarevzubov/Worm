@@ -99,6 +99,23 @@ final class SearchDefaultViewModel<Model: SearchModel>: @unchecked Sendable, Sea
                 }
             }
             .store(in: &cancellables)
+        model
+            .favoriteBookIDsPublisher
+            .sink { ids in
+                Task { @MainActor [weak self] in
+                    guard let self else {
+                        return
+                    }
+                    for bookIndex in self.books.indices {
+                        self.books[bookIndex] = BookViewModel(authors: self.books[bookIndex].authors,
+                                                              id: self.books[bookIndex].id,
+                                                              imageURL: self.books[bookIndex].imageURL,
+                                                              favorite: ids.contains(self.books[bookIndex].id),
+                                                              title: self.books[bookIndex].title)
+                    }
+                }
+            }
+            .store(in: &cancellables)
     }
 
 }
