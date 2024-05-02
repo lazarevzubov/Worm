@@ -985,8 +985,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/lazarevzubov/GoodreadsService.git";
 			requirement = {
-				branch = bugfix/empty_books;
-				kind = branch;
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.2;
 			};
 		};
 		DDB4B7A12B932EF3001A3172 /* XCRemoteSwiftPackageReference "swift-collections" */ = {
