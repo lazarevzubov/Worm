@@ -7,6 +7,7 @@
 //
 
 import Combine
+import Dispatch
 
 /// The presentation logic of the book search screen.
 protocol SearchViewModel: BookListCellViewModel, BookDetailsPresentable, ObservableObject {
@@ -23,14 +24,19 @@ protocol SearchViewModel: BookListCellViewModel, BookDetailsPresentable, Observa
 // MARK: -
 
 /// The presentation logic of the book search screen relying on the default model implementation.
-final class SearchDefaultViewModel<Model: SearchModel>: SearchViewModel {
+final class SearchDefaultViewModel<Model: SearchModel>: @unchecked Sendable, SearchViewModel {
 
     // MARK: - Properties
 
     // MARK: SearchViewModel protocol properties
 
-    var query: String = "" {
-        didSet { model.searchBooks(by: query) }
+    var query: String {
+        get {
+            synchronizationQueue.sync { synchronizedQuery }
+        }
+        set {
+            synchronizationQueue.async(flags: .barrier) { self.synchronizedQuery = newValue }
+        }
     }
     @Published
     private(set) var books = [BookViewModel]()
@@ -39,7 +45,14 @@ final class SearchDefaultViewModel<Model: SearchModel>: SearchViewModel {
 
     private let imageService: ImageService
     private let model: Model
+    private let synchronizationQueue = DispatchQueue(label: "com.lazarevzubov.SearchDefaultViewModel",
+                                                     attributes: .concurrent)
     private lazy var cancellables = Set<AnyCancellable>()
+    private var synchronizedQuery = "" {
+        didSet {
+            Task { await model.searchBooks(by: query) }
+        }
+    }
 
     // MARK: - Initialization
 
@@ -94,7 +107,7 @@ final class SearchDefaultViewModel<Model: SearchModel>: SearchViewModel {
 
 // MARK: -
 
-final class SearchPreviewViewModel: SearchViewModel, BookListCellViewModel {
+final class SearchPreviewViewModel: @unchecked Sendable, SearchViewModel, BookListCellViewModel {
 
     // MARK: - Properties
 
@@ -155,20 +168,27 @@ final class SearchPreviewViewModel: SearchViewModel, BookListCellViewModel {
     ]
     var query = ""
 
+    // MARK: Private properties
+
+    private let synchronizationQueue = DispatchQueue(label: "com.lazarevzubov.SearchPreviewViewModel",
+                                                     attributes: .concurrent)
+
     // MARK: - Methods
 
     // MARK: SearchViewModel protocol methods
 
     func toggleFavoriteStateOfBook(withID id: String) {
-        books = books.map {
-            BookViewModel(authors: $0.authors,
-                          id: $0.id,
-                          imageURL: nil,
-                          favorite: ($0.id == id)
-                                          ? !$0.favorite
-                                          : $0.favorite,
-                          title: $0.title)
+        synchronizationQueue.async(flags: .barrier) {
+            self.books = self.books.map {
+                BookViewModel(authors: $0.authors,
+                              id: $0.id,
+                              imageURL: nil,
+                              favorite: ($0.id == id)
+                              ? !$0.favorite
+                              : $0.favorite,
+                              title: $0.title)
 
+            }
         }
     }
 

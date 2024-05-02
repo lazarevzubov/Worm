@@ -7,10 +7,11 @@
 //
 
 import Combine
+import Dispatch
 import GoodreadsService
 
 /// The search screen model.
-protocol SearchModel {
+protocol SearchModel: Sendable {
 
     // MARK: - Properties
 
@@ -27,7 +28,7 @@ protocol SearchModel {
 
     /// Queries the book search engine.
     /// - Parameter query: The query to search.
-    func searchBooks(by query: String)
+    func searchBooks(by query: String) async
     /// Toggles the favorite-ness state of a book.
     /// - Parameter id: The ID of the book to manipulate.
     func toggleFavoriteStateOfBook(withID id: String)
@@ -37,7 +38,7 @@ protocol SearchModel {
 // MARK: -
 
 /// The search screen model implemented on top of a data providing service.
-final class SearchServiceBasedModel<RecommendationsService: FavoritesService>: SearchModel {
+final class SearchServiceBasedModel<RecommendationsService: FavoritesService>: @unchecked Sendable, SearchModel {
 
     // MARK: - Properties
 
@@ -55,6 +56,7 @@ final class SearchServiceBasedModel<RecommendationsService: FavoritesService>: S
     private let catalogService: CatalogService
     private let favoritesService: RecommendationsService
     private let queryDelay: Duration?
+    private let synchronizationQueue = DispatchQueue(label: "com.lazarevzubov.SearchServiceBasedModel")
     private lazy var cancellables = Set<AnyCancellable>()
     private var currentSearchResult = [String]() {
         didSet {
@@ -90,11 +92,11 @@ final class SearchServiceBasedModel<RecommendationsService: FavoritesService>: S
 
     // MARK: SearchModel protocol methods
 
-    func searchBooks(by query: String) {
+    func searchBooks(by query: String) async {
         currentSearchTask?.cancel()
 
         let newSearchTask = Task {
-            books.removeAll()
+            synchronizationQueue.sync { books.removeAll() }
             currentSearchResult.removeAll()
 
             if !query.isEmpty {
@@ -103,12 +105,10 @@ final class SearchServiceBasedModel<RecommendationsService: FavoritesService>: S
         }
         currentSearchTask = newSearchTask
 
-        Task {
-            if let queryDelay {
-                try? await Task.sleep(for: queryDelay)
-            }
-            await newSearchTask.value
+        if let queryDelay {
+            try? await Task.sleep(for: queryDelay)
         }
+        await newSearchTask.value
     }
 
     func toggleFavoriteStateOfBook(withID id: String) {
@@ -133,13 +133,13 @@ final class SearchServiceBasedModel<RecommendationsService: FavoritesService>: S
 
     private func handleSearchResult(_ result: String) async {
         if let book = await catalogService.getBook(by: result) {
-            await MainActor.run { appendIfNeeded(book: book) }
+            appendIfNeeded(book: book)
         }
     }
 
     private func appendIfNeeded(book: Book) {
         if currentSearchResult.contains(book.id) {
-            books.insert(book)
+            _ = synchronizationQueue.sync { books.insert(book) }
         }
     }
 

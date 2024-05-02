@@ -7,6 +7,7 @@
 //
 
 import Combine
+import Dispatch
 
 /// Object responsible for Favorites screen presentation logic.
 protocol FavoritesViewModel: BookListCellViewModel, BookDetailsPresentable, ObservableObject {
@@ -21,7 +22,7 @@ protocol FavoritesViewModel: BookListCellViewModel, BookDetailsPresentable, Obse
 // MARK: -
 
 /// The default implementation of the Favorites screen view model.
-final class FavoritesDefaultViewModel<Model: FavoritesModel>: FavoritesViewModel {
+final class FavoritesDefaultViewModel<Model: FavoritesModel>: @unchecked Sendable, FavoritesViewModel {
 
     // MARK: - Properties
 
@@ -90,13 +91,13 @@ final class FavoritesDefaultViewModel<Model: FavoritesModel>: FavoritesViewModel
 
 #if DEBUG
 
-final class FavoritesPreviewsViewModel: FavoritesViewModel {
+final class FavoritesPreviewsViewModel: @unchecked Sendable, FavoritesViewModel {
 
     // MARK: - Properties
 
     // MARK: FavoritesViewModel protocol properties
 
-    var favorites = [
+    private(set) var favorites = [
         BookViewModel(authors: "J.R.R. Tolkien",
                       id: "1",
                       imageURL: nil,

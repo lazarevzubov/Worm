@@ -7,11 +7,12 @@
 //
 
 import Combine
+import Dispatch
 import GoodreadsService
 import OrderedCollections
 
 /// Owns logic of maintaining a list of recommendations.
-protocol RecommendationsModel {
+protocol RecommendationsModel: Sendable {
 
     // FIXME: Duplication with SearchModel?
     // TODO: Unblock?
@@ -31,7 +32,7 @@ protocol RecommendationsModel {
 
     /// Toggles the favorite-ness state of a book.
     /// - Parameter id: The ID of the book to manipulate.
-    func toggleFavoriteStateOfBook(withID id: String)
+    func toggleFavoriteStateOfBook(withID id: String) async
     /// Blocks a book ID from appearing as a recommendation.
     /// - Parameter bookID: The ID of the book to manipulate.
     func blockFromRecommendationsBook(withID id: String)
@@ -41,7 +42,8 @@ protocol RecommendationsModel {
 // MARK: -
 
 /// The default logic of the recommendations list maintenance.
-final class RecommendationsDefaultModel<RecommendationsService: FavoritesService>: RecommendationsModel {
+final class RecommendationsDefaultModel<RecommendationsService: FavoritesService>: @unchecked Sendable,
+                                                                                   RecommendationsModel {
 
     // MARK: - Properties
 
@@ -57,11 +59,13 @@ final class RecommendationsDefaultModel<RecommendationsService: FavoritesService
     // MARK: Private properties
 
     private let catalogService: CatalogService
+    private let favoriteBookIDsSynchronizationQueue = DispatchQueue(label: "com.lazarevzubov.FavoriteBookIDs")
     private let favoritesService: RecommendationsService
+    private let recommendationsSynchronizationQueue = DispatchQueue(label: "com.lazarevzubov.Recommendations")
     private lazy var cancellables = Set<AnyCancellable>()
     private var prioritizedRecommendations = OrderedDictionary<String, (book: Book, sourceIDs: Set<String>)>() {
         didSet {
-            Task { @MainActor in
+            recommendationsSynchronizationQueue.sync {
                 recommendations = Set(
                     prioritizedRecommendations
                         .values
@@ -93,13 +97,13 @@ final class RecommendationsDefaultModel<RecommendationsService: FavoritesService
 
     // MARK: RecommendationsModel protocol methods
 
-    func toggleFavoriteStateOfBook(withID id: String) {
+    func toggleFavoriteStateOfBook(withID id: String) async {
         if favoriteBookIDs.contains(id) {
             favoritesService.removeFromFavoriteBook(withID: id)
             removeRecommendedBooksForBook(withID: id)
         } else {
             favoritesService.addToFavoritesBook(withID: id)
-            Task { await addRecommendedBooksForBook(withID: id) }
+            await addRecommendedBooksForBook(withID: id)
         }
     }
 
@@ -113,20 +117,22 @@ final class RecommendationsDefaultModel<RecommendationsService: FavoritesService
     private func bind(favoritesService: RecommendationsService) {
         favoritesService
             .favoriteBookIDsPublisher
-            .sink { [weak self] in
-                self?.update(with: $0)
+            .sink { id in
+                Task { [weak self] in
+                    await self?.update(with: id)
+                }
             }
             .store(in: &cancellables)
     }
 
-    private func update(with favoriteBookIDs: Set<String>) {
-        self.favoriteBookIDs = favoriteBookIDs
-        addRecommendedBooksForBooks(withIDs: favoriteBookIDs)
+    private func update(with favoriteBookIDs: Set<String>) async {
+        favoriteBookIDsSynchronizationQueue.sync { self.favoriteBookIDs = favoriteBookIDs }
+        await addRecommendedBooksForBooks(withIDs: favoriteBookIDs)
     }
 
-    private func addRecommendedBooksForBooks(withIDs ids: Set<String>) {
-        ids.forEach { id in
-            Task { await addRecommendedBooksForBook(withID: id) }
+    private func addRecommendedBooksForBooks(withIDs ids: Set<String>) async {
+        for id in ids {
+            await addRecommendedBooksForBook(withID: id)
         }
     }
 

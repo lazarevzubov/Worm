@@ -40,13 +40,13 @@ final class RecommendationsDefaultViewModelTest: XCTestCase {
         wait(for: [expectation], timeout: 2.0)
     }
 
-    func testTogglingFavorite_updatesModel() {
+    func testTogglingFavorite_updatesModel() async {
         let model = RecommendationsMockModel()
         let vm: some RecommendationsViewModel = RecommendationsDefaultViewModel(model: model,
                                                                                 imageService: ImageMockService())
 
         let id = "1"
-        vm.toggleFavoriteStateOfBook(withID: id)
+        await vm.toggleFavoriteStateOfBook(withID: id)
 
         XCTAssertTrue(model.favoriteBookIDs.contains(id))
     }
@@ -119,7 +119,7 @@ final class RecommendationsDefaultViewModelTest: XCTestCase {
 
     // MARK: -
 
-    private final class RecommendationsMockModel: RecommendationsModel {
+    private final class RecommendationsMockModel: @unchecked Sendable, RecommendationsModel {
 
         // MARK: - Properties
 
@@ -133,6 +133,10 @@ final class RecommendationsDefaultViewModelTest: XCTestCase {
         private(set) var favoriteBookIDs: Set<String>
         @Published
         private(set) var recommendations: Set<Book>
+
+        // MARK: Private properties
+
+        private let synchronizationQueue = DispatchQueue(label: "com.lazarevzubov.RecommendationsMockModel")
 
         // MARK: - Initialization
 
@@ -152,7 +156,7 @@ final class RecommendationsDefaultViewModelTest: XCTestCase {
         }
         
         func blockFromRecommendationsBook(withID id: String) {
-            blockedRecommendations.insert(id)
+            _ = synchronizationQueue.sync { blockedRecommendations.insert(id) }
         }
 
     }

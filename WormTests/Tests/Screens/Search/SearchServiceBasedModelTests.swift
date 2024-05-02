@@ -21,7 +21,7 @@ final class SearchServiceBasedModelTests: XCTestCase {
         XCTAssertTrue(model.books.isEmpty)
     }
 
-    func testBooks_update_onSearch() {
+    func testBooks_update_onSearch() async {
         let books = [Book(authors: ["J.R.R. Tolkien"],
                           title: "The Lord of the Rings",
                           id: "1",
@@ -47,11 +47,11 @@ final class SearchServiceBasedModelTests: XCTestCase {
         }
         let expectation = XCTNSPredicateExpectation(predicate: predicate, object: model)
 
-        model.searchBooks(by: query)
-        wait(for: [expectation], timeout: 2.0)
+        await model.searchBooks(by: query)
+        await fulfillment(of: [expectation], timeout: 2.0)
     }
 
-    func testSearch_cancels_whenReplacedWithinDelay() {
+    func testSearch_cancels_whenReplacedWithinDelay() async {
         let books1 = [Book(authors: ["J.R.R. Tolkien"],
                            title: "The Lord of the Rings",
                            id: "1",
@@ -90,10 +90,10 @@ final class SearchServiceBasedModelTests: XCTestCase {
         }
         let expectation = XCTNSPredicateExpectation(predicate: predicate, object: model)
 
-        model.searchBooks(by: query2)
-        model.searchBooks(by: query1)
+        await model.searchBooks(by: query2)
+        await model.searchBooks(by: query1)
 
-        wait(for: [expectation], timeout: 2.0)
+        await fulfillment(of: [expectation], timeout: 2.0)
     }
 
     func testFavoriteBooksIDs_initiallyEmpty() {

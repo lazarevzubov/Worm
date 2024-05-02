@@ -27,7 +27,8 @@ protocol RecommendationsViewModel: BookListCellViewModel, BookDetailsPresentable
 // MARK: -
 
 /// The default implementation of the Recommendations screen view model.
-final class RecommendationsDefaultViewModel<Model: RecommendationsModel>: RecommendationsViewModel {
+final class RecommendationsDefaultViewModel<Model: RecommendationsModel>: @unchecked Sendable,
+                                                                          RecommendationsViewModel {
 
     // MARK: - Properties
 
@@ -63,8 +64,8 @@ final class RecommendationsDefaultViewModel<Model: RecommendationsModel>: Recomm
 
     // MARK: RecommendationsViewModel protocol methods
 
-    func toggleFavoriteStateOfBook(withID id: String) {
-        model.toggleFavoriteStateOfBook(withID: id)
+    func toggleFavoriteStateOfBook(withID id: String) async {
+        await model.toggleFavoriteStateOfBook(withID: id)
     }
 
     func makeDetailsViewModel(for book: BookViewModel) -> some BookDetailsViewModel {
@@ -105,7 +106,7 @@ final class RecommendationsPreviewViewModel: RecommendationsViewModel {
 
     // MARK: RecommendationsViewModel protocol properties
 
-    var recommendations = [
+    let recommendations = [
         BookViewModel(authors: "J.R.R. Tolkien",
                       id: "1",
                       imageURL: nil,
