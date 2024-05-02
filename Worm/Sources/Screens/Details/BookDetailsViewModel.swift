@@ -8,7 +8,7 @@
 import UIKit
 
 /// Provides presentation data for a book details.
-protocol BookDetailsViewModel: ObservableObject {
+protocol BookDetailsViewModel: Sendable, ObservableObject {
 
     // MARK: - Properties
 
@@ -24,7 +24,7 @@ protocol BookDetailsViewModel: ObservableObject {
 // MARK: -
 
 /// The default provider of presentation data for a book details.
-final class BookDetailsDefaultViewModel: BookDetailsViewModel {
+final class BookDetailsDefaultViewModel: @unchecked Sendable, BookDetailsViewModel {
 
     // MARK: - Properties
 

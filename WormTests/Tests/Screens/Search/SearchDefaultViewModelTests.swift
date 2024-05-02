@@ -26,7 +26,15 @@ final class SearchDefaultViewModelTests: XCTestCase {
         let query = "Query"
         vm.query = query
 
-        XCTAssertEqual(model.query, query)
+        let predicate = NSPredicate { model, _ in
+            guard let model = model as? SearchMockModel else {
+                return false
+            }
+            return model.query == query
+        }
+        let expectation = XCTNSPredicateExpectation(predicate: predicate, object: model)
+
+        wait(for: [expectation], timeout: 2.0)
     }
 
     func testBooks_initiallyEmpty() {
@@ -68,12 +76,12 @@ final class SearchDefaultViewModelTests: XCTestCase {
         wait(for: [expectation], timeout: 2.0)
     }
 
-    func testTogglingFavorite_togglesModel() {
+    func testTogglingFavorite_togglesModel() async {
         let model = SearchMockModel()
         let vm: any SearchViewModel = SearchDefaultViewModel(model: model, imageService: ImageMockService())
 
         let id = "1"
-        vm.toggleFavoriteStateOfBook(withID: id)
+        await vm.toggleFavoriteStateOfBook(withID: id)
 
         XCTAssertTrue(model.favoriteBookIDs.contains(id), "The favorite state of the book was not toggled.")
     }

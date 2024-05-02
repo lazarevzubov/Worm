@@ -9,6 +9,7 @@
 import SwiftUI
 
 /// A set of creational methods for building views for the app.
+@MainActor
 enum ViewFactory<RecommendationsService: FavoritesService> {
 
     // MARK: - Methods

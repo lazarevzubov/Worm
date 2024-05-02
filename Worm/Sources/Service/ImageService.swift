@@ -8,7 +8,7 @@
 import UIKit
 
 /// Retrieves images.
-protocol ImageService {
+protocol ImageService: Sendable {
 
     // MARK: - Methods
 
@@ -22,7 +22,7 @@ protocol ImageService {
 // MARK: -
 
 /// Coordinates a group of web service tasks.
-protocol WebService {
+protocol WebService: Sendable {
 
     // MARK: - Methods
 

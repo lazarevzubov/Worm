@@ -7,12 +7,12 @@
 //
 
 /// The presentation logic of the table cell representing a book info.
-protocol BookListCellViewModel {
+protocol BookListCellViewModel: Sendable {
 
     // MARK: - Methods
 
     /// Toggles a favorite state of the book.
     /// - Parameter id: The book ID.
-    func toggleFavoriteStateOfBook(withID id: String)
+    func toggleFavoriteStateOfBook(withID id: String) async
 
 }

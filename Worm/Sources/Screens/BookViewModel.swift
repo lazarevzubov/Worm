@@ -10,7 +10,7 @@ import Foundation
 import GoodreadsService
 
 /// A book data for a visual representation.
-struct BookViewModel {
+struct BookViewModel: Sendable {
 
     // MARK: - Properties
 

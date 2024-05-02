@@ -39,7 +39,7 @@ final class FavoritesDefaultViewModelTests: XCTestCase {
         wait(for: [expectation], timeout: 2.0)
     }
 
-    func testFavorites_update_onAddingFavorite() {
+    func testFavorites_update_onAddingFavorite() async {
         let id = "1"
         let book = Book(authors: [], title: "", id: id)
 
@@ -54,11 +54,11 @@ final class FavoritesDefaultViewModelTests: XCTestCase {
         }
         let expectation = XCTNSPredicateExpectation(predicate: predicate, object: vm)
 
-        vm.toggleFavoriteStateOfBook(withID: id)
-        wait(for: [expectation], timeout: 2.0)
+        await vm.toggleFavoriteStateOfBook(withID: id)
+        await fulfillment(of: [expectation], timeout: 2.0)
     }
 
-    func testFavorites_update_onRemovingFavorite() {
+    func testFavorites_update_onRemovingFavorite() async {
         let id = "1"
         let book = Book(authors: [], title: "", id: id)
 
@@ -73,8 +73,8 @@ final class FavoritesDefaultViewModelTests: XCTestCase {
         }
         let expectation = XCTNSPredicateExpectation(predicate: predicate, object: vm)
 
-        vm.toggleFavoriteStateOfBook(withID: id)
-        wait(for: [expectation], timeout: 2.0)
+        await vm.toggleFavoriteStateOfBook(withID: id)
+        await fulfillment(of: [expectation], timeout: 2.0)
     }
 
     func testDetailsViewModel_authors() {
@@ -127,7 +127,7 @@ final class FavoritesDefaultViewModelTests: XCTestCase {
 
     // MARK: -
 
-    private final class FavoritesMockModel: FavoritesModel {
+    private final class FavoritesMockModel: @unchecked Sendable, FavoritesModel {
 
         // MARK: - Properties
 
@@ -136,6 +136,10 @@ final class FavoritesDefaultViewModelTests: XCTestCase {
         var favoritesPublisher: Published<[Book]>.Publisher { $favorites }
         @Published
         private(set) var favorites: [Book]
+
+        // MARK: Private properties
+
+        private let synchronisationQueue = DispatchQueue(label: "com.lazarevzubov.FavoritesMockModel")
 
         // MARK: - Initialization
 
@@ -148,10 +152,12 @@ final class FavoritesDefaultViewModelTests: XCTestCase {
         // MARK: FavoritesModel protocol methods
 
         func toggleFavoriteStateOfBook(withID id: String) {
-            if favorites.contains(where: { $0.id == id }) {
-                favorites.removeAll { $0.id == id }
-            } else {
-                favorites.append(Book(authors: [], title: "", id: id))
+            synchronisationQueue.sync {
+                if favorites.contains(where: { $0.id == id }) {
+                    favorites.removeAll { $0.id == id }
+                } else {
+                    favorites.append(Book(authors: [], title: "", id: id))
+                }
             }
         }
     }

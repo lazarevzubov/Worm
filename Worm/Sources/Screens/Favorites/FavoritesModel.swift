@@ -7,10 +7,11 @@
 //
 
 import Combine
+import Dispatch
 import GoodreadsService
 
 /// Owns logic of maintaining a list of favorite books.
-protocol FavoritesModel: AnyObject {
+protocol FavoritesModel: Sendable, AnyObject {
 
     // MARK: - Properties
 
@@ -30,7 +31,7 @@ protocol FavoritesModel: AnyObject {
 // MARK: -
 
 /// The default logic of the favorites list maintenance.
-final class FavoritesServiceBasedModel<FavoriteBooksService: FavoritesService>: FavoritesModel {
+final class FavoritesServiceBasedModel<FavoriteBooksService: FavoritesService>: @unchecked Sendable, FavoritesModel {
 
     // MARK: - Properties
 
@@ -44,6 +45,7 @@ final class FavoritesServiceBasedModel<FavoriteBooksService: FavoritesService>: 
 
     private let catalogService: CatalogService
     private let favoritesService: FavoriteBooksService
+    private let synchronizationQueue = DispatchQueue(label: "com.lazarevzubov.FavoritesServiceBasedModel")
     private lazy var cancellables = Set<AnyCancellable>()
 
     // MARK: - Initialization
@@ -81,22 +83,24 @@ final class FavoritesServiceBasedModel<FavoriteBooksService: FavoritesService>: 
         favoritesService
             .favoriteBookIDsPublisher
             .removeDuplicates()
-            .sink { [weak self] in
-                self?.updateFavorites(with: $0)
+            .sink { id in
+                Task { [weak self] in
+                    await self?.updateFavorites(with: id)
+                }
             }
             .store(in: &cancellables)
     }
 
-    private func updateFavorites(with favoriteBookIDs: Set<String>) {
-        favoriteBookIDs.forEach { bookID in
-            Task {
-                if let book = await catalogService.getBook(by: bookID),
-                   !favorites.contains(where: { $0.id == book.id }) {
-                    favorites.append(book)
-                }
+    private func updateFavorites(with favoriteBookIDs: Set<String>) async {
+        for bookID in favoriteBookIDs {
+            if let book = await catalogService.getBook(by: bookID),
+               !favorites.contains(where: { $0.id == book.id }) {
+                synchronizationQueue.sync { favorites.append(book) }
             }
         }
-        favorites.removeAll { !favoriteBookIDs.contains($0.id) }
+        synchronizationQueue.sync {
+            favorites.removeAll { !favoriteBookIDs.contains($0.id) }
+        }
     }
 
 }
