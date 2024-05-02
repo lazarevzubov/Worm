@@ -19,16 +19,13 @@ struct RecommendationsView<ViewModel: RecommendationsViewModel>: View {
         NavigationView {
             List {
                 ForEach(viewModel.recommendations) { book in
-                    Button { detailsPresented = true } label: { BookListCell(book: book, viewModel: viewModel) }
-                        .sheet(isPresented: $detailsPresented) {
-                            BookDetailsView(viewModel: viewModel.makeDetailsViewModel(for: book),
-                                            presented: $detailsPresented)
-                        }
+                    Button { selectedBook = book } label: { BookListCell(book: book, viewModel: viewModel) }
                 }
                     .onDelete(perform: deleteItem)
             }
                 .animation(.easeIn, value: viewModel.recommendations)
                 .listStyle(.plain)
+                .sheet(item: $selectedBook) { BookDetailsView(viewModel: viewModel.makeDetailsViewModel(for: $0)) }
                 .navigationTitle("Recommendations")
                 .navigationBarItems(trailing: EditButton())
                 .toolbarColorScheme(.light, for: .navigationBar)
@@ -41,7 +38,7 @@ struct RecommendationsView<ViewModel: RecommendationsViewModel>: View {
     // MARK: Private properties
 
     @State
-    private var detailsPresented = false
+    private var selectedBook: BookViewModel?
     @ObservedObject
     private var viewModel: ViewModel
 

@@ -20,18 +20,15 @@ struct SearchView<ViewModel: SearchViewModel>: View {
             List(viewModel.books) { book in
                 Button {
                     searchActive = false
-                    detailsPresented = true
+                    selectedBook = book
                 } label: { BookListCell(book: book, viewModel: viewModel) }
-                    .sheet(isPresented: $detailsPresented) {
-                        BookDetailsView(viewModel: viewModel.makeDetailsViewModel(for: book),
-                                        presented: $detailsPresented)
-                    }
             }
                 .listStyle(.plain)
                 .searchable(text: $viewModel.query,
                             isPresented: $searchActive,
                             placement: .navigationBarDrawer(displayMode: .always),
                             prompt: "Search books")
+                .sheet(item: $selectedBook) { BookDetailsView(viewModel: viewModel.makeDetailsViewModel(for: $0)) }
                 .navigationTitle("Search")
                 .toolbarColorScheme(.light, for: .navigationBar)
                 .toolbarBackground(Color(red: (172.0 / 255.0), green: (211.0 / 255.0), blue: (214.0 / 255.0)),
@@ -43,9 +40,9 @@ struct SearchView<ViewModel: SearchViewModel>: View {
     // MARK: Private properties
 
     @State
-    private var detailsPresented = false
-    @State
     private var searchActive = false
+    @State
+    private var selectedBook: BookViewModel?
     @ObservedObject
     private var viewModel: ViewModel
 
