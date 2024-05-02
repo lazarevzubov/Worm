@@ -51,7 +51,7 @@ final class SearchScreenTests: XCTestCase {
         let app = XCTestCase.testApp
         app.launch()
 
-        let searchBar = app.textFields["Search books"]
+        let searchBar = app.navigationBars.searchFields.element(boundBy: 0)
         wait(forElement: searchBar)
         XCTAssertTrue(searchBar.exists)
         XCTAssertTrue(searchBar.isHittable)
@@ -61,7 +61,7 @@ final class SearchScreenTests: XCTestCase {
         let app = XCTestCase.testApp
         app.launch()
 
-        let searchBar = app.textFields["Search books"]
+        let searchBar = app.navigationBars.searchFields.element(boundBy: 0)
         wait(forElement: searchBar)
         searchBar.tap()
 
@@ -74,7 +74,7 @@ final class SearchScreenTests: XCTestCase {
         let app = XCTestCase.testApp
         app.launch()
 
-        let searchBar = app.textFields["Search books"]
+        let searchBar = app.navigationBars.searchFields.element(boundBy: 0)
         wait(forElement: searchBar)
         searchBar.tap()
 
@@ -88,7 +88,7 @@ final class SearchScreenTests: XCTestCase {
         let app = XCTestCase.testApp
         app.launch()
 
-        let searchBar = app.textFields["Search books"]
+        let searchBar = app.navigationBars.searchFields.element(boundBy: 0)
         wait(forElement: searchBar)
         searchBar.tap()
 
