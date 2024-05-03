@@ -93,6 +93,14 @@ final class RecommendationsDefaultViewModel<Model: RecommendationsModel>: @unche
                     .filter { !$0.favorite }
             }
             .store(in: &cancellables)
+        model
+            .favoriteBookIDsPublisher
+            .sink { ids in
+                Task { @MainActor [weak self] in
+                    self?.recommendations.removeAll { ids.contains($0.id) }
+                }
+            }
+            .store(in: &cancellables)
     }
 
 }

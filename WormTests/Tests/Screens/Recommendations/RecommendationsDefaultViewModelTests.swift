@@ -40,6 +40,26 @@ final class RecommendationsDefaultViewModelTest: XCTestCase {
         wait(for: [expectation], timeout: 3.0)
     }
 
+    func testRecommendations_update_afterTogglingFavorite() async {
+        let id = "1"
+        let recommendations: Set = [Book(authors: [], title: "", id: id)]
+        let vm: some RecommendationsViewModel = RecommendationsDefaultViewModel(
+            model: RecommendationsMockModel(recommendations: recommendations),
+            imageService: ImageMockService()
+        )
+
+        let predicate = NSPredicate { vm, _ in
+            guard let vm = vm as? any RecommendationsViewModel else {
+                return false
+            }
+            return vm.recommendations.isEmpty
+        }
+        let expectation = XCTNSPredicateExpectation(predicate: predicate, object: vm)
+
+        await vm.toggleFavoriteStateOfBook(withID: id)
+        await fulfillment(of: [expectation], timeout: 2.0)
+    }
+
     func testTogglingFavorite_updatesModel() async {
         let model = RecommendationsMockModel()
         let vm: some RecommendationsViewModel = RecommendationsDefaultViewModel(model: model,
