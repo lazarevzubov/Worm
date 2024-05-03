@@ -37,7 +37,7 @@ final class RecommendationsDefaultViewModelTest: XCTestCase {
         }
         let expectation = XCTNSPredicateExpectation(predicate: predicate, object: vm)
 
-        wait(for: [expectation], timeout: 2.0)
+        wait(for: [expectation], timeout: 3.0)
     }
 
     func testTogglingFavorite_updatesModel() async {

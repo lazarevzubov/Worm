@@ -7,6 +7,7 @@
 //
 
 import Combine
+import Foundation
 
 /// Object responsible for Recommendations screen presentation logic.
 protocol RecommendationsViewModel: BookListCellViewModel, BookDetailsPresentable, ObservableObject {
@@ -84,12 +85,11 @@ final class RecommendationsDefaultViewModel<Model: RecommendationsModel>: @unche
     private func bind(model: Model) {
         model
             .recommendationsPublisher
-            .sink { recommendations in
-                Task { @MainActor in
-                    self.recommendations = recommendations
-                        .map { BookViewModel(book: $0, favorite: model.favoriteBookIDs.contains($0.id)) }
-                        .filter { !$0.favorite }
-                }
+            .debounce(for: .seconds(2), scheduler: RunLoop.main)
+            .sink { [weak self] recommendations in
+                self?.recommendations = recommendations
+                    .map { BookViewModel(book: $0, favorite: model.favoriteBookIDs.contains($0.id)) }
+                    .filter { !$0.favorite }
             }
             .store(in: &cancellables)
     }
