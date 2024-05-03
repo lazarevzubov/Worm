@@ -91,6 +91,7 @@ final class SearchDefaultViewModel<Model: SearchModel>: @unchecked Sendable, Sea
     private func bind(model: Model) {
         model
             .booksPublisher
+            .removeDuplicates()
             .sink { books in
                 Task { @MainActor [weak self] in
                     self?.books = books.map {
@@ -101,6 +102,7 @@ final class SearchDefaultViewModel<Model: SearchModel>: @unchecked Sendable, Sea
             .store(in: &cancellables)
         model
             .favoriteBookIDsPublisher
+            .removeDuplicates()
             .sink { ids in
                 Task { @MainActor [weak self] in
                     guard let self else {
