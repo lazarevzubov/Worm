@@ -65,7 +65,7 @@ final class SearchServiceBasedModel<RecommendationsService: FavoritesService>: @
             }
         }
     }
-    private var currentSearchTask: Task<(), Never>?
+    private var currentSearchTask: Task<(), Error>?
 
     // MARK: - Initialization
 
@@ -94,8 +94,11 @@ final class SearchServiceBasedModel<RecommendationsService: FavoritesService>: @
 
     func searchBooks(by query: String) async {
         currentSearchTask?.cancel()
+        currentSearchTask = Task {
+            if let queryDelay {
+                try await Task.sleep(for: queryDelay)
+            }
 
-        let newSearchTask = Task {
             synchronizationQueue.sync { books.removeAll() }
             currentSearchResult.removeAll()
 
@@ -103,12 +106,6 @@ final class SearchServiceBasedModel<RecommendationsService: FavoritesService>: @
                 self.currentSearchResult = await self.catalogService.searchBooks(query)
             }
         }
-        currentSearchTask = newSearchTask
-
-        if let queryDelay {
-            try? await Task.sleep(for: queryDelay)
-        }
-        await newSearchTask.value
     }
 
     func toggleFavoriteStateOfBook(withID id: String) {
