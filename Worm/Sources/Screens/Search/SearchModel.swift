@@ -121,6 +121,7 @@ final class SearchServiceBasedModel<RecommendationsService: FavoritesService>: @
     private func bind(favoritesService: RecommendationsService) {
         favoritesService
             .favoriteBookIDsPublisher
+            .removeDuplicates()
             .sink { [weak self] in
                 self?.favoriteBookIDs = $0
 

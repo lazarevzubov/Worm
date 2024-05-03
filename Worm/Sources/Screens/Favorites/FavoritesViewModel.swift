@@ -74,6 +74,7 @@ final class FavoritesDefaultViewModel<Model: FavoritesModel>: @unchecked Sendabl
     private func bind(model: Model) {
         model
             .favoritesPublisher
+            .removeDuplicates()
             .sink { book in
                 Task { @MainActor [weak self, weak model] in
                     guard let model else {

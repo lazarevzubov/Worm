@@ -117,6 +117,7 @@ final class RecommendationsDefaultModel<RecommendationsService: FavoritesService
     private func bind(favoritesService: RecommendationsService) {
         favoritesService
             .favoriteBookIDsPublisher
+            .removeDuplicates()
             .sink { id in
                 Task { [weak self] in
                     await self?.update(with: id)

@@ -85,6 +85,7 @@ final class RecommendationsDefaultViewModel<Model: RecommendationsModel>: @unche
     private func bind(model: Model) {
         model
             .recommendationsPublisher
+            .removeDuplicates()
             .debounce(for: .seconds(2), scheduler: RunLoop.main)
             .sink { [weak self] recommendations in
                 self?.recommendations = recommendations
