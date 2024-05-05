@@ -37,7 +37,7 @@ struct MainScreen<SearchView: View, RecommendationsView: View, FavoritesView: Vi
                 .tabItem {
                     Image(systemName: "heart")
                         .accessibility(hidden: true)
-                    Text("Favorites")
+                    Text("Favourites")
                 }
         }
     }
