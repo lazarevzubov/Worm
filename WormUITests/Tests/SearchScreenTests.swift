@@ -40,6 +40,44 @@ final class SearchScreenTests: XCTestCase {
         continueAfterFailure = false
     }
 
+    // Onboarding-related tests must be run first, because onboarding is only shown once.
+
+    func test1Onboarding_shown() {
+        let app = XCTestCase.testApp
+        app.launch()
+
+        let onboardingLabel = app.staticTexts["OnboardingLabel"]
+        
+        wait(forElement: onboardingLabel)
+        XCTAssertTrue(onboardingLabel.exists)
+        XCTAssertTrue(onboardingLabel.isHittable)
+    }
+
+    func test2Onboarding_disappears_onTapping() {
+        let app = XCTestCase.testApp
+        app.launch()
+
+        let onboardingLabel = app.staticTexts["OnboardingLabel"]
+        wait(forElement: onboardingLabel)
+        
+        onboardingLabel.tap()
+
+        waitForDisappearance(of: onboardingLabel)
+        XCTAssertFalse(onboardingLabel.exists)
+        XCTAssertFalse(onboardingLabel.isHittable)
+    }
+
+    func test3Onboarding_notShown_again() {
+        let app = XCTestCase.testApp
+        app.launch()
+
+        let onboardingLabel = app.staticTexts["OnboardingLabel"]
+        
+        waitForDisappearance(of: onboardingLabel) // Same as "not appearance."
+        XCTAssertFalse(onboardingLabel.exists)
+        XCTAssertFalse(onboardingLabel.isHittable)
+    }
+
     func testSearchInitiallyShown() {
         let app = XCTestCase.testApp
         app.launch()
