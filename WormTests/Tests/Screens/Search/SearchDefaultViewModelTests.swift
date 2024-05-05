@@ -15,13 +15,17 @@ final class SearchDefaultViewModelTests: XCTestCase {
     // MARK: - Methods
 
     func testQuery_initiallyEmpty() {
-        let vm: any SearchViewModel = SearchDefaultViewModel(model: SearchMockModel(), imageService: ImageMockService())
+        let vm: any SearchViewModel = SearchDefaultViewModel(model: SearchMockModel(),
+                                                             onboardingService: OnboardingMockService(),
+                                                             imageService: ImageMockService())
         XCTAssertTrue(vm.query.isEmpty)
     }
 
     func testQuery_update_searchedModel() {
         let model = SearchMockModel()
-        let vm: any SearchViewModel = SearchDefaultViewModel(model: model, imageService: ImageMockService())
+        let vm: any SearchViewModel = SearchDefaultViewModel(model: model,
+                                                             onboardingService: OnboardingMockService(),
+                                                             imageService: ImageMockService())
 
         let query = "Query"
         vm.query = query
@@ -38,13 +42,16 @@ final class SearchDefaultViewModelTests: XCTestCase {
     }
 
     func testBooks_initiallyEmpty() {
-        let vm: any SearchViewModel = SearchDefaultViewModel(model: SearchMockModel(), imageService: ImageMockService())
+        let vm: any SearchViewModel = SearchDefaultViewModel(model: SearchMockModel(),
+                                                             onboardingService: OnboardingMockService(),
+                                                             imageService: ImageMockService())
         XCTAssertTrue(vm.books.isEmpty)
     }
 
     func testBooks_update() {
         let books: Set = [Book(authors: [], title: "", id: "1")]
         let vm: any SearchViewModel = SearchDefaultViewModel(model: SearchMockModel(books: books),
+                                                             onboardingService: OnboardingMockService(),
                                                              imageService: ImageMockService())
 
         let predicate = NSPredicate { vm, _ in
@@ -63,6 +70,7 @@ final class SearchDefaultViewModelTests: XCTestCase {
         let books: Set = [Book(authors: [], title: "", id: id)]
         let vm: any SearchViewModel = SearchDefaultViewModel(model: SearchMockModel(books: books,
                                                                                     favoriteBookIDs: [id]),
+                                                             onboardingService: OnboardingMockService(),
                                                              imageService: ImageMockService())
 
         let predicate = NSPredicate { vm, _ in
@@ -80,6 +88,7 @@ final class SearchDefaultViewModelTests: XCTestCase {
         let id = "1"
         let books: Set = [Book(authors: [], title: "", id: id)]
         let vm: any SearchViewModel = SearchDefaultViewModel(model: SearchMockModel(books: books),
+                                                             onboardingService: OnboardingMockService(),
                                                              imageService: ImageMockService())
 
         let predicate = NSPredicate { vm, _ in
@@ -96,7 +105,9 @@ final class SearchDefaultViewModelTests: XCTestCase {
 
     func testTogglingFavorite_togglesModel() async {
         let model = SearchMockModel()
-        let vm: any SearchViewModel = SearchDefaultViewModel(model: model, imageService: ImageMockService())
+        let vm: any SearchViewModel = SearchDefaultViewModel(model: model,
+                                                             onboardingService: OnboardingMockService(),
+                                                             imageService: ImageMockService())
 
         let id = "1"
         await vm.toggleFavoriteStateOfBook(withID: id)
@@ -105,7 +116,9 @@ final class SearchDefaultViewModelTests: XCTestCase {
     }
 
     func testDetailsViewModel_authors() {
-        let vm: any SearchViewModel = SearchDefaultViewModel(model: SearchMockModel(), imageService: ImageMockService())
+        let vm: any SearchViewModel = SearchDefaultViewModel(model: SearchMockModel(),
+                                                             onboardingService: OnboardingMockService(),
+                                                             imageService: ImageMockService())
 
         let bookVM = BookViewModel(authors: "Authors",
                                    id: "ID",
@@ -118,7 +131,9 @@ final class SearchDefaultViewModelTests: XCTestCase {
     }
 
     func testDetailsViewModel_title() {
-        let vm: any SearchViewModel = SearchDefaultViewModel(model: SearchMockModel(), imageService: ImageMockService())
+        let vm: any SearchViewModel = SearchDefaultViewModel(model: SearchMockModel(),
+                                                             onboardingService: OnboardingMockService(),
+                                                             imageService: ImageMockService())
 
         let bookVM = BookViewModel(authors: "Authors",
                                    id: "ID",
@@ -135,6 +150,7 @@ final class SearchDefaultViewModelTests: XCTestCase {
         let image = UIImage()
 
         let vm: any SearchViewModel = SearchDefaultViewModel(model: SearchMockModel(),
+                                                             onboardingService: OnboardingMockService(),
                                                              imageService: ImageMockService(images: [imageURL : image]))
         let bookVM = BookViewModel(authors: "Authors", id: "ID", imageURL: imageURL, favorite: true, title: "Title")
 
@@ -149,6 +165,18 @@ final class SearchDefaultViewModelTests: XCTestCase {
         let expectation = XCTNSPredicateExpectation(predicate: predicate, object: bookDetailsVM)
 
         wait(for: [expectation], timeout: 2.0)
+    }
+
+    // MARK: -
+
+    private final class OnboardingMockService: OnboardingService {
+
+        // MARK: - Properties
+
+        // MARK: OnboardingService protocol properties
+
+        var onboardingShown = false
+
     }
 
 }

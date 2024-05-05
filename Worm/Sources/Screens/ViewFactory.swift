@@ -41,7 +41,9 @@ enum ViewFactory<RecommendationsService: FavoritesService> {
                                        favoritesService: RecommendationsService,
                                        imageService: ImageService) -> some View {
         let model = SearchServiceBasedModel(catalogService: catalogService, favoritesService: favoritesService)
-        let viewModel = SearchDefaultViewModel(model: model, imageService: imageService)
+        let viewModel = SearchDefaultViewModel(model: model,
+                                               onboardingService: OnboardingPersistentService(),
+                                               imageService: imageService)
 
         return SearchView<SearchDefaultViewModel<SearchServiceBasedModel>>(viewModel: viewModel)
     }

@@ -17,13 +17,33 @@ struct SearchView<ViewModel: SearchViewModel>: View {
 
     var body: some View {
         NavigationView {
-            List(viewModel.books) { book in
-                Button {
-                    searchActive = false
-                    selectedBook = book
-                } label: { BookListCell(book: book, viewModel: viewModel) }
+            ZStack {
+                List(viewModel.books) { book in
+                    Button {
+                        searchActive = false
+                        selectedBook = book
+                    } label: { BookListCell(book: book, viewModel: viewModel) }
+                }
+                    .listStyle(.plain)
+                if !viewModel.onboardingShown {
+                    VStack {
+                        Text("Start by searching your favourite books and marking them as favourites.")
+                            .foregroundStyle(
+                                Color
+                                    .black
+                            )
+                            .padding(8.0)
+                            .background(
+                                Color(red: (249.0 / 255.0), green: (231.0 / 255.0), blue: (132.0 / 255.0))
+                                    .cornerRadius(4.0)
+                            )
+                            .padding(16.0)
+                            .accessibilityIdentifier("OnboardingLabel")
+                        Spacer()
+                    }
+                        .onTapGesture { viewModel.onboardingShown = true }
+                }
             }
-                .listStyle(.plain)
                 .searchable(text: $viewModel.query,
                             isPresented: $searchActive,
                             placement: .navigationBarDrawer(displayMode: .always),
@@ -35,6 +55,7 @@ struct SearchView<ViewModel: SearchViewModel>: View {
                                    for: .navigationBar)
                 .toolbarBackground(.visible, for: .navigationBar)
         }
+            .animation(.default, value: viewModel.onboardingShown)
     }
 
     // MARK: Private properties

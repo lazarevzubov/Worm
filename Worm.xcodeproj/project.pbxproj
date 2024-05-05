@@ -38,6 +38,8 @@
 		4E6760502593CAA9001ABB42 /* BookListCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E67604F2593CAA9001ABB42 /* BookListCellViewModel.swift */; };
 		4EAD6D2425E6EEA800D1879A /* BookDetailsPresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EAD6D2325E6EEA800D1879A /* BookDetailsPresentable.swift */; };
 		AF23A3AB2BD01E5800B68F12 /* CatalogMockService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF23A3AA2BD01E5800B68F12 /* CatalogMockService.swift */; };
+		AF474EA22BE6940B00A19264 /* OnboardingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF474EA12BE6940B00A19264 /* OnboardingService.swift */; };
+		AF474EA42BE6A14700A19264 /* OnboardingPersistentServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF474EA32BE6A14700A19264 /* OnboardingPersistentServiceTests.swift */; };
 		AF5A04692BDCF76E00AF543C /* BookViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5A04682BDCF76E00AF543C /* BookViewModelTests.swift */; };
 		AF5A046D2BDCFABA00AF543C /* FavoritesPersistenceServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5A046C2BDCFABA00AF543C /* FavoritesPersistenceServiceTests.swift */; };
 		AF5A046F2BE002C800AF543C /* ImageWebServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5A046E2BE002C800AF543C /* ImageWebServiceTests.swift */; };
@@ -112,6 +114,8 @@
 		4E67604F2593CAA9001ABB42 /* BookListCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookListCellViewModel.swift; sourceTree = "<group>"; };
 		4EAD6D2325E6EEA800D1879A /* BookDetailsPresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookDetailsPresentable.swift; sourceTree = "<group>"; };
 		AF23A3AA2BD01E5800B68F12 /* CatalogMockService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogMockService.swift; sourceTree = "<group>"; };
+		AF474EA12BE6940B00A19264 /* OnboardingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingService.swift; sourceTree = "<group>"; };
+		AF474EA32BE6A14700A19264 /* OnboardingPersistentServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPersistentServiceTests.swift; sourceTree = "<group>"; };
 		AF5A04682BDCF76E00AF543C /* BookViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookViewModelTests.swift; sourceTree = "<group>"; };
 		AF5A046C2BDCFABA00AF543C /* FavoritesPersistenceServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesPersistenceServiceTests.swift; sourceTree = "<group>"; };
 		AF5A046E2BE002C800AF543C /* ImageWebServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageWebServiceTests.swift; sourceTree = "<group>"; };
@@ -296,6 +300,7 @@
 				4E5C6DFE2565BE7D00DDB833 /* Favorites */,
 				4E5C6DE92565BDF500DDB833 /* CatalogService.swift */,
 				4E62031925E2EB6100671369 /* ImageService.swift */,
+				AF474EA12BE6940B00A19264 /* OnboardingService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -373,6 +378,7 @@
 			children = (
 				AF5A046B2BDCFAA700AF543C /* Favorites */,
 				AF5A046E2BE002C800AF543C /* ImageWebServiceTests.swift */,
+				AF474EA32BE6A14700A19264 /* OnboardingPersistentServiceTests.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -622,6 +628,7 @@
 				4EAD6D2425E6EEA800D1879A /* BookDetailsPresentable.swift in Sources */,
 				4E4FD62525C41765004A8F0C /* BlockedBook.swift in Sources */,
 				4E5AFB6125ACC73400DD73BF /* FavoritesViewModel.swift in Sources */,
+				AF474EA22BE6940B00A19264 /* OnboardingService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -638,6 +645,7 @@
 				AF72245C2BC13EE00057D1ED /* RecommendationsDefaultModelTests.swift in Sources */,
 				AF5A046F2BE002C800AF543C /* ImageWebServiceTests.swift in Sources */,
 				AF72245E2BC13F560057D1ED /* FavoritesMockService.swift in Sources */,
+				AF474EA42BE6A14700A19264 /* OnboardingPersistentServiceTests.swift in Sources */,
 				DDA193D22BAC9F1B00081F5F /* FavoritesServiceBasedModelTests.swift in Sources */,
 				AF7224542BBF2B140057D1ED /* FavoritesDefaultViewModelTests.swift in Sources */,
 				DDBBF8032BA239A00032039C /* SequenceTests.swift in Sources */,

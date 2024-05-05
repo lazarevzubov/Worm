@@ -14,6 +14,8 @@ protocol SearchViewModel: BookListCellViewModel, BookDetailsPresentable, Observa
 
     // MARK: - Properties
 
+    /// Whether the onboarding has been already shown to the user.
+    var onboardingShown: Bool { get set }
     /// The current search query.
     var query: String { get set }
     /// The list of books corresponding to the current search query.
@@ -30,6 +32,10 @@ final class SearchDefaultViewModel<Model: SearchModel>: @unchecked Sendable, Sea
 
     // MARK: SearchViewModel protocol properties
 
+    @Published
+    var onboardingShown: Bool {
+        didSet { onboardingService.onboardingShown = onboardingShown }
+    }
     var query: String {
         get {
             synchronizationQueue.sync { synchronizedQuery }
@@ -45,6 +51,7 @@ final class SearchDefaultViewModel<Model: SearchModel>: @unchecked Sendable, Sea
 
     private let imageService: ImageService
     private let model: Model
+    private var onboardingService: OnboardingService
     private let synchronizationQueue = DispatchQueue(label: "com.lazarevzubov.SearchDefaultViewModel",
                                                      attributes: .concurrent)
     private lazy var cancellables = Set<AnyCancellable>()
@@ -59,11 +66,14 @@ final class SearchDefaultViewModel<Model: SearchModel>: @unchecked Sendable, Sea
     /// Creates the presentation logic object.
     /// - Parameters:
     ///   - model: The search screen model.
+    ///   - onboardingService: Provides with information related to the user onboarding.
     ///   - imageService: The services that turns image URLs into images themselves.
-    init(model: Model, imageService: ImageService) {
+    init(model: Model, onboardingService: OnboardingService, imageService: ImageService) {
         self.model = model
+        self.onboardingService = onboardingService
         self.imageService = imageService
 
+        onboardingShown = onboardingService.onboardingShown
         bind(model: self.model)
     }
 
@@ -132,6 +142,7 @@ final class SearchPreviewViewModel: @unchecked Sendable, SearchViewModel, BookLi
 
     // MARK: SearchViewModel protocol properties
 
+    var onboardingShown = false
     private(set) var books = [
         BookViewModel(authors: "J.R.R. Tolkien",
                       id: "1",
