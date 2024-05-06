@@ -29,8 +29,7 @@ struct RecommendationsView<ViewModel: RecommendationsViewModel>: View {
                 .navigationTitle("Recommendations")
                 .navigationBarItems(trailing: EditButton())
                 .toolbarColorScheme(.light, for: .navigationBar)
-                .toolbarBackground(Color(red: (190.0 / 255.0), green: (142.0 / 255.0), blue: (155.0 / 255.0)),
-                                   for: .navigationBar)
+                .toolbarBackground(Color.recommendations, for: .navigationBar)
                 .toolbarBackground(.visible, for: .navigationBar)
         }
     }

@@ -19,42 +19,143 @@ final class SearchScreenTests: XCTestCase {
         continueAfterFailure = false
     }
 
-    // Onboarding-related tests must be run first, because onboarding is only shown once.
+    func testSearchOnboarding_shown_onFirstLaunch() {
+        deleteApp()
 
-    func test1Onboarding_shown() {
         let app = XCTestCase.testApp
         app.launch()
 
-        let onboardingLabel = app.staticTexts["OnboardingLabel"]
-        
-        wait(forElement: onboardingLabel)
-        XCTAssertTrue(onboardingLabel.exists)
-        XCTAssertTrue(onboardingLabel.isHittable)
+        let onboardingLabel = app.staticTexts["SearchOnboardingLabel"]
+        guard onboardingLabel.waitForExistence(timeout: 5.0) else {
+            XCTFail("Search onboarding didn't appear.")
+            return
+        }
+
+        XCTAssertTrue(onboardingLabel.exists, "Search onboarding didn't appear.")
+        XCTAssertTrue(onboardingLabel.isHittable, "Search onboarding isn't tappable.")
     }
 
-    func test2Onboarding_disappears_onTapping() {
+    func testSearchOnboarding_disappears_onTap() {
+        deleteApp()
+
         let app = XCTestCase.testApp
         app.launch()
 
-        let onboardingLabel = app.staticTexts["OnboardingLabel"]
-        wait(forElement: onboardingLabel)
-        
+        let onboardingLabel = app.staticTexts["SearchOnboardingLabel"]
+        guard onboardingLabel.waitForExistence(timeout: 5.0) else {
+            XCTFail("Search onboarding didn't appear.")
+            return
+        }
         onboardingLabel.tap()
 
-        waitForDisappearance(of: onboardingLabel)
-        XCTAssertFalse(onboardingLabel.exists)
-        XCTAssertFalse(onboardingLabel.isHittable)
+        waitForDisappearance(of: onboardingLabel, timeout: 5.0)
+        XCTAssertFalse(onboardingLabel.exists, "Search onboarding didn't disappear.")
+        XCTAssertFalse(onboardingLabel.isHittable, "Search onboarding is tappable.")
     }
 
-    func test3Onboarding_notShown_again() {
+    func testSearchOnboarding_shownTwice() {
+        deleteApp()
+
         let app = XCTestCase.testApp
         app.launch()
 
-        let onboardingLabel = app.staticTexts["OnboardingLabel"]
+        let onboardingLabel = app.staticTexts["SearchOnboardingLabel"]
+        guard onboardingLabel.waitForExistence(timeout: 5.0) else {
+            XCTFail("Search onboarding didn't appear.")
+            return
+        }
+
+        onboardingLabel.tap()
+        waitForDisappearance(of: onboardingLabel, timeout: 5.0)
         
-        waitForDisappearance(of: onboardingLabel) // Same as "not appearance."
-        XCTAssertFalse(onboardingLabel.exists)
-        XCTAssertFalse(onboardingLabel.isHittable)
+        app.terminate()
+        app.launch()
+
+        guard onboardingLabel.waitForExistence(timeout: 5.0) else {
+            XCTFail("Search onboarding didn't appear.")
+            return
+        }
+    }
+
+    func testRecommendationsOnboarding_appears_onSearchOnboarding_disappearing() {
+        deleteApp()
+
+        let app = XCTestCase.testApp
+        app.launch()
+
+        let searchOnboardingLabel = app.staticTexts["SearchOnboardingLabel"]
+        guard searchOnboardingLabel.waitForExistence(timeout: 5.0) else {
+            XCTFail("Search onboarding didn't appear.")
+            return
+        }
+
+        searchOnboardingLabel.tap()
+        waitForDisappearance(of: searchOnboardingLabel, timeout: 5.0)
+
+        let recommendationsOnboardingLabel = app.staticTexts["RecommendationsOnboardingLabel"]
+        guard recommendationsOnboardingLabel.waitForExistence(timeout: 5.0) else {
+            XCTFail("Search onboarding didn't appear.")
+            return
+        }
+
+        XCTAssertTrue(recommendationsOnboardingLabel.exists, "Recommendations onboarding didn't appear.")
+        XCTAssertTrue(recommendationsOnboardingLabel.isHittable, "Recommendations onboarding isn't tappable.")
+    }
+
+    func testRecommendationsOnboarding_disappears_onTap() {
+        deleteApp()
+
+        let app = XCTestCase.testApp
+        app.launch()
+
+        let searchOnboardingLabel = app.staticTexts["SearchOnboardingLabel"]
+        guard searchOnboardingLabel.waitForExistence(timeout: 5.0) else {
+            XCTFail("Search onboarding didn't appear.")
+            return
+        }
+        searchOnboardingLabel.tap()
+
+        let recommendationsOnboardingLabel = app.staticTexts["RecommendationsOnboardingLabel"]
+        guard recommendationsOnboardingLabel.waitForExistence(timeout: 5.0) else {
+            XCTFail("Search onboarding didn't appear.")
+            return
+        }
+        recommendationsOnboardingLabel.tap()
+
+        waitForDisappearance(of: recommendationsOnboardingLabel, timeout: 5.0)
+        XCTAssertFalse(recommendationsOnboardingLabel.exists, "Recommendations onboarding didn't disappear.")
+        XCTAssertFalse(recommendationsOnboardingLabel.isHittable, "Recommendations onboarding is tappable.")
+    }
+
+    func testSearchOnboarding_notShownTwice_afterRecommendationsOnboardingDismissal() {
+        deleteApp()
+
+        let app = XCTestCase.testApp
+        app.launch()
+
+        let searchOnboardingLabel = app.staticTexts["SearchOnboardingLabel"]
+        guard searchOnboardingLabel.waitForExistence(timeout: 5.0) else {
+            XCTFail("Search onboarding didn't appear.")
+            return
+        }
+        searchOnboardingLabel.tap()
+
+        let recommendationsOnboardingLabel = app.staticTexts["RecommendationsOnboardingLabel"]
+        guard recommendationsOnboardingLabel.waitForExistence(timeout: 5.0) else {
+            XCTFail("Search onboarding didn't appear.")
+            return
+        }
+
+        recommendationsOnboardingLabel.tap()
+        waitForDisappearance(of: recommendationsOnboardingLabel, timeout: 5.0)
+
+        app.terminate()
+        app.launch()
+
+        guard !searchOnboardingLabel.waitForExistence(timeout: 5.0) else {
+            XCTFail("Search onboarding appeared again.")
+            return
+        }
     }
 
     func testSearchInitiallyShown() {
