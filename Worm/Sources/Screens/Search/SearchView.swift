@@ -25,23 +25,25 @@ struct SearchView<ViewModel: SearchViewModel>: View {
                     } label: { BookListCell(book: book, viewModel: viewModel) }
                 }
                     .listStyle(.plain)
-                if !viewModel.onboardingShown {
+                if !viewModel.searchOnboardingShown {
                     VStack {
-                        Text("Start by searching your favourite books and marking them as favourites.")
-                            .foregroundStyle(
-                                Color
-                                    .black
-                            )
-                            .padding(8.0)
-                            .background(
-                                Color(red: (249.0 / 255.0), green: (231.0 / 255.0), blue: (132.0 / 255.0))
-                                    .cornerRadius(4.0)
-                            )
-                            .padding(16.0)
-                            .accessibilityIdentifier("OnboardingLabel")
+                        makeOnboardingView(
+                            text: "Start by searching your favourite books and marking them as favourites.",
+                            color: .favorites
+                        )
+                            .accessibilityIdentifier("SearchOnboardingLabel")
                         Spacer()
                     }
-                        .onTapGesture { viewModel.onboardingShown = true }
+                        .onTapGesture { viewModel.searchOnboardingShown = true }
+                }
+                if viewModel.searchOnboardingShown 
+                       && !viewModel.recommendationsOnboardingShown {
+                    VStack {
+                        Spacer()
+                        makeOnboardingView(text: "Then check your recommendations!", color: .recommendations)
+                            .accessibilityIdentifier("RecommendationsOnboardingLabel")
+                    }
+                        .onTapGesture { viewModel.recommendationsOnboardingShown = true }
                 }
             }
                 .searchable(text: $viewModel.query,
@@ -51,11 +53,11 @@ struct SearchView<ViewModel: SearchViewModel>: View {
                 .sheet(item: $selectedBook) { BookDetailsView(viewModel: viewModel.makeDetailsViewModel(for: $0)) }
                 .navigationTitle("Search")
                 .toolbarColorScheme(.light, for: .navigationBar)
-                .toolbarBackground(Color(red: (172.0 / 255.0), green: (211.0 / 255.0), blue: (214.0 / 255.0)),
-                                   for: .navigationBar)
+                .toolbarBackground(Color.search, for: .navigationBar)
                 .toolbarBackground(.visible, for: .navigationBar)
         }
-            .animation(.default, value: viewModel.onboardingShown)
+            .animation(.default, value: viewModel.searchOnboardingShown)
+            .animation(.default, value: viewModel.recommendationsOnboardingShown)
     }
 
     // MARK: Private properties
@@ -73,6 +75,19 @@ struct SearchView<ViewModel: SearchViewModel>: View {
     /// - Parameter viewModel: The presentation logic handler.
     init(viewModel: ViewModel) {
         self.viewModel = viewModel
+    }
+
+    // MARK: - Methods
+
+    // MARK: Private methods
+
+    private func makeOnboardingView(text: LocalizedStringKey, color: Color) -> some View {
+        Text(text)
+            .fontWeight(.light)
+            .foregroundStyle(Color.black)
+            .padding(8.0)
+            .background(color.cornerRadius(4.0))
+            .padding(16.0)
     }
 
 }

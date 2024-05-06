@@ -14,12 +14,14 @@ protocol SearchViewModel: BookListCellViewModel, BookDetailsPresentable, Observa
 
     // MARK: - Properties
 
-    /// Whether the onboarding has been already shown to the user.
-    var onboardingShown: Bool { get set }
-    /// The current search query.
-    var query: String { get set }
     /// The list of books corresponding to the current search query.
     var books: [BookViewModel] { get }
+    /// The current search query.
+    var query: String { get set }
+    /// Whether the onboarding about the recommendations has been already shown to the user.
+    var recommendationsOnboardingShown: Bool { get set }
+    /// Whether the onboarding about the searching has been already shown to the user.
+    var searchOnboardingShown: Bool { get set }
 
 }
 
@@ -33,9 +35,7 @@ final class SearchDefaultViewModel<Model: SearchModel>: @unchecked Sendable, Sea
     // MARK: SearchViewModel protocol properties
 
     @Published
-    var onboardingShown: Bool {
-        didSet { onboardingService.onboardingShown = onboardingShown }
-    }
+    private(set) var books = [BookViewModel]()
     var query: String {
         get {
             synchronizationQueue.sync { synchronizedQuery }
@@ -45,16 +45,20 @@ final class SearchDefaultViewModel<Model: SearchModel>: @unchecked Sendable, Sea
         }
     }
     @Published
-    private(set) var books = [BookViewModel]()
+    var recommendationsOnboardingShown: Bool {
+        didSet { onboardingService.onboardingShown = recommendationsOnboardingShown }
+    }
+    @Published
+    var searchOnboardingShown: Bool
 
     // MARK: Private methods
 
     private let imageService: ImageService
     private let model: Model
-    private var onboardingService: OnboardingService
     private let synchronizationQueue = DispatchQueue(label: "com.lazarevzubov.SearchDefaultViewModel",
                                                      attributes: .concurrent)
     private lazy var cancellables = Set<AnyCancellable>()
+    private var onboardingService: OnboardingService
     private var synchronizedQuery = "" {
         didSet {
             Task { await model.searchBooks(by: query) }
@@ -73,7 +77,9 @@ final class SearchDefaultViewModel<Model: SearchModel>: @unchecked Sendable, Sea
         self.onboardingService = onboardingService
         self.imageService = imageService
 
-        onboardingShown = onboardingService.onboardingShown
+        searchOnboardingShown = onboardingService.onboardingShown
+        recommendationsOnboardingShown = onboardingService.onboardingShown
+
         bind(model: self.model)
     }
 
@@ -142,7 +148,9 @@ final class SearchPreviewViewModel: @unchecked Sendable, SearchViewModel, BookLi
 
     // MARK: SearchViewModel protocol properties
 
-    var onboardingShown = false
+    var query = ""
+    var recommendationsOnboardingShown = false
+    var searchOnboardingShown = false
     private(set) var books = [
         BookViewModel(authors: "J.R.R. Tolkien",
                       id: "1",
@@ -196,7 +204,6 @@ final class SearchPreviewViewModel: @unchecked Sendable, SearchViewModel, BookLi
                       favorite: false,
                       title: "The Wind-Up Bird Chronicle")
     ]
-    var query = ""
 
     // MARK: Private properties
 

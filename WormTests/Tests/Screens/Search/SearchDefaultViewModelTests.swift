@@ -14,11 +14,57 @@ final class SearchDefaultViewModelTests: XCTestCase {
 
     // MARK: - Methods
 
+    func testSearchOnboarding_stateInitially_asProvided() {
+        let value = true
+        let service = OnboardingMockService(onboardingShown: value)
+
+        let vm: any SearchViewModel = SearchDefaultViewModel(model: SearchMockModel(),
+                                                             onboardingService: service,
+                                                             imageService: ImageMockService())
+        XCTAssertEqual(vm.searchOnboardingShown, value, "Search onboarding has an unexpected initial value.")
+    }
+
+    func testSearchOnboarding_update_doesNotUpdatePersistence() {
+        let value = true
+        let service = OnboardingMockService(onboardingShown: value)
+        let vm: any SearchViewModel = SearchDefaultViewModel(model: SearchMockModel(),
+                                                             onboardingService: service,
+                                                             imageService: ImageMockService())
+
+        let newValue = !value
+        vm.searchOnboardingShown = newValue
+
+        XCTAssertEqual(service.onboardingShown, value, "Persistence was updated.")
+    }
+
+    func testRecommendationsOnboarding_stateInitially_asProvided() {
+        let value = true
+        let service = OnboardingMockService(onboardingShown: value)
+
+        let vm: any SearchViewModel = SearchDefaultViewModel(model: SearchMockModel(),
+                                                             onboardingService: service,
+                                                             imageService: ImageMockService())
+        XCTAssertEqual(vm.recommendationsOnboardingShown, value, "Search onboarding has an unexpected initial value.")
+    }
+
+    func testRecommendationsOnboarding_update_updatesPersistence() {
+        let value = true
+        let service = OnboardingMockService(onboardingShown: value)
+        let vm: any SearchViewModel = SearchDefaultViewModel(model: SearchMockModel(),
+                                                             onboardingService: service,
+                                                             imageService: ImageMockService())
+
+        let newValue = !value
+        vm.recommendationsOnboardingShown = newValue
+
+        XCTAssertEqual(service.onboardingShown, newValue, "Persistence wasn't updated.")
+    }
+
     func testQuery_initiallyEmpty() {
         let vm: any SearchViewModel = SearchDefaultViewModel(model: SearchMockModel(),
                                                              onboardingService: OnboardingMockService(),
                                                              imageService: ImageMockService())
-        XCTAssertTrue(vm.query.isEmpty)
+        XCTAssertTrue(vm.query.isEmpty, "Query has an unexpected initial value.")
     }
 
     func testQuery_update_searchedModel() {
@@ -175,7 +221,13 @@ final class SearchDefaultViewModelTests: XCTestCase {
 
         // MARK: OnboardingService protocol properties
 
-        var onboardingShown = false
+        var onboardingShown: Bool
+
+        // MARK: - Initialization
+
+        init(onboardingShown: Bool = false) {
+            self.onboardingShown = onboardingShown
+        }
 
     }
 

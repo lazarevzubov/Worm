@@ -25,8 +25,7 @@ struct FavoritesView<ViewModel: FavoritesViewModel>: View {
                 .sheet(item: $selectedBook) { BookDetailsView(viewModel: viewModel.makeDetailsViewModel(for: $0)) }
                 .navigationTitle("Favourites")
                 .toolbarColorScheme(.light, for: .navigationBar)
-                .toolbarBackground(Color(red: (249.0 / 255.0), green: (231.0 / 255.0), blue: (132.0 / 255.0)),
-                                   for: .navigationBar)
+                .toolbarBackground(Color.favorites, for: .navigationBar)
                 .toolbarBackground(.visible, for: .navigationBar)
         }
     }
