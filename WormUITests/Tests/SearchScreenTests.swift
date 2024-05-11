@@ -48,7 +48,11 @@ final class SearchScreenTests: XCTestCase {
         }
         onboardingLabel.tap()
 
-        waitForDisappearance(of: onboardingLabel, timeout: 5.0)
+        guard !onboardingLabel.waitForExistence(timeout: 5.0) else {
+            XCTFail("Search onboarding didn't disappear.")
+            return
+        }
+
         XCTAssertFalse(onboardingLabel.exists, "Search onboarding didn't disappear.")
         XCTAssertFalse(onboardingLabel.isHittable, "Search onboarding is tappable.")
     }
@@ -66,8 +70,11 @@ final class SearchScreenTests: XCTestCase {
         }
 
         onboardingLabel.tap()
-        waitForDisappearance(of: onboardingLabel, timeout: 5.0)
-        
+        guard !onboardingLabel.waitForExistence(timeout: 5.0) else {
+            XCTFail("Search onboarding didn't disappear.")
+            return
+        }
+
         app.terminate()
         app.launch()
 
@@ -90,7 +97,10 @@ final class SearchScreenTests: XCTestCase {
         }
 
         searchOnboardingLabel.tap()
-        waitForDisappearance(of: searchOnboardingLabel, timeout: 5.0)
+        guard !searchOnboardingLabel.waitForExistence(timeout: 5.0) else {
+            XCTFail("Search onboarding didn't disappear.")
+            return
+        }
 
         let recommendationsOnboardingLabel = app.staticTexts["RecommendationsOnboardingLabel"]
         guard recommendationsOnboardingLabel.waitForExistence(timeout: 5.0) else {
@@ -120,9 +130,13 @@ final class SearchScreenTests: XCTestCase {
             XCTFail("Search onboarding didn't appear.")
             return
         }
-        recommendationsOnboardingLabel.tap()
 
-        waitForDisappearance(of: recommendationsOnboardingLabel, timeout: 5.0)
+        recommendationsOnboardingLabel.tap()
+        guard !recommendationsOnboardingLabel.waitForExistence(timeout: 5.0) else {
+            XCTFail("Search onboarding didn't disappear.")
+            return
+        }
+
         XCTAssertFalse(recommendationsOnboardingLabel.exists, "Recommendations onboarding didn't disappear.")
         XCTAssertFalse(recommendationsOnboardingLabel.isHittable, "Recommendations onboarding is tappable.")
     }
@@ -147,7 +161,10 @@ final class SearchScreenTests: XCTestCase {
         }
 
         recommendationsOnboardingLabel.tap()
-        waitForDisappearance(of: recommendationsOnboardingLabel, timeout: 5.0)
+        guard !recommendationsOnboardingLabel.waitForExistence(timeout: 5.0) else {
+            XCTFail("Search onboarding didn't disappear.")
+            return
+        }
 
         app.terminate()
         app.launch()
@@ -170,7 +187,11 @@ final class SearchScreenTests: XCTestCase {
         app.launch()
 
         let searchBar = app.navigationBars.searchFields.element(boundBy: 0)
-        wait(forElement: searchBar)
+        guard searchBar.waitForExistence(timeout: 5.0) else {
+            XCTFail("Search bar didn't appear.")
+            return
+        }
+
         XCTAssertTrue(searchBar.exists)
         XCTAssertTrue(searchBar.isHittable)
     }
@@ -180,7 +201,10 @@ final class SearchScreenTests: XCTestCase {
         app.launch()
 
         let searchBar = app.navigationBars.searchFields.element(boundBy: 0)
-        wait(forElement: searchBar)
+        guard searchBar.waitForExistence(timeout: 5.0) else {
+            XCTFail("Search bar didn't appear.")
+            return
+        }
         searchBar.tap()
 
         let keyboardActivated = NSPredicate(format: "count > 0")
@@ -193,11 +217,18 @@ final class SearchScreenTests: XCTestCase {
         app.launch()
 
         let searchBar = app.navigationBars.searchFields.element(boundBy: 0)
-        wait(forElement: searchBar)
+        guard searchBar.waitForExistence(timeout: 5.0) else {
+            XCTFail("Search bar didn't appear.")
+            return
+        }
         searchBar.tap()
 
         let cancelButton = app.buttons["Cancel"]
-        wait(forElement: cancelButton)
+        guard searchBar.waitForExistence(timeout: 5.0) else {
+            XCTFail("Search bar didn't appear.")
+            return
+        }
+
         XCTAssertTrue(cancelButton.exists)
         XCTAssertTrue(cancelButton.isHittable)
     }
@@ -207,11 +238,17 @@ final class SearchScreenTests: XCTestCase {
         app.launch()
 
         let searchBar = app.navigationBars.searchFields.element(boundBy: 0)
-        wait(forElement: searchBar)
+        guard searchBar.waitForExistence(timeout: 5.0) else {
+            XCTFail("Search bar didn't appear.")
+            return
+        }
         searchBar.tap()
 
         let cancelButton = app.navigationBars.buttons["Cancel"]
-        wait(forElement: cancelButton)
+        guard cancelButton.waitForExistence(timeout: 5.0) else {
+            XCTFail("Cancel button bar didn't appear.")
+            return
+        }
 
         let keyboardActivated = NSPredicate(format: "count > 0")
         expectation(for: keyboardActivated, evaluatedWith: app.keyboards)
