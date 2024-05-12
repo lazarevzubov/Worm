@@ -14,6 +14,8 @@ protocol RecommendationsViewModel: BookListCellViewModel, BookDetailsPresentable
 
     // MARK: - Properties
 
+    /// Whether the onboarding has been already shown to the user.
+    var onboardingShown: Bool { get set }
     /// A list of view models representing items on the Recommendations screen.
     var recommendations: [BookViewModel] { get }
 
@@ -36,23 +38,39 @@ final class RecommendationsDefaultViewModel<Model: RecommendationsModel>: @unche
     // MARK: RecommendationsViewModel protocol properties
 
     @Published
+    var onboardingShown: Bool {
+        didSet {
+            onboardingSynchronizationQueue.async(flags: .barrier) { [weak self, onboardingShown] in
+                self?.onboardingService.recommendationsOnboardingShown = onboardingShown
+            }
+        }
+    }
+    @Published
     private(set) var recommendations = [BookViewModel]()
 
     // MARK: Private properties
 
     private let imageService: ImageService
     private let model: Model
+    private let onboardingSynchronizationQueue = DispatchQueue(
+        label: "com.lazarevzubov.RecommendationsDefaultViewModel-onboarding", attributes: .concurrent
+    )
     private lazy var cancellables = Set<AnyCancellable>()
+    private var onboardingService: OnboardingService
 
     // MARK: - Initialization
 
     /// Creates a view model object.
     /// - Parameters:
     ///   - model: Data providing object.
+    ///   - onboardingService: Provides with information related to the user onboarding.
     ///   - imageService: The services that turns image URLs into images themselves.
-    init(model: Model, imageService: ImageService) {
+    init(model: Model, onboardingService: OnboardingService, imageService: ImageService) {
         self.model = model
+        self.onboardingService = onboardingService
         self.imageService = imageService
+
+        onboardingShown = onboardingService.recommendationsOnboardingShown
 
         bind(model: model)
     }
@@ -109,12 +127,20 @@ final class RecommendationsDefaultViewModel<Model: RecommendationsModel>: @unche
 
 // MARK: -
 
-final class RecommendationsPreviewViewModel: RecommendationsViewModel {
+final class RecommendationsPreviewViewModel: @unchecked Sendable, RecommendationsViewModel {
 
     // MARK: - Properties
 
     // MARK: RecommendationsViewModel protocol properties
 
+    var onboardingShown: Bool {
+        get {
+            onboardingSynchronizationQueue.sync { synchronizedOnboardingShown }
+        }
+        set {
+            onboardingSynchronizationQueue.async(flags: .barrier) { self.synchronizedOnboardingShown = newValue }
+        }
+    }
     let recommendations = [
         BookViewModel(authors: "J.R.R. Tolkien",
                       id: "1",
@@ -168,6 +194,13 @@ final class RecommendationsPreviewViewModel: RecommendationsViewModel {
                       favorite: false,
                       title: "The Wind-Up Bird Chronicle")
     ]
+
+    // MARK: Private methods
+
+    private let onboardingSynchronizationQueue = DispatchQueue(
+        label: "com.lazarevzubov.RecommendationsPreviewViewModel-onboarding", attributes: .concurrent
+    )
+    private var synchronizedOnboardingShown = false
 
     // MARK: - Methods
 

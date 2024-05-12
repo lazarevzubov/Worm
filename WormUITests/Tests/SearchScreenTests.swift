@@ -14,11 +14,6 @@ final class SearchScreenTests: XCTestCase {
 
     // MARK: - Methods
 
-    override func setUp() {
-        super.setUp()
-        continueAfterFailure = false
-    }
-
     func testSearchOnboarding_shown_onFirstLaunch() {
         deleteApp()
 
@@ -52,8 +47,6 @@ final class SearchScreenTests: XCTestCase {
             XCTFail("Search onboarding didn't disappear.")
             return
         }
-
-        XCTAssertFalse(onboardingLabel.exists, "Search onboarding didn't disappear.")
         XCTAssertFalse(onboardingLabel.isHittable, "Search onboarding is tappable.")
     }
 
@@ -175,7 +168,7 @@ final class SearchScreenTests: XCTestCase {
         }
     }
 
-    func testSearchInitiallyShown() {
+    func testSearch_isPresent() {
         let app = XCTestCase.testApp
         app.launch()
 

@@ -27,10 +27,9 @@ struct SearchView<ViewModel: SearchViewModel>: View {
                     .listStyle(.plain)
                 if !viewModel.searchOnboardingShown {
                     VStack {
-                        makeOnboardingView(
-                            text: "Start by searching your favourite books and marking them as favourites.",
-                            color: .favorites
-                        )
+
+                        OnboardingView(text: "Start by searching your favourite books and marking them as favourites.",
+                                       color: .favorites)
                             .accessibilityIdentifier("SearchOnboardingLabel")
                         Spacer()
                     }
@@ -40,12 +39,14 @@ struct SearchView<ViewModel: SearchViewModel>: View {
                        && !viewModel.recommendationsOnboardingShown {
                     VStack {
                         Spacer()
-                        makeOnboardingView(text: "Then check your recommendations!", color: .recommendations)
+                        OnboardingView(text: "Then check your recommendations!", color: .recommendations)
                             .accessibilityIdentifier("RecommendationsOnboardingLabel")
                     }
                         .onTapGesture { viewModel.recommendationsOnboardingShown = true }
                 }
             }
+                .animation(.default, value: viewModel.searchOnboardingShown)
+                .animation(.default, value: viewModel.recommendationsOnboardingShown)
                 .searchable(text: $viewModel.query,
                             isPresented: $searchActive,
                             placement: .navigationBarDrawer(displayMode: .always),
@@ -56,8 +57,6 @@ struct SearchView<ViewModel: SearchViewModel>: View {
                 .toolbarBackground(Color.search, for: .navigationBar)
                 .toolbarBackground(.visible, for: .navigationBar)
         }
-            .animation(.default, value: viewModel.searchOnboardingShown)
-            .animation(.default, value: viewModel.recommendationsOnboardingShown)
     }
 
     // MARK: Private properties
@@ -75,19 +74,6 @@ struct SearchView<ViewModel: SearchViewModel>: View {
     /// - Parameter viewModel: The presentation logic handler.
     init(viewModel: ViewModel) {
         self.viewModel = viewModel
-    }
-
-    // MARK: - Methods
-
-    // MARK: Private methods
-
-    private func makeOnboardingView(text: LocalizedStringKey, color: Color) -> some View {
-        Text(text)
-            .fontWeight(.light)
-            .foregroundStyle(Color.black)
-            .padding(8.0)
-            .background(color.cornerRadius(4.0))
-            .padding(16.0)
     }
 
 }

@@ -12,8 +12,10 @@ protocol OnboardingService {
 
     // MARK: - Properties
 
-    /// Whether the onboarding has been already shown to the user.
-    var onboardingShown: Bool { get set }
+    /// Whether the onboarding related to the "Recommendations" screen has been already shown to the user.
+    var recommendationsOnboardingShown: Bool { get set }
+    /// Whether the onboarding related to the "Search" screen has been already shown to the user.
+    var searchOnboardingShown: Bool { get set }
 
 }
 
@@ -26,9 +28,13 @@ final class OnboardingPersistentService: OnboardingService {
 
     // MARK: OnboardingService protocol properties
 
-    var onboardingShown: Bool {
-        get { userDefaults.bool(forKey: .onboardingShown) }
-        set { userDefaults.setValue(newValue, forKey: .onboardingShown) }
+    var recommendationsOnboardingShown: Bool {
+        get { userDefaults.bool(forKey: .recommendationsOnboardingShown) }
+        set { userDefaults.setValue(newValue, forKey: .recommendationsOnboardingShown) }
+    }
+    var searchOnboardingShown: Bool {
+        get { userDefaults.bool(forKey: .searchOnboardingShown) }
+        set { userDefaults.setValue(newValue, forKey: .searchOnboardingShown) }
     }
 
     // MARK: Private properties
@@ -56,6 +62,7 @@ private extension UserDefaultsKey {
 
     // MARK: - Properties
 
-    static let onboardingShown = "onboardingShown"
+    static let recommendationsOnboardingShown = "recommendationsOnboardingShown"
+    static let searchOnboardingShown = "searchOnboardingShown"
 
 }

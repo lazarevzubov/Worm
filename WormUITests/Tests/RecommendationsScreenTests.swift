@@ -14,14 +14,66 @@ final class RecommendationsScreenTests: XCTestCase {
 
     // MARK: - Methods
 
-    override func setUp() {
-        super.setUp()
-        continueAfterFailure = false
-    }
-
     func testScreenOpening() {
         let app = openedRecommendationsTab()
         XCTAssert(app.staticTexts["Recommendations"].exists)
+    }
+
+    func testOnboarding_shown_onFirstLaunch() {
+        deleteApp()
+        let app = openedRecommendationsTab()
+
+        let onboardingLabel = app.staticTexts["OnboardingLabel"]
+        guard onboardingLabel.waitForExistence(timeout: 5.0) else {
+            XCTFail("Onboarding didn't appear.")
+            return
+        }
+
+        XCTAssertTrue(onboardingLabel.exists, "Onboarding didn't appear.")
+        XCTAssertTrue(onboardingLabel.isHittable, "Onboarding isn't tappable.")
+    }
+
+    func testOnboarding_disappears_onTap() {
+        deleteApp()
+        let app = openedRecommendationsTab()
+
+        let onboardingLabel = app.staticTexts["OnboardingLabel"]
+        guard onboardingLabel.waitForExistence(timeout: 5.0) else {
+            XCTFail("Onboarding didn't appear.")
+            return
+        }
+        onboardingLabel.tap()
+
+        guard !onboardingLabel.waitForExistence(timeout: 5.0) else {
+            XCTFail("Onboarding didn't disappear.")
+            return
+        }
+        XCTAssertFalse(onboardingLabel.isHittable, "Oboarding is tappable.")
+    }
+
+    func testOnboarding_notShownTwice_afterDismissal() {
+        deleteApp()
+        let app = openedRecommendationsTab()
+
+        let onboardingLabel = app.staticTexts["OnboardingLabel"]
+        guard onboardingLabel.waitForExistence(timeout: 5.0) else {
+            XCTFail("Onboarding didn't appear.")
+            return
+        }
+        onboardingLabel.tap()
+
+        guard !onboardingLabel.waitForExistence(timeout: 5.0) else {
+            XCTFail("Onboarding didn't disappear.")
+            return
+        }
+
+        app.terminate()
+        _ = openedRecommendationsTab()
+
+        guard !onboardingLabel.waitForExistence(timeout: 5.0) else {
+            XCTFail("Onboarding appeared again.")
+            return
+        }
     }
 
     func testListInitiallyEmpty() {
