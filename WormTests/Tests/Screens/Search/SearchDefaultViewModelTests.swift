@@ -34,7 +34,7 @@ final class SearchDefaultViewModelTests: XCTestCase {
         let newValue = !value
         vm.searchOnboardingShown = newValue
 
-        XCTAssertEqual(service.onboardingShown, value, "Persistence was updated.")
+        XCTAssertEqual(service.searchOnboardingShown, value, "Persistence was updated.")
     }
 
     func testRecommendationsOnboarding_stateInitially_asProvided() {
@@ -55,9 +55,16 @@ final class SearchDefaultViewModelTests: XCTestCase {
                                                              imageService: ImageMockService())
 
         let newValue = !value
-        vm.recommendationsOnboardingShown = newValue
+        let predicate = NSPredicate { service, _ in
+            guard let service = service as? OnboardingService else {
+                return false
+            }
+            return service.searchOnboardingShown == newValue
+        }
+        let expectation = XCTNSPredicateExpectation(predicate: predicate, object: service)
 
-        XCTAssertEqual(service.onboardingShown, newValue, "Persistence wasn't updated.")
+        vm.recommendationsOnboardingShown = newValue
+        wait(for: [expectation], timeout: 2.0)
     }
 
     func testQuery_initiallyEmpty() {
@@ -211,24 +218,6 @@ final class SearchDefaultViewModelTests: XCTestCase {
         let expectation = XCTNSPredicateExpectation(predicate: predicate, object: bookDetailsVM)
 
         wait(for: [expectation], timeout: 2.0)
-    }
-
-    // MARK: -
-
-    private final class OnboardingMockService: OnboardingService {
-
-        // MARK: - Properties
-
-        // MARK: OnboardingService protocol properties
-
-        var onboardingShown: Bool
-
-        // MARK: - Initialization
-
-        init(onboardingShown: Bool = false) {
-            self.onboardingShown = onboardingShown
-        }
-
     }
 
 }

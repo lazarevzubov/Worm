@@ -38,25 +38,33 @@ final class SearchDefaultViewModel<Model: SearchModel>: @unchecked Sendable, Sea
     private(set) var books = [BookViewModel]()
     var query: String {
         get {
-            synchronizationQueue.sync { synchronizedQuery }
+            booksSynchronizationQueue.sync { synchronizedQuery }
         }
         set {
-            synchronizationQueue.async(flags: .barrier) { self.synchronizedQuery = newValue }
+            booksSynchronizationQueue.async(flags: .barrier) { self.synchronizedQuery = newValue }
         }
     }
     @Published
     var recommendationsOnboardingShown: Bool {
-        didSet { onboardingService.onboardingShown = recommendationsOnboardingShown }
+        didSet {
+            onboardingSynchronizationQueue
+                .async(flags: .barrier) { [weak self, recommendationsOnboardingShown] in
+                    self?.onboardingService.searchOnboardingShown = recommendationsOnboardingShown
+                }
+        }
     }
     @Published
     var searchOnboardingShown: Bool
 
     // MARK: Private methods
 
+    private let booksSynchronizationQueue = DispatchQueue(label: "com.lazarevzubov.SearchDefaultViewModel-books",
+                                                          attributes: .concurrent)
     private let imageService: ImageService
     private let model: Model
-    private let synchronizationQueue = DispatchQueue(label: "com.lazarevzubov.SearchDefaultViewModel",
-                                                     attributes: .concurrent)
+    private let onboardingSynchronizationQueue = DispatchQueue(
+        label: "com.lazarevzubov.SearchDefaultViewModel-onboarding", attributes: .concurrent
+    )
     private lazy var cancellables = Set<AnyCancellable>()
     private var onboardingService: OnboardingService
     private var synchronizedQuery = "" {
@@ -77,8 +85,8 @@ final class SearchDefaultViewModel<Model: SearchModel>: @unchecked Sendable, Sea
         self.onboardingService = onboardingService
         self.imageService = imageService
 
-        searchOnboardingShown = onboardingService.onboardingShown
-        recommendationsOnboardingShown = onboardingService.onboardingShown
+        searchOnboardingShown = onboardingService.searchOnboardingShown
+        recommendationsOnboardingShown = onboardingService.searchOnboardingShown
 
         bind(model: self.model)
     }
@@ -148,9 +156,34 @@ final class SearchPreviewViewModel: @unchecked Sendable, SearchViewModel, BookLi
 
     // MARK: SearchViewModel protocol properties
 
-    var query = ""
-    var recommendationsOnboardingShown = false
-    var searchOnboardingShown = false
+    var query: String {
+        get {
+            booksSynchronizationQueue.sync { synchronizedQuery }
+        }
+        set {
+            booksSynchronizationQueue.async(flags: .barrier) { self.synchronizedQuery = newValue }
+        }
+    }
+    var recommendationsOnboardingShown: Bool {
+        get {
+            recommendationsOnboardingSynchronizationQueue.sync { synchronizedRecommendationsOnboardingShown }
+        }
+        set {
+            recommendationsOnboardingSynchronizationQueue.async(flags: .barrier) {
+                self.synchronizedRecommendationsOnboardingShown = newValue
+            }
+        }
+    }
+    var searchOnboardingShown: Bool {
+        get {
+            searchOnboardingSynchronizationQueue.sync { synchronizedSearchOnboardingShown }
+        }
+        set {
+            searchOnboardingSynchronizationQueue.async(flags: .barrier) {
+                self.synchronizedSearchOnboardingShown = newValue
+            }
+        }
+    }
     private(set) var books = [
         BookViewModel(authors: "J.R.R. Tolkien",
                       id: "1",
@@ -207,15 +240,24 @@ final class SearchPreviewViewModel: @unchecked Sendable, SearchViewModel, BookLi
 
     // MARK: Private properties
 
-    private let synchronizationQueue = DispatchQueue(label: "com.lazarevzubov.SearchPreviewViewModel",
-                                                     attributes: .concurrent)
+    private let booksSynchronizationQueue = DispatchQueue(label: "com.lazarevzubov.SearchPreviewViewModel-books",
+                                                          attributes: .concurrent)
+    private let recommendationsOnboardingSynchronizationQueue = DispatchQueue(
+        label: "com.lazarevzubov.SearchPreviewViewModel-recommendationsOnboarding", attributes: .concurrent
+    )
+    private let searchOnboardingSynchronizationQueue = DispatchQueue(
+        label: "com.lazarevzubov.SearchPreviewViewModel-searchOnboarding", attributes: .concurrent
+    )
+    private var synchronizedQuery = ""
+    private var synchronizedRecommendationsOnboardingShown = false
+    private var synchronizedSearchOnboardingShown = false
 
     // MARK: - Methods
 
     // MARK: SearchViewModel protocol methods
 
     func toggleFavoriteStateOfBook(withID id: String) {
-        synchronizationQueue.async(flags: .barrier) {
+        booksSynchronizationQueue.async(flags: .barrier) {
             self.books = self.books.map {
                 BookViewModel(authors: $0.authors,
                               id: $0.id,

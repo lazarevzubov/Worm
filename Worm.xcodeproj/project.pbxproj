@@ -52,6 +52,8 @@
 		AF8B68B82BDADE3A00AFE50B /* SearchMockModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF8B68B72BDADE3A00AFE50B /* SearchMockModel.swift */; };
 		AF9810A12BC31C69003B487A /* RecommendationsDefaultViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF9810A02BC31C69003B487A /* RecommendationsDefaultViewModelTests.swift */; };
 		AFBE421A2BEE6397000DE9B4 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFBE42192BEE6397000DE9B4 /* Color.swift */; };
+		AFD626462BF29368000A2970 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD626452BF29368000A2970 /* OnboardingView.swift */; };
+		AFD626482BF29622000A2970 /* OnboardingMockService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD626472BF29622000A2970 /* OnboardingMockService.swift */; };
 		AFF3F2B32BCD6F4200416D39 /* SearchServiceBasedModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF3F2B22BCD6F4200416D39 /* SearchServiceBasedModelTests.swift */; };
 		DDA193D22BAC9F1B00081F5F /* FavoritesServiceBasedModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA193D12BAC9F1B00081F5F /* FavoritesServiceBasedModelTests.swift */; };
 		DDB4B7A32B932EF3001A3172 /* OrderedCollections in Frameworks */ = {isa = PBXBuildFile; productRef = DDB4B7A22B932EF3001A3172 /* OrderedCollections */; };
@@ -129,6 +131,8 @@
 		AF8B68B72BDADE3A00AFE50B /* SearchMockModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchMockModel.swift; sourceTree = "<group>"; };
 		AF9810A02BC31C69003B487A /* RecommendationsDefaultViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationsDefaultViewModelTests.swift; sourceTree = "<group>"; };
 		AFBE42192BEE6397000DE9B4 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
+		AFD626452BF29368000A2970 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		AFD626472BF29622000A2970 /* OnboardingMockService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingMockService.swift; sourceTree = "<group>"; };
 		AFF3F2B22BCD6F4200416D39 /* SearchServiceBasedModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchServiceBasedModelTests.swift; sourceTree = "<group>"; };
 		DDA193D12BAC9F1B00081F5F /* FavoritesServiceBasedModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesServiceBasedModelTests.swift; sourceTree = "<group>"; };
 		DDB4B7A52B933155001A3172 /* Sequence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sequence.swift; sourceTree = "<group>"; };
@@ -291,6 +295,7 @@
 				4EAD6D2325E6EEA800D1879A /* BookDetailsPresentable.swift */,
 				4E5C6E422565C05F00DDB833 /* BookViewModel.swift */,
 				4E5C6E072565BEB700DDB833 /* MainScreen.swift */,
+				AFD626452BF29368000A2970 /* OnboardingView.swift */,
 				4E5C6DE22565BD5500DDB833 /* ViewFactory.swift */,
 			);
 			path = Screens;
@@ -342,6 +347,7 @@
 				AF23A3AA2BD01E5800B68F12 /* CatalogMockService.swift */,
 				AF72245D2BC13F560057D1ED /* FavoritesMockService.swift */,
 				AF7224582BC06CCF0057D1ED /* ImageMockService.swift */,
+				AFD626472BF29622000A2970 /* OnboardingMockService.swift */,
 				AF8B68B72BDADE3A00AFE50B /* SearchMockModel.swift */,
 			);
 			path = Mocks;
@@ -619,6 +625,7 @@
 				4E5C6DEA2565BDF500DDB833 /* CatalogService.swift in Sources */,
 				4E5C6E432565C06000DDB833 /* BookViewModel.swift in Sources */,
 				4E5C6E4B2565C09A00DDB833 /* FavoriteBook.swift in Sources */,
+				AFD626462BF29368000A2970 /* OnboardingView.swift in Sources */,
 				4E5C6E242565BF6900DDB833 /* SearchViewModel.swift in Sources */,
 				4E5C6E2B2565BF9800DDB833 /* SearchView.swift in Sources */,
 				4E6760502593CAA9001ABB42 /* BookListCellViewModel.swift in Sources */,
@@ -650,6 +657,7 @@
 				AF5A046F2BE002C800AF543C /* ImageWebServiceTests.swift in Sources */,
 				AF72245E2BC13F560057D1ED /* FavoritesMockService.swift in Sources */,
 				AF474EA42BE6A14700A19264 /* OnboardingPersistentServiceTests.swift in Sources */,
+				AFD626482BF29622000A2970 /* OnboardingMockService.swift in Sources */,
 				DDA193D22BAC9F1B00081F5F /* FavoritesServiceBasedModelTests.swift in Sources */,
 				AF7224542BBF2B140057D1ED /* FavoritesDefaultViewModelTests.swift in Sources */,
 				DDBBF8032BA239A00032039C /* SequenceTests.swift in Sources */,

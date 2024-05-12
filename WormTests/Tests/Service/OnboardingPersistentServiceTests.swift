@@ -21,18 +21,34 @@ final class OnboardingPersistentServiceTests: XCTestCase {
         super.tearDown()
     }
 
-    func testOnboardingShown_false_whenNotSet() {
+    func testSearchOnboardingShown_false_whenNotSet() {
         let service = OnboardingPersistentService(userDefaults: userDefaults)
-        XCTAssertFalse(service.onboardingShown)
+        XCTAssertFalse(service.searchOnboardingShown)
     }
 
-    func testOnboardingShown_setting() {
+    func testSearchOnboardingShown_setting() {
         let service = OnboardingPersistentService(userDefaults: userDefaults)
 
         let value = true
-        service.onboardingShown = value
+        service.searchOnboardingShown = value
 
-        XCTAssertEqual(service.onboardingShown, value, "onboardingShown returned an unexpected value.")
+        XCTAssertEqual(service.searchOnboardingShown, value, "searchOnboardingShown returned an unexpected value.")
+    }
+
+    func testRecommendationsOnboardingShown_false_whenNotSet() {
+        let service = OnboardingPersistentService(userDefaults: userDefaults)
+        XCTAssertFalse(service.recommendationsOnboardingShown)
+    }
+
+    func testRecommendationsOnboardingShown_setting() {
+        let service = OnboardingPersistentService(userDefaults: userDefaults)
+
+        let value = true
+        service.recommendationsOnboardingShown = value
+
+        XCTAssertEqual(service.recommendationsOnboardingShown,
+                       value,
+                       "recommendationsOnboardingShown returned an unexpected value.")
     }
 
 }

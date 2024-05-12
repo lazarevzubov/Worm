@@ -22,12 +22,21 @@ struct WormApp: App {
         WindowGroup {
             ViewFactory.makeMainView(catalogService: catalogService,
                                      favoritesService: favoritesService,
-                                     imageService: imageService)
+                                     imageService: imageService, 
+                                     onboardingService: onboardingService)
         }
     }
 
     // MARK: Private properties
 
+    private let catalogService: CatalogService = {
+#if DEBUG
+        if ProcessInfo.processInfo.environment["TEST"] != nil {
+            return CatalogPreviewsService()
+        }
+#endif
+        return GoodreadsService(key: "JQfiS9k0doIho3vm13Qxdg")
+    }()
     private let favoritesService = {
         let modelContainer: ModelContainer = {
 #if DEBUG
@@ -53,13 +62,6 @@ struct WormApp: App {
         return FavoritesPersistenceService(modelContainer: modelContainer)
     }()
     private let imageService = ImageWebService(webService: URLSession.shared)
-    private var catalogService: CatalogService = {
-#if DEBUG
-        if ProcessInfo.processInfo.environment["TEST"] != nil {
-            return CatalogPreviewsService()
-        }
-#endif
-        return GoodreadsService(key: "JQfiS9k0doIho3vm13Qxdg")
-    }()
+    private let onboardingService = OnboardingPersistentService()
 
 }
