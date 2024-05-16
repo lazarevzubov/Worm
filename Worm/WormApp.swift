@@ -7,6 +7,7 @@
 //
 
 import GoodreadsService
+import OSLog
 import SwiftData
 import SwiftUI
 
@@ -16,6 +17,10 @@ struct WormApp: App {
 
     // MARK: - Properties
 
+    /// Manages shared legacy behaviors of the app.
+    @UIApplicationDelegateAdaptor(AppDelegate.self)
+    var appDelegate
+
     // MARK: App protocol properties
 
     var body: some Scene {
@@ -23,7 +28,8 @@ struct WormApp: App {
             ViewFactory.makeMainView(catalogService: catalogService,
                                      favoritesService: favoritesService,
                                      imageService: imageService, 
-                                     onboardingService: onboardingService)
+                                     onboardingService: onboardingService,
+                                     logger: logger)
         }
     }
 
@@ -62,6 +68,7 @@ struct WormApp: App {
         return FavoritesPersistenceService(modelContainer: modelContainer)
     }()
     private let imageService = ImageWebService(webService: URLSession.shared)
+    private let logger = Logger()
     private let onboardingService = OnboardingPersistentService()
 
 }

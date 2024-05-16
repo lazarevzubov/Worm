@@ -52,8 +52,13 @@
 		AF8B68B82BDADE3A00AFE50B /* SearchMockModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF8B68B72BDADE3A00AFE50B /* SearchMockModel.swift */; };
 		AF9810A12BC31C69003B487A /* RecommendationsDefaultViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF9810A02BC31C69003B487A /* RecommendationsDefaultViewModelTests.swift */; };
 		AFBE421A2BEE6397000DE9B4 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFBE42192BEE6397000DE9B4 /* Color.swift */; };
+		AFC84ABF2BF7CEDD0067EC7B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC84ABE2BF7CEDD0067EC7B /* AppDelegate.swift */; };
+		AFC84AC22BF7D0CB0067EC7B /* BannerViewControllerWidthDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC84AC12BF7D0CB0067EC7B /* BannerViewControllerWidthDelegate.swift */; };
+		AFC84AC42BF7D13D0067EC7B /* BannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC84AC32BF7D13D0067EC7B /* BannerViewController.swift */; };
+		AFC84AC62BF7D2170067EC7B /* BannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC84AC52BF7D2170067EC7B /* BannerView.swift */; };
 		AFD626462BF29368000A2970 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD626452BF29368000A2970 /* OnboardingView.swift */; };
 		AFD626482BF29622000A2970 /* OnboardingMockService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD626472BF29622000A2970 /* OnboardingMockService.swift */; };
+		AFEBCDB82BF68A6300E12997 /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = AFEBCDB72BF68A6300E12997 /* GoogleMobileAds */; };
 		AFF3F2B32BCD6F4200416D39 /* SearchServiceBasedModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF3F2B22BCD6F4200416D39 /* SearchServiceBasedModelTests.swift */; };
 		DDA193D22BAC9F1B00081F5F /* FavoritesServiceBasedModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA193D12BAC9F1B00081F5F /* FavoritesServiceBasedModelTests.swift */; };
 		DDB4B7A32B932EF3001A3172 /* OrderedCollections in Frameworks */ = {isa = PBXBuildFile; productRef = DDB4B7A22B932EF3001A3172 /* OrderedCollections */; };
@@ -131,6 +136,10 @@
 		AF8B68B72BDADE3A00AFE50B /* SearchMockModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchMockModel.swift; sourceTree = "<group>"; };
 		AF9810A02BC31C69003B487A /* RecommendationsDefaultViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationsDefaultViewModelTests.swift; sourceTree = "<group>"; };
 		AFBE42192BEE6397000DE9B4 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
+		AFC84ABE2BF7CEDD0067EC7B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		AFC84AC12BF7D0CB0067EC7B /* BannerViewControllerWidthDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerViewControllerWidthDelegate.swift; sourceTree = "<group>"; };
+		AFC84AC32BF7D13D0067EC7B /* BannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerViewController.swift; sourceTree = "<group>"; };
+		AFC84AC52BF7D2170067EC7B /* BannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerView.swift; sourceTree = "<group>"; };
 		AFD626452BF29368000A2970 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		AFD626472BF29622000A2970 /* OnboardingMockService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingMockService.swift; sourceTree = "<group>"; };
 		AFF3F2B22BCD6F4200416D39 /* SearchServiceBasedModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchServiceBasedModelTests.swift; sourceTree = "<group>"; };
@@ -145,6 +154,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AFEBCDB82BF68A6300E12997 /* GoogleMobileAds in Frameworks */,
 				DDB4B7A32B932EF3001A3172 /* OrderedCollections in Frameworks */,
 				4E5C6DDD2565BD2900DDB833 /* GoodreadsService in Frameworks */,
 			);
@@ -280,6 +290,7 @@
 				DDB4B7A42B933139001A3172 /* Extensions */,
 				4E5C6DE12565BD3F00DDB833 /* Screens */,
 				4E5C6DE72565BDC100DDB833 /* Service */,
+				AFC84ABE2BF7CEDD0067EC7B /* AppDelegate.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -334,6 +345,7 @@
 		4E5C6E1A2565BF3F00DDB833 /* Search */ = {
 			isa = PBXGroup;
 			children = (
+				AFC84AC02BF7D0BE0067EC7B /* Banner */,
 				4E5C6E1B2565BF4800DDB833 /* SearchModel.swift */,
 				4E5C6E2A2565BF9800DDB833 /* SearchView.swift */,
 				4E5C6E232565BF6900DDB833 /* SearchViewModel.swift */,
@@ -416,6 +428,16 @@
 			path = Recommendations;
 			sourceTree = "<group>";
 		};
+		AFC84AC02BF7D0BE0067EC7B /* Banner */ = {
+			isa = PBXGroup;
+			children = (
+				AFC84AC52BF7D2170067EC7B /* BannerView.swift */,
+				AFC84AC32BF7D13D0067EC7B /* BannerViewController.swift */,
+				AFC84AC12BF7D0CB0067EC7B /* BannerViewControllerWidthDelegate.swift */,
+			);
+			path = Banner;
+			sourceTree = "<group>";
+		};
 		AFF3F2B12BCD6F2600416D39 /* Search */ = {
 			isa = PBXGroup;
 			children = (
@@ -490,6 +512,7 @@
 			packageProductDependencies = (
 				4E5C6DDC2565BD2900DDB833 /* GoodreadsService */,
 				DDB4B7A22B932EF3001A3172 /* OrderedCollections */,
+				AFEBCDB72BF68A6300E12997 /* GoogleMobileAds */,
 			);
 			productName = Worm;
 			productReference = 4E5C6D962565BBB400DDB833 /* Worm.app */;
@@ -568,6 +591,7 @@
 			packageReferences = (
 				4E5C6DDB2565BD2900DDB833 /* XCRemoteSwiftPackageReference "GoodreadsService" */,
 				DDB4B7A12B932EF3001A3172 /* XCRemoteSwiftPackageReference "swift-collections" */,
+				AFEBCDB62BF68A6300E12997 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */,
 			);
 			productRefGroup = 4E5C6D972565BBB400DDB833 /* Products */;
 			projectDirPath = "";
@@ -613,19 +637,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AFC84AC42BF7D13D0067EC7B /* BannerViewController.swift in Sources */,
 				4E5AFB5C25ACC24A00DD73BF /* FavoritesView.swift in Sources */,
 				4E5C6E002565BE8900DDB833 /* FavoritesService.swift in Sources */,
 				DDB4B7A62B933155001A3172 /* Sequence.swift in Sources */,
 				4E62031A25E2EB6100671369 /* ImageService.swift in Sources */,
+				AFC84ABF2BF7CEDD0067EC7B /* AppDelegate.swift in Sources */,
 				4E5C6E1C2565BF4800DDB833 /* SearchModel.swift in Sources */,
 				4E5C6E082565BEB700DDB833 /* MainScreen.swift in Sources */,
 				4E62030C25E2E49000671369 /* BookDetailsViewModel.swift in Sources */,
 				4E5C6DE32565BD5500DDB833 /* ViewFactory.swift in Sources */,
+				AFC84AC62BF7D2170067EC7B /* BannerView.swift in Sources */,
 				4E5AFB6625ACC74100DD73BF /* FavoritesModel.swift in Sources */,
 				4E5C6DEA2565BDF500DDB833 /* CatalogService.swift in Sources */,
 				4E5C6E432565C06000DDB833 /* BookViewModel.swift in Sources */,
 				4E5C6E4B2565C09A00DDB833 /* FavoriteBook.swift in Sources */,
 				AFD626462BF29368000A2970 /* OnboardingView.swift in Sources */,
+				AFC84AC22BF7D0CB0067EC7B /* BannerViewControllerWidthDelegate.swift in Sources */,
 				4E5C6E242565BF6900DDB833 /* SearchViewModel.swift in Sources */,
 				4E5C6E2B2565BF9800DDB833 /* SearchView.swift in Sources */,
 				4E6760502593CAA9001ABB42 /* BookListCellViewModel.swift in Sources */,
@@ -1009,6 +1037,14 @@
 				minimumVersion = 1.0.2;
 			};
 		};
+		AFEBCDB62BF68A6300E12997 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/googleads/swift-package-manager-google-mobile-ads.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.4.0;
+			};
+		};
 		DDB4B7A12B932EF3001A3172 /* XCRemoteSwiftPackageReference "swift-collections" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/apple/swift-collections.git";
@@ -1024,6 +1060,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 4E5C6DDB2565BD2900DDB833 /* XCRemoteSwiftPackageReference "GoodreadsService" */;
 			productName = GoodreadsService;
+		};
+		AFEBCDB72BF68A6300E12997 /* GoogleMobileAds */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AFEBCDB62BF68A6300E12997 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */;
+			productName = GoogleMobileAds;
 		};
 		DDB4B7A22B932EF3001A3172 /* OrderedCollections */ = {
 			isa = XCSwiftPackageProductDependency;

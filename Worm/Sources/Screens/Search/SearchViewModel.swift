@@ -6,8 +6,10 @@
 //  Copyright © 2020 Nikita Lazarev-Zubov. All rights reserved.
 //
 
+import AppTrackingTransparency
 import Combine
 import Dispatch
+import OSLog
 
 /// The presentation logic of the book search screen.
 protocol SearchViewModel: BookListCellViewModel, BookDetailsPresentable, ObservableObject {
@@ -22,6 +24,11 @@ protocol SearchViewModel: BookListCellViewModel, BookDetailsPresentable, Observa
     var recommendationsOnboardingShown: Bool { get set }
     /// Whether the onboarding about the searching has been already shown to the user.
     var searchOnboardingShown: Bool { get set }
+
+    // MARK: - Methods
+
+    /// Handles appearing of the book search screen.
+    func handleAppearing() async
 
 }
 
@@ -66,6 +73,7 @@ final class SearchDefaultViewModel<Model: SearchModel>: @unchecked Sendable, Sea
         label: "com.lazarevzubov.SearchDefaultViewModel-onboarding", attributes: .concurrent
     )
     private lazy var cancellables = Set<AnyCancellable>()
+    private var logger: Logger?
     private var onboardingService: OnboardingService
     private var synchronizedQuery = "" {
         didSet {
@@ -80,10 +88,12 @@ final class SearchDefaultViewModel<Model: SearchModel>: @unchecked Sendable, Sea
     ///   - model: The search screen model.
     ///   - onboardingService: Provides with information related to the user onboarding.
     ///   - imageService: The services that turns image URLs into images themselves.
-    init(model: Model, onboardingService: OnboardingService, imageService: ImageService) {
+    ///   - logger: An object for writing interpolated string messages to the unified logging system.
+    init(model: Model, onboardingService: OnboardingService, imageService: ImageService, logger: Logger? = nil) {
         self.model = model
         self.onboardingService = onboardingService
         self.imageService = imageService
+        self.logger = logger
 
         searchOnboardingShown = onboardingService.searchOnboardingShown
         recommendationsOnboardingShown = onboardingService.searchOnboardingShown
@@ -108,6 +118,27 @@ final class SearchDefaultViewModel<Model: SearchModel>: @unchecked Sendable, Sea
                                     title: book.title,
                                     imageURL: book.imageURL,
                                     imageService: imageService)
+    }
+
+    func handleAppearing() async {
+        guard !trackingAccessAvailable() else {
+            return
+        }
+
+        try? await Task.sleep(for: .milliseconds(100))
+        switch await ATTrackingManager.requestTrackingAuthorization() {
+        case .authorized:
+            self.logger?.info("Tracking has been authorized.")
+        case .denied:
+            self.logger?.info("Tracking has been denied.")
+        case .notDetermined:
+            self.logger?.info("Tracking authorization status cannot be determined.")
+        case .restricted:
+            self.logger?.info("Tracking has been restricted on the device.")
+        @unknown
+        default:
+            self.logger?.info("Tracking authorization status cannot be determined.")
+        }
     }
 
     // MARK: Private methods
@@ -144,6 +175,20 @@ final class SearchDefaultViewModel<Model: SearchModel>: @unchecked Sendable, Sea
             .store(in: &cancellables)
     }
 
+    private func trackingAccessAvailable() -> Bool {
+        switch ATTrackingManager.trackingAuthorizationStatus {
+        case .authorized:
+            true
+        case .notDetermined,
+                .restricted,
+                .denied:
+            false
+        @unknown
+        default:
+            false
+        }
+    }
+
 }
 
 #if DEBUG
@@ -151,6 +196,7 @@ final class SearchDefaultViewModel<Model: SearchModel>: @unchecked Sendable, Sea
 // MARK: -
 
 final class SearchPreviewViewModel: @unchecked Sendable, SearchViewModel, BookListCellViewModel {
+
 
     // MARK: - Properties
 
@@ -263,8 +309,8 @@ final class SearchPreviewViewModel: @unchecked Sendable, SearchViewModel, BookLi
                               id: $0.id,
                               imageURL: nil,
                               favorite: ($0.id == id)
-                              ? !$0.favorite
-                              : $0.favorite,
+                                            ? !$0.favorite
+                                            : $0.favorite,
                               title: $0.title)
 
             }
@@ -273,6 +319,10 @@ final class SearchPreviewViewModel: @unchecked Sendable, SearchViewModel, BookLi
 
     func makeDetailsViewModel(for favorite: BookViewModel) -> some BookDetailsViewModel {
         BookDetailsPreviewViewModel()
+    }
+
+    func handleAppearing() {
+        // Do nothing in previews.
     }
 
 }

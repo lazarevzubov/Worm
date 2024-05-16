@@ -1,5 +1,5 @@
 {
-  "originHash" : "e084e445195d319a3e47ef207c8e68c5bbb1a63584112a3a89a144986275a8de",
+  "originHash" : "9939486d2c60c65c660f002184b0427a58b0de99d591feae581b5ecd49eb92c3",
   "pins" : [
     {
       "identity" : "goodreadsservice",
@@ -17,6 +17,24 @@
       "state" : {
         "revision" : "94cf62b3ba8d4bed62680a282d4c25f9c63c2efb",
         "version" : "1.1.0"
+      }
+    },
+    {
+      "identity" : "swift-package-manager-google-mobile-ads",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/googleads/swift-package-manager-google-mobile-ads.git",
+      "state" : {
+        "revision" : "41118048ffdeb8ef6c0f2207b685f84fba260f56",
+        "version" : "11.4.0"
+      }
+    },
+    {
+      "identity" : "swift-package-manager-google-user-messaging-platform",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/googleads/swift-package-manager-google-user-messaging-platform.git",
+      "state" : {
+        "revision" : "9b68aa69fb508f0274853e226c734151a973c7b7",
+        "version" : "2.4.0"
       }
     }
   ],

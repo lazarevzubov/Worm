@@ -6,6 +6,7 @@
 //  Copyright © 2020 Nikita Lazarev-Zubov. All rights reserved.
 //
 
+import OSLog
 import SwiftUI
 
 /// A set of creational methods for building views for the app.
@@ -19,15 +20,18 @@ enum ViewFactory<RecommendationsService: FavoritesService> {
     ///   - catalogService: The main data service of the app.
     ///   - favoritesService: The favorite books list manager.
     ///   - favoritesService: Provides with information related to the user onboarding.
+    ///   - logger: An object for writing interpolated string messages to the unified logging system.
     /// - Returns: The main view of the app.
     static func makeMainView(catalogService: CatalogService,
                              favoritesService: RecommendationsService,
                              imageService: ImageService,
-                             onboardingService: OnboardingService) -> some View {
+                             onboardingService: OnboardingService,
+                             logger: Logger? = nil) -> some View {
         let searchView = makeSearchView(catalogService: catalogService,
                                         favoritesService: favoritesService,
                                         imageService: imageService,
-                                        onboardingService: onboardingService)
+                                        onboardingService: onboardingService,
+                                        logger: logger)
         let recommendationsView = makeRecommendationsView(catalogService: catalogService,
                                                           favoritesService: favoritesService,
                                                           imageService: imageService,
@@ -44,11 +48,13 @@ enum ViewFactory<RecommendationsService: FavoritesService> {
     private static func makeSearchView(catalogService: CatalogService,
                                        favoritesService: RecommendationsService,
                                        imageService: ImageService,
-                                       onboardingService: OnboardingService) -> some View {
+                                       onboardingService: OnboardingService,
+                                       logger: Logger? = nil) -> some View {
         let model = SearchServiceBasedModel(catalogService: catalogService, favoritesService: favoritesService)
         let viewModel = SearchDefaultViewModel(model: model,
                                                onboardingService: onboardingService,
-                                               imageService: imageService)
+                                               imageService: imageService,
+                                               logger: logger)
 
         return SearchView<SearchDefaultViewModel<SearchServiceBasedModel>>(viewModel: viewModel)
     }
