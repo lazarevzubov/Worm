@@ -27,7 +27,6 @@ struct SearchView<ViewModel: SearchViewModel>: View {
                     .listStyle(.plain)
                 if !viewModel.searchOnboardingShown {
                     VStack {
-
                         OnboardingView(text: "Start by searching your favourite books and marking them as favourites.",
                                        color: .favorites)
                             .accessibilityIdentifier("SearchOnboardingLabel")
