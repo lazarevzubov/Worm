@@ -14,7 +14,11 @@ struct OnboardingView: View {
     // MARK: View protocol properties
 
     var body: some View {
-        Text(text)
+        VStack(alignment: .trailing) {
+            Image(systemName: "xmark")
+                .padding([.top, .bottom, .trailing], 4.0)
+            Text(text)
+        }
             .fontWeight(.light)
             .foregroundStyle(Color.black)
             .padding(8.0)
