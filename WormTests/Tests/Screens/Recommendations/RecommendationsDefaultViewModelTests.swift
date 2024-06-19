@@ -56,7 +56,7 @@ final class RecommendationsDefaultViewModelTest: XCTestCase {
     }
 
     func testRecommendations_update() {
-        let recommendations: Set = [Book(authors: [], title: "", id: "1")]
+        let recommendations: Set = [Book(id: "1", authors: [], title: "", description: "Desc")]
         let vm: some RecommendationsViewModel = RecommendationsDefaultViewModel(
             model: RecommendationsMockModel(recommendations: recommendations),
             onboardingService: OnboardingMockService(),
@@ -67,7 +67,11 @@ final class RecommendationsDefaultViewModelTest: XCTestCase {
             guard let vm = vm as? any RecommendationsViewModel else {
                 return false
             }
-            return vm.recommendations == [BookViewModel(book: Book(authors: [], title: "", id: "1"), favorite: false)]
+            return vm.recommendations == [BookViewModel(book: Book(id: "1", 
+                                                                   authors: [],
+                                                                   title: "",
+                                                                   description: "Desc"),
+                                                        favorite: false)]
         }
         let expectation = XCTNSPredicateExpectation(predicate: predicate, object: vm)
 
@@ -76,7 +80,7 @@ final class RecommendationsDefaultViewModelTest: XCTestCase {
 
     func testRecommendations_update_afterTogglingFavorite() async {
         let id = "1"
-        let recommendations: Set = [Book(authors: [], title: "", id: id)]
+        let recommendations: Set = [Book(id: id, authors: [], title: "", description: "Desc")]
         let vm: some RecommendationsViewModel = RecommendationsDefaultViewModel(
             model: RecommendationsMockModel(recommendations: recommendations),
             onboardingService: OnboardingMockService(),
@@ -112,7 +116,8 @@ final class RecommendationsDefaultViewModelTest: XCTestCase {
     func testDetailsViewModel_authors_accordingToBook() {
         let authors = ["Author 1",
                        "Authors 2"]
-        let bookVM = BookViewModel(book: Book(authors: authors, title: "Title", id: "1"), favorite: false)
+        let bookVM = BookViewModel(book: Book(id: "1", authors: authors, title: "Title", description: "Desc"),
+                                   favorite: false)
 
         let vm: some RecommendationsViewModel = RecommendationsDefaultViewModel(
             model: RecommendationsMockModel(),
@@ -126,10 +131,11 @@ final class RecommendationsDefaultViewModelTest: XCTestCase {
 
     func testDetailsViewModel_title_accordingToBook() {
         let title = "Title"
-        let bookVM = BookViewModel(book: Book(authors: ["Author 1",
+        let bookVM = BookViewModel(book: Book(id: "1", 
+                                              authors: ["Author 1",
                                                         "Authors 2"],
                                               title: title,
-                                              id: "1"),
+                                              description: "Desc"),
                                    favorite: false)
 
         let vm: some RecommendationsViewModel = RecommendationsDefaultViewModel(
@@ -147,10 +153,11 @@ final class RecommendationsDefaultViewModelTest: XCTestCase {
         let image = UIImage()
         let imageService = ImageMockService(images: [imageURL : image])
 
-        let bookVM = BookViewModel(book: Book(authors: ["Author 1",
+        let bookVM = BookViewModel(book: Book(id: "1", 
+                                              authors: ["Author 1",
                                                         "Authors 2"],
                                               title: "Title",
-                                              id: "1",
+                                              description: "Desc",
                                               imageURL: imageURL),
                                    favorite: false)
 
@@ -181,7 +188,7 @@ final class RecommendationsDefaultViewModelTest: XCTestCase {
         )
 
         let id = "1"
-        let bookVM = BookViewModel(book: Book(authors: [], title: "", id: id), favorite: false)
+        let bookVM = BookViewModel(book: Book(id: id, authors: [], title: "", description: "Desc2"), favorite: false)
 
         vm.blockRecommendation(bookVM)
         XCTAssertTrue(model.blockedRecommendations.contains(id))

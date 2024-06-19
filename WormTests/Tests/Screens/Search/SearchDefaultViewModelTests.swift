@@ -102,7 +102,7 @@ final class SearchDefaultViewModelTests: XCTestCase {
     }
 
     func testBooks_update() {
-        let books: Set = [Book(authors: [], title: "", id: "1")]
+        let books: Set = [Book(id: "1", authors: [], title: "", description: "Desc")]
         let vm: any SearchViewModel = SearchDefaultViewModel(model: SearchMockModel(books: books),
                                                              onboardingService: OnboardingMockService(),
                                                              imageService: ImageMockService())
@@ -111,7 +111,9 @@ final class SearchDefaultViewModelTests: XCTestCase {
             guard let vm = vm as? any SearchViewModel else {
                 return false
             }
-            return vm.books == [BookViewModel(book: Book(authors: [], title: "", id: "1"), favorite: false)]
+            return vm.books == [
+                BookViewModel(book: Book(id: "1", authors: [], title: "", description: "Desc"), favorite: false)
+            ]
         }
         let expectation = XCTNSPredicateExpectation(predicate: predicate, object: vm)
 
@@ -120,7 +122,7 @@ final class SearchDefaultViewModelTests: XCTestCase {
 
     func testBooks_update_withFavorite() {
         let id = "1"
-        let books: Set = [Book(authors: [], title: "", id: id)]
+        let books: Set = [Book(id: id, authors: [], title: "", description: "Desc")]
         let vm: any SearchViewModel = SearchDefaultViewModel(model: SearchMockModel(books: books,
                                                                                     favoriteBookIDs: [id]),
                                                              onboardingService: OnboardingMockService(),
@@ -130,7 +132,9 @@ final class SearchDefaultViewModelTests: XCTestCase {
             guard let vm = vm as? any SearchViewModel else {
                 return false
             }
-            return vm.books == [BookViewModel(book: Book(authors: [], title: "", id: id), favorite: true)]
+            return vm.books == [
+                BookViewModel(book: Book(id: id, authors: [], title: "", description: "Desc"), favorite: true)
+            ]
         }
         let expectation = XCTNSPredicateExpectation(predicate: predicate, object: vm)
 
@@ -139,7 +143,7 @@ final class SearchDefaultViewModelTests: XCTestCase {
 
     func testBooks_update_afterTogglingFavorite() async {
         let id = "1"
-        let books: Set = [Book(authors: [], title: "", id: id)]
+        let books: Set = [Book(id: id, authors: [], title: "", description: "Desc")]
         let vm: any SearchViewModel = SearchDefaultViewModel(model: SearchMockModel(books: books),
                                                              onboardingService: OnboardingMockService(),
                                                              imageService: ImageMockService())
@@ -148,7 +152,9 @@ final class SearchDefaultViewModelTests: XCTestCase {
             guard let vm = vm as? any SearchViewModel else {
                 return false
             }
-            return vm.books == [BookViewModel(book: Book(authors: [], title: "", id: id), favorite: true)]
+            return vm.books == [
+                BookViewModel(book: Book(id: id, authors: [], title: "", description: "Desc"), favorite: true)
+            ]
         }
         let expectation = XCTNSPredicateExpectation(predicate: predicate, object: vm)
 
