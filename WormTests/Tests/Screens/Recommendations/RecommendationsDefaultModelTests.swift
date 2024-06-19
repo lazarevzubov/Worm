@@ -107,13 +107,15 @@ final class RecommendationsDefaultModelTests: XCTestCase {
     }
 
     func testRecommendations_update() {
-        let book = Book(authors: ["J.R.R. Tolkien"],
+        let book = Book(id: "1", 
+                        authors: ["J.R.R. Tolkien"],
                         title: "The Lord of the Rings",
-                        id: "1",
+                        description: "Desc1",
                         similarBookIDs: ["15"])
-        let recommendedBook = Book(authors: ["Haruki Murakami"],
+        let recommendedBook = Book(id: "15", 
+                                   authors: ["Haruki Murakami"],
                                    title: "The Wind-Up Bird Chronicle",
-                                   id: "15",
+                                   description: "Desc2",
                                    similarBookIDs: ["1"])
 
         let model: RecommendationsModel = RecommendationsDefaultModel(
@@ -140,13 +142,15 @@ final class RecommendationsDefaultModelTests: XCTestCase {
     }
 
     func testRecommendations_update_onAddingFavorite() async {
-        let book = Book(authors: ["J.R.R. Tolkien"],
+        let book = Book(id: "1", 
+                        authors: ["J.R.R. Tolkien"],
                         title: "The Lord of the Rings",
-                        id: "1",
+                        description: "Desc1",
                         similarBookIDs: ["15"])
-        let recommendedBook = Book(authors: ["Haruki Murakami"],
+        let recommendedBook = Book(id: "15",
+                                   authors: ["Haruki Murakami"],
                                    title: "The Wind-Up Bird Chronicle",
-                                   id: "15",
+                                   description: "Desc2",
                                    similarBookIDs: ["1"])
 
         let model: RecommendationsModel = RecommendationsDefaultModel(
@@ -174,13 +178,15 @@ final class RecommendationsDefaultModelTests: XCTestCase {
     }
 
     func testRecommendations_update_onRemovingFavorite() async {
-        let book = Book(authors: ["J.R.R. Tolkien"],
+        let book = Book(id: "1", 
+                        authors: ["J.R.R. Tolkien"],
                         title: "The Lord of the Rings",
-                        id: "1",
+                        description: "Desc1",
                         similarBookIDs: ["15"])
-        let recommendedBook = Book(authors: ["Haruki Murakami"],
+        let recommendedBook = Book(id: "15", 
+                                   authors: ["Haruki Murakami"],
                                    title: "The Wind-Up Bird Chronicle",
-                                   id: "15",
+                                   description: "Desc2",
                                    similarBookIDs: ["1"])
 
         let model: RecommendationsModel = RecommendationsDefaultModel(
@@ -209,13 +215,15 @@ final class RecommendationsDefaultModelTests: XCTestCase {
     }
 
     func testRecommendations_update_onBlockingRecommendation() {
-        let book = Book(authors: ["J.R.R. Tolkien"],
+        let book = Book(id: "1", 
+                        authors: ["J.R.R. Tolkien"],
                         title: "The Lord of the Rings",
-                        id: "1",
+                        description: "Desc1",
                         similarBookIDs: ["15"])
-        let recommendedBook = Book(authors: ["Haruki Murakami"],
+        let recommendedBook = Book(id: "15", 
+                                   authors: ["Haruki Murakami"],
                                    title: "The Wind-Up Bird Chronicle",
-                                   id: "15",
+                                   description: "Desc2",
                                    similarBookIDs: ["1"])
 
         let model: RecommendationsModel = RecommendationsDefaultModel(

@@ -22,13 +22,15 @@ final class SearchServiceBasedModelTests: XCTestCase {
     }
 
     func testBooks_update_onSearch() async {
-        let books = [Book(authors: ["J.R.R. Tolkien"],
+        let books = [Book(id: "1", 
+                          authors: ["J.R.R. Tolkien"],
                           title: "The Lord of the Rings",
-                          id: "1",
+                          description: "Desc1",
                           similarBookIDs: ["15"]),
-                     Book(authors: ["Michael Bond"],
+                     Book(id: "2", 
+                          authors: ["Michael Bond"],
                           title: "Paddington Pop-Up London",
-                          id: "2",
+                          description: "Desc2",
                           similarBookIDs: ["14"])]
 
         let query = "Query"
@@ -52,25 +54,29 @@ final class SearchServiceBasedModelTests: XCTestCase {
     }
 
     func testSearch_cancels_whenReplacedWithinDelay() async {
-        let books1 = [Book(authors: ["J.R.R. Tolkien"],
+        let books1 = [Book(id: "1", 
+                           authors: ["J.R.R. Tolkien"],
                            title: "The Lord of the Rings",
-                           id: "1",
+                           description: "Desc1",
                            similarBookIDs: ["15"]),
-                      Book(authors: ["Michael Bond"],
+                      Book(id: "2", 
+                           authors: ["Michael Bond"],
                            title: "Paddington Pop-Up London",
-                           id: "2",
+                           description: "Desc2",
                            similarBookIDs: ["14"])]
 
         let query1 = "Query1"
         let result1 = books1.map { $0.id }
 
-        let books2 = [Book(authors: ["J.K. Rowling"],
+        let books2 = [Book(id: "3", 
+                           authors: ["J.K. Rowling"],
                            title: "Harry Potter and the Sorcecer's Stone",
-                           id: "3",
+                           description: "Desc1",
                            similarBookIDs: ["13"]),
-                      Book(authors: ["George R.R. Martin"],
+                      Book(id: "4", 
+                           authors: ["George R.R. Martin"],
                            title: "A Game of Thrones",
-                           id: "4",
+                           description: "Desc2",
                            similarBookIDs: ["12"])]
 
         let query2 = "Query2"

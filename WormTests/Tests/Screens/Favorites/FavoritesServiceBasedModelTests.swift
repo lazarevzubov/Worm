@@ -23,7 +23,7 @@ final class FavoritesServiceBasedModelTests: XCTestCase {
 
     func testFavorites_update() {
         let id = "1"
-        let book = Book(authors: [], title: "", id: id)
+        let book = Book(id: id, authors: [], title: "", description: "Desc")
 
         let catalogService = CatalogMockService(books: [book])
         let favoritesService = FavoritesMockService(favoriteBookIDs: [id])
@@ -49,7 +49,7 @@ final class FavoritesServiceBasedModelTests: XCTestCase {
 
     func testFavorites_update_onAddingFavorite() {
         let id = "1"
-        let book = Book(authors: [], title: "", id: id)
+        let book = Book(id: id, authors: [], title: "", description: "Desc")
 
         let catalogService = CatalogMockService(books: [book])
         let model: FavoritesModel = FavoritesServiceBasedModel(catalogService: catalogService,
@@ -76,7 +76,7 @@ final class FavoritesServiceBasedModelTests: XCTestCase {
 
     func testFavorites_update_onRemovingFavorite() {
         let id = "1"
-        let book = Book(authors: [], title: "", id: id)
+        let book = Book(id: id, authors: [], title: "", description: "Desc")
 
         let catalogService = CatalogMockService(books: [book])
         let favoritesService = FavoritesMockService(favoriteBookIDs: [id])

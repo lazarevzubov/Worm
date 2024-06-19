@@ -23,7 +23,7 @@ final class FavoritesDefaultViewModelTests: XCTestCase {
 
     func testFavorites_update() {
         let id = "1"
-        let book = Book(authors: [], title: "", id: id)
+        let book = Book(id: id, authors: [], title: "", description: "Desc")
 
         let vm: some FavoritesViewModel = FavoritesDefaultViewModel(model: FavoritesMockModel(favorites: [book]),
                                                                     imageService: ImageMockService())
@@ -41,7 +41,7 @@ final class FavoritesDefaultViewModelTests: XCTestCase {
 
     func testFavorites_update_onAddingFavorite() async {
         let id = "1"
-        let book = Book(authors: [], title: "", id: id)
+        let book = Book(id: id, authors: [], title: "", description: "Desc")
 
         let vm: some FavoritesViewModel = FavoritesDefaultViewModel(model: FavoritesMockModel(),
                                                                     imageService: ImageMockService())
@@ -60,7 +60,7 @@ final class FavoritesDefaultViewModelTests: XCTestCase {
 
     func testFavorites_update_onRemovingFavorite() async {
         let id = "1"
-        let book = Book(authors: [], title: "", id: id)
+        let book = Book(id: id, authors: [], title: "", description: "Desc")
 
         let vm: some FavoritesViewModel = FavoritesDefaultViewModel(model: FavoritesMockModel(favorites: [book]),
                                                                     imageService: ImageMockService())
@@ -81,7 +81,11 @@ final class FavoritesDefaultViewModelTests: XCTestCase {
         let vm: some FavoritesViewModel = FavoritesDefaultViewModel(model: FavoritesMockModel(),
                                                                     imageService: ImageMockService())
 
-        let bookVM = BookViewModel(book: Book(authors: ["Author1", "Author2"], title: "Title", id: "ID"),
+        let bookVM = BookViewModel(book: Book(id: "ID",
+                                              authors: ["Author1", 
+                                                        "Author2"],
+                                              title: "Title",
+                                              description: "Desc"),
                                    favorite: false)
         let bookDetailsVM = vm.makeDetailsViewModel(for: bookVM)
 
@@ -92,7 +96,11 @@ final class FavoritesDefaultViewModelTests: XCTestCase {
         let vm: some FavoritesViewModel = FavoritesDefaultViewModel(model: FavoritesMockModel(),
                                                                     imageService: ImageMockService())
 
-        let bookVM = BookViewModel(book: Book(authors: ["Author1", "Author2"], title: "Title", id: "ID"),
+        let bookVM = BookViewModel(book: Book(id: "ID",
+                                              authors: ["Author1", 
+                                                        "Author2"],
+                                              title: "Title",
+                                              description: "Desc"),
                                    favorite: false)
         let bookDetailsVM = vm.makeDetailsViewModel(for: bookVM)
 
@@ -106,9 +114,11 @@ final class FavoritesDefaultViewModelTests: XCTestCase {
         let vm: some FavoritesViewModel = FavoritesDefaultViewModel(
             model: FavoritesMockModel(), imageService: ImageMockService(images: [imageURL : image])
         )
-        let bookVM = BookViewModel(book: Book(authors: ["Author1", "Author2"],
+        let bookVM = BookViewModel(book: Book(id: "ID", 
+                                              authors: ["Author1",
+                                                        "Author2"],
                                               title: "Title",
-                                              id: "ID",
+                                              description: "Desc",
                                               imageURL: URL(string: "https://apple.com")),
                                    favorite: false)
 
@@ -156,10 +166,11 @@ final class FavoritesDefaultViewModelTests: XCTestCase {
                 if favorites.contains(where: { $0.id == id }) {
                     favorites.removeAll { $0.id == id }
                 } else {
-                    favorites.append(Book(authors: [], title: "", id: id))
+                    favorites.append(Book(id: id, authors: [], title: "", description: "Desc"))
                 }
             }
         }
+
     }
 
 }

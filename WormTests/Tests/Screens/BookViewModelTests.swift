@@ -14,27 +14,13 @@ final class BookViewModelTests: XCTestCase {
 
     // MARK: - Methods
 
-    func testAuthors() {
-        let author1 = "Author1"
-        let author2 = "Author2"
-        let book = Book(authors: [author1,
-                                  author2],
-                        title: "Title",
-                        id: "ID",
-                        imageURL: URL(string: "https://apple.com")!,
-                        similarBookIDs: ["ID1",
-                                         "ID2"])
-
-        let vm = BookViewModel(book: book, favorite: true)
-        XCTAssertEqual(vm.authors, "\(author1), \(author2)")
-    }
-
     func testID() {
         let id = "ID"
-        let book = Book(authors: ["Author1",
+        let book = Book(id: id, 
+                        authors: ["Author1",
                                   "Author2"],
                         title: "Title",
-                        id: id,
+                        description: "Desc",
                         imageURL: URL(string: "https://apple.com")!,
                         similarBookIDs: ["ID1",
                                          "ID2"])
@@ -43,12 +29,29 @@ final class BookViewModelTests: XCTestCase {
         XCTAssertEqual(vm.id, id)
     }
 
+    func testAuthors() {
+        let author1 = "Author1"
+        let author2 = "Author2"
+        let book = Book(id: "ID", 
+                        authors: [author1,
+                                  author2],
+                        title: "Title", 
+                        description: "Desc",
+                        imageURL: URL(string: "https://apple.com")!,
+                        similarBookIDs: ["ID1",
+                                         "ID2"])
+
+        let vm = BookViewModel(book: book, favorite: true)
+        XCTAssertEqual(vm.authors, "\(author1), \(author2)")
+    }
+
     func testImageURL() {
         let imageURL = URL(string: "https://apple.com")!
-        let book = Book(authors: ["Author1",
+        let book = Book(id: "ID", 
+                        authors: ["Author1",
                                   "Author2"],
                         title: "Title",
-                        id: "ID",
+                        description: "Desc",
                         imageURL: imageURL,
                         similarBookIDs: ["ID1",
                                          "ID2"])
@@ -58,10 +61,11 @@ final class BookViewModelTests: XCTestCase {
     }
 
     func testFavorite() {
-        let book = Book(authors: ["Author1",
+        let book = Book(id: "ID", 
+                        authors: ["Author1",
                                   "Author2"],
                         title: "Title",
-                        id: "ID",
+                        description: "Desc",
                         imageURL: URL(string: "https://apple.com")!,
                         similarBookIDs: ["ID1",
                                          "ID2"])
@@ -74,10 +78,11 @@ final class BookViewModelTests: XCTestCase {
 
     func testTitle() {
         let title = "Title"
-        let book = Book(authors: ["Author1",
+        let book = Book(id: "ID", 
+                        authors: ["Author1",
                                   "Author2"],
-                        title: title,
-                        id: "ID",
+                        title: title, 
+                        description: "Desc",
                         imageURL: URL(string: "https://apple.com")!,
                         similarBookIDs: ["ID1",
                                          "ID2"])
