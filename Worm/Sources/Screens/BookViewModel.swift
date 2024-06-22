@@ -16,6 +16,8 @@ struct BookViewModel: Sendable {
 
     /// Formatted authors list.
     let authors: String
+    /// The book's description.
+    var description: String
     /// The book ID.
     let id: String
     /// The URL of the book image.
@@ -24,6 +26,25 @@ struct BookViewModel: Sendable {
     let favorite: Bool
     /// The book title.
     let title: String
+
+    // MARK: - Initialization
+
+    /// Creates a book data for a visual representation.
+    /// - Parameters:
+    ///   - id: The book ID.
+    ///   - authors: Formatted authors list.
+    ///   - title: The book title.
+    ///   - description: The book's description.
+    ///   - imageURL: The URL of the book image.
+    ///   - favorite: Whether the book is in the favorites list.
+    init(id: String, authors: String, title: String, description: String, imageURL: URL?, favorite: Bool) {
+        self.id = id
+        self.authors = authors
+        self.title = title
+        self.description = description
+        self.imageURL = imageURL
+        self.favorite = favorite
+    }
 
 }
 
@@ -46,11 +67,12 @@ extension BookViewModel {
     ///   - book: A book meta-data object.
     ///   - favorite: Whether the book is a favorite.
     init(book: Book, favorite: Bool) {
-        self.init(authors: book.authors.joined(separator: ", "),
-                  id: book.id,
+        self.init(id: book.id, 
+                  authors: book.authors.joined(separator: ", "),
+                  title: book.title,
+                  description: book.description,
                   imageURL: book.imageURL,
-                  favorite: favorite,
-                  title: book.title)
+                  favorite: favorite)
     }
 
 }

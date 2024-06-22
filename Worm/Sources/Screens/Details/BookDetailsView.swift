@@ -23,7 +23,7 @@ struct BookDetailsView<ViewModel: BookDetailsViewModel>: View {
         Spacer()
         if let image = viewModel.image { // TODO: Update if downloaded later.
             Image(uiImage: image)
-            Spacer()
+                .padding(.bottom)
         }
         Text(viewModel.title)
             .font(.headline)
@@ -32,7 +32,12 @@ struct BookDetailsView<ViewModel: BookDetailsViewModel>: View {
         Text(viewModel.authors)
             .font(.subheadline)
             .multilineTextAlignment(.center)
-            .padding([.top, .horizontal])
+            .padding(.horizontal)
+        Text(viewModel.description)
+            .font(.caption)
+            .multilineTextAlignment(.center)
+            .padding([.top,
+                      .horizontal])
         Spacer()
     }
 
