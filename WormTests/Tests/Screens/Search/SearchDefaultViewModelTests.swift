@@ -179,11 +179,12 @@ final class SearchDefaultViewModelTests: XCTestCase {
                                                              onboardingService: OnboardingMockService(),
                                                              imageService: ImageMockService())
 
-        let bookVM = BookViewModel(authors: "Authors",
-                                   id: "ID",
+        let bookVM = BookViewModel(id: "ID",
+                                   authors: "Authors",
+                                   title: "Title",
+                                   description: "Desc",
                                    imageURL: URL(string: "https://apple.com"),
-                                   favorite: true,
-                                   title: "Title")
+                                   favorite: true)
         let bookDetailsVM = vm.makeDetailsViewModel(for: bookVM)
 
         XCTAssertEqual(bookDetailsVM.authors, bookVM.authors, "The authors of the source and the result don't match.")
@@ -194,11 +195,12 @@ final class SearchDefaultViewModelTests: XCTestCase {
                                                              onboardingService: OnboardingMockService(),
                                                              imageService: ImageMockService())
 
-        let bookVM = BookViewModel(authors: "Authors",
-                                   id: "ID",
+        let bookVM = BookViewModel(id: "ID",
+                                   authors: "Authors",
+                                   title: "Title",
+                                   description: "Desc",
                                    imageURL: URL(string: "https://apple.com"),
-                                   favorite: true,
-                                   title: "Title")
+                                   favorite: true)
         let bookDetailsVM = vm.makeDetailsViewModel(for: bookVM)
 
         XCTAssertEqual(bookDetailsVM.title, bookVM.title, "The titles of the source and the result don't match.")
@@ -211,7 +213,12 @@ final class SearchDefaultViewModelTests: XCTestCase {
         let vm: any SearchViewModel = SearchDefaultViewModel(model: SearchMockModel(),
                                                              onboardingService: OnboardingMockService(),
                                                              imageService: ImageMockService(images: [imageURL : image]))
-        let bookVM = BookViewModel(authors: "Authors", id: "ID", imageURL: imageURL, favorite: true, title: "Title")
+        let bookVM = BookViewModel(id: "ID",
+                                   authors: "Authors",
+                                   title: "Title",
+                                   description: "Desc",
+                                   imageURL: imageURL,
+                                   favorite: true)
 
         let bookDetailsVM = vm.makeDetailsViewModel(for: bookVM)
 

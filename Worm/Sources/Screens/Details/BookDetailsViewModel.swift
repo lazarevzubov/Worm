@@ -14,6 +14,8 @@ protocol BookDetailsViewModel: Sendable, ObservableObject {
 
     /// The ready to present combined authors string.
     var authors: String { get }
+    /// The book's description.
+    var description: String { get }
     /// The book's image.
     var image: UIImage? { get }
     /// The book's title.
@@ -31,6 +33,7 @@ final class BookDetailsDefaultViewModel: @unchecked Sendable, BookDetailsViewMod
     // MARK: BookDetailsViewModel protocol properties
 
     let authors: String
+    let description: String
     let title: String
     @Published
     private(set) var image: UIImage?
@@ -45,10 +48,12 @@ final class BookDetailsDefaultViewModel: @unchecked Sendable, BookDetailsViewMod
     /// - Parameters:
     ///   - authors: The authors string.
     ///   - title: The title string.
+    ///   - description: The book's description.
     ///   - imageURL: The URL of the image.
     ///   - imageService: The service that magically turns image URL into image.
-    init(authors: String, title: String, imageURL: URL?, imageService: ImageService) {
+    init(authors: String, title: String, description: String, imageURL: URL?, imageService: ImageService) {
         self.authors = authors
+        self.description = description
         self.title = title
         self.imageService = imageService
 
@@ -82,6 +87,7 @@ final class BookDetailsPreviewViewModel: BookDetailsViewModel {
     // MARK: BookDetailsViewModel protocol properties
 
     let authors = "J.R.R. Tolkien"
+    let description = "A sensitive hobbit unexpectedly saves the situation."
     let image = UIImage(systemName: "scribble.variable")
     let title = "The Lord of the Rings"
 

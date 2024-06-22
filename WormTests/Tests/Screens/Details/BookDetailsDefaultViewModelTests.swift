@@ -20,6 +20,7 @@ final class BookDetailsDefaultViewModelTests: XCTestCase {
         let vm: BookDetailsDefaultViewModel = BookDetailsDefaultViewModel(
             authors: "Authors",
             title: "Title",
+            description: "Desc",
             imageURL: url,
             imageService: ImageMockService(images: [url : UIImage()])
         )
