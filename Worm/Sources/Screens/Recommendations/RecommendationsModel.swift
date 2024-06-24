@@ -118,9 +118,9 @@ final class RecommendationsDefaultModel<RecommendationsService: FavoritesService
         favoritesService
             .favoriteBookIDsPublisher
             .removeDuplicates()
-            .sink { id in
+            .sink { ids in
                 Task { [weak self] in
-                    await self?.update(with: id)
+                    await self?.update(with: ids)
                 }
             }
             .store(in: &cancellables)

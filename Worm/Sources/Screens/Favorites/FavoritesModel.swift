@@ -83,9 +83,9 @@ final class FavoritesServiceBasedModel<FavoriteBooksService: FavoritesService>: 
         favoritesService
             .favoriteBookIDsPublisher
             .removeDuplicates()
-            .sink { id in
+            .sink { ids in
                 Task { [weak self] in
-                    await self?.updateFavorites(with: id)
+                    await self?.updateFavorites(with: ids)
                 }
             }
             .store(in: &cancellables)
