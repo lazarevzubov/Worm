@@ -23,21 +23,15 @@ struct MainScreen<SearchView: View, RecommendationsView: View, FavoritesView: Vi
         TabView {
             searchView
                 .tabItem {
-                    Image(systemName: "magnifyingglass")
-                        .accessibility(hidden: true)
-                    Text("Search")
+                    Label("Search", systemImage: "magnifyingglass")
                 }
             recommendationsView
                 .tabItem {
-                    Image(systemName: "checkmark")
-                        .accessibility(hidden: true)
-                    Text("Recommendations")
+                    Label("Recommendations", systemImage: "checkmark")
                 }
             favoritesView
                 .tabItem {
-                    Image(systemName: "heart")
-                        .accessibility(hidden: true)
-                    Text("Favourites")
+                    Label("Favourites", systemImage: "heart")
                 }
         }
     }
