@@ -5,7 +5,11 @@
 //  Created by Nikita Lazarev-Zubov on 21.2.2021.
 //
 
+#if os(iOS)
 import UIKit
+#elseif os(macOS)
+import AppKit
+#endif
 
 /// Provides presentation data for a book details.
 protocol BookDetailsViewModel: Sendable, ObservableObject {
@@ -17,7 +21,11 @@ protocol BookDetailsViewModel: Sendable, ObservableObject {
     /// The book's description.
     var description: String { get }
     /// The book's image.
+#if os(iOS)
     var image: UIImage? { get }
+#elseif os(macOS)
+    var image: NSImage? { get }
+#endif
     /// The book's title.
     var title: String { get }
 
@@ -35,8 +43,13 @@ final class BookDetailsDefaultViewModel: @unchecked Sendable, BookDetailsViewMod
     let authors: String
     let description: String
     let title: String
+#if os(iOS)
     @Published
     private(set) var image: UIImage?
+#elseif os(macOS)
+    @Published
+    private(set) var image: NSImage?
+#endif
 
     // MARK: Private properties
 
@@ -88,9 +101,21 @@ final class BookDetailsPreviewViewModel: BookDetailsViewModel {
 
     let authors = "J.R.R. Tolkien"
     let description = "A sensitive hobbit unexpectedly saves the situation."
+#if os(iOS)
     let image = UIImage(systemName: "scribble.variable")
+#elseif os(macOS)
+    let image = NSImage(systemSymbolName: "scribble.variable", accessibilityDescription: nil)
+#endif
     let title = "The Lord of the Rings"
 
 }
+
+#endif
+
+#if os(macOS)
+
+// MARK: -
+
+extension NSImage: @unchecked Sendable { }
 
 #endif

@@ -48,7 +48,7 @@
 		AF7224592BC06CCF0057D1ED /* ImageMockService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF7224582BC06CCF0057D1ED /* ImageMockService.swift */; };
 		AF72245C2BC13EE00057D1ED /* RecommendationsDefaultModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF72245B2BC13EE00057D1ED /* RecommendationsDefaultModelTests.swift */; };
 		AF72245E2BC13F560057D1ED /* FavoritesMockService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF72245D2BC13F560057D1ED /* FavoritesMockService.swift */; };
-		AF77F9902C14B06A00BF79BB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AF77F98F2C14B06A00BF79BB /* LaunchScreen.storyboard */; };
+		AF77F9902C14B06A00BF79BB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AF77F98F2C14B06A00BF79BB /* LaunchScreen.storyboard */; platformFilter = ios; };
 		AF8B68B52BDADD8D00AFE50B /* SearchDefaultViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF8B68B42BDADD8D00AFE50B /* SearchDefaultViewModelTests.swift */; };
 		AF8B68B82BDADE3A00AFE50B /* SearchMockModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF8B68B72BDADE3A00AFE50B /* SearchMockModel.swift */; };
 		AF9810A12BC31C69003B487A /* RecommendationsDefaultViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF9810A02BC31C69003B487A /* RecommendationsDefaultViewModelTests.swift */; };
@@ -837,6 +837,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.LazarevZubov.Worm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_STRICT_CONCURRENCY = complete;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -863,6 +866,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.LazarevZubov.Worm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_STRICT_CONCURRENCY = complete;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
