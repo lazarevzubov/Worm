@@ -15,13 +15,17 @@ final class ImageWebServiceTests: XCTestCase {
 
     func testImageReturned_fromWebService() async {
         let url = URL(string: "https://apple.com")!
-        let image = UIImage(named: "Worms.jpg", in: Bundle(for: type(of: self)), compatibleWith: nil)!
-        let webService = WebMockService(data: [url : image.pngData()!])
+#if os(iOS)
+        let image = Image(named: "Worms.jpg", in: Bundle(for: type(of: self)), compatibleWith: nil)!
+#elseif os(macOS)
+        let image = Bundle(for: type(of: self)).image(forResource: "Worms.jpg")!
+#endif
+        let webService = WebMockService(data: [url : image.tiffRepresentation!])
 
         let service = ImageWebService(webService: webService)
         let retrievedImage = await service.getImage(from: url)
 
-        XCTAssertEqual(retrievedImage!.pngData()!, image.pngData()!, "Unexpected data received")
+        XCTAssertEqual(retrievedImage!.tiffRepresentation!, image.tiffRepresentation!, "Unexpected data received")
     }
 
     func testNilReturned_whenWebService_throws() async {

@@ -38,7 +38,7 @@ protocol SearchModel: Sendable {
 // MARK: -
 
 /// The search screen model implemented on top of a data providing service.
-final class SearchServiceBasedModel<RecommendationsService: FavoritesService>: @unchecked Sendable, SearchModel {
+final class SearchServiceBasedModel: @unchecked Sendable, SearchModel {
 
     // MARK: - Properties
 
@@ -54,7 +54,7 @@ final class SearchServiceBasedModel<RecommendationsService: FavoritesService>: @
     // MARK: Private properties
 
     private let catalogService: CatalogService
-    private let favoritesService: RecommendationsService
+    private let favoritesService: FavoritesService
     private let queryDelay: Duration?
     private let synchronizationQueue = DispatchQueue(label: "com.lazarevzubov.SearchServiceBasedModel")
     private lazy var cancellables = Set<AnyCancellable>()
@@ -75,7 +75,7 @@ final class SearchServiceBasedModel<RecommendationsService: FavoritesService>: @
     ///   - favoritesService: A service providing an interface to track and manipulate the list of favorite books.
     ///   - queryDelay: The delay after which the request is actually dispatched. This delay is useful to prevent too many request while typing a query.
     init(catalogService: CatalogService,
-         favoritesService: RecommendationsService,
+         favoritesService: FavoritesService,
          queryDelay: Duration? = .milliseconds(500)) {
         self.catalogService = catalogService
         self.favoritesService = favoritesService
@@ -118,7 +118,7 @@ final class SearchServiceBasedModel<RecommendationsService: FavoritesService>: @
 
     // MARK: Private methods
 
-    private func bind(favoritesService: RecommendationsService) {
+    private func bind(favoritesService: FavoritesService) {
         favoritesService
             .favoriteBookIDsPublisher
             .removeDuplicates()

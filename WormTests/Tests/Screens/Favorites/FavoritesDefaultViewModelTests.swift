@@ -109,7 +109,7 @@ final class FavoritesDefaultViewModelTests: XCTestCase {
 
     func testDetailsViewModel_image() {
         let imageURL = URL(string: "https://apple.com")!
-        let image = UIImage()
+        let image = Image()
 
         let vm: some FavoritesViewModel = FavoritesDefaultViewModel(
             model: FavoritesMockModel(), imageService: ImageMockService(images: [imageURL : image])

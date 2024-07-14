@@ -68,17 +68,17 @@ final class SearchDefaultViewModelTests: XCTestCase {
     }
 
     func testQuery_initiallyEmpty() {
-        let vm: any SearchViewModel = SearchDefaultViewModel(model: SearchMockModel(),
-                                                             onboardingService: OnboardingMockService(),
-                                                             imageService: ImageMockService())
+        let vm: any MainScreenViewModel = SearchDefaultViewModel(model: SearchMockModel(),
+                                                                 onboardingService: OnboardingMockService(),
+                                                                 imageService: ImageMockService())
         XCTAssertTrue(vm.query.isEmpty, "Query has an unexpected initial value.")
     }
 
     func testQuery_update_searchedModel() {
         let model = SearchMockModel()
-        let vm: any SearchViewModel = SearchDefaultViewModel(model: model,
-                                                             onboardingService: OnboardingMockService(),
-                                                             imageService: ImageMockService())
+        let vm: any MainScreenViewModel = SearchDefaultViewModel(model: model,
+                                                                 onboardingService: OnboardingMockService(),
+                                                                 imageService: ImageMockService())
 
         let query = "Query"
         vm.query = query
@@ -208,7 +208,7 @@ final class SearchDefaultViewModelTests: XCTestCase {
 
     func testDetailsViewModel_image() {
         let imageURL = URL(string: "https://apple.com")!
-        let image = UIImage()
+        let image = Image()
 
         let vm: any SearchViewModel = SearchDefaultViewModel(model: SearchMockModel(),
                                                              onboardingService: OnboardingMockService(),
