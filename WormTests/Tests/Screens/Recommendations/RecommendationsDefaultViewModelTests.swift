@@ -150,7 +150,7 @@ final class RecommendationsDefaultViewModelTest: XCTestCase {
 
     func testDetailsViewModel_image_accordingToImageService() {
         let imageURL = URL(string: "https://apple.com")!
-        let image = UIImage()
+        let image = Image()
         let imageService = ImageMockService(images: [imageURL : image])
 
         let bookVM = BookViewModel(book: Book(id: "1", 

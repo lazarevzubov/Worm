@@ -5,7 +5,7 @@
 //  Created by Lazarev-Zubov, Nikita on 5.4.2024.
 //
 
-import UIKit
+import Foundation
 @testable
 import Worm
 
@@ -13,11 +13,11 @@ struct ImageMockService: ImageService {
 
     // MARK: - Properties
 
-    let images: [URL : UIImage]
+    let images: [URL : Image]
 
     // MARK: - Initialization
 
-    init(images: [URL : UIImage] = [:]) {
+    init(images: [URL : Image] = [:]) {
         self.images = images
     }
 
@@ -25,7 +25,7 @@ struct ImageMockService: ImageService {
 
     // MARK: ImageService protocol methods
 
-    func getImage(from url: URL) async -> UIImage? {
+    func getImage(from url: URL) async -> Image? {
         images[url]
     }
 

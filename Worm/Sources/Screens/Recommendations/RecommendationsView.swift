@@ -16,36 +16,29 @@ struct RecommendationsView<ViewModel: RecommendationsViewModel>: View {
     // MARK: View protocol properties
 
     var body: some View {
-        NavigationView {
-            ZStack {
-                List {
-                    ForEach(viewModel.recommendations) { book in
-                        Button { selectedBook = book } label: { BookListCell(book: book, viewModel: viewModel) }
-                    }
+        ZStack {
+            List {
+                ForEach(viewModel.recommendations) { book in
+                    Button { selectedBook = book } label: { BookListCell(book: book, viewModel: viewModel) }
+                }
                     .onDelete(perform: deleteItem)
-                }
-                    .animation(.easeIn, value: viewModel.recommendations)
-                    .listStyle(.plain)
-                if !viewModel.onboardingShown {
-                    VStack {
-                        OnboardingView(
-                            text: "Recommendations are shown in the order of their relevance and update as you turn some of them down or mark more books as favourites.",
-                            color: .search
-                        )
-                            .accessibilityIdentifier("OnboardingLabel")
-                        Spacer()
-                    }
-                        .onTapGesture { viewModel.onboardingShown = true }
-                }
             }
-                .animation(.default, value: viewModel.onboardingShown)
-                .sheet(item: $selectedBook) { BookDetailsView(viewModel: viewModel.makeDetailsViewModel(for: $0)) }
-                .navigationTitle("Recommendations")
-                .navigationBarItems(trailing: EditButton())
-                .toolbarColorScheme(.light, for: .navigationBar)
-                .toolbarBackground(Color.recommendations, for: .navigationBar)
-                .toolbarBackground(.visible, for: .navigationBar)
+                .animation(.easeIn, value: viewModel.recommendations)
+                .listStyle(.plain)
+            if !viewModel.onboardingShown {
+                VStack {
+                    OnboardingView(
+                        text: "Recommendations are shown in the order of their relevance and update as you turn some of them down or mark more books as favourites.",
+                        color: .search
+                    )
+                        .accessibilityIdentifier("OnboardingLabel")
+                    Spacer()
+                }
+                    .onTapGesture { viewModel.onboardingShown = true }
+            }
         }
+            .animation(.default, value: viewModel.onboardingShown)
+            .sheet(item: $selectedBook) { BookDetailsView(viewModel: viewModel.makeDetailsViewModel(for: $0)) }
     }
 
     // MARK: Private properties

@@ -16,18 +16,12 @@ struct FavoritesView<ViewModel: FavoritesViewModel>: View {
     // MARK: View protocol properties
 
     var body: some View {
-        NavigationView {
-            List(viewModel.favorites) { book in
-                Button { selectedBook = book } label: { BookListCell(book: book, viewModel: viewModel) }
-            }
-                .listStyle(.plain)
-                .animation(.easeIn, value: viewModel.favorites)
-                .sheet(item: $selectedBook) { BookDetailsView(viewModel: viewModel.makeDetailsViewModel(for: $0)) }
-                .navigationTitle("Favourites")
-                .toolbarColorScheme(.light, for: .navigationBar)
-                .toolbarBackground(Color.favorites, for: .navigationBar)
-                .toolbarBackground(.visible, for: .navigationBar)
+        List(viewModel.favorites) { book in
+            Button { selectedBook = book } label: { BookListCell(book: book, viewModel: viewModel) }
         }
+            .listStyle(.plain)
+            .animation(.easeIn, value: viewModel.favorites)
+            .sheet(item: $selectedBook) { BookDetailsView(viewModel: viewModel.makeDetailsViewModel(for: $0)) }
     }
 
     // MARK: Private properties
