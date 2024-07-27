@@ -41,8 +41,10 @@ struct BookDetailsView<ViewModel: BookDetailsViewModel>: View {
         Text(viewModel.description)
             .font(.caption)
             .multilineTextAlignment(.center)
-            .padding([.top,
-                      .horizontal])
+            .padding(
+                [.top,
+                 .horizontal]
+            )
         Spacer()
     }
 

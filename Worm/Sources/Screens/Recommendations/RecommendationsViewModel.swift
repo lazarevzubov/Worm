@@ -83,8 +83,8 @@ final class RecommendationsDefaultViewModel<Model: RecommendationsModel>: @unche
 
     // MARK: RecommendationsViewModel protocol methods
 
-    func toggleFavoriteStateOfBook(withID id: String) async {
-        await model.toggleFavoriteStateOfBook(withID: id)
+    func toggleFavoriteStateOfBook(withID id: String) {
+        model.toggleFavoriteStateOfBook(withID: id)
     }
 
     func makeDetailsViewModel(for book: BookViewModel) -> some BookDetailsViewModel {

@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// TODO: HeaderDoc.
 struct OnboardingView: View {
 
     // MARK: - Properties
@@ -33,6 +34,7 @@ struct OnboardingView: View {
 
     // MARK: - Initialization
 
+    // TODO: HeaderDoc.
     init(text: String, color: Color) {
         self.text = text
         self.color = color
@@ -40,8 +42,12 @@ struct OnboardingView: View {
 
 }
 
+#if DEBUG
+
 // MARK: -
 
 #Preview {
     OnboardingView(text: "Start by searching your favourite books and marking them as favourites.", color: .favorites)
 }
+
+#endif
