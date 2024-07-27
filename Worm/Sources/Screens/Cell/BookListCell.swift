@@ -32,9 +32,7 @@ struct BookListCell: View {
                 .accessibilityElement()
                 .accessibility(label: makeCellAccessibilityLabel(for: book))
             Spacer()
-            Button {
-                Task { await viewModel.toggleFavoriteStateOfBook(withID: book.id) }
-            } label: {
+            Button { viewModel.toggleFavoriteStateOfBook(withID: book.id) } label: {
                 Image(systemName: (book.favorite
                                        ? "heart.fill"
                                        : "heart"))

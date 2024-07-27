@@ -32,7 +32,7 @@ protocol RecommendationsModel: Sendable {
 
     /// Toggles the favorite-ness state of a book.
     /// - Parameter id: The ID of the book to manipulate.
-    func toggleFavoriteStateOfBook(withID id: String) async
+    func toggleFavoriteStateOfBook(withID id: String)
     /// Blocks a book ID from appearing as a recommendation.
     /// - Parameter bookID: The ID of the book to manipulate.
     func blockFromRecommendationsBook(withID id: String)
@@ -97,13 +97,15 @@ final class RecommendationsDefaultModel<RecommendationsService: FavoritesService
 
     // MARK: RecommendationsModel protocol methods
 
-    func toggleFavoriteStateOfBook(withID id: String) async {
+    func toggleFavoriteStateOfBook(withID id: String) {
         if favoriteBookIDs.contains(id) {
             favoritesService.removeFromFavoriteBook(withID: id)
             removeRecommendedBooksForBook(withID: id)
         } else {
-            favoritesService.addToFavoritesBook(withID: id)
-            await addRecommendedBooksForBook(withID: id)
+            Task {
+                favoritesService.addToFavoritesBook(withID: id)
+                await addRecommendedBooksForBook(withID: id)
+            }
         }
     }
 

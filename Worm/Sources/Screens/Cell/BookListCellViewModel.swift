@@ -13,6 +13,6 @@ protocol BookListCellViewModel: Sendable {
 
     /// Toggles a favorite state of the book.
     /// - Parameter id: The book ID.
-    func toggleFavoriteStateOfBook(withID id: String) async
+    func toggleFavoriteStateOfBook(withID id: String)
 
 }

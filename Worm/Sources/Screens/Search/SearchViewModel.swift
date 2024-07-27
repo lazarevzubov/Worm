@@ -176,14 +176,16 @@ final class SearchPreviewViewModel: @unchecked Sendable, SearchViewModel, BookLi
     func toggleFavoriteStateOfBook(withID id: String) {
         booksSynchronizationQueue.async(flags: .barrier) {
             self.books = self.books.map {
-                BookViewModel(id: $0.id,
-                              authors: $0.authors,
-                              title: $0.title,
-                              description: $0.description,
-                              imageURL: nil,
-                              favorite: ($0.id == id)
-                              ? !$0.favorite
-                              : $0.favorite)
+                BookViewModel(
+                    id: $0.id,
+                    authors: $0.authors,
+                    title: $0.title,
+                    description: $0.description,
+                    imageURL: nil,
+                    favorite: ($0.id == id)
+                                  ? !$0.favorite
+                                  : $0.favorite
+                )
 
             }
         }
