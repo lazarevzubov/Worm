@@ -20,6 +20,7 @@ struct RecommendationsView<ViewModel: RecommendationsViewModel>: View {
             List {
                 ForEach(viewModel.recommendations) { book in
                     Button { selectedBook = book } label: { BookListCell(book: book, viewModel: viewModel) }
+                        .buttonStyle(.plain)
                 }
                     .onDelete(perform: deleteItem)
             }
