@@ -18,6 +18,7 @@ struct FavoritesView<ViewModel: FavoritesViewModel>: View {
     var body: some View {
         List(viewModel.favorites) { book in
             Button { selectedBook = book } label: { BookListCell(book: book, viewModel: viewModel) }
+                .buttonStyle(.plain)
         }
             .listStyle(.plain)
             .animation(.easeIn, value: viewModel.favorites)

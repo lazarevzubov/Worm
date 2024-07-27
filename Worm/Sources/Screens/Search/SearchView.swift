@@ -19,6 +19,7 @@ struct SearchView<ViewModel: SearchViewModel>: View {
         ZStack {
             List(viewModel.books) { book in
                 Button { selectedBook = book } label: { BookListCell(book: book, viewModel: viewModel) }
+                    .buttonStyle(.plain)
             }
                 .listStyle(.plain)
             if !viewModel.searchOnboardingShown {
