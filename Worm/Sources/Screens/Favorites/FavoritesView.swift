@@ -17,7 +17,10 @@ struct FavoritesView<ViewModel: FavoritesViewModel>: View {
 
     var body: some View {
         List(viewModel.favorites) { book in
-            Button { selectedBook = book } label: { BookListCell(book: book, viewModel: viewModel) }
+            Button { selectedBook = book } label: {
+                BookListCell(book: book, viewModel: viewModel)
+                    .background(Color.white.opacity(0.0001)) // For making empty space clickable/tappable.
+            }
                 .buttonStyle(.plain)
         }
             .listStyle(.plain)
