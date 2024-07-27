@@ -36,7 +36,9 @@ struct MainScreen<FavoritesView: View,
                     .tag(Tab.favorites)
             }
                 .if(tab == .search) {
-                    $0.searchable(text: $viewModel.query, placement: .toolbar, prompt: "Search books")
+                    $0
+                        .searchable(text: $viewModel.query, placement: .toolbar, prompt: "Search books")
+                        .autocorrectionDisabled(true)
                 }
                 .toolbarColorScheme(.light, for: .automatic)
                 .navigationTitle(tab.title)
