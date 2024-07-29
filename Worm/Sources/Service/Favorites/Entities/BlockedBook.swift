@@ -16,7 +16,7 @@ final class BlockedBook {
 
     /// The book's ID.
     @Attribute(.unique)
-    let id: String // TODO: Check if can be let.
+    let id: String
 
     // MARK: - Initialization
 

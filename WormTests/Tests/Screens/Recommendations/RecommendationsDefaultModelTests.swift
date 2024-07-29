@@ -50,7 +50,7 @@ final class RecommendationsDefaultModelTests: XCTestCase {
         cancellables.forEach { $0.cancel() }
     }
 
-    func testFavoriteBookIDs_update_onAddingFavorite() async {
+    func testFavoriteBookIDs_update_onAddingFavorite() {
         let model: RecommendationsModel = RecommendationsDefaultModel(catalogService: CatalogMockService(),
                                                                       favoritesService: FavoritesMockService())
 
@@ -67,13 +67,13 @@ final class RecommendationsDefaultModelTests: XCTestCase {
             }
             .store(in: &cancellables)
 
-        await model.toggleFavoriteStateOfBook(withID: id)
-        await fulfillment(of: [expectation], timeout: 2.0)
+        model.toggleFavoriteStateOfBook(withID: id)
+        wait(for: [expectation], timeout: 2.0)
 
         cancellables.forEach { $0.cancel() }
     }
 
-    func testFavoriteBookIDs_update_onRemovingFavorite() async {
+    func testFavoriteBookIDs_update_onRemovingFavorite() {
         let id = "1"
         let model: RecommendationsModel = RecommendationsDefaultModel(
             catalogService: CatalogMockService(), favoritesService: FavoritesMockService(favoriteBookIDs: [id])
@@ -98,10 +98,10 @@ final class RecommendationsDefaultModelTests: XCTestCase {
             }
             .store(in: &cancellables)
 
-        await fulfillment(of: [updateExpectation], timeout: 1.0)
+        wait(for: [updateExpectation], timeout: 1.0)
 
-        await model.toggleFavoriteStateOfBook(withID: id)
-        await fulfillment(of: [editingExpectation], timeout: 1.0)
+        model.toggleFavoriteStateOfBook(withID: id)
+        wait(for: [editingExpectation], timeout: 2.0)
 
         cancellables.forEach { $0.cancel() }
     }
@@ -141,7 +141,7 @@ final class RecommendationsDefaultModelTests: XCTestCase {
         cancellables.forEach { $0.cancel() }
     }
 
-    func testRecommendations_update_onAddingFavorite() async {
+    func testRecommendations_update_onAddingFavorite() {
         let book = Book(id: "1", 
                         authors: ["J.R.R. Tolkien"],
                         title: "The Lord of the Rings",
@@ -171,8 +171,8 @@ final class RecommendationsDefaultModelTests: XCTestCase {
             }
             .store(in: &cancellables)
 
-        await model.toggleFavoriteStateOfBook(withID: "1")
-        await fulfillment(of: [expectation], timeout: 1.0)
+        model.toggleFavoriteStateOfBook(withID: "1")
+        wait(for: [expectation], timeout: 1.0)
 
         cancellables.forEach { $0.cancel() }
     }
@@ -208,7 +208,7 @@ final class RecommendationsDefaultModelTests: XCTestCase {
             .store(in: &cancellables)
 
         try? await Task.sleep(for: .seconds(1)) // Imitates a separate update, after initialization.
-        await model.toggleFavoriteStateOfBook(withID: book.id)
+        model.toggleFavoriteStateOfBook(withID: book.id)
         await fulfillment(of: [expectation], timeout: 2.0)
 
         cancellables.forEach { $0.cancel() }

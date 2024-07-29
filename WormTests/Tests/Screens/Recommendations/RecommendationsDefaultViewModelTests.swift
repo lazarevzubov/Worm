@@ -78,7 +78,7 @@ final class RecommendationsDefaultViewModelTest: XCTestCase {
         wait(for: [expectation], timeout: 3.0)
     }
 
-    func testRecommendations_update_afterTogglingFavorite() async {
+    func testRecommendations_update_afterTogglingFavorite() {
         let id = "1"
         let recommendations: Set = [Book(id: id, authors: [], title: "", description: "Desc")]
         let vm: some RecommendationsViewModel = RecommendationsDefaultViewModel(
@@ -95,11 +95,11 @@ final class RecommendationsDefaultViewModelTest: XCTestCase {
         }
         let expectation = XCTNSPredicateExpectation(predicate: predicate, object: vm)
 
-        await vm.toggleFavoriteStateOfBook(withID: id)
-        await fulfillment(of: [expectation], timeout: 2.0)
+        vm.toggleFavoriteStateOfBook(withID: id)
+        wait(for: [expectation], timeout: 2.0)
     }
 
-    func testTogglingFavorite_updatesModel() async {
+    func testTogglingFavorite_updatesModel() {
         let model = RecommendationsMockModel()
         let vm: some RecommendationsViewModel = RecommendationsDefaultViewModel(
             model: model,
@@ -108,7 +108,7 @@ final class RecommendationsDefaultViewModelTest: XCTestCase {
         )
 
         let id = "1"
-        await vm.toggleFavoriteStateOfBook(withID: id)
+        vm.toggleFavoriteStateOfBook(withID: id)
 
         XCTAssertTrue(model.favoriteBookIDs.contains(id))
     }
@@ -150,7 +150,7 @@ final class RecommendationsDefaultViewModelTest: XCTestCase {
 
     func testDetailsViewModel_image_accordingToImageService() {
         let imageURL = URL(string: "https://apple.com")!
-        let image = Image()
+        let image = UniversalImage()
         let imageService = ImageMockService(images: [imageURL : image])
 
         let bookVM = BookViewModel(book: Book(id: "1", 

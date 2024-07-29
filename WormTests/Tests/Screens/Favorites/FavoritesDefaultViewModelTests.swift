@@ -39,7 +39,7 @@ final class FavoritesDefaultViewModelTests: XCTestCase {
         wait(for: [expectation], timeout: 2.0)
     }
 
-    func testFavorites_update_onAddingFavorite() async {
+    func testFavorites_update_onAddingFavorite() {
         let id = "1"
         let book = Book(id: id, authors: [], title: "", description: "Desc")
 
@@ -54,11 +54,11 @@ final class FavoritesDefaultViewModelTests: XCTestCase {
         }
         let expectation = XCTNSPredicateExpectation(predicate: predicate, object: vm)
 
-        await vm.toggleFavoriteStateOfBook(withID: id)
-        await fulfillment(of: [expectation], timeout: 2.0)
+        vm.toggleFavoriteStateOfBook(withID: id)
+        wait(for: [expectation], timeout: 2.0)
     }
 
-    func testFavorites_update_onRemovingFavorite() async {
+    func testFavorites_update_onRemovingFavorite() {
         let id = "1"
         let book = Book(id: id, authors: [], title: "", description: "Desc")
 
@@ -73,8 +73,8 @@ final class FavoritesDefaultViewModelTests: XCTestCase {
         }
         let expectation = XCTNSPredicateExpectation(predicate: predicate, object: vm)
 
-        await vm.toggleFavoriteStateOfBook(withID: id)
-        await fulfillment(of: [expectation], timeout: 2.0)
+        vm.toggleFavoriteStateOfBook(withID: id)
+        wait(for: [expectation], timeout: 2.0)
     }
 
     func testDetailsViewModel_authors() {
@@ -109,7 +109,7 @@ final class FavoritesDefaultViewModelTests: XCTestCase {
 
     func testDetailsViewModel_image() {
         let imageURL = URL(string: "https://apple.com")!
-        let image = Image()
+        let image = UniversalImage()
 
         let vm: some FavoritesViewModel = FavoritesDefaultViewModel(
             model: FavoritesMockModel(), imageService: ImageMockService(images: [imageURL : image])

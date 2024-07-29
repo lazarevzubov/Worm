@@ -22,13 +22,8 @@ struct BookDetailsView<ViewModel: BookDetailsViewModel>: View {
         }
         Spacer()
         if let image = viewModel.image { // TODO: Update if downloaded later.
-#if os(iOS)
-            Image(uiImage: image)
+            UniversalImageView(image: image)
                 .padding(.bottom)
-#elseif os(macOS)
-            Image(nsImage: image)
-                .padding(.bottom)
-#endif
         }
         Text(viewModel.title)
             .font(.headline)

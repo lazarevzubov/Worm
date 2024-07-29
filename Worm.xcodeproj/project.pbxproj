@@ -58,8 +58,12 @@
 		AFD626482BF29622000A2970 /* OnboardingMockService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD626472BF29622000A2970 /* OnboardingMockService.swift */; };
 		AFE8FD7C2C42E98A009919D6 /* MainScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFE8FD7B2C42E98A009919D6 /* MainScreenViewModel.swift */; };
 		AFE8FD7E2C42EA0B009919D6 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFE8FD7D2C42EA0B009919D6 /* SearchViewModel.swift */; };
-		AFE8FD802C43F3FA009919D6 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFE8FD7F2C43F3FA009919D6 /* Image.swift */; };
 		AFF3F2B32BCD6F4200416D39 /* SearchServiceBasedModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF3F2B22BCD6F4200416D39 /* SearchServiceBasedModelTests.swift */; };
+		AFF699DC2C5675F10074DF66 /* UniversalImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF699DB2C5675F10074DF66 /* UniversalImageView.swift */; };
+		AFF699DE2C5676630074DF66 /* UniversalImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF699DD2C5676630074DF66 /* UniversalImage.swift */; };
+		AFF699E02C5677060074DF66 /* NSImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF699DF2C5677060074DF66 /* NSImage.swift */; };
+		AFF699E32C5679C00074DF66 /* Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF699E22C5679C00074DF66 /* Bundle.swift */; };
+		AFF699E52C567A9F0074DF66 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF699E42C567A9F0074DF66 /* UIImage.swift */; };
 		DDA193D22BAC9F1B00081F5F /* FavoritesServiceBasedModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA193D12BAC9F1B00081F5F /* FavoritesServiceBasedModelTests.swift */; };
 		DDB4B7A32B932EF3001A3172 /* OrderedCollections in Frameworks */ = {isa = PBXBuildFile; productRef = DDB4B7A22B932EF3001A3172 /* OrderedCollections */; };
 		DDB4B7A62B933155001A3172 /* Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB4B7A52B933155001A3172 /* Sequence.swift */; };
@@ -142,8 +146,12 @@
 		AFD626472BF29622000A2970 /* OnboardingMockService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingMockService.swift; sourceTree = "<group>"; };
 		AFE8FD7B2C42E98A009919D6 /* MainScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenViewModel.swift; sourceTree = "<group>"; };
 		AFE8FD7D2C42EA0B009919D6 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
-		AFE8FD7F2C43F3FA009919D6 /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		AFF3F2B22BCD6F4200416D39 /* SearchServiceBasedModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchServiceBasedModelTests.swift; sourceTree = "<group>"; };
+		AFF699DB2C5675F10074DF66 /* UniversalImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniversalImageView.swift; sourceTree = "<group>"; };
+		AFF699DD2C5676630074DF66 /* UniversalImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniversalImage.swift; sourceTree = "<group>"; };
+		AFF699DF2C5677060074DF66 /* NSImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSImage.swift; sourceTree = "<group>"; };
+		AFF699E22C5679C00074DF66 /* Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bundle.swift; sourceTree = "<group>"; };
+		AFF699E42C567A9F0074DF66 /* UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
 		DDA193D12BAC9F1B00081F5F /* FavoritesServiceBasedModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesServiceBasedModelTests.swift; sourceTree = "<group>"; };
 		DDB4B7A52B933155001A3172 /* Sequence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sequence.swift; sourceTree = "<group>"; };
 		DDBBF8022BA239A00032039C /* SequenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SequenceTests.swift; sourceTree = "<group>"; };
@@ -262,7 +270,6 @@
 				AF5A04702BE0051400AF543C /* Resources */,
 				4E5C6E7A2565C1E400DDB833 /* Tests */,
 				4E5C6DB22565BBB500DDB833 /* Info.plist */,
-				AFE8FD7F2C43F3FA009919D6 /* Image.swift */,
 			);
 			path = WormTests;
 			sourceTree = "<group>";
@@ -289,7 +296,7 @@
 		4E5C6DD62565BCAC00DDB833 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				DDB4B7A42B933139001A3172 /* Extensions */,
+				AFF699DA2C5675DC0074DF66 /* Common */,
 				4E5C6DE12565BD3F00DDB833 /* Screens */,
 				4E5C6DE72565BDC100DDB833 /* Service */,
 			);
@@ -447,6 +454,24 @@
 			path = Search;
 			sourceTree = "<group>";
 		};
+		AFF699DA2C5675DC0074DF66 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				DDB4B7A42B933139001A3172 /* Extensions */,
+				AFF699E12C5678220074DF66 /* UniversalImage */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		AFF699E12C5678220074DF66 /* UniversalImage */ = {
+			isa = PBXGroup;
+			children = (
+				AFF699DD2C5676630074DF66 /* UniversalImage.swift */,
+				AFF699DB2C5675F10074DF66 /* UniversalImageView.swift */,
+			);
+			path = UniversalImage;
+			sourceTree = "<group>";
+		};
 		DDA193D02BAA1B2E00081F5F /* Favorites */ = {
 			isa = PBXGroup;
 			children = (
@@ -459,8 +484,11 @@
 		DDB4B7A42B933139001A3172 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				AFF699E22C5679C00074DF66 /* Bundle.swift */,
 				AFBE42192BEE6397000DE9B4 /* Color.swift */,
+				AFF699DF2C5677060074DF66 /* NSImage.swift */,
 				DDB4B7A52B933155001A3172 /* Sequence.swift */,
+				AFF699E42C567A9F0074DF66 /* UIImage.swift */,
 				AFC62E872C3A9046007810B5 /* View.swift */,
 			);
 			path = Extensions;
@@ -643,20 +671,25 @@
 				4E62031A25E2EB6100671369 /* ImageService.swift in Sources */,
 				4E5C6E1C2565BF4800DDB833 /* SearchModel.swift in Sources */,
 				4E5C6E082565BEB700DDB833 /* MainScreen.swift in Sources */,
+				AFF699E52C567A9F0074DF66 /* UIImage.swift in Sources */,
 				AFE8FD7E2C42EA0B009919D6 /* SearchViewModel.swift in Sources */,
 				4E62030C25E2E49000671369 /* BookDetailsViewModel.swift in Sources */,
 				AFE8FD7C2C42E98A009919D6 /* MainScreenViewModel.swift in Sources */,
 				4E5C6DE32565BD5500DDB833 /* ViewFactory.swift in Sources */,
 				4E5AFB6625ACC74100DD73BF /* FavoritesModel.swift in Sources */,
+				AFF699DE2C5676630074DF66 /* UniversalImage.swift in Sources */,
 				4E5C6DEA2565BDF500DDB833 /* CatalogService.swift in Sources */,
 				4E5C6E432565C06000DDB833 /* BookViewModel.swift in Sources */,
+				AFF699DC2C5675F10074DF66 /* UniversalImageView.swift in Sources */,
 				4E5C6E4B2565C09A00DDB833 /* FavoriteBook.swift in Sources */,
 				AFC62E882C3A9046007810B5 /* View.swift in Sources */,
 				AFD626462BF29368000A2970 /* OnboardingView.swift in Sources */,
 				4E5C6E242565BF6900DDB833 /* SearchDefaultViewModel.swift in Sources */,
+				AFF699E02C5677060074DF66 /* NSImage.swift in Sources */,
 				4E5C6E2B2565BF9800DDB833 /* SearchView.swift in Sources */,
 				4E6760502593CAA9001ABB42 /* BookListCellViewModel.swift in Sources */,
 				4E5C6E582565C0EF00DDB833 /* BookListCell.swift in Sources */,
+				AFF699E32C5679C00074DF66 /* Bundle.swift in Sources */,
 				4E5C6E392565C00100DDB833 /* RecommendationsModel.swift in Sources */,
 				AFBE421A2BEE6397000DE9B4 /* Color.swift in Sources */,
 				4E1AE61625DC47F5000D7DF2 /* BookDetailsView.swift in Sources */,
@@ -675,7 +708,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				AF7224592BC06CCF0057D1ED /* ImageMockService.swift in Sources */,
-				AFE8FD802C43F3FA009919D6 /* Image.swift in Sources */,
 				AFF3F2B32BCD6F4200416D39 /* SearchServiceBasedModelTests.swift in Sources */,
 				AF8B68B52BDADD8D00AFE50B /* SearchDefaultViewModelTests.swift in Sources */,
 				AF9810A12BC31C69003B487A /* RecommendationsDefaultViewModelTests.swift in Sources */,
