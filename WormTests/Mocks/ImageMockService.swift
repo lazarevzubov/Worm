@@ -13,11 +13,11 @@ struct ImageMockService: ImageService {
 
     // MARK: - Properties
 
-    let images: [URL : Image]
+    let images: [URL : UniversalImage]
 
     // MARK: - Initialization
 
-    init(images: [URL : Image] = [:]) {
+    init(images: [URL : UniversalImage] = [:]) {
         self.images = images
     }
 
@@ -25,7 +25,7 @@ struct ImageMockService: ImageService {
 
     // MARK: ImageService protocol methods
 
-    func getImage(from url: URL) async -> Image? {
+    func getImage(from url: URL) async -> UniversalImage? {
         images[url]
     }
 

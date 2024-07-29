@@ -141,7 +141,7 @@ final class SearchDefaultViewModelTests: XCTestCase {
         wait(for: [expectation], timeout: 2.0)
     }
 
-    func testBooks_update_afterTogglingFavorite() async {
+    func testBooks_update_afterTogglingFavorite() {
         let id = "1"
         let books: Set = [Book(id: id, authors: [], title: "", description: "Desc")]
         let vm: any SearchViewModel = SearchDefaultViewModel(model: SearchMockModel(books: books),
@@ -158,18 +158,18 @@ final class SearchDefaultViewModelTests: XCTestCase {
         }
         let expectation = XCTNSPredicateExpectation(predicate: predicate, object: vm)
 
-        await vm.toggleFavoriteStateOfBook(withID: id)
-        await fulfillment(of: [expectation], timeout: 2.0)
+        vm.toggleFavoriteStateOfBook(withID: id)
+        wait(for: [expectation], timeout: 3.0)
     }
 
-    func testTogglingFavorite_togglesModel() async {
+    func testTogglingFavorite_togglesModel() {
         let model = SearchMockModel()
         let vm: any SearchViewModel = SearchDefaultViewModel(model: model,
                                                              onboardingService: OnboardingMockService(),
                                                              imageService: ImageMockService())
 
         let id = "1"
-        await vm.toggleFavoriteStateOfBook(withID: id)
+        vm.toggleFavoriteStateOfBook(withID: id)
 
         XCTAssertTrue(model.favoriteBookIDs.contains(id), "The favorite state of the book was not toggled.")
     }
@@ -208,7 +208,7 @@ final class SearchDefaultViewModelTests: XCTestCase {
 
     func testDetailsViewModel_image() {
         let imageURL = URL(string: "https://apple.com")!
-        let image = Image()
+        let image = UniversalImage()
 
         let vm: any SearchViewModel = SearchDefaultViewModel(model: SearchMockModel(),
                                                              onboardingService: OnboardingMockService(),

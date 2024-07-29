@@ -5,12 +5,6 @@
 //  Created by Nikita Lazarev-Zubov on 14.3.2024.
 //
 
-#if os(iOS)
-import UIKit
-#elseif os(macOS)
-import AppKit
-#endif
-
 import Combine
 @testable
 import Worm
@@ -27,7 +21,7 @@ final class BookDetailsDefaultViewModelTests: XCTestCase {
             title: "Title",
             description: "Desc",
             imageURL: url,
-            imageService: ImageMockService(images: [url : Image()])
+            imageService: ImageMockService(images: [url : UniversalImage()])
         )
 
         let expectation = XCTestExpectation(description: "Image retrieved")

@@ -5,11 +5,7 @@
 //  Created by Nikita Lazarev-Zubov on 21.2.2021.
 //
 
-#if os(iOS)
-import UIKit
-#elseif os(macOS)
-import AppKit
-#endif
+import Foundation
 
 /// Retrieves images.
 protocol ImageService: Sendable {
@@ -19,11 +15,7 @@ protocol ImageService: Sendable {
     /// Retrieves the image from an URL.
     /// - Parameter url: The image URL.
     /// - Returns: The retrieved image.
-#if os(iOS)
-    func getImage(from url: URL) async -> UIImage?
-#elseif os(macOS)
-    func getImage(from url: URL) async -> NSImage?
-#endif
+    func getImage(from url: URL) async -> UniversalImage?
 
 }
 
@@ -68,22 +60,12 @@ final class ImageWebService<DownloadService: WebService>: ImageService {
 
     // MARK: ImageService protocol methods
 
-#if os(iOS)
-    func getImage(from url: URL) async -> UIImage? {
+    func getImage(from url: URL) async -> UniversalImage? {
         if let (data, _) = try? await webService.data(from: url) {
-            UIImage(data: data)
+            UniversalImage(data: data)
         } else {
             nil
         }
     }
-#elseif os(macOS)
-    func getImage(from url: URL) async -> NSImage? {
-        if let (data, _) = try? await webService.data(from: url) {
-            NSImage(data: data)
-        } else {
-            nil
-        }
-    }
-#endif
 
 }
