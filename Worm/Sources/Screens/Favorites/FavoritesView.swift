@@ -16,16 +16,21 @@ struct FavoritesView<ViewModel: FavoritesViewModel>: View {
     // MARK: View protocol properties
 
     var body: some View {
-        List(viewModel.favorites) { book in
-            Button { selectedBook = book } label: {
-                BookListCell(book: book, viewModel: viewModel)
-                    .background(Color.white.opacity(0.0001)) // For making empty space clickable/tappable.
+        GeometryReader { geometry in
+            List(viewModel.favorites) { book in
+                Button { selectedBook = book } label: {
+                    BookListCell(book: book, viewModel: viewModel)
+                        .background(Color.white.opacity(0.0001)) // For making empty space clickable/tappable.
+                }
+                    .buttonStyle(.plain)
             }
-                .buttonStyle(.plain)
+                .listStyle(.plain)
+                .animation(.easeIn, value: viewModel.favorites)
+                .sheet(item: $selectedBook) {
+                    BookDetailsView(viewModel: viewModel.makeDetailsViewModel(for: $0))
+                        .frame(width: geometry.size.width * 0.8, height: geometry.size.height * 1.2)
+                }
         }
-            .listStyle(.plain)
-            .animation(.easeIn, value: viewModel.favorites)
-            .sheet(item: $selectedBook) { BookDetailsView(viewModel: viewModel.makeDetailsViewModel(for: $0)) }
     }
 
     // MARK: Private properties

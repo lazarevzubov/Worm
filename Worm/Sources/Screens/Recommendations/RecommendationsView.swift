@@ -16,33 +16,38 @@ struct RecommendationsView<ViewModel: RecommendationsViewModel>: View {
     // MARK: View protocol properties
 
     var body: some View {
-        ZStack {
-            List {
-                ForEach(viewModel.recommendations) { book in
-                    Button { selectedBook = book } label: {
-                        BookListCell(book: book, viewModel: viewModel)
-                            .background(Color.white.opacity(0.0001)) // For making empty space clickable/tappable.
+        GeometryReader { geometry in
+            ZStack {
+                List {
+                    ForEach(viewModel.recommendations) { book in
+                        Button { selectedBook = book } label: {
+                            BookListCell(book: book, viewModel: viewModel)
+                                .background(Color.white.opacity(0.0001)) // For making empty space clickable/tappable.
+                        }
+                            .buttonStyle(.plain)
                     }
-                        .buttonStyle(.plain)
+                        .onDelete(perform: deleteItem)
                 }
-                    .onDelete(perform: deleteItem)
-            }
-                .animation(.easeIn, value: viewModel.recommendations)
-                .listStyle(.plain)
-            if !viewModel.onboardingShown {
-                VStack {
-                    OnboardingView(
-                        text: "Recommendations are shown in the order of their relevance and update as you turn some of them down or mark more books as favourites.",
-                        color: .search
-                    )
-                        .accessibilityIdentifier("OnboardingLabel")
-                    Spacer()
+                    .animation(.easeIn, value: viewModel.recommendations)
+                    .listStyle(.plain)
+                if !viewModel.onboardingShown {
+                    VStack {
+                        OnboardingView(
+                            text: "Recommendations are shown in the order of their relevance and update as you turn some of them down or mark more books as favourites.",
+                            color: .search
+                        )
+                            .accessibilityIdentifier("OnboardingLabel")
+                        Spacer()
+                    }
+                        .onTapGesture { viewModel.onboardingShown = true }
                 }
-                    .onTapGesture { viewModel.onboardingShown = true }
             }
+                .animation(.default, value: viewModel.onboardingShown)
+                .sheet(item: $selectedBook) {
+                    BookDetailsView(viewModel: viewModel.makeDetailsViewModel(for: $0))
+                        .frame(width: geometry.size.width * 0.8, height: geometry.size.height * 1.2)
+                }
         }
-            .animation(.default, value: viewModel.onboardingShown)
-            .sheet(item: $selectedBook) { BookDetailsView(viewModel: viewModel.makeDetailsViewModel(for: $0)) }
     }
 
     // MARK: Private properties
