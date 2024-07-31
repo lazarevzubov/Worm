@@ -15,9 +15,9 @@ protocol FavoritesModel: Sendable, AnyObject {
 
     // MARK: - Properties
 
-    // TODO: HeaderDoc.
+    /// The list of favorite books.
     var favorites: [Book] { get }
-    // TODO: HeaderDoc.
+    /// The publisher of changes to the list of favorite books.
     var favoritesPublisher: Published<[Book]>.Publisher { get }
 
     // MARK: - Methods

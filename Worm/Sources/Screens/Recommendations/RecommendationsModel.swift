@@ -14,18 +14,17 @@ import OrderedCollections
 /// Owns logic of maintaining a list of recommendations.
 protocol RecommendationsModel: Sendable {
 
-    // FIXME: Duplication with SearchModel?
     // TODO: Unblock?
 
     // MARK: - Properties
 
     /// The list of favorite book IDs.
     var favoriteBookIDs: Set<String> { get }
-    // TODO: HeaderDoc.
+    /// The publisher of changes to the list of favorite book IDs.
     var favoriteBookIDsPublisher: Published<Set<String>>.Publisher { get }
     /// A list of recommended books in ready-to-display order.
     var recommendations: Set<Book> { get }
-    // TODO: HeaderDoc.
+    /// The publisher of changes to the list of recommended books.
     var recommendationsPublisher: Published<Set<Book>>.Publisher { get }
 
     // MARK: - Methods
