@@ -17,11 +17,11 @@ protocol SearchModel: Sendable {
 
     /// The list of books corresponding to the current search query.
     var books: Set<Book> { get }
-    // TODO: HeaderDoc.
+    /// The publisher of changes to the list of books corresponding to the current search query.
     var booksPublisher: Published<Set<Book>>.Publisher { get }
     /// The list of favorite book IDs.
     var favoriteBookIDs: Set<String> { get }
-    // TODO: HeaderDoc.
+    /// The publisher of books to the list of favorite book IDs.
     var favoriteBookIDsPublisher: Published<Set<String>>.Publisher { get }
 
     // MARK: - Methods

@@ -17,11 +17,11 @@ protocol FavoritesService {
 
     /// The list of IDs of books blocked from recommendations.
     var blockedBookIDs: Set<String> { get }
-    // TODO: HeaderDoc.
+    /// The publisher of changes to the list of IDs of books blocked from recommendations.
     var blockedBookIDsPublisher: Published<Set<String>>.Publisher { get }
     /// The list of IDs of favorite books.
     var favoriteBookIDs: Set<String> { get }
-    // TODO: HeaderDoc.
+    /// The publisher of books to the list of IDs of favorite books.
     var favoriteBookIDsPublisher: Published<Set<String>>.Publisher { get }
 
     // MARK: - Methods

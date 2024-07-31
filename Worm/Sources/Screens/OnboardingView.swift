@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-// TODO: HeaderDoc.
+/// A hint view suited for on-boarding.
 struct OnboardingView: View {
 
     // MARK: - Properties
@@ -34,7 +34,10 @@ struct OnboardingView: View {
 
     // MARK: - Initialization
 
-    // TODO: HeaderDoc.
+    /// Creates a hint view suited for on-boarding.
+    /// - Parameters:
+    ///   - text: The text of the hint.
+    ///   - color: The background color of the hint.
     init(text: String, color: Color) {
         self.text = text
         self.color = color
