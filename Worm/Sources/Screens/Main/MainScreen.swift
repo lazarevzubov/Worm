@@ -10,7 +10,6 @@ import SwiftUI
 
 // TODO: Accessibility.
 // TODO: UI tests.
-// TODO: iPads.
 
 /// The main screen visual representation.
 struct MainScreen<FavoritesView: View,
