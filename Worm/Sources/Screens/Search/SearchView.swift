@@ -49,7 +49,9 @@ struct SearchView<ViewModel: SearchViewModel>: View {
                 .animation(.default, value: viewModel.recommendationsOnboardingShown)
                 .sheet(item: $selectedBook) {
                     BookDetailsView(viewModel: viewModel.makeDetailsViewModel(for: $0))
+#if os(macOS)
                         .frame(width: geometry.size.width * 0.8, height: geometry.size.height * 1.2)
+#endif
                 }
         }
     }
