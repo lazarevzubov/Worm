@@ -16,8 +16,8 @@ final class FavoritesDefaultViewModelTests: XCTestCase {
     // MARK: - Methods
 
     func testFavorites_initiallyEmpty() {
-        let vm: some FavoritesViewModel = FavoritesDefaultViewModel(model: FavoritesMockModel(),
-                                                                    imageService: ImageMockService())
+        let vm: any FavoritesViewModel = FavoritesDefaultViewModel(model: FavoritesMockModel(),
+                                                                   imageService: ImageMockService())
         XCTAssertTrue(vm.favorites.isEmpty)
     }
 
@@ -25,8 +25,8 @@ final class FavoritesDefaultViewModelTests: XCTestCase {
         let id = "1"
         let book = Book(id: id, authors: [], title: "", description: "Desc")
 
-        let vm: some FavoritesViewModel = FavoritesDefaultViewModel(model: FavoritesMockModel(favorites: [book]),
-                                                                    imageService: ImageMockService())
+        let vm: any FavoritesViewModel = FavoritesDefaultViewModel(model: FavoritesMockModel(favorites: [book]),
+                                                                   imageService: ImageMockService())
 
         let predicate = NSPredicate { vm, _ in
             guard let vm = vm as? any FavoritesViewModel else {
@@ -43,8 +43,8 @@ final class FavoritesDefaultViewModelTests: XCTestCase {
         let id = "1"
         let book = Book(id: id, authors: [], title: "", description: "Desc")
 
-        let vm: some FavoritesViewModel = FavoritesDefaultViewModel(model: FavoritesMockModel(),
-                                                                    imageService: ImageMockService())
+        let vm: any FavoritesViewModel = FavoritesDefaultViewModel(model: FavoritesMockModel(),
+                                                                   imageService: ImageMockService())
 
         let predicate = NSPredicate { vm, _ in
             guard let vm = vm as? any FavoritesViewModel else {
@@ -62,8 +62,8 @@ final class FavoritesDefaultViewModelTests: XCTestCase {
         let id = "1"
         let book = Book(id: id, authors: [], title: "", description: "Desc")
 
-        let vm: some FavoritesViewModel = FavoritesDefaultViewModel(model: FavoritesMockModel(favorites: [book]),
-                                                                    imageService: ImageMockService())
+        let vm: any FavoritesViewModel = FavoritesDefaultViewModel(model: FavoritesMockModel(favorites: [book]),
+                                                                   imageService: ImageMockService())
 
         let predicate = NSPredicate { vm, _ in
             guard let vm = vm as? any FavoritesViewModel else {
@@ -78,8 +78,8 @@ final class FavoritesDefaultViewModelTests: XCTestCase {
     }
 
     func testDetailsViewModel_authors() {
-        let vm: some FavoritesViewModel = FavoritesDefaultViewModel(model: FavoritesMockModel(),
-                                                                    imageService: ImageMockService())
+        let vm: any FavoritesViewModel = FavoritesDefaultViewModel(model: FavoritesMockModel(),
+                                                                   imageService: ImageMockService())
 
         let bookVM = BookViewModel(book: Book(id: "ID",
                                               authors: ["Author1", 
@@ -93,8 +93,8 @@ final class FavoritesDefaultViewModelTests: XCTestCase {
     }
 
     func testDetailsViewModel_title() {
-        let vm: some FavoritesViewModel = FavoritesDefaultViewModel(model: FavoritesMockModel(),
-                                                                    imageService: ImageMockService())
+        let vm: any FavoritesViewModel = FavoritesDefaultViewModel(model: FavoritesMockModel(),
+                                                                   imageService: ImageMockService())
 
         let bookVM = BookViewModel(book: Book(id: "ID",
                                               authors: ["Author1", 
@@ -111,7 +111,7 @@ final class FavoritesDefaultViewModelTests: XCTestCase {
         let imageURL = URL(string: "https://apple.com")!
         let image = UniversalImage()
 
-        let vm: some FavoritesViewModel = FavoritesDefaultViewModel(
+        let vm: any FavoritesViewModel = FavoritesDefaultViewModel(
             model: FavoritesMockModel(), imageService: ImageMockService(images: [imageURL : image])
         )
         let bookVM = BookViewModel(book: Book(id: "ID", 

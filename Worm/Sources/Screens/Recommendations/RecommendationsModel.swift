@@ -41,8 +41,7 @@ protocol RecommendationsModel: Sendable {
 // MARK: -
 
 /// The default logic of the recommendations list maintenance.
-final class RecommendationsDefaultModel<RecommendationsService: FavoritesService>: @unchecked Sendable,
-                                                                                   RecommendationsModel {
+final class RecommendationsDefaultModel: @unchecked Sendable, RecommendationsModel {
 
     // MARK: - Properties
 
@@ -59,7 +58,7 @@ final class RecommendationsDefaultModel<RecommendationsService: FavoritesService
 
     private let catalogService: CatalogService
     private let favoriteBookIDsSynchronizationQueue = DispatchQueue(label: "com.lazarevzubov.FavoriteBookIDs")
-    private let favoritesService: RecommendationsService
+    private let favoritesService: any FavoritesService
     private let recommendationsSynchronizationQueue = DispatchQueue(label: "com.lazarevzubov.Recommendations")
     private lazy var cancellables = Set<AnyCancellable>()
     private var prioritizedRecommendations = OrderedDictionary<String, (book: Book, sourceIDs: Set<String>)>() {
@@ -81,7 +80,7 @@ final class RecommendationsDefaultModel<RecommendationsService: FavoritesService
     /// - Parameters:
     ///   - catalogService: The data service of the app.
     ///   - favoritesService: The favorite books list manager.
-    init(catalogService: CatalogService, favoritesService: RecommendationsService) {
+    init(catalogService: CatalogService, favoritesService: any FavoritesService) {
         self.catalogService = catalogService
         self.favoritesService = favoritesService
 
@@ -115,7 +114,7 @@ final class RecommendationsDefaultModel<RecommendationsService: FavoritesService
 
     // MARK: Private methods
 
-    private func bind(favoritesService: RecommendationsService) {
+    private func bind(favoritesService: any FavoritesService) {
         favoritesService
             .favoriteBookIDsPublisher
             .removeDuplicates()

@@ -16,8 +16,8 @@ final class SearchServiceBasedModelTests: XCTestCase {
     // MARK: - Methods
 
     func testBooks_initiallyEmpty() {
-        let model: some SearchModel = SearchServiceBasedModel(catalogService: CatalogMockService(),
-                                                              favoritesService: FavoritesMockService())
+        let model: any SearchModel = SearchServiceBasedModel(catalogService: CatalogMockService(),
+                                                             favoritesService: FavoritesMockService())
         XCTAssertTrue(model.books.isEmpty)
     }
 
@@ -36,7 +36,7 @@ final class SearchServiceBasedModelTests: XCTestCase {
         let query = "Query"
         let result = books.map { $0.id }
 
-        let model: some SearchModel = SearchServiceBasedModel(
+        let model: any SearchModel = SearchServiceBasedModel(
             catalogService: CatalogMockService(books: books, queries: [query : result]),
             favoritesService: FavoritesMockService()
         )
@@ -82,9 +82,10 @@ final class SearchServiceBasedModelTests: XCTestCase {
         let query2 = "Query2"
         let result2 = books2.map { $0.id }
 
-        let model: some SearchModel = SearchServiceBasedModel(
-            catalogService: CatalogMockService(books: books1 + books2, queries: [query1 : result1,
-                                                                                 query2 : result2]),
+        let model: any SearchModel = SearchServiceBasedModel(
+            catalogService: CatalogMockService(books: books1 + books2,
+                                               queries: [query1 : result1,
+                                                         query2 : result2]),
             favoritesService: FavoritesMockService()
         )
 
@@ -103,14 +104,14 @@ final class SearchServiceBasedModelTests: XCTestCase {
     }
 
     func testFavoriteBooksIDs_initiallyEmpty() {
-        let model: some SearchModel = SearchServiceBasedModel(catalogService: CatalogMockService(),
-                                                              favoritesService: FavoritesMockService())
+        let model: any SearchModel = SearchServiceBasedModel(catalogService: CatalogMockService(),
+                                                             favoritesService: FavoritesMockService())
         XCTAssertTrue(model.favoriteBookIDs.isEmpty)
     }
 
     func testFavoriteBooksIDs_update() {
         let ids: Set = ["1"]
-        let model: some SearchModel = SearchServiceBasedModel(
+        let model: any SearchModel = SearchServiceBasedModel(
             catalogService: CatalogMockService(), favoritesService: FavoritesMockService(favoriteBookIDs: ids)
         )
 
@@ -134,8 +135,8 @@ final class SearchServiceBasedModelTests: XCTestCase {
         let id = "1"
         let favoritesService = FavoritesMockService(favoriteBookIDs: [id])
 
-        let model: some SearchModel = SearchServiceBasedModel(catalogService: CatalogMockService(),
-                                                              favoritesService: favoritesService)
+        let model: any SearchModel = SearchServiceBasedModel(catalogService: CatalogMockService(),
+                                                             favoritesService: favoritesService)
 
         let expectation = expectation(description: "Update received.")
         expectation.assertForOverFulfill = false
@@ -158,8 +159,8 @@ final class SearchServiceBasedModelTests: XCTestCase {
 
     func testFavoriteBookID_toggling_onAddingToFavorites() {
         let favoritesService = FavoritesMockService()
-        let model: some SearchModel = SearchServiceBasedModel(catalogService: CatalogMockService(),
-                                                              favoritesService: favoritesService)
+        let model: any SearchModel = SearchServiceBasedModel(catalogService: CatalogMockService(),
+                                                             favoritesService: favoritesService)
 
         let expectation = expectation(description: "Update received.")
         expectation.assertForOverFulfill = false

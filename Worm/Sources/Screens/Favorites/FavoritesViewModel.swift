@@ -22,7 +22,7 @@ protocol FavoritesViewModel: BookListCellViewModel, BookDetailsPresentable, Obse
 // MARK: -
 
 /// The default implementation of the Favorites screen view model.
-final class FavoritesDefaultViewModel<Model: FavoritesModel>: @unchecked Sendable, FavoritesViewModel {
+final class FavoritesDefaultViewModel: @unchecked Sendable, FavoritesViewModel {
 
     // MARK: - Properties
 
@@ -34,7 +34,7 @@ final class FavoritesDefaultViewModel<Model: FavoritesModel>: @unchecked Sendabl
     // MARK: Private properties
 
     private let imageService: ImageService
-    private let model: Model
+    private let model: any FavoritesModel
     private lazy var cancellables = Set<AnyCancellable>()
 
     // MARK: - Initialization
@@ -43,7 +43,7 @@ final class FavoritesDefaultViewModel<Model: FavoritesModel>: @unchecked Sendabl
     /// - Parameters:
     ///   - model: Data providing object.
     ///   - imageService: The services that turns image URLs into images themselves.
-    init(model: Model, imageService: ImageService) {
+    init(model: any FavoritesModel, imageService: ImageService) {
         self.model = model
         self.imageService = imageService
         
@@ -72,7 +72,7 @@ final class FavoritesDefaultViewModel<Model: FavoritesModel>: @unchecked Sendabl
 
     // MARK: Private methods
 
-    private func bind(model: Model) {
+    private func bind(model: any FavoritesModel) {
         model
             .favoritesPublisher
             .removeDuplicates()
