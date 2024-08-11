@@ -20,18 +20,18 @@ final class RecommendationsDefaultViewModelTest: XCTestCase {
         let value = true
         let service = OnboardingMockService(onboardingShown: value)
 
-        let vm: some RecommendationsViewModel = RecommendationsDefaultViewModel(model: RecommendationsMockModel(),
-                                                                                onboardingService: service,
-                                                                                imageService: ImageMockService())
+        let vm: any RecommendationsViewModel = RecommendationsDefaultViewModel(model: RecommendationsMockModel(),
+                                                                               onboardingService: service,
+                                                                               imageService: ImageMockService())
         XCTAssertEqual(vm.onboardingShown, value, "Onboarding has an unexpected initial value.")
     }
 
     func testRecommendationsOnboarding_update_updatesPersistence() {
         let value = true
         let service = OnboardingMockService(onboardingShown: value)
-        let vm: some RecommendationsViewModel = RecommendationsDefaultViewModel(model: RecommendationsMockModel(),
-                                                                                onboardingService: service,
-                                                                                imageService: ImageMockService())
+        let vm: any RecommendationsViewModel = RecommendationsDefaultViewModel(model: RecommendationsMockModel(),
+                                                                               onboardingService: service,
+                                                                               imageService: ImageMockService())
 
         let newValue = !value
         let predicate = NSPredicate { service, _ in
@@ -47,7 +47,7 @@ final class RecommendationsDefaultViewModelTest: XCTestCase {
     }
 
     func testRecommendations_initiallyEmpty() {
-        let vm: some RecommendationsViewModel = RecommendationsDefaultViewModel(
+        let vm: any RecommendationsViewModel = RecommendationsDefaultViewModel(
             model: RecommendationsMockModel(),
             onboardingService: OnboardingMockService(),
             imageService: ImageMockService()
@@ -57,7 +57,7 @@ final class RecommendationsDefaultViewModelTest: XCTestCase {
 
     func testRecommendations_update() {
         let recommendations: Set = [Book(id: "1", authors: [], title: "", description: "Desc")]
-        let vm: some RecommendationsViewModel = RecommendationsDefaultViewModel(
+        let vm: any RecommendationsViewModel = RecommendationsDefaultViewModel(
             model: RecommendationsMockModel(recommendations: recommendations),
             onboardingService: OnboardingMockService(),
             imageService: ImageMockService()
@@ -81,7 +81,7 @@ final class RecommendationsDefaultViewModelTest: XCTestCase {
     func testRecommendations_update_afterTogglingFavorite() {
         let id = "1"
         let recommendations: Set = [Book(id: id, authors: [], title: "", description: "Desc")]
-        let vm: some RecommendationsViewModel = RecommendationsDefaultViewModel(
+        let vm: any RecommendationsViewModel = RecommendationsDefaultViewModel(
             model: RecommendationsMockModel(recommendations: recommendations),
             onboardingService: OnboardingMockService(),
             imageService: ImageMockService()
@@ -101,7 +101,7 @@ final class RecommendationsDefaultViewModelTest: XCTestCase {
 
     func testTogglingFavorite_updatesModel() {
         let model = RecommendationsMockModel()
-        let vm: some RecommendationsViewModel = RecommendationsDefaultViewModel(
+        let vm: any RecommendationsViewModel = RecommendationsDefaultViewModel(
             model: model,
             onboardingService: OnboardingMockService(),
             imageService: ImageMockService()
@@ -119,7 +119,7 @@ final class RecommendationsDefaultViewModelTest: XCTestCase {
         let bookVM = BookViewModel(book: Book(id: "1", authors: authors, title: "Title", description: "Desc"),
                                    favorite: false)
 
-        let vm: some RecommendationsViewModel = RecommendationsDefaultViewModel(
+        let vm: any RecommendationsViewModel = RecommendationsDefaultViewModel(
             model: RecommendationsMockModel(),
             onboardingService: OnboardingMockService(),
             imageService: ImageMockService()
@@ -138,7 +138,7 @@ final class RecommendationsDefaultViewModelTest: XCTestCase {
                                               description: "Desc"),
                                    favorite: false)
 
-        let vm: some RecommendationsViewModel = RecommendationsDefaultViewModel(
+        let vm: any RecommendationsViewModel = RecommendationsDefaultViewModel(
             model: RecommendationsMockModel(),
             onboardingService: OnboardingMockService(),
             imageService: ImageMockService()
@@ -161,7 +161,7 @@ final class RecommendationsDefaultViewModelTest: XCTestCase {
                                               imageURL: imageURL),
                                    favorite: false)
 
-        let vm: some RecommendationsViewModel = RecommendationsDefaultViewModel(
+        let vm: any RecommendationsViewModel = RecommendationsDefaultViewModel(
             model: RecommendationsMockModel(),
             onboardingService: OnboardingMockService(),
             imageService: imageService
@@ -181,7 +181,7 @@ final class RecommendationsDefaultViewModelTest: XCTestCase {
 
     func testBlockingRecommendation_updatesModel() {
         let model = RecommendationsMockModel()
-        let vm: some RecommendationsViewModel = RecommendationsDefaultViewModel(
+        let vm: any RecommendationsViewModel = RecommendationsDefaultViewModel(
             model: model,
             onboardingService: OnboardingMockService(),
             imageService: ImageMockService()

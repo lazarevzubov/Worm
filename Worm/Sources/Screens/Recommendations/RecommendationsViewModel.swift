@@ -30,8 +30,7 @@ protocol RecommendationsViewModel: BookListCellViewModel, BookDetailsPresentable
 // MARK: -
 
 /// The default implementation of the Recommendations screen view model.
-final class RecommendationsDefaultViewModel<Model: RecommendationsModel>: @unchecked Sendable,
-                                                                          RecommendationsViewModel {
+final class RecommendationsDefaultViewModel: @unchecked Sendable, RecommendationsViewModel {
 
     // MARK: - Properties
 
@@ -51,7 +50,7 @@ final class RecommendationsDefaultViewModel<Model: RecommendationsModel>: @unche
     // MARK: Private properties
 
     private let imageService: ImageService
-    private let model: Model
+    private let model: any RecommendationsModel
     private let onboardingSynchronizationQueue = DispatchQueue(
         label: "com.lazarevzubov.RecommendationsDefaultViewModel-onboarding", attributes: .concurrent
     )
@@ -65,7 +64,7 @@ final class RecommendationsDefaultViewModel<Model: RecommendationsModel>: @unche
     ///   - model: Data providing object.
     ///   - onboardingService: Provides with information related to the user onboarding.
     ///   - imageService: The services that turns image URLs into images themselves.
-    init(model: Model, onboardingService: OnboardingService, imageService: ImageService) {
+    init(model: any RecommendationsModel, onboardingService: OnboardingService, imageService: ImageService) {
         self.model = model
         self.onboardingService = onboardingService
         self.imageService = imageService
@@ -101,7 +100,7 @@ final class RecommendationsDefaultViewModel<Model: RecommendationsModel>: @unche
 
     // MARK: Private methods
 
-    private func bind(model: Model) {
+    private func bind(model: any RecommendationsModel) {
         model
             .recommendationsPublisher
             .removeDuplicates()

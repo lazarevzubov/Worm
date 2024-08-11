@@ -31,7 +31,7 @@ protocol FavoritesModel: Sendable, AnyObject {
 // MARK: -
 
 /// The default logic of the favorites list maintenance.
-final class FavoritesServiceBasedModel<FavoriteBooksService: FavoritesService>: @unchecked Sendable, FavoritesModel {
+final class FavoritesServiceBasedModel: @unchecked Sendable, FavoritesModel {
 
     // MARK: - Properties
 
@@ -44,7 +44,7 @@ final class FavoritesServiceBasedModel<FavoriteBooksService: FavoritesService>: 
     // MARK: Private properties
 
     private let catalogService: CatalogService
-    private let favoritesService: FavoriteBooksService
+    private let favoritesService: any FavoritesService
     private let synchronizationQueue = DispatchQueue(label: "com.lazarevzubov.FavoritesServiceBasedModel")
     private lazy var cancellables = Set<AnyCancellable>()
 
@@ -54,7 +54,7 @@ final class FavoritesServiceBasedModel<FavoriteBooksService: FavoritesService>: 
     /// - Parameters:
     ///   - catalogService: The data service of the app.
     ///   - favoritesService: The favorite books list manager.
-    init(catalogService: CatalogService, favoritesService: FavoriteBooksService) {
+    init(catalogService: CatalogService, favoritesService: any FavoritesService) {
         self.catalogService = catalogService
         self.favoritesService = favoritesService
 
@@ -79,7 +79,7 @@ final class FavoritesServiceBasedModel<FavoriteBooksService: FavoritesService>: 
 
     // MARK: Private methods
 
-    private func bind(favoritesService: FavoriteBooksService) {
+    private func bind(favoritesService: any FavoritesService) {
         favoritesService
             .favoriteBookIDsPublisher
             .removeDuplicates()

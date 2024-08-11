@@ -21,7 +21,7 @@ enum ViewFactory {
     ///   - favoritesService: Provides with information related to the user onboarding.
     /// - Returns: The main view of the app.
     static func makeMainView(catalogService: CatalogService,
-                             favoritesService: some FavoritesService,
+                             favoritesService: any FavoritesService,
                              imageService: ImageService,
                              onboardingService: OnboardingService) -> some View {
         let viewModel = makeMainViewModel(catalogService: catalogService,
@@ -62,7 +62,7 @@ enum ViewFactory {
     }
 
     private static func makeRecommendationsView(catalogService: CatalogService,
-                                                favoritesService: some FavoritesService,
+                                                favoritesService: any FavoritesService,
                                                 imageService: ImageService,
                                                 onboardingService: OnboardingService) -> some View {
         let recommendationsModel = RecommendationsDefaultModel(catalogService: catalogService,
@@ -75,7 +75,7 @@ enum ViewFactory {
     }
 
     private static func makeFavoritesView(catalogService: CatalogService,
-                                          favoritesService: some FavoritesService,
+                                          favoritesService: any FavoritesService,
                                           imageService: ImageService) -> some View {
         let model = FavoritesServiceBasedModel(catalogService: catalogService, favoritesService: favoritesService)
         let viewModel = FavoritesDefaultViewModel(model: model, imageService: imageService)

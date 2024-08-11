@@ -40,19 +40,19 @@ extension URLSession: WebService { }
 // MARK: -
 
 /// The image retrieving service based on the web service.
-final class ImageWebService<DownloadService: WebService>: ImageService {
+final class ImageWebService: ImageService {
 
     // MARK: - Properties
 
     // MARK: Private properties
 
-    private let webService: DownloadService
+    private let webService: any WebService
 
     // MARK: - Initialization
 
     /// Creates the service.
     /// - Parameter webService: The web service for making network requests.
-    init(webService: DownloadService) {
+    init(webService: any WebService) {
         self.webService = webService
     }
 

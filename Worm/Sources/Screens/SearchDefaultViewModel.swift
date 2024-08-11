@@ -12,7 +12,7 @@ import Dispatch
 // MARK: -
 
 /// The presentation logic of the book search screen relying on the default model implementation.
-final class SearchDefaultViewModel<Model: SearchModel>: @unchecked Sendable, MainScreenViewModel, SearchViewModel {
+final class SearchDefaultViewModel: @unchecked Sendable, MainScreenViewModel, SearchViewModel {
 
     // MARK: - Properties
 
@@ -48,7 +48,7 @@ final class SearchDefaultViewModel<Model: SearchModel>: @unchecked Sendable, Mai
     private let booksSynchronizationQueue = DispatchQueue(label: "com.lazarevzubov.SearchDefaultViewModel-books",
                                                           attributes: .concurrent)
     private let imageService: ImageService
-    private let model: Model
+    private let model: any SearchModel
     private let onboardingSynchronizationQueue = DispatchQueue(
         label: "com.lazarevzubov.SearchDefaultViewModel-onboarding", attributes: .concurrent
     )
@@ -67,7 +67,7 @@ final class SearchDefaultViewModel<Model: SearchModel>: @unchecked Sendable, Mai
     ///   - model: The search screen model.
     ///   - onboardingService: Provides with information related to the user onboarding.
     ///   - imageService: The services that turns image URLs into images themselves.
-    init(model: Model, onboardingService: OnboardingService, imageService: ImageService) {
+    init(model: any SearchModel, onboardingService: OnboardingService, imageService: ImageService) {
         self.model = model
         self.onboardingService = onboardingService
         self.imageService = imageService
@@ -100,7 +100,7 @@ final class SearchDefaultViewModel<Model: SearchModel>: @unchecked Sendable, Mai
 
     // MARK: Private methods
 
-    private func bind(model: Model) {
+    private func bind(model: any SearchModel) {
         model
             .booksPublisher
             .removeDuplicates()
