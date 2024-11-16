@@ -22,27 +22,39 @@ struct MainScreen<FavoritesView: View,
     // MARK: View protocol properties
 
     var body: some View {
-        NavigationStack {
-            TabView(selection: $tab) {
+        TabView {
+            NavigationStack {
                 searchView
-                    .tabItem { Label("Search", systemImage: "magnifyingglass") }
-                    .tag(Tab.search)
-                recommendationsView
-                    .tabItem { Label("Recommendations", systemImage: "checkmark") }
-                    .tag(Tab.recommendations)
-                favoritesView
-                    .tabItem { Label("Favourites", systemImage: "heart") }
-                    .tag(Tab.favorites)
+                    .searchable(text: $viewModel.query, placement: .toolbar, prompt: "Search books")
+                    .autocorrectionDisabled(true)
+                    .toolbarColorScheme(.light, for: .automatic)
+                    .navigationTitle("Search")
+                    .toolbarBackground(Color.search, for: .automatic)
+                    .toolbarBackground(.visible, for: .automatic)
             }
-                .if(tab == .search) {
-                    $0
-                        .searchable(text: $viewModel.query, placement: .toolbar, prompt: "Search books")
-                        .autocorrectionDisabled(true)
+                .tabItem {
+                    Label("Search", systemImage: "magnifyingglass")
                 }
-                .toolbarColorScheme(.light, for: .automatic)
-                .navigationTitle(tab.title)
-                .toolbarBackground(tab.color, for: .automatic)
-                .toolbarBackground(.visible, for: .automatic)
+            NavigationStack {
+                recommendationsView
+                    .toolbarColorScheme(.light, for: .automatic)
+                    .navigationTitle("Recommendations")
+                    .toolbarBackground(Color.recommendations, for: .automatic)
+                    .toolbarBackground(.visible, for: .automatic)
+            }
+                .tabItem {
+                    Label("Recommendations", systemImage: "checkmark")
+                }
+            NavigationStack {
+                favoritesView
+                    .toolbarColorScheme(.light, for: .automatic)
+                    .navigationTitle("Favourites")
+                    .toolbarBackground(Color.favorites, for: .automatic)
+                    .toolbarBackground(.visible, for: .automatic)
+            }
+                .tabItem {
+                    Label("Favourites", systemImage: "heart")
+                }
         }
     }
 
@@ -55,8 +67,6 @@ struct MainScreen<FavoritesView: View,
     private var viewModel: ViewModel
     @State
     private var searchQuery = ""
-    @State
-    private var tab = Tab.search
 
     // MARK: - Initialization
 
@@ -75,37 +85,6 @@ struct MainScreen<FavoritesView: View,
         self.favoritesView = favoritesView
 
         self.viewModel = viewModel
-    }
-
-    // MARK: -
-
-    private enum Tab {
-
-        case search
-        case recommendations
-        case favorites
-
-        var color: Color {
-            switch self {
-                case .search:
-                    .search
-                case .recommendations:
-                    .recommendations
-                case .favorites:
-                    .favorites
-            }
-        }
-        var title: LocalizedStringKey {
-            switch self {
-                case .search:
-                    "Search"
-                case .recommendations:
-                    "Recommendations"
-                case .favorites:
-                    "Favourites"
-            }
-        }
-
     }
 
 }
