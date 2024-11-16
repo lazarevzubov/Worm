@@ -16,7 +16,7 @@ final class BlockedBook {
 
     /// The book's ID.
     @Attribute(.unique)
-    let id: String
+    private(set) var id: String
 
     // MARK: - Initialization
 

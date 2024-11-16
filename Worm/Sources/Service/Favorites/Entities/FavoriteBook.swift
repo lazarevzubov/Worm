@@ -10,13 +10,13 @@ import SwiftData
 
 /// A persisted object representing a favorite book.
 @Model
-final class FavoriteBook {
+final class FavoriteBook: @unchecked Sendable {
 
     // MARK: - Properties
 
     /// The book's ID.
     @Attribute(.unique)
-    let id: String
+    private(set) var id: String
 
     // MARK: - Initialization
 
