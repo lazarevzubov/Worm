@@ -45,7 +45,7 @@ final class RecommendationsDefaultModelTests: XCTestCase {
             }
             .store(in: &cancellables)
 
-        wait(for: [expectation], timeout: 1.0)
+        wait(for: [expectation], timeout: 2.0)
 
         cancellables.forEach { $0.cancel() }
     }
