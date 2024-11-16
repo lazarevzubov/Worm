@@ -14,11 +14,13 @@ final class RecommendationsScreenTests: XCTestCase {
 
     // MARK: - Methods
 
+    @MainActor
     func testScreenOpening() {
         let app = openedRecommendationsTab()
         XCTAssert(app.staticTexts["Recommendations"].exists)
     }
 
+    @MainActor
     func testOnboarding_shown_onFirstLaunch() {
         deleteApp()
         let app = openedRecommendationsTab()
@@ -33,6 +35,7 @@ final class RecommendationsScreenTests: XCTestCase {
         XCTAssertTrue(onboardingLabel.isHittable, "Onboarding isn't tappable.")
     }
 
+    @MainActor
     func testOnboarding_disappears_onTap() {
         deleteApp()
         let app = openedRecommendationsTab()
@@ -51,6 +54,7 @@ final class RecommendationsScreenTests: XCTestCase {
         XCTAssertFalse(onboardingLabel.isHittable, "Oboarding is tappable.")
     }
 
+    @MainActor
     func testOnboarding_notShownTwice_afterDismissal() {
         deleteApp()
         let app = openedRecommendationsTab()
@@ -76,6 +80,7 @@ final class RecommendationsScreenTests: XCTestCase {
         }
     }
 
+    @MainActor
     func testListInitiallyEmpty() {
         let app = openedRecommendationsTab()
         XCTAssertTrue(app.tables.staticTexts.count == 0)
@@ -83,6 +88,7 @@ final class RecommendationsScreenTests: XCTestCase {
 
     // MARK: Private properties
 
+    @MainActor
     private func openedRecommendationsTab() -> XCUIApplication {
         let app = XCTestCase.testApp
         app.launch()

@@ -14,6 +14,7 @@ final class SearchScreenTests: XCTestCase {
 
     // MARK: - Methods
 
+    @MainActor
     func testSearchOnboarding_shown_onFirstLaunch() {
         deleteApp()
 
@@ -30,6 +31,7 @@ final class SearchScreenTests: XCTestCase {
         XCTAssertTrue(onboardingLabel.isHittable, "Search onboarding isn't tappable.")
     }
 
+    @MainActor
     func testSearchOnboarding_disappears_onTap() {
         deleteApp()
 
@@ -50,6 +52,7 @@ final class SearchScreenTests: XCTestCase {
         XCTAssertFalse(onboardingLabel.isHittable, "Search onboarding is tappable.")
     }
 
+    @MainActor
     func testSearchOnboarding_shownTwice() {
         deleteApp()
 
@@ -77,6 +80,7 @@ final class SearchScreenTests: XCTestCase {
         }
     }
 
+    @MainActor
     func testRecommendationsOnboarding_appears_onSearchOnboarding_disappearing() {
         deleteApp()
 
@@ -105,6 +109,7 @@ final class SearchScreenTests: XCTestCase {
         XCTAssertTrue(recommendationsOnboardingLabel.isHittable, "Recommendations onboarding isn't tappable.")
     }
 
+    @MainActor
     func testRecommendationsOnboarding_disappears_onTap() {
         deleteApp()
 
@@ -134,6 +139,7 @@ final class SearchScreenTests: XCTestCase {
         XCTAssertFalse(recommendationsOnboardingLabel.isHittable, "Recommendations onboarding is tappable.")
     }
 
+    @MainActor
     func testSearchOnboarding_notShownTwice_afterRecommendationsOnboardingDismissal() {
         deleteApp()
 
@@ -168,6 +174,7 @@ final class SearchScreenTests: XCTestCase {
         }
     }
 
+    @MainActor
     func testSearch_isPresent() {
         let app = XCTestCase.testApp
         app.launch()
@@ -175,6 +182,7 @@ final class SearchScreenTests: XCTestCase {
         XCTAssert(app.staticTexts["Search"].exists)
     }
 
+    @MainActor
     func testSearchBarVisible() {
         let app = XCTestCase.testApp
         app.launch()
@@ -189,6 +197,7 @@ final class SearchScreenTests: XCTestCase {
         XCTAssertTrue(searchBar.isHittable)
     }
 
+    @MainActor
     func testKeyboardActivation() {
         let app = XCTestCase.testApp
         app.launch()
@@ -205,6 +214,7 @@ final class SearchScreenTests: XCTestCase {
         waitForExpectations(timeout: 5.0)
     }
 
+    @MainActor
     func testCancelSearchButtonVisible() {
         let app = XCTestCase.testApp
         app.launch()
@@ -226,6 +236,7 @@ final class SearchScreenTests: XCTestCase {
         XCTAssertTrue(cancelButton.isHittable)
     }
 
+    @MainActor
     func testCancelButtonHidesKeyboard() {
         let app = XCTestCase.testApp
         app.launch()
@@ -254,6 +265,7 @@ final class SearchScreenTests: XCTestCase {
         waitForExpectations(timeout: 5.0)
     }
 
+    @MainActor
     func testResultsInitiallyEmpty() {
         let app = XCTestCase.testApp
         app.launch()

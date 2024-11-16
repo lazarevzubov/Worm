@@ -131,6 +131,7 @@ final class SearchServiceBasedModelTests: XCTestCase {
         cancellables.forEach { $0.cancel() }
     }
 
+    @MainActor
     func testFavoriteBookID_toggling_onRemovingFromFavorites() {
         let id = "1"
         let favoritesService = FavoritesMockService(favoriteBookIDs: [id])
@@ -157,6 +158,7 @@ final class SearchServiceBasedModelTests: XCTestCase {
         cancellables.forEach { $0.cancel() }
     }
 
+    @MainActor
     func testFavoriteBookID_toggling_onAddingToFavorites() {
         let favoritesService = FavoritesMockService()
         let model: any SearchModel = SearchServiceBasedModel(catalogService: CatalogMockService(),

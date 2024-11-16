@@ -13,6 +13,7 @@ extension XCTestCase {
     // MARK: - Properties
 
     /// The application under test instance with the `TEST` flag added to the launch environment.
+    @MainActor
     static var testApp: XCUIApplication {
         let app = XCUIApplication()
         app.launchEnvironment = ["TEST": "YES"]
@@ -23,6 +24,7 @@ extension XCTestCase {
     // MARK: - Methods
 
     /// Removes the app from the testing device.
+    @MainActor
     func deleteApp() {
         XCUIApplication().terminate()
 
