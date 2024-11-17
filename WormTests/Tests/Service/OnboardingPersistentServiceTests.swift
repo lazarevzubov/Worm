@@ -46,9 +46,11 @@ final class OnboardingPersistentServiceTests: XCTestCase {
         let value = true
         service.recommendationsOnboardingShown = value
 
-        XCTAssertEqual(service.recommendationsOnboardingShown,
-                       value,
-                       "recommendationsOnboardingShown returned an unexpected value.")
+        XCTAssertEqual(
+            service.recommendationsOnboardingShown,
+            value,
+            "recommendationsOnboardingShown returned an unexpected value."
+        )
     }
 
 }

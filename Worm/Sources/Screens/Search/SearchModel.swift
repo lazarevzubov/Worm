@@ -74,9 +74,9 @@ final class SearchServiceBasedModel: @unchecked Sendable, SearchModel {
     ///   - catalogService: The data providing service.
     ///   - favoritesService: A service providing an interface to track and manipulate the list of favorite books.
     ///   - queryDelay: The delay after which the request is actually dispatched. This delay is useful to prevent too many request while typing a query.
-    init(catalogService: CatalogService,
-         favoritesService: FavoritesService,
-         queryDelay: Duration? = .milliseconds(500)) {
+    init(
+        catalogService: CatalogService, favoritesService: FavoritesService, queryDelay: Duration? = .milliseconds(500)
+    ) {
         self.catalogService = catalogService
         self.favoritesService = favoritesService
         self.queryDelay = queryDelay

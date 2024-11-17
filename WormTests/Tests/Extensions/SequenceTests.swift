@@ -14,18 +14,22 @@ final class SequenceTests: XCTestCase {
     // MARK: - Methods
 
     func testStableSorted_sorts() throws {
-        let items = [Item(value: 3),
-                     Item(value: 2),
-                     Item(value: 2),
-                     Item(value: 1)]
+        let items = [
+            Item(value: 3),
+            Item(value: 2),
+            Item(value: 2),
+            Item(value: 1)
+        ]
 
         let sortedItems = items.stableSorted { $0.value < $1.value }
-        XCTAssertEqual(sortedItems.map { $0.value },
-                       [1,
-                        2,
-                        2,
-                        3],
-                       "Sorting produced the unexpected result.")
+        XCTAssertEqual(
+            sortedItems.map { $0.value },
+            [1,
+             2,
+             2,
+             3],
+            "Sorting produced the unexpected result."
+        )
     }
 
     func testStableSorted_stable() throws {
@@ -33,10 +37,12 @@ final class SequenceTests: XCTestCase {
         let item2 = Item(value: 2)
         let item3 = Item(value: 2)
         let item4 = Item(value: 3)
-        let items = [item4,
-                     item2,
-                     item3,
-                     item1]
+        let items = [
+            item4,
+            item2,
+            item3,
+            item1
+        ]
 
         let sortedItems = items.stableSorted { $0.value < $1.value }
 

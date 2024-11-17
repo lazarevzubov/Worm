@@ -20,18 +20,18 @@ final class RecommendationsDefaultViewModelTest: XCTestCase {
         let value = true
         let service = OnboardingMockService(onboardingShown: value)
 
-        let vm: any RecommendationsViewModel = RecommendationsDefaultViewModel(model: RecommendationsMockModel(),
-                                                                               onboardingService: service,
-                                                                               imageService: ImageMockService())
+        let vm: any RecommendationsViewModel = RecommendationsDefaultViewModel(
+            model: RecommendationsMockModel(), onboardingService: service, imageService: ImageMockService()
+        )
         XCTAssertEqual(vm.onboardingShown, value, "Onboarding has an unexpected initial value.")
     }
 
     func testRecommendationsOnboarding_update_updatesPersistence() {
         let value = true
         let service = OnboardingMockService(onboardingShown: value)
-        let vm: any RecommendationsViewModel = RecommendationsDefaultViewModel(model: RecommendationsMockModel(),
-                                                                               onboardingService: service,
-                                                                               imageService: ImageMockService())
+        let vm: any RecommendationsViewModel = RecommendationsDefaultViewModel(
+            model: RecommendationsMockModel(), onboardingService: service, imageService: ImageMockService()
+        )
 
         let newValue = !value
         let predicate = NSPredicate { service, _ in
@@ -67,11 +67,12 @@ final class RecommendationsDefaultViewModelTest: XCTestCase {
             guard let vm = vm as? any RecommendationsViewModel else {
                 return false
             }
-            return vm.recommendations == [BookViewModel(book: Book(id: "1", 
-                                                                   authors: [],
-                                                                   title: "",
-                                                                   description: "Desc"),
-                                                        favorite: false)]
+            return vm.recommendations == [
+                BookViewModel(book: Book(
+                    id: "1", authors: [], title: "", description: "Desc"
+                ),
+                              favorite: false)
+            ]
         }
         let expectation = XCTNSPredicateExpectation(predicate: predicate, object: vm)
 
@@ -114,10 +115,14 @@ final class RecommendationsDefaultViewModelTest: XCTestCase {
     }
 
     func testDetailsViewModel_authors_accordingToBook() {
-        let authors = ["Author 1",
-                       "Authors 2"]
-        let bookVM = BookViewModel(book: Book(id: "1", authors: authors, title: "Title", description: "Desc"),
-                                   favorite: false)
+        let authors = [
+            "Author 1",
+            "Authors 2"
+        ]
+        let bookVM = BookViewModel(
+            book: Book(id: "1", authors: authors, title: "Title", description: "Desc"),
+            favorite: false
+        )
 
         let vm: any RecommendationsViewModel = RecommendationsDefaultViewModel(
             model: RecommendationsMockModel(),
@@ -131,12 +136,18 @@ final class RecommendationsDefaultViewModelTest: XCTestCase {
 
     func testDetailsViewModel_title_accordingToBook() {
         let title = "Title"
-        let bookVM = BookViewModel(book: Book(id: "1", 
-                                              authors: ["Author 1",
-                                                        "Authors 2"],
-                                              title: title,
-                                              description: "Desc"),
-                                   favorite: false)
+        let bookVM = BookViewModel(
+            book: Book(
+                id: "1",
+                authors: [
+                    "Author 1",
+                    "Authors 2"
+                ],
+                title: title,
+                description: "Desc"
+            ),
+            favorite: false
+        )
 
         let vm: any RecommendationsViewModel = RecommendationsDefaultViewModel(
             model: RecommendationsMockModel(),
@@ -153,13 +164,19 @@ final class RecommendationsDefaultViewModelTest: XCTestCase {
         let image = UniversalImage()
         let imageService = ImageMockService(images: [imageURL : image])
 
-        let bookVM = BookViewModel(book: Book(id: "1", 
-                                              authors: ["Author 1",
-                                                        "Authors 2"],
-                                              title: "Title",
-                                              description: "Desc",
-                                              imageURL: imageURL),
-                                   favorite: false)
+        let bookVM = BookViewModel(
+            book: Book(
+                id: "1",
+                authors: [
+                    "Author 1",
+                    "Authors 2"
+                ],
+                title: "Title",
+                description: "Desc",
+                imageURL: imageURL
+            ),
+            favorite: false
+        )
 
         let vm: any RecommendationsViewModel = RecommendationsDefaultViewModel(
             model: RecommendationsMockModel(),

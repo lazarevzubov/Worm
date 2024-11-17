@@ -16,9 +16,11 @@ final class FavoritesPersistenceServiceTests: XCTestCase {
     // MARK: - Methods
 
     func testBlockedBookIDs_initiallyEmpty() throws {
-        let schema = Schema([BlockedBook.self,
-                             FavoriteBook.self],
-                            version: Schema.Version(1, 0, 0))
+        let schema = Schema(
+            [BlockedBook.self,
+             FavoriteBook.self],
+            version: Schema.Version(1, 0, 0)
+        )
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: true)
         let modelContainer = try ModelContainer(for: schema, configurations: [modelConfiguration])
 
@@ -27,9 +29,11 @@ final class FavoritesPersistenceServiceTests: XCTestCase {
     }
 
     func testBlockedBookIDs_update() throws {
-        let schema = Schema([BlockedBook.self,
-                             FavoriteBook.self],
-                            version: Schema.Version(1, 0, 0))
+        let schema = Schema(
+            [BlockedBook.self,
+             FavoriteBook.self],
+            version: Schema.Version(1, 0, 0)
+        )
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: true)
         let modelContainer = try ModelContainer(for: schema, configurations: [modelConfiguration])
 
@@ -59,9 +63,11 @@ final class FavoritesPersistenceServiceTests: XCTestCase {
     }
 
     func testBlockedBookIDs_adding() throws {
-        let schema = Schema([BlockedBook.self,
-                             FavoriteBook.self],
-                            version: Schema.Version(1, 0, 0))
+        let schema = Schema(
+            [BlockedBook.self,
+             FavoriteBook.self],
+            version: Schema.Version(1, 0, 0)
+        )
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: true)
         let modelContainer = try ModelContainer(for: schema, configurations: [modelConfiguration])
 
@@ -87,9 +93,11 @@ final class FavoritesPersistenceServiceTests: XCTestCase {
     }
 
     func testFavoriteBookIDs_initiallyEmpty() throws {
-        let schema = Schema([BlockedBook.self,
-                             FavoriteBook.self],
-                            version: Schema.Version(1, 0, 0))
+        let schema = Schema(
+            [BlockedBook.self,
+             FavoriteBook.self],
+            version: Schema.Version(1, 0, 0)
+        )
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: true)
         let modelContainer = try ModelContainer(for: schema, configurations: [modelConfiguration])
 
@@ -98,9 +106,11 @@ final class FavoritesPersistenceServiceTests: XCTestCase {
     }
 
     func testFavoriteBookIDs_update() throws {
-        let schema = Schema([BlockedBook.self,
-                             FavoriteBook.self],
-                            version: Schema.Version(1, 0, 0))
+        let schema = Schema(
+            [BlockedBook.self,
+             FavoriteBook.self],
+            version: Schema.Version(1, 0, 0)
+        )
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: true)
         let modelContainer = try ModelContainer(for: schema, configurations: [modelConfiguration])
 
@@ -130,9 +140,11 @@ final class FavoritesPersistenceServiceTests: XCTestCase {
     }
 
     func testFavoriteBookIDs_adding() throws {
-        let schema = Schema([BlockedBook.self,
-                             FavoriteBook.self],
-                            version: Schema.Version(1, 0, 0))
+        let schema = Schema(
+            [BlockedBook.self,
+             FavoriteBook.self],
+            version: Schema.Version(1, 0, 0)
+        )
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: true)
         let modelContainer = try ModelContainer(for: schema, configurations: [modelConfiguration])
 
@@ -158,9 +170,11 @@ final class FavoritesPersistenceServiceTests: XCTestCase {
     }
 
     func testFavoriteBookIDs_removing() throws {
-        let schema = Schema([BlockedBook.self,
-                             FavoriteBook.self],
-                            version: Schema.Version(1, 0, 0))
+        let schema = Schema(
+            [BlockedBook.self,
+             FavoriteBook.self],
+            version: Schema.Version(1, 0, 0)
+        )
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: true)
         let modelContainer = try ModelContainer(for: schema, configurations: [modelConfiguration])
 

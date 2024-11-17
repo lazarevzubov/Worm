@@ -20,29 +20,37 @@ enum ViewFactory {
     ///   - favoritesService: The favorite books list manager.
     ///   - favoritesService: Provides with information related to the user onboarding.
     /// - Returns: The main view of the app.
-    static func makeMainView(catalogService: CatalogService,
-                             favoritesService: any FavoritesService,
-                             imageService: ImageService,
-                             onboardingService: OnboardingService) -> some View {
-        let viewModel = makeMainViewModel(catalogService: catalogService,
-                                          favoritesService: favoritesService,
-                                          imageService: imageService,
-                                          onboardingService: onboardingService)
+    static func makeMainView(
+        catalogService: CatalogService,
+        favoritesService: any FavoritesService,
+        imageService: ImageService,
+        onboardingService: OnboardingService
+    ) -> some View {
+        let viewModel = makeMainViewModel(
+            catalogService: catalogService,
+            favoritesService: favoritesService,
+            imageService: imageService,
+            onboardingService: onboardingService
+        )
         let searchView = makeSearchView(viewModel: viewModel)
 
-        let recommendationsView = makeRecommendationsView(catalogService: catalogService,
-                                                          favoritesService: favoritesService,
-                                                          imageService: imageService,
-                                                          onboardingService: onboardingService)
-        
-        let favoritesView = makeFavoritesView(catalogService: catalogService,
-                                              favoritesService: favoritesService,
-                                              imageService: imageService)
+        let recommendationsView = makeRecommendationsView(
+            catalogService: catalogService,
+            favoritesService: favoritesService,
+            imageService: imageService,
+            onboardingService: onboardingService
+        )
 
-        return MainScreen(searchView: searchView, 
-                          recommendationsView: recommendationsView,
-                          favoritesView: favoritesView,
-                          viewModel: viewModel)
+        let favoritesView = makeFavoritesView(
+            catalogService: catalogService, favoritesService: favoritesService, imageService: imageService
+        )
+
+        return MainScreen(
+            searchView: searchView,
+            recommendationsView: recommendationsView,
+            favoritesView: favoritesView,
+            viewModel: viewModel
+        )
     }
 
     // MARK: Private methods
@@ -61,22 +69,25 @@ enum ViewFactory {
         SearchView(viewModel: viewModel)
     }
 
-    private static func makeRecommendationsView(catalogService: CatalogService,
-                                                favoritesService: any FavoritesService,
-                                                imageService: ImageService,
-                                                onboardingService: OnboardingService) -> some View {
-        let recommendationsModel = RecommendationsDefaultModel(catalogService: catalogService,
-                                                               favoritesService: favoritesService)
-        let viewModel = RecommendationsDefaultViewModel(model: recommendationsModel,
-                                                        onboardingService: onboardingService,
-                                                        imageService: imageService)
+    private static func makeRecommendationsView(
+        catalogService: CatalogService,
+        favoritesService: any FavoritesService,
+        imageService: ImageService,
+        onboardingService: OnboardingService
+    ) -> some View {
+        let recommendationsModel = RecommendationsDefaultModel(
+            catalogService: catalogService, favoritesService: favoritesService
+        )
+        let viewModel = RecommendationsDefaultViewModel(
+            model: recommendationsModel, onboardingService: onboardingService, imageService: imageService
+        )
 
         return RecommendationsView(viewModel: viewModel)
     }
 
-    private static func makeFavoritesView(catalogService: CatalogService,
-                                          favoritesService: any FavoritesService,
-                                          imageService: ImageService) -> some View {
+    private static func makeFavoritesView(
+        catalogService: CatalogService, favoritesService: any FavoritesService, imageService: ImageService
+    ) -> some View {
         let model = FavoritesServiceBasedModel(catalogService: catalogService, favoritesService: favoritesService)
         let viewModel = FavoritesDefaultViewModel(model: model, imageService: imageService)
 

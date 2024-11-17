@@ -20,10 +20,12 @@ struct WormApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ViewFactory.makeMainView(catalogService: catalogService,
-                                     favoritesService: favoritesService,
-                                     imageService: imageService, 
-                                     onboardingService: onboardingService)
+            ViewFactory.makeMainView(
+                catalogService: catalogService,
+                favoritesService: favoritesService,
+                imageService: imageService,
+                onboardingService: onboardingService
+            )
         }
     }
 
@@ -48,9 +50,11 @@ struct WormApp: App {
 #else
             let isStoredInMemoryOnly = false
 #endif
-            let schema = Schema([BlockedBook.self,
-                                 FavoriteBook.self],
-                                version: Schema.Version(1, 0, 0))
+            let schema = Schema(
+                [BlockedBook.self,
+                 FavoriteBook.self],
+                version: Schema.Version(1, 0, 0)
+            )
             let configuration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: storedInMemory)
             do {
                 return try ModelContainer(for: schema, configurations: configuration)

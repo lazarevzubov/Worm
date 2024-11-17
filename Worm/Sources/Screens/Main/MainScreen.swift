@@ -12,10 +12,12 @@ import SwiftUI
 // TODO: UI tests.
 
 /// The main screen visual representation.
-struct MainScreen<FavoritesView: View,
-                  RecommendationsView: View,
-                  SearchView: View,
-                  ViewModel: MainScreenViewModel>: View {
+struct MainScreen<
+    FavoritesView: View,
+    RecommendationsView: View,
+    SearchView: View,
+    ViewModel: MainScreenViewModel
+>: View {
 
     // MARK: - Properties
 
@@ -94,10 +96,12 @@ struct MainScreen<FavoritesView: View,
 // MARK: -
 
 #Preview {
-    MainScreen(searchView: SearchView(viewModel: SearchPreviewViewModel()),
-               recommendationsView: RecommendationsView(viewModel: RecommendationsPreviewViewModel()),
-               favoritesView: FavoritesView(viewModel: FavoritesPreviewsViewModel()), 
-               viewModel: MainScreenPreviewViewModel())
+    MainScreen(
+        searchView: SearchView(viewModel: SearchPreviewViewModel()),
+        recommendationsView: RecommendationsView(viewModel: RecommendationsPreviewViewModel()),
+        favoritesView: FavoritesView(viewModel: FavoritesPreviewsViewModel()), 
+        viewModel: MainScreenPreviewViewModel()
+    )
 }
 
 #endif
