@@ -16,8 +16,9 @@ final class FavoritesDefaultViewModelTests: XCTestCase {
     // MARK: - Methods
 
     func testFavorites_initiallyEmpty() {
-        let vm: any FavoritesViewModel = FavoritesDefaultViewModel(model: FavoritesMockModel(),
-                                                                   imageService: ImageMockService())
+        let vm: any FavoritesViewModel = FavoritesDefaultViewModel(
+            model: FavoritesMockModel(), imageService: ImageMockService()
+        )
         XCTAssertTrue(vm.favorites.isEmpty)
     }
 
@@ -25,8 +26,9 @@ final class FavoritesDefaultViewModelTests: XCTestCase {
         let id = "1"
         let book = Book(id: id, authors: [], title: "", description: "Desc")
 
-        let vm: any FavoritesViewModel = FavoritesDefaultViewModel(model: FavoritesMockModel(favorites: [book]),
-                                                                   imageService: ImageMockService())
+        let vm: any FavoritesViewModel = FavoritesDefaultViewModel(
+            model: FavoritesMockModel(favorites: [book]), imageService: ImageMockService()
+        )
 
         let predicate = NSPredicate { vm, _ in
             guard let vm = vm as? any FavoritesViewModel else {
@@ -43,8 +45,9 @@ final class FavoritesDefaultViewModelTests: XCTestCase {
         let id = "1"
         let book = Book(id: id, authors: [], title: "", description: "Desc")
 
-        let vm: any FavoritesViewModel = FavoritesDefaultViewModel(model: FavoritesMockModel(),
-                                                                   imageService: ImageMockService())
+        let vm: any FavoritesViewModel = FavoritesDefaultViewModel(
+            model: FavoritesMockModel(), imageService: ImageMockService()
+        )
 
         let predicate = NSPredicate { vm, _ in
             guard let vm = vm as? any FavoritesViewModel else {
@@ -62,8 +65,9 @@ final class FavoritesDefaultViewModelTests: XCTestCase {
         let id = "1"
         let book = Book(id: id, authors: [], title: "", description: "Desc")
 
-        let vm: any FavoritesViewModel = FavoritesDefaultViewModel(model: FavoritesMockModel(favorites: [book]),
-                                                                   imageService: ImageMockService())
+        let vm: any FavoritesViewModel = FavoritesDefaultViewModel(
+            model: FavoritesMockModel(favorites: [book]), imageService: ImageMockService()
+        )
 
         let predicate = NSPredicate { vm, _ in
             guard let vm = vm as? any FavoritesViewModel else {
@@ -78,30 +82,40 @@ final class FavoritesDefaultViewModelTests: XCTestCase {
     }
 
     func testDetailsViewModel_authors() {
-        let vm: any FavoritesViewModel = FavoritesDefaultViewModel(model: FavoritesMockModel(),
-                                                                   imageService: ImageMockService())
+        let vm: any FavoritesViewModel = FavoritesDefaultViewModel(
+            model: FavoritesMockModel(), imageService: ImageMockService()
+        )
 
-        let bookVM = BookViewModel(book: Book(id: "ID",
-                                              authors: ["Author1", 
-                                                        "Author2"],
-                                              title: "Title",
-                                              description: "Desc"),
-                                   favorite: false)
+        let bookVM = BookViewModel(
+            book: Book(id: "ID",
+                       authors: [
+                        "Author1",
+                        "Author2"
+                       ],
+                       title: "Title",
+                       description: "Desc"),
+            favorite: false
+        )
         let bookDetailsVM = vm.makeDetailsViewModel(for: bookVM)
 
         XCTAssertEqual(bookDetailsVM.authors, bookVM.authors, "Unexpected authors string generated")
     }
 
     func testDetailsViewModel_title() {
-        let vm: any FavoritesViewModel = FavoritesDefaultViewModel(model: FavoritesMockModel(),
-                                                                   imageService: ImageMockService())
+        let vm: any FavoritesViewModel = FavoritesDefaultViewModel(
+            model: FavoritesMockModel(), imageService: ImageMockService()
+        )
 
-        let bookVM = BookViewModel(book: Book(id: "ID",
-                                              authors: ["Author1", 
-                                                        "Author2"],
-                                              title: "Title",
-                                              description: "Desc"),
-                                   favorite: false)
+        let bookVM = BookViewModel(
+            book: Book(id: "ID",
+                       authors: [
+                        "Author1",
+                        "Author2"
+                       ],
+                       title: "Title",
+                       description: "Desc"),
+            favorite: false
+        )
         let bookDetailsVM = vm.makeDetailsViewModel(for: bookVM)
 
         XCTAssertEqual(bookDetailsVM.title, bookVM.title, "Unexpected authors string generated")
@@ -114,13 +128,17 @@ final class FavoritesDefaultViewModelTests: XCTestCase {
         let vm: any FavoritesViewModel = FavoritesDefaultViewModel(
             model: FavoritesMockModel(), imageService: ImageMockService(images: [imageURL : image])
         )
-        let bookVM = BookViewModel(book: Book(id: "ID", 
-                                              authors: ["Author1",
-                                                        "Author2"],
-                                              title: "Title",
-                                              description: "Desc",
-                                              imageURL: URL(string: "https://apple.com")),
-                                   favorite: false)
+        let bookVM = BookViewModel(
+            book: Book(id: "ID",
+                       authors: [
+                        "Author1",
+                        "Author2"
+                       ],
+                       title: "Title",
+                       description: "Desc",
+                       imageURL: URL(string: "https://apple.com")),
+            favorite: false
+        )
 
         let bookDetailsVM = vm.makeDetailsViewModel(for: bookVM)
 

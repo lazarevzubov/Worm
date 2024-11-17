@@ -16,8 +16,9 @@ final class FavoritesServiceBasedModelTests: XCTestCase {
     // MARK: - Methods
     
     func testFavorites_empty_initially() {
-        let model: FavoritesModel = FavoritesServiceBasedModel(catalogService: CatalogMockService(),
-                                                               favoritesService: FavoritesMockService())
+        let model: FavoritesModel = FavoritesServiceBasedModel(
+            catalogService: CatalogMockService(), favoritesService: FavoritesMockService()
+        )
         XCTAssertTrue(model.favorites.isEmpty)
     }
 
@@ -28,8 +29,9 @@ final class FavoritesServiceBasedModelTests: XCTestCase {
         let catalogService = CatalogMockService(books: [book])
         let favoritesService = FavoritesMockService(favoriteBookIDs: [id])
 
-        let model: FavoritesModel = FavoritesServiceBasedModel(catalogService: catalogService,
-                                                               favoritesService: favoritesService)
+        let model: FavoritesModel = FavoritesServiceBasedModel(
+            catalogService: catalogService, favoritesService: favoritesService
+        )
 
         let expectation = XCTestExpectation(description: "Update received")
 
@@ -52,8 +54,9 @@ final class FavoritesServiceBasedModelTests: XCTestCase {
         let book = Book(id: id, authors: [], title: "", description: "Desc")
 
         let catalogService = CatalogMockService(books: [book])
-        let model: FavoritesModel = FavoritesServiceBasedModel(catalogService: catalogService,
-                                                               favoritesService: FavoritesMockService())
+        let model: FavoritesModel = FavoritesServiceBasedModel(
+            catalogService: catalogService, favoritesService: FavoritesMockService()
+        )
 
         let expectation = XCTestExpectation(description: "Update received")
 
@@ -81,8 +84,9 @@ final class FavoritesServiceBasedModelTests: XCTestCase {
         let catalogService = CatalogMockService(books: [book])
         let favoritesService = FavoritesMockService(favoriteBookIDs: [id])
 
-        let model: FavoritesModel = FavoritesServiceBasedModel(catalogService: catalogService,
-                                                               favoritesService: favoritesService)
+        let model: FavoritesModel = FavoritesServiceBasedModel(
+            catalogService: catalogService, favoritesService: favoritesService
+        )
 
         let predicate = NSPredicate { model, _ in
             guard let model = model as? FavoritesModel else {

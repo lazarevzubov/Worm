@@ -16,22 +16,29 @@ final class SearchServiceBasedModelTests: XCTestCase {
     // MARK: - Methods
 
     func testBooks_initiallyEmpty() {
-        let model: any SearchModel = SearchServiceBasedModel(catalogService: CatalogMockService(),
-                                                             favoritesService: FavoritesMockService())
+        let model: any SearchModel = SearchServiceBasedModel(
+            catalogService: CatalogMockService(), favoritesService: FavoritesMockService()
+        )
         XCTAssertTrue(model.books.isEmpty)
     }
 
     func testBooks_update_onSearch() async {
-        let books = [Book(id: "1", 
-                          authors: ["J.R.R. Tolkien"],
-                          title: "The Lord of the Rings",
-                          description: "Desc1",
-                          similarBookIDs: ["15"]),
-                     Book(id: "2", 
-                          authors: ["Michael Bond"],
-                          title: "Paddington Pop-Up London",
-                          description: "Desc2",
-                          similarBookIDs: ["14"])]
+        let books = [
+            Book(
+                id: "1",
+                authors: ["J.R.R. Tolkien"],
+                title: "The Lord of the Rings",
+                description: "Desc1",
+                similarBookIDs: ["15"]
+            ),
+            Book(
+                id: "2",
+                authors: ["Michael Bond"],
+                title: "Paddington Pop-Up London",
+                description: "Desc2",
+                similarBookIDs: ["14"]
+            )
+        ]
 
         let query = "Query"
         let result = books.map { $0.id }
@@ -54,38 +61,54 @@ final class SearchServiceBasedModelTests: XCTestCase {
     }
 
     func testSearch_cancels_whenReplacedWithinDelay() async {
-        let books1 = [Book(id: "1", 
-                           authors: ["J.R.R. Tolkien"],
-                           title: "The Lord of the Rings",
-                           description: "Desc1",
-                           similarBookIDs: ["15"]),
-                      Book(id: "2", 
-                           authors: ["Michael Bond"],
-                           title: "Paddington Pop-Up London",
-                           description: "Desc2",
-                           similarBookIDs: ["14"])]
+        let books1 = [
+            Book(
+                id: "1",
+                authors: ["J.R.R. Tolkien"],
+                title: "The Lord of the Rings",
+                description: "Desc1",
+                similarBookIDs: ["15"]
+            ),
+            Book(
+                id: "2",
+                authors: ["Michael Bond"],
+                title: "Paddington Pop-Up London",
+                description: "Desc2",
+                similarBookIDs: ["14"]
+            )
+        ]
 
         let query1 = "Query1"
         let result1 = books1.map { $0.id }
 
-        let books2 = [Book(id: "3", 
-                           authors: ["J.K. Rowling"],
-                           title: "Harry Potter and the Sorcecer's Stone",
-                           description: "Desc1",
-                           similarBookIDs: ["13"]),
-                      Book(id: "4", 
-                           authors: ["George R.R. Martin"],
-                           title: "A Game of Thrones",
-                           description: "Desc2",
-                           similarBookIDs: ["12"])]
+        let books2 = [
+            Book(
+                id: "3",
+                authors: ["J.K. Rowling"],
+                title: "Harry Potter and the Sorcecer's Stone",
+                description: "Desc1",
+                similarBookIDs: ["13"]
+            ),
+            Book(
+                id: "4",
+                authors: ["George R.R. Martin"],
+                title: "A Game of Thrones",
+                description: "Desc2",
+                similarBookIDs: ["12"]
+            )
+        ]
 
         let query2 = "Query2"
         let result2 = books2.map { $0.id }
 
         let model: any SearchModel = SearchServiceBasedModel(
-            catalogService: CatalogMockService(books: books1 + books2,
-                                               queries: [query1 : result1,
-                                                         query2 : result2]),
+            catalogService: CatalogMockService(
+                books: books1 + books2,
+                queries: [
+                    query1 : result1,
+                    query2 : result2
+                ]
+            ),
             favoritesService: FavoritesMockService()
         )
 
@@ -104,8 +127,9 @@ final class SearchServiceBasedModelTests: XCTestCase {
     }
 
     func testFavoriteBooksIDs_initiallyEmpty() {
-        let model: any SearchModel = SearchServiceBasedModel(catalogService: CatalogMockService(),
-                                                             favoritesService: FavoritesMockService())
+        let model: any SearchModel = SearchServiceBasedModel(
+            catalogService: CatalogMockService(), favoritesService: FavoritesMockService()
+        )
         XCTAssertTrue(model.favoriteBookIDs.isEmpty)
     }
 
@@ -136,8 +160,9 @@ final class SearchServiceBasedModelTests: XCTestCase {
         let id = "1"
         let favoritesService = FavoritesMockService(favoriteBookIDs: [id])
 
-        let model: any SearchModel = SearchServiceBasedModel(catalogService: CatalogMockService(),
-                                                             favoritesService: favoritesService)
+        let model: any SearchModel = SearchServiceBasedModel(
+            catalogService: CatalogMockService(), favoritesService: favoritesService
+        )
 
         let expectation = expectation(description: "Update received.")
         expectation.assertForOverFulfill = false
@@ -161,8 +186,9 @@ final class SearchServiceBasedModelTests: XCTestCase {
     @MainActor
     func testFavoriteBookID_toggling_onAddingToFavorites() {
         let favoritesService = FavoritesMockService()
-        let model: any SearchModel = SearchServiceBasedModel(catalogService: CatalogMockService(),
-                                                             favoritesService: favoritesService)
+        let model: any SearchModel = SearchServiceBasedModel(
+            catalogService: CatalogMockService(), favoritesService: favoritesService
+        )
 
         let expectation = expectation(description: "Update received.")
         expectation.assertForOverFulfill = false

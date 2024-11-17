@@ -16,14 +16,16 @@ final class RecommendationsDefaultModelTests: XCTestCase {
     // MARK: - Methods
 
     func testFavoriteBookIDs_initiallyEmpty() {
-        let model = RecommendationsDefaultModel(catalogService: CatalogMockService(),
-                                                favoritesService: FavoritesMockService())
+        let model = RecommendationsDefaultModel(
+            catalogService: CatalogMockService(), favoritesService: FavoritesMockService()
+        )
         XCTAssertTrue(model.favoriteBookIDs.isEmpty)
     }
 
     func testRecommendations_initiallyEmpty() {
-        let model = RecommendationsDefaultModel(catalogService: CatalogMockService(),
-                                                favoritesService: FavoritesMockService())
+        let model = RecommendationsDefaultModel(
+            catalogService: CatalogMockService(), favoritesService: FavoritesMockService()
+        )
         XCTAssertTrue(model.recommendations.isEmpty)
     }
 
@@ -51,8 +53,9 @@ final class RecommendationsDefaultModelTests: XCTestCase {
     }
 
     func testFavoriteBookIDs_update_onAddingFavorite() {
-        let model: RecommendationsModel = RecommendationsDefaultModel(catalogService: CatalogMockService(),
-                                                                      favoritesService: FavoritesMockService())
+        let model: RecommendationsModel = RecommendationsDefaultModel(
+            catalogService: CatalogMockService(), favoritesService: FavoritesMockService()
+        )
 
         let expectation = XCTestExpectation(description: "Update received.")
         let id = "1"
@@ -107,20 +110,28 @@ final class RecommendationsDefaultModelTests: XCTestCase {
     }
 
     func testRecommendations_update() {
-        let book = Book(id: "1", 
-                        authors: ["J.R.R. Tolkien"],
-                        title: "The Lord of the Rings",
-                        description: "Desc1",
-                        similarBookIDs: ["15"])
-        let recommendedBook = Book(id: "15", 
-                                   authors: ["Haruki Murakami"],
-                                   title: "The Wind-Up Bird Chronicle",
-                                   description: "Desc2",
-                                   similarBookIDs: ["1"])
+        let book = Book(
+            id: "1",
+            authors: ["J.R.R. Tolkien"],
+            title: "The Lord of the Rings",
+            description: "Desc1",
+            similarBookIDs: ["15"]
+        )
+        let recommendedBook = Book(
+            id: "15",
+            authors: ["Haruki Murakami"],
+            title: "The Wind-Up Bird Chronicle",
+            description: "Desc2",
+            similarBookIDs: ["1"]
+        )
 
         let model: RecommendationsModel = RecommendationsDefaultModel(
-            catalogService: CatalogMockService(books: [book,
-                                                       recommendedBook]),
+            catalogService: CatalogMockService(
+                books: [
+                    book,
+                    recommendedBook
+                ]
+            ),
             favoritesService: FavoritesMockService(favoriteBookIDs: ["1"])
         )
 
@@ -142,20 +153,28 @@ final class RecommendationsDefaultModelTests: XCTestCase {
     }
 
     func testRecommendations_update_onAddingFavorite() {
-        let book = Book(id: "1", 
-                        authors: ["J.R.R. Tolkien"],
-                        title: "The Lord of the Rings",
-                        description: "Desc1",
-                        similarBookIDs: ["15"])
-        let recommendedBook = Book(id: "15",
-                                   authors: ["Haruki Murakami"],
-                                   title: "The Wind-Up Bird Chronicle",
-                                   description: "Desc2",
-                                   similarBookIDs: ["1"])
+        let book = Book(
+            id: "1",
+            authors: ["J.R.R. Tolkien"],
+            title: "The Lord of the Rings",
+            description: "Desc1",
+            similarBookIDs: ["15"]
+        )
+        let recommendedBook = Book(
+            id: "15",
+            authors: ["Haruki Murakami"],
+            title: "The Wind-Up Bird Chronicle",
+            description: "Desc2",
+            similarBookIDs: ["1"]
+        )
 
         let model: RecommendationsModel = RecommendationsDefaultModel(
-            catalogService: CatalogMockService(books: [book,
-                                                       recommendedBook]),
+            catalogService: CatalogMockService(
+                books: [
+                    book,
+                    recommendedBook
+                ]
+            ),
             favoritesService: FavoritesMockService()
         )
 
@@ -178,20 +197,28 @@ final class RecommendationsDefaultModelTests: XCTestCase {
     }
 
     func testRecommendations_update_onRemovingFavorite() async {
-        let book = Book(id: "1", 
-                        authors: ["J.R.R. Tolkien"],
-                        title: "The Lord of the Rings",
-                        description: "Desc1",
-                        similarBookIDs: ["15"])
-        let recommendedBook = Book(id: "15", 
-                                   authors: ["Haruki Murakami"],
-                                   title: "The Wind-Up Bird Chronicle",
-                                   description: "Desc2",
-                                   similarBookIDs: ["1"])
+        let book = Book(
+            id: "1",
+            authors: ["J.R.R. Tolkien"],
+            title: "The Lord of the Rings",
+            description: "Desc1",
+            similarBookIDs: ["15"]
+        )
+        let recommendedBook = Book(
+            id: "15",
+            authors: ["Haruki Murakami"],
+            title: "The Wind-Up Bird Chronicle",
+            description: "Desc2",
+            similarBookIDs: ["1"]
+        )
 
         let model: RecommendationsModel = RecommendationsDefaultModel(
-            catalogService: CatalogMockService(books: [book,
-                                                       recommendedBook]),
+            catalogService: CatalogMockService(
+                books: [
+                    book,
+                    recommendedBook
+                ]
+            ),
             favoritesService: FavoritesMockService(favoriteBookIDs: [book.id])
         )
 
@@ -215,20 +242,28 @@ final class RecommendationsDefaultModelTests: XCTestCase {
     }
 
     func testRecommendations_update_onBlockingRecommendation() {
-        let book = Book(id: "1", 
-                        authors: ["J.R.R. Tolkien"],
-                        title: "The Lord of the Rings",
-                        description: "Desc1",
-                        similarBookIDs: ["15"])
-        let recommendedBook = Book(id: "15", 
-                                   authors: ["Haruki Murakami"],
-                                   title: "The Wind-Up Bird Chronicle",
-                                   description: "Desc2",
-                                   similarBookIDs: ["1"])
+        let book = Book(
+            id: "1",
+            authors: ["J.R.R. Tolkien"],
+            title: "The Lord of the Rings",
+            description: "Desc1",
+            similarBookIDs: ["15"]
+        )
+        let recommendedBook = Book(
+            id: "15",
+            authors: ["Haruki Murakami"],
+            title: "The Wind-Up Bird Chronicle",
+            description: "Desc2",
+            similarBookIDs: ["1"]
+        )
 
         let model: RecommendationsModel = RecommendationsDefaultModel(
-            catalogService: CatalogMockService(books: [book,
-                                                       recommendedBook]),
+            catalogService: CatalogMockService(
+                books: [
+                    book,
+                    recommendedBook
+                ]
+            ),
             favoritesService: FavoritesMockService(favoriteBookIDs: [book.id])
         )
 
@@ -255,8 +290,9 @@ final class RecommendationsDefaultModelTests: XCTestCase {
 
     func testBlockingRecommendation_updatesBlockedBooks() {
         let favoritesService = FavoritesMockService()
-        let model: RecommendationsModel = RecommendationsDefaultModel(catalogService: CatalogMockService(),
-                                                                      favoritesService: favoritesService)
+        let model: RecommendationsModel = RecommendationsDefaultModel(
+            catalogService: CatalogMockService(), favoritesService: favoritesService
+        )
 
         let id = "1"
         model.blockFromRecommendationsBook(withID: id)

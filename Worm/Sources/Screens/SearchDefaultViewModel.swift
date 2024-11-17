@@ -91,11 +91,13 @@ final class SearchDefaultViewModel: @unchecked Sendable, MainScreenViewModel, Se
     }
 
     func makeDetailsViewModel(for book: BookViewModel) -> some BookDetailsViewModel {
-        BookDetailsDefaultViewModel(authors: book.authors,
-                                    title: book.title, 
-                                    description: book.description,
-                                    imageURL: book.imageURL,
-                                    imageService: imageService)
+        BookDetailsDefaultViewModel(
+            authors: book.authors,
+            title: book.title,
+            description: book.description,
+            imageURL: book.imageURL,
+            imageService: imageService
+        )
     }
 
     // MARK: Private methods
@@ -121,12 +123,14 @@ final class SearchDefaultViewModel: @unchecked Sendable, MainScreenViewModel, Se
                         return
                     }
                     for bookIndex in self.books.indices {
-                        self.books[bookIndex] = BookViewModel(id: self.books[bookIndex].id,
-                                                              authors: self.books[bookIndex].authors,
-                                                              title: self.books[bookIndex].title,
-                                                              description: self.books[bookIndex].description,
-                                                              imageURL: self.books[bookIndex].imageURL,
-                                                              favorite: ids.contains(self.books[bookIndex].id))
+                        self.books[bookIndex] = BookViewModel(
+                            id: self.books[bookIndex].id,
+                            authors: self.books[bookIndex].authors,
+                            title: self.books[bookIndex].title,
+                            description: self.books[bookIndex].description,
+                            imageURL: self.books[bookIndex].imageURL,
+                            favorite: ids.contains(self.books[bookIndex].id)
+                        )
                     }
                 }
             }

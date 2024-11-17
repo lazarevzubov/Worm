@@ -18,18 +18,18 @@ final class SearchDefaultViewModelTests: XCTestCase {
         let value = true
         let service = OnboardingMockService(onboardingShown: value)
 
-        let vm: any SearchViewModel = SearchDefaultViewModel(model: SearchMockModel(),
-                                                             onboardingService: service,
-                                                             imageService: ImageMockService())
+        let vm: any SearchViewModel = SearchDefaultViewModel(
+            model: SearchMockModel(), onboardingService: service, imageService: ImageMockService()
+        )
         XCTAssertEqual(vm.searchOnboardingShown, value, "Search onboarding has an unexpected initial value.")
     }
 
     func testSearchOnboarding_update_doesNotUpdatePersistence() {
         let value = true
         let service = OnboardingMockService(onboardingShown: value)
-        let vm: any SearchViewModel = SearchDefaultViewModel(model: SearchMockModel(),
-                                                             onboardingService: service,
-                                                             imageService: ImageMockService())
+        let vm: any SearchViewModel = SearchDefaultViewModel(
+            model: SearchMockModel(), onboardingService: service, imageService: ImageMockService()
+        )
 
         let newValue = !value
         vm.searchOnboardingShown = newValue
@@ -41,18 +41,18 @@ final class SearchDefaultViewModelTests: XCTestCase {
         let value = true
         let service = OnboardingMockService(onboardingShown: value)
 
-        let vm: any SearchViewModel = SearchDefaultViewModel(model: SearchMockModel(),
-                                                             onboardingService: service,
-                                                             imageService: ImageMockService())
+        let vm: any SearchViewModel = SearchDefaultViewModel(
+            model: SearchMockModel(), onboardingService: service, imageService: ImageMockService()
+        )
         XCTAssertEqual(vm.recommendationsOnboardingShown, value, "Search onboarding has an unexpected initial value.")
     }
 
     func testRecommendationsOnboarding_update_updatesPersistence() {
         let value = true
         let service = OnboardingMockService(onboardingShown: value)
-        let vm: any SearchViewModel = SearchDefaultViewModel(model: SearchMockModel(),
-                                                             onboardingService: service,
-                                                             imageService: ImageMockService())
+        let vm: any SearchViewModel = SearchDefaultViewModel(
+            model: SearchMockModel(), onboardingService: service, imageService: ImageMockService()
+        )
 
         let newValue = !value
         let predicate = NSPredicate { service, _ in
@@ -68,17 +68,17 @@ final class SearchDefaultViewModelTests: XCTestCase {
     }
 
     func testQuery_initiallyEmpty() {
-        let vm: any MainScreenViewModel = SearchDefaultViewModel(model: SearchMockModel(),
-                                                                 onboardingService: OnboardingMockService(),
-                                                                 imageService: ImageMockService())
+        let vm: any MainScreenViewModel = SearchDefaultViewModel(
+            model: SearchMockModel(), onboardingService: OnboardingMockService(), imageService: ImageMockService()
+        )
         XCTAssertTrue(vm.query.isEmpty, "Query has an unexpected initial value.")
     }
 
     func testQuery_update_searchedModel() {
         let model = SearchMockModel()
-        let vm: any MainScreenViewModel = SearchDefaultViewModel(model: model,
-                                                                 onboardingService: OnboardingMockService(),
-                                                                 imageService: ImageMockService())
+        let vm: any MainScreenViewModel = SearchDefaultViewModel(
+            model: model, onboardingService: OnboardingMockService(), imageService: ImageMockService()
+        )
 
         let query = "Query"
         vm.query = query
@@ -95,17 +95,19 @@ final class SearchDefaultViewModelTests: XCTestCase {
     }
 
     func testBooks_initiallyEmpty() {
-        let vm: any SearchViewModel = SearchDefaultViewModel(model: SearchMockModel(),
-                                                             onboardingService: OnboardingMockService(),
-                                                             imageService: ImageMockService())
+        let vm: any SearchViewModel = SearchDefaultViewModel(
+            model: SearchMockModel(), onboardingService: OnboardingMockService(), imageService: ImageMockService()
+        )
         XCTAssertTrue(vm.books.isEmpty)
     }
 
     func testBooks_update() {
         let books: Set = [Book(id: "1", authors: [], title: "", description: "Desc")]
-        let vm: any SearchViewModel = SearchDefaultViewModel(model: SearchMockModel(books: books),
-                                                             onboardingService: OnboardingMockService(),
-                                                             imageService: ImageMockService())
+        let vm: any SearchViewModel = SearchDefaultViewModel(
+            model: SearchMockModel(books: books),
+            onboardingService: OnboardingMockService(),
+            imageService: ImageMockService()
+        )
 
         let predicate = NSPredicate { vm, _ in
             guard let vm = vm as? any SearchViewModel else {
@@ -123,10 +125,11 @@ final class SearchDefaultViewModelTests: XCTestCase {
     func testBooks_update_withFavorite() {
         let id = "1"
         let books: Set = [Book(id: id, authors: [], title: "", description: "Desc")]
-        let vm: any SearchViewModel = SearchDefaultViewModel(model: SearchMockModel(books: books,
-                                                                                    favoriteBookIDs: [id]),
-                                                             onboardingService: OnboardingMockService(),
-                                                             imageService: ImageMockService())
+        let vm: any SearchViewModel = SearchDefaultViewModel(
+            model: SearchMockModel(books: books, favoriteBookIDs: [id]),
+            onboardingService: OnboardingMockService(),
+            imageService: ImageMockService()
+        )
 
         let predicate = NSPredicate { vm, _ in
             guard let vm = vm as? any SearchViewModel else {
@@ -144,9 +147,11 @@ final class SearchDefaultViewModelTests: XCTestCase {
     func testBooks_update_afterTogglingFavorite() {
         let id = "1"
         let books: Set = [Book(id: id, authors: [], title: "", description: "Desc")]
-        let vm: any SearchViewModel = SearchDefaultViewModel(model: SearchMockModel(books: books),
-                                                             onboardingService: OnboardingMockService(),
-                                                             imageService: ImageMockService())
+        let vm: any SearchViewModel = SearchDefaultViewModel(
+            model: SearchMockModel(books: books),
+            onboardingService: OnboardingMockService(),
+            imageService: ImageMockService()
+        )
 
         let predicate = NSPredicate { vm, _ in
             guard let vm = vm as? any SearchViewModel else {
@@ -164,9 +169,9 @@ final class SearchDefaultViewModelTests: XCTestCase {
 
     func testTogglingFavorite_togglesModel() {
         let model = SearchMockModel()
-        let vm: any SearchViewModel = SearchDefaultViewModel(model: model,
-                                                             onboardingService: OnboardingMockService(),
-                                                             imageService: ImageMockService())
+        let vm: any SearchViewModel = SearchDefaultViewModel(
+            model: model, onboardingService: OnboardingMockService(), imageService: ImageMockService()
+        )
 
         let id = "1"
         vm.toggleFavoriteStateOfBook(withID: id)
@@ -175,32 +180,36 @@ final class SearchDefaultViewModelTests: XCTestCase {
     }
 
     func testDetailsViewModel_authors() {
-        let vm: any SearchViewModel = SearchDefaultViewModel(model: SearchMockModel(),
-                                                             onboardingService: OnboardingMockService(),
-                                                             imageService: ImageMockService())
+        let vm: any SearchViewModel = SearchDefaultViewModel(
+            model: SearchMockModel(), onboardingService: OnboardingMockService(), imageService: ImageMockService()
+        )
 
-        let bookVM = BookViewModel(id: "ID",
-                                   authors: "Authors",
-                                   title: "Title",
-                                   description: "Desc",
-                                   imageURL: URL(string: "https://apple.com"),
-                                   favorite: true)
+        let bookVM = BookViewModel(
+            id: "ID",
+            authors: "Authors",
+            title: "Title",
+            description: "Desc",
+            imageURL: URL(string: "https://apple.com"),
+            favorite: true
+        )
         let bookDetailsVM = vm.makeDetailsViewModel(for: bookVM)
 
         XCTAssertEqual(bookDetailsVM.authors, bookVM.authors, "The authors of the source and the result don't match.")
     }
 
     func testDetailsViewModel_title() {
-        let vm: any SearchViewModel = SearchDefaultViewModel(model: SearchMockModel(),
-                                                             onboardingService: OnboardingMockService(),
-                                                             imageService: ImageMockService())
+        let vm: any SearchViewModel = SearchDefaultViewModel(
+            model: SearchMockModel(), onboardingService: OnboardingMockService(), imageService: ImageMockService()
+        )
 
-        let bookVM = BookViewModel(id: "ID",
-                                   authors: "Authors",
-                                   title: "Title",
-                                   description: "Desc",
-                                   imageURL: URL(string: "https://apple.com"),
-                                   favorite: true)
+        let bookVM = BookViewModel(
+            id: "ID",
+            authors: "Authors",
+            title: "Title",
+            description: "Desc",
+            imageURL: URL(string: "https://apple.com"),
+            favorite: true
+        )
         let bookDetailsVM = vm.makeDetailsViewModel(for: bookVM)
 
         XCTAssertEqual(bookDetailsVM.title, bookVM.title, "The titles of the source and the result don't match.")
@@ -210,15 +219,19 @@ final class SearchDefaultViewModelTests: XCTestCase {
         let imageURL = URL(string: "https://apple.com")!
         let image = UniversalImage()
 
-        let vm: any SearchViewModel = SearchDefaultViewModel(model: SearchMockModel(),
-                                                             onboardingService: OnboardingMockService(),
-                                                             imageService: ImageMockService(images: [imageURL : image]))
-        let bookVM = BookViewModel(id: "ID",
-                                   authors: "Authors",
-                                   title: "Title",
-                                   description: "Desc",
-                                   imageURL: imageURL,
-                                   favorite: true)
+        let vm: any SearchViewModel = SearchDefaultViewModel(
+            model: SearchMockModel(),
+            onboardingService: OnboardingMockService(),
+            imageService: ImageMockService(images: [imageURL : image])
+        )
+        let bookVM = BookViewModel(
+            id: "ID",
+            authors: "Authors",
+            title: "Title",
+            description: "Desc",
+            imageURL: imageURL,
+            favorite: true
+        )
 
         let bookDetailsVM = vm.makeDetailsViewModel(for: bookVM)
 

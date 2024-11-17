@@ -67,12 +67,14 @@ extension BookViewModel {
     ///   - book: A book meta-data object.
     ///   - favorite: Whether the book is a favorite.
     init(book: Book, favorite: Bool) {
-        self.init(id: book.id, 
-                  authors: book.authors.joined(separator: ", "),
-                  title: book.title,
-                  description: book.description,
-                  imageURL: book.imageURL,
-                  favorite: favorite)
+        self.init(
+            id: book.id,
+            authors: book.authors.joined(separator: ", "),
+            title: book.title,
+            description: book.description,
+            imageURL: book.imageURL,
+            favorite: favorite
+        )
     }
 
 }
