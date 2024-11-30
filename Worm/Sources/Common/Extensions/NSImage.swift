@@ -27,5 +27,5 @@ extension NSImage {
 
 // MARK: - Sendable
 
-extension NSImage: @unchecked Sendable { }
+extension NSImage: @unchecked @retroactive Sendable { }
 #endif
