@@ -5,50 +5,52 @@
 //  Created by Lazarev-Zubov, Nikita on 4.5.2024.
 //
 
+import Foundation
+import Testing
 @testable
 import Worm
-import XCTest
 
-final class OnboardingPersistentServiceTests: XCTestCase {
-
-    private static let suiteName = "com.lazarevzubov.OnboardingPersistentServiceTests"
-    private let userDefaults = UserDefaults(suiteName: OnboardingPersistentServiceTests.suiteName)!
+struct OnboardingPersistentServiceTests {
 
     // MARK: - Methods
 
-    override func tearDown() {
-        userDefaults.removePersistentDomain(forName: Self.suiteName)
-        super.tearDown()
-    }
-
-    func testSearchOnboardingShown_false_whenNotSet() {
+    @Test
+    func searchOnboarding_shown_false_whenNotSet() {
+        let userDefaults = UserDefaults(suiteName: #function)!
         let service = OnboardingPersistentService(userDefaults: userDefaults)
-        XCTAssertFalse(service.searchOnboardingShown)
+
+        #expect(!service.searchOnboardingShown)
     }
 
-    func testSearchOnboardingShown_setting() {
+    @Test
+    func searchOnboarding_shown_setting() {
+        let userDefaults = UserDefaults(suiteName: #function)!
         let service = OnboardingPersistentService(userDefaults: userDefaults)
 
         let value = true
         service.searchOnboardingShown = value
 
-        XCTAssertEqual(service.searchOnboardingShown, value, "searchOnboardingShown returned an unexpected value.")
+        #expect(service.searchOnboardingShown == value, "searchOnboardingShown returned an unexpected value.")
     }
 
-    func testRecommendationsOnboardingShown_false_whenNotSet() {
+    @Test
+    func recommendationsOnboarding_shown_false_whenNotSet() {
+        let userDefaults = UserDefaults(suiteName: #function)!
         let service = OnboardingPersistentService(userDefaults: userDefaults)
-        XCTAssertFalse(service.recommendationsOnboardingShown)
+
+        #expect(!service.recommendationsOnboardingShown)
     }
 
-    func testRecommendationsOnboardingShown_setting() {
+    @Test
+    func recommendationsOnboarding_shown_setting() {
+        let userDefaults = UserDefaults(suiteName: #function)!
         let service = OnboardingPersistentService(userDefaults: userDefaults)
 
         let value = true
         service.recommendationsOnboardingShown = value
 
-        XCTAssertEqual(
-            service.recommendationsOnboardingShown,
-            value,
+        #expect(
+            service.recommendationsOnboardingShown == value,
             "recommendationsOnboardingShown returned an unexpected value."
         )
     }

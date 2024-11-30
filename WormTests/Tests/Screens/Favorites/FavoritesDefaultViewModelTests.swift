@@ -6,82 +6,26 @@
 //
 
 import Combine
+import Foundation
 import GoodreadsService
+import Testing
 @testable
 import Worm
-import XCTest
 
-final class FavoritesDefaultViewModelTests: XCTestCase {
+struct FavoritesDefaultViewModelTests {
 
     // MARK: - Methods
 
-    func testFavorites_initiallyEmpty() {
+    @Test
+    func favorites_empty_initially() {
         let vm: any FavoritesViewModel = FavoritesDefaultViewModel(
             model: FavoritesMockModel(), imageService: ImageMockService()
         )
-        XCTAssertTrue(vm.favorites.isEmpty)
+        #expect(vm.favorites.isEmpty, "Favorites are not empty initially.")
     }
 
-    func testFavorites_update() {
-        let id = "1"
-        let book = Book(id: id, authors: [], title: "", description: "Desc")
-
-        let vm: any FavoritesViewModel = FavoritesDefaultViewModel(
-            model: FavoritesMockModel(favorites: [book]), imageService: ImageMockService()
-        )
-
-        let predicate = NSPredicate { vm, _ in
-            guard let vm = vm as? any FavoritesViewModel else {
-                return false
-            }
-            return vm.favorites == [BookViewModel(book: book, favorite: true)]
-        }
-        let expectation = XCTNSPredicateExpectation(predicate: predicate, object: vm)
-
-        wait(for: [expectation], timeout: 2.0)
-    }
-
-    func testFavorites_update_onAddingFavorite() {
-        let id = "1"
-        let book = Book(id: id, authors: [], title: "", description: "Desc")
-
-        let vm: any FavoritesViewModel = FavoritesDefaultViewModel(
-            model: FavoritesMockModel(), imageService: ImageMockService()
-        )
-
-        let predicate = NSPredicate { vm, _ in
-            guard let vm = vm as? any FavoritesViewModel else {
-                return false
-            }
-            return vm.favorites == [BookViewModel(book: book, favorite: true)]
-        }
-        let expectation = XCTNSPredicateExpectation(predicate: predicate, object: vm)
-
-        vm.toggleFavoriteStateOfBook(withID: id)
-        wait(for: [expectation], timeout: 2.0)
-    }
-
-    func testFavorites_update_onRemovingFavorite() {
-        let id = "1"
-        let book = Book(id: id, authors: [], title: "", description: "Desc")
-
-        let vm: any FavoritesViewModel = FavoritesDefaultViewModel(
-            model: FavoritesMockModel(favorites: [book]), imageService: ImageMockService()
-        )
-
-        let predicate = NSPredicate { vm, _ in
-            guard let vm = vm as? any FavoritesViewModel else {
-                return false
-            }
-            return vm.favorites.isEmpty
-        }
-        let expectation = XCTNSPredicateExpectation(predicate: predicate, object: vm)
-
-        vm.toggleFavoriteStateOfBook(withID: id)
-        wait(for: [expectation], timeout: 2.0)
-    }
-
-    func testDetailsViewModel_authors() {
+    @Test
+    func detailsViewModel_authors_asExpected() {
         let vm: any FavoritesViewModel = FavoritesDefaultViewModel(
             model: FavoritesMockModel(), imageService: ImageMockService()
         )
@@ -98,9 +42,10 @@ final class FavoritesDefaultViewModelTests: XCTestCase {
         )
         let bookDetailsVM = vm.makeDetailsViewModel(for: bookVM)
 
-        XCTAssertEqual(bookDetailsVM.authors, bookVM.authors, "Unexpected authors string generated")
+        #expect(bookDetailsVM.authors == bookVM.authors, "Unexpected authors string generated")
     }
 
+    @Test
     func testDetailsViewModel_title() {
         let vm: any FavoritesViewModel = FavoritesDefaultViewModel(
             model: FavoritesMockModel(), imageService: ImageMockService()
@@ -118,10 +63,39 @@ final class FavoritesDefaultViewModelTests: XCTestCase {
         )
         let bookDetailsVM = vm.makeDetailsViewModel(for: bookVM)
 
-        XCTAssertEqual(bookDetailsVM.title, bookVM.title, "Unexpected authors string generated")
+        #expect(bookDetailsVM.title == bookVM.title, "Unexpected authors string generated")
     }
 
-    func testDetailsViewModel_image() {
+    @Test(.timeLimit(.minutes(1)))
+    func favorites_update() async {
+        let id = "1"
+        let book = Book(id: id, authors: [], title: "", description: "Desc")
+
+        let vm: any FavoritesViewModel = FavoritesDefaultViewModel(
+            model: FavoritesMockModel(favorites: [book]), imageService: ImageMockService()
+        )
+        while vm.favorites != [BookViewModel(book: book, favorite: true)] {
+            await Task.yield()
+        }
+    }
+
+    @Test(.timeLimit(.minutes(1)))
+    func favorites_update_onRemovingFavorite() async {
+        let id = "1"
+        let book = Book(id: id, authors: [], title: "", description: "Desc")
+
+        let vm: any FavoritesViewModel = FavoritesDefaultViewModel(
+            model: FavoritesMockModel(favorites: [book]), imageService: ImageMockService()
+        )
+
+        vm.toggleFavoriteStateOfBook(withID: id)
+        while !vm.favorites.isEmpty {
+            await Task.yield()
+        }
+    }
+
+    @Test(.timeLimit(.minutes(1)))
+    func detailsViewModel_image() async {
         let imageURL = URL(string: "https://apple.com")!
         let image = UniversalImage()
 
@@ -141,16 +115,9 @@ final class FavoritesDefaultViewModelTests: XCTestCase {
         )
 
         let bookDetailsVM = vm.makeDetailsViewModel(for: bookVM)
-
-        let predicate = NSPredicate { vm, _ in
-            guard let vm = vm as? any BookDetailsViewModel else {
-                return false
-            }
-            return vm.image == image
+        while bookDetailsVM.image != image {
+            await Task.yield()
         }
-        let expectation = XCTNSPredicateExpectation(predicate: predicate, object: bookDetailsVM)
-
-        wait(for: [expectation], timeout: 2.0)
     }
 
     // MARK: -

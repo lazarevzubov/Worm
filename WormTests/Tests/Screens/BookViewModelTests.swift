@@ -5,16 +5,18 @@
 //  Created by Lazarev-Zubov, Nikita on 27.4.2024.
 //
 
+import Foundation
 import GoodreadsService
+import Testing
 @testable
 import Worm
-import XCTest
 
-final class BookViewModelTests: XCTestCase {
+struct BookViewModelTests {
 
     // MARK: - Methods
 
-    func testID() {
+    @Test
+    func id_asProvided() {
         let id = "ID"
         let book = Book(
             id: id,
@@ -32,10 +34,11 @@ final class BookViewModelTests: XCTestCase {
         )
 
         let vm = BookViewModel(book: book, favorite: true)
-        XCTAssertEqual(vm.id, id)
+        #expect(vm.id == id)
     }
 
-    func testAuthors() {
+    @Test
+    func authors_asProvided() {
         let author1 = "Author1"
         let author2 = "Author2"
         let book = Book(
@@ -54,10 +57,11 @@ final class BookViewModelTests: XCTestCase {
         )
 
         let vm = BookViewModel(book: book, favorite: true)
-        XCTAssertEqual(vm.authors, "\(author1), \(author2)")
+        #expect(vm.authors == "\(author1), \(author2)")
     }
 
-    func testImageURL() {
+    @Test
+    func imageURL_asProvided() {
         let imageURL = URL(string: "https://apple.com")!
         let book = Book(
             id: "ID",
@@ -75,10 +79,11 @@ final class BookViewModelTests: XCTestCase {
         )
 
         let vm = BookViewModel(book: book, favorite: true)
-        XCTAssertEqual(vm.imageURL, imageURL)
+        #expect(vm.imageURL == imageURL)
     }
 
-    func testFavorite() {
+    @Test
+    func favorite_asProvided() {
         let book = Book(
             id: "ID",
             authors: [
@@ -97,10 +102,11 @@ final class BookViewModelTests: XCTestCase {
         let favorite = true
         let vm = BookViewModel(book: book, favorite: favorite)
 
-        XCTAssertEqual(vm.favorite, favorite)
+        #expect(vm.favorite == favorite)
     }
 
-    func testTitle() {
+    @Test
+    func title_asProvided() {
         let title = "Title"
         let book = Book(
             id: "ID",
@@ -118,7 +124,7 @@ final class BookViewModelTests: XCTestCase {
         )
 
         let vm = BookViewModel(book: book, favorite: true)
-        XCTAssertEqual(vm.title, title)
+        #expect(vm.title == title)
     }
 
 }

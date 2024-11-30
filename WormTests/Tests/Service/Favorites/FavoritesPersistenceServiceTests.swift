@@ -7,15 +7,16 @@
 
 import Combine
 import SwiftData
+import Testing
 @testable
 import Worm
-import XCTest
 
-final class FavoritesPersistenceServiceTests: XCTestCase {
+struct FavoritesPersistenceServiceTests {
 
     // MARK: - Methods
 
-    func testBlockedBookIDs_initiallyEmpty() throws {
+    @Test
+    func blockedBookIDs_empty_initially() throws {
         let schema = Schema(
             [BlockedBook.self,
              FavoriteBook.self],
@@ -25,10 +26,11 @@ final class FavoritesPersistenceServiceTests: XCTestCase {
         let modelContainer = try ModelContainer(for: schema, configurations: [modelConfiguration])
 
         let service = FavoritesPersistenceService(modelContainer: modelContainer)
-        XCTAssertTrue(service.blockedBookIDs.isEmpty)
+        #expect(service.blockedBookIDs.isEmpty)
     }
 
-    func testBlockedBookIDs_update() throws {
+    @Test(.timeLimit(.minutes(1)))
+    func blockedBookIDs_update() async throws {
         let schema = Schema(
             [BlockedBook.self,
              FavoriteBook.self],
@@ -45,24 +47,13 @@ final class FavoritesPersistenceServiceTests: XCTestCase {
         try context.save()
 
         let service = FavoritesPersistenceService(modelContainer: modelContainer)
+        var ids = service.blockedBookIDsPublisher.values.makeAsyncIterator()
 
-        let expectation = XCTestExpectation(description: "Update received.")
-
-        var cancellables = Set<AnyCancellable>()
-        service
-            .blockedBookIDsPublisher
-            .sink {
-                XCTAssertEqual($0, [id], "Unexpected data received.")
-                expectation.fulfill()
-            }
-            .store(in: &cancellables)
-
-        wait(for: [expectation], timeout: 1.0)
-
-        cancellables.forEach { $0.cancel() }
+        await #expect(ids.next() == [id], "Unexpected data received.")
     }
 
-    func testBlockedBookIDs_adding() throws {
+    @Test(.timeLimit(.minutes(1)))
+    func blockedBookIDs_update_onAdding() async throws {
         let schema = Schema(
             [BlockedBook.self,
              FavoriteBook.self],
@@ -72,27 +63,16 @@ final class FavoritesPersistenceServiceTests: XCTestCase {
         let modelContainer = try ModelContainer(for: schema, configurations: [modelConfiguration])
 
         let service = FavoritesPersistenceService(modelContainer: modelContainer)
-
-        let expectation = XCTestExpectation(description: "Update received.")
-        var cancellables = Set<AnyCancellable>()
+        var ids = service.blockedBookIDsPublisher.dropFirst().values.makeAsyncIterator()
 
         let id = "ID"
-        service
-            .blockedBookIDsPublisher
-            .dropFirst()
-            .sink {
-                XCTAssertEqual($0, [id], "Unexpected data received.")
-                expectation.fulfill()
-            }
-            .store(in: &cancellables)
-
         service.addToBlockedBook(withID: id)
-        wait(for: [expectation], timeout: 1.0)
 
-        cancellables.forEach { $0.cancel() }
+        await #expect(ids.next() == [id], "Unexpected data received.")
     }
 
-    func testFavoriteBookIDs_initiallyEmpty() throws {
+    @Test
+    func favoriteBookIDs_empty_initially() throws {
         let schema = Schema(
             [BlockedBook.self,
              FavoriteBook.self],
@@ -102,10 +82,11 @@ final class FavoritesPersistenceServiceTests: XCTestCase {
         let modelContainer = try ModelContainer(for: schema, configurations: [modelConfiguration])
 
         let service = FavoritesPersistenceService(modelContainer: modelContainer)
-        XCTAssertTrue(service.favoriteBookIDs.isEmpty)
+        #expect(service.favoriteBookIDs.isEmpty)
     }
 
-    func testFavoriteBookIDs_update() throws {
+    @Test(.timeLimit(.minutes(1)))
+    func favoriteBookIDs_update() async throws {
         let schema = Schema(
             [BlockedBook.self,
              FavoriteBook.self],
@@ -122,24 +103,13 @@ final class FavoritesPersistenceServiceTests: XCTestCase {
         try context.save()
 
         let service = FavoritesPersistenceService(modelContainer: modelContainer)
+        var ids = service.favoriteBookIDsPublisher.values.makeAsyncIterator()
 
-        let expectation = XCTestExpectation(description: "Update received.")
-
-        var cancellables = Set<AnyCancellable>()
-        service
-            .favoriteBookIDsPublisher
-            .sink {
-                XCTAssertEqual($0, [id], "Unexpected data received.")
-                expectation.fulfill()
-            }
-            .store(in: &cancellables)
-
-        wait(for: [expectation], timeout: 1.0)
-
-        cancellables.forEach { $0.cancel() }
+        await #expect(ids.next() == [id], "Unexpected data received.")
     }
 
-    func testFavoriteBookIDs_adding() throws {
+    @Test(.timeLimit(.minutes(1)))
+    func favoriteBookIDs_update_onAdding() async throws {
         let schema = Schema(
             [BlockedBook.self,
              FavoriteBook.self],
@@ -149,27 +119,16 @@ final class FavoritesPersistenceServiceTests: XCTestCase {
         let modelContainer = try ModelContainer(for: schema, configurations: [modelConfiguration])
 
         let service = FavoritesPersistenceService(modelContainer: modelContainer)
-
-        let expectation = XCTestExpectation(description: "Update received.")
-        var cancellables = Set<AnyCancellable>()
+        var ids = service.favoriteBookIDsPublisher.dropFirst().values.makeAsyncIterator()
 
         let id = "ID"
-        service
-            .favoriteBookIDsPublisher
-            .dropFirst()
-            .sink {
-                XCTAssertEqual($0, [id], "Unexpected data received.")
-                expectation.fulfill()
-            }
-            .store(in: &cancellables)
-
         service.addToFavoritesBook(withID: id)
-        wait(for: [expectation], timeout: 1.0)
 
-        cancellables.forEach { $0.cancel() }
+        await #expect(ids.next() == [id], "Unexpected data received.")
     }
 
-    func testFavoriteBookIDs_removing() throws {
+    @Test(.timeLimit(.minutes(1)))
+    func favoriteBookIDs_update_onRemoving() async throws {
         let schema = Schema(
             [BlockedBook.self,
              FavoriteBook.self],
@@ -186,23 +145,10 @@ final class FavoritesPersistenceServiceTests: XCTestCase {
         try context.save()
 
         let service = FavoritesPersistenceService(modelContainer: modelContainer)
-
-        let expectation = XCTestExpectation(description: "Update received.")
-        var cancellables = Set<AnyCancellable>()
-
-        service
-            .favoriteBookIDsPublisher
-            .dropFirst()
-            .sink {
-                XCTAssertTrue($0.isEmpty, "Unexpected data received.")
-                expectation.fulfill()
-            }
-            .store(in: &cancellables)
+        var ids = service.favoriteBookIDsPublisher.dropFirst().values.makeAsyncIterator()
 
         service.removeFromFavoriteBook(withID: id)
-        wait(for: [expectation], timeout: 1.0)
-
-        cancellables.forEach { $0.cancel() }
+        await #expect(ids.next()?.isEmpty == true, "Unexpected data received.")
     }
 
 }

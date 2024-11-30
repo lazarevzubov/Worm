@@ -7,109 +7,70 @@
 
 import Combine
 import GoodreadsService
+import Testing
 @testable
 import Worm
-import XCTest
 
-final class RecommendationsDefaultModelTests: XCTestCase {
+struct RecommendationsDefaultModelTests {
 
     // MARK: - Methods
 
-    func testFavoriteBookIDs_initiallyEmpty() {
+    @Test
+    func favoriteBookIDs_empty_initially() {
         let model = RecommendationsDefaultModel(
             catalogService: CatalogMockService(), favoritesService: FavoritesMockService()
         )
-        XCTAssertTrue(model.favoriteBookIDs.isEmpty)
+        #expect(model.favoriteBookIDs.isEmpty)
     }
 
-    func testRecommendations_initiallyEmpty() {
-        let model = RecommendationsDefaultModel(
-            catalogService: CatalogMockService(), favoritesService: FavoritesMockService()
-        )
-        XCTAssertTrue(model.recommendations.isEmpty)
-    }
-
-    func testFavoriteBookIDs_update() {
+    @Test(.timeLimit(.minutes(1)))
+    func favoriteBookIDs_updates() async {
         let id = "1"
         let model: RecommendationsModel = RecommendationsDefaultModel(
             catalogService: CatalogMockService(), favoritesService: FavoritesMockService(favoriteBookIDs: [id])
         )
 
-        let expectation = XCTestExpectation(description: "Update received.")
-
-        var cancellables = Set<AnyCancellable>()
-        model
-            .favoriteBookIDsPublisher
-            .dropFirst()
-            .sink {
-                XCTAssertEqual($0, [id], "Unexpected data received.")
-                expectation.fulfill()
-            }
-            .store(in: &cancellables)
-
-        wait(for: [expectation], timeout: 2.0)
-
-        cancellables.forEach { $0.cancel() }
+        var ids =  model.favoriteBookIDsPublisher.dropFirst().values.makeAsyncIterator()
+        await #expect(ids.next() == [id], "Unexpected data received.")
     }
 
-    func testFavoriteBookIDs_update_onAddingFavorite() {
+    @Test(.timeLimit(.minutes(1)))
+    func favoriteBookIDs_updates_onAddingFavorite() async {
         let model: RecommendationsModel = RecommendationsDefaultModel(
             catalogService: CatalogMockService(), favoritesService: FavoritesMockService()
         )
 
-        let expectation = XCTestExpectation(description: "Update received.")
+        var favorites = model.favoriteBookIDsPublisher.dropFirst(2).values.makeAsyncIterator()
+
         let id = "1"
-
-        var cancellables = Set<AnyCancellable>()
-        model
-            .favoriteBookIDsPublisher
-            .dropFirst(2)
-            .sink {
-                XCTAssertEqual($0, [id], "Unexpected data received.")
-                expectation.fulfill()
-            }
-            .store(in: &cancellables)
-
         model.toggleFavoriteStateOfBook(withID: id)
-        wait(for: [expectation], timeout: 2.0)
 
-        cancellables.forEach { $0.cancel() }
+        await #expect(favorites.next() == [id], "Unexpected data received.")
     }
 
-    func testFavoriteBookIDs_update_onRemovingFavorite() {
+    @Test(.timeLimit(.minutes(1)))
+    func favoriteBookIDs_updates_onRemovingFavorite() async {
         let id = "1"
         let model: RecommendationsModel = RecommendationsDefaultModel(
             catalogService: CatalogMockService(), favoritesService: FavoritesMockService(favoriteBookIDs: [id])
         )
 
-        let updateExpectation = XCTestExpectation(description: "Update received.")
-        let editingExpectation = XCTestExpectation(description: "Update after editing received.")
-
-        var callCount = 0
-        var cancellables = Set<AnyCancellable>()
-        model
-            .favoriteBookIDsPublisher
-            .dropFirst()
-            .sink {
-                if callCount == 0 {
-                    updateExpectation.fulfill()
-                    callCount += 1
-                } else {
-                    XCTAssertTrue($0.isEmpty, "Unexpected data received.")
-                    editingExpectation.fulfill()
-                }
-            }
-            .store(in: &cancellables)
-
-        wait(for: [updateExpectation], timeout: 1.0)
+        var favorites = model.favoriteBookIDsPublisher.dropFirst().values.makeAsyncIterator()
 
         model.toggleFavoriteStateOfBook(withID: id)
-        wait(for: [editingExpectation], timeout: 2.0)
-
-        cancellables.forEach { $0.cancel() }
+        await #expect(favorites.next()?.isEmpty == true, "Unexpected data received.")
     }
 
-    func testRecommendations_update() {
+    @Test
+    func recommendations_empty_initially() {
+        let model = RecommendationsDefaultModel(
+            catalogService: CatalogMockService(), favoritesService: FavoritesMockService()
+        )
+        #expect(model.recommendations.isEmpty)
+    }
+
+    @Test(.timeLimit(.minutes(1)))
+    func recommendationsUpdate_received() async {
         let book = Book(
             id: "1",
             authors: ["J.R.R. Tolkien"],
@@ -135,24 +96,12 @@ final class RecommendationsDefaultModelTests: XCTestCase {
             favoritesService: FavoritesMockService(favoriteBookIDs: ["1"])
         )
 
-        let expectation = XCTestExpectation(description: "Update received.")
-
-        var cancellables = Set<AnyCancellable>()
-        model
-            .recommendationsPublisher
-            .dropFirst()
-            .sink {
-                XCTAssertEqual($0, [recommendedBook], "Unexpected data received.")
-                expectation.fulfill()
-            }
-            .store(in: &cancellables)
-
-        wait(for: [expectation], timeout: 2.0)
-
-        cancellables.forEach { $0.cancel() }
+        var books = model.recommendationsPublisher.dropFirst().values.makeAsyncIterator()
+        await #expect(books.next() == [recommendedBook], "Unexpected data received.")
     }
 
-    func testRecommendations_update_onAddingFavorite() {
+    @Test(.timeLimit(.minutes(1)))
+    func recommendationsUpdate_received_onAddingFavorite() async {
         let book = Book(
             id: "1",
             authors: ["J.R.R. Tolkien"],
@@ -178,25 +127,14 @@ final class RecommendationsDefaultModelTests: XCTestCase {
             favoritesService: FavoritesMockService()
         )
 
-        let expectation = XCTestExpectation(description: "Update received.")
-
-        var cancellables = Set<AnyCancellable>()
-        model
-            .recommendationsPublisher
-            .dropFirst()
-            .sink {
-                XCTAssertEqual($0, [recommendedBook], "Unexpected data received.")
-                expectation.fulfill()
-            }
-            .store(in: &cancellables)
+        var books = model.recommendationsPublisher.dropFirst().values.makeAsyncIterator()
 
         model.toggleFavoriteStateOfBook(withID: "1")
-        wait(for: [expectation], timeout: 1.0)
-
-        cancellables.forEach { $0.cancel() }
+        await #expect(books.next() == [recommendedBook], "Unexpected data received.")
     }
 
-    func testRecommendations_update_onRemovingFavorite() async {
+    @Test(.timeLimit(.minutes(1)))
+    func recommendationsUpdate_received_onRemovingFavorite() async {
         let book = Book(
             id: "1",
             authors: ["J.R.R. Tolkien"],
@@ -222,26 +160,15 @@ final class RecommendationsDefaultModelTests: XCTestCase {
             favoritesService: FavoritesMockService(favoriteBookIDs: [book.id])
         )
 
-        let expectation = XCTestExpectation(description: "Update received.")
-
-        var cancellables = Set<AnyCancellable>()
-        model
-            .recommendationsPublisher
-            .dropFirst(2)
-            .sink {
-                XCTAssertTrue($0.isEmpty, "Unexpected data received.")
-                expectation.fulfill()
-            }
-            .store(in: &cancellables)
-
+        var books = model.recommendationsPublisher.dropFirst(2).values.makeAsyncIterator()
         try? await Task.sleep(for: .seconds(1)) // Imitates a separate update, after initialization.
-        model.toggleFavoriteStateOfBook(withID: book.id)
-        await fulfillment(of: [expectation], timeout: 2.0)
 
-        cancellables.forEach { $0.cancel() }
+        model.toggleFavoriteStateOfBook(withID: book.id)
+        await #expect(books.next()?.isEmpty == true, "Unexpected data received.")
     }
 
-    func testRecommendations_update_onBlockingRecommendation() {
+    @Test(.timeLimit(.minutes(1)))
+    func recommendationsUpdate_received_onBlockingRecommendation() async {
         let book = Book(
             id: "1",
             authors: ["J.R.R. Tolkien"],
@@ -267,28 +194,17 @@ final class RecommendationsDefaultModelTests: XCTestCase {
             favoritesService: FavoritesMockService(favoriteBookIDs: [book.id])
         )
 
-        let expectation = XCTestExpectation(description: "Update received.")
-
-        var cancellables = Set<AnyCancellable>()
-        model
-            .recommendationsPublisher
-            .dropFirst(2)
-            .sink {
-                XCTAssertTrue($0.isEmpty, "Unexpected data received.")
-                expectation.fulfill()
-            }
-            .store(in: &cancellables)
-
+        var books = model.recommendationsPublisher.dropFirst(2).values.makeAsyncIterator()
+        
         Task {
             try? await Task.sleep(for: .seconds(1)) // Imitates a separate update, after initialization.
             model.blockFromRecommendationsBook(withID: recommendedBook.id)
         }
-        wait(for: [expectation], timeout: 2.0)
-
-        cancellables.forEach { $0.cancel() }
+        await #expect(books.next()?.isEmpty == true, "Unexpected data received.")
     }
 
-    func testBlockingRecommendation_updatesBlockedBooks() {
+    @Test
+    func blockingRecommendation_updatesBlockedBooks() {
         let favoritesService = FavoritesMockService()
         let model: RecommendationsModel = RecommendationsDefaultModel(
             catalogService: CatalogMockService(), favoritesService: favoritesService
@@ -297,7 +213,7 @@ final class RecommendationsDefaultModelTests: XCTestCase {
         let id = "1"
         model.blockFromRecommendationsBook(withID: id)
 
-        XCTAssertTrue(favoritesService.blockedBookIDs.contains(id))
+        #expect(favoritesService.blockedBookIDs.contains(id))
     }
 
 }
