@@ -888,6 +888,7 @@
 				DEVELOPMENT_TEAM = HFC9T3AWTY;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Worm/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.books";
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -919,6 +920,7 @@
 				DEVELOPMENT_TEAM = HFC9T3AWTY;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Worm/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.books";
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
