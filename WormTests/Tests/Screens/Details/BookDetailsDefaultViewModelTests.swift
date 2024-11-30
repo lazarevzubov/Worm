@@ -6,15 +6,17 @@
 //
 
 import Combine
+import Foundation
+import Testing
 @testable
 import Worm
-import XCTest
 
-final class BookDetailsDefaultViewModelTests: XCTestCase {
+struct BookDetailsDefaultViewModelTests {
 
     // MARK: - Methods
 
-    func testImageRetrieved() throws {
+    @Test(.timeLimit(.minutes(1)))
+    func imageRetrieved() async throws {
         let url = URL(string: "https://example.com")!
         let vm: BookDetailsDefaultViewModel = BookDetailsDefaultViewModel(
             authors: "Authors",
@@ -24,22 +26,8 @@ final class BookDetailsDefaultViewModelTests: XCTestCase {
             imageService: ImageMockService(images: [url : UniversalImage()])
         )
 
-        let expectation = XCTestExpectation(description: "Image retrieved")
-
-        var cancellables = Set<AnyCancellable>()
-        vm
-            .$image
-            .dropFirst()
-            .sink { _ in
-                // Do nothing on completion.
-            } receiveValue: {
-                XCTAssertNotNil($0, "Retrieved image is nil.")
-                expectation.fulfill()
-            }
-            .store(in: &cancellables)
-        wait(for: [expectation], timeout: 1.0)
-
-        cancellables.forEach { $0.cancel() }
+        var images = vm.$image.dropFirst().values.makeAsyncIterator()
+        await #expect(images.next() != nil, "Retrieved image should not be nil.")
     }
 
 }

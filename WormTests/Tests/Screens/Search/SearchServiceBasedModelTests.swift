@@ -7,22 +7,73 @@
 
 import Combine
 import GoodreadsService
+import Testing
 @testable
 import Worm
-import XCTest
 
-final class SearchServiceBasedModelTests: XCTestCase {
+struct SearchServiceBasedModelTests {
 
     // MARK: - Methods
 
-    func testBooks_initiallyEmpty() {
+    @Test
+    func books_empty_initially() {
         let model: any SearchModel = SearchServiceBasedModel(
             catalogService: CatalogMockService(), favoritesService: FavoritesMockService()
         )
-        XCTAssertTrue(model.books.isEmpty)
+        #expect(model.books.isEmpty)
     }
 
-    func testBooks_update_onSearch() async {
+    @Test
+    func favoriteBooksIDs_empty_initially() {
+        let model: any SearchModel = SearchServiceBasedModel(
+            catalogService: CatalogMockService(), favoritesService: FavoritesMockService()
+        )
+        #expect(model.favoriteBookIDs.isEmpty)
+    }
+
+    @Test(.timeLimit(.minutes(1)))
+    func favoriteBooksIDs_update() async {
+        let expectedIDs: Set = ["1"]
+        let model: any SearchModel = SearchServiceBasedModel(
+            catalogService: CatalogMockService(), favoritesService: FavoritesMockService(favoriteBookIDs: expectedIDs)
+        )
+
+        var ids = model.favoriteBookIDsPublisher.values.makeAsyncIterator()
+        await #expect(ids.next() == expectedIDs, "Unexpected data received.")
+    }
+
+    @Test
+    func favoriteBookID_toggling_onRemovingFromFavorites() async {
+        let id = "1"
+        let favoritesService = FavoritesMockService(favoriteBookIDs: [id])
+
+        let model: any SearchModel = SearchServiceBasedModel(
+            catalogService: CatalogMockService(), favoritesService: favoritesService
+        )
+
+        var ids = model.favoriteBookIDsPublisher.values.makeAsyncIterator()
+        _ = await ids.next()
+
+        model.toggleFavoriteStateOfBook(withID: id)
+        #expect(favoritesService.favoriteBookIDs.isEmpty)
+    }
+
+    @Test
+    func favoriteBookID_toggling_onAddingToFavorites() async {
+        let favoritesService = FavoritesMockService()
+        let model: any SearchModel = SearchServiceBasedModel(
+            catalogService: CatalogMockService(), favoritesService: favoritesService
+        )
+
+        var ids = model.favoriteBookIDsPublisher.values.makeAsyncIterator()
+        _ = await ids.next()
+
+        model.toggleFavoriteStateOfBook(withID: "1")
+        #expect(!favoritesService.favoriteBookIDs.isEmpty)
+    }
+
+    @Test(.timeLimit(.minutes(1)))
+    func books_update_onSearch() async {
         let books = [
             Book(
                 id: "1",
@@ -48,19 +99,14 @@ final class SearchServiceBasedModelTests: XCTestCase {
             favoritesService: FavoritesMockService()
         )
 
-        let predicate = NSPredicate { model, _ in
-            guard let model = model as? SearchModel else {
-                return false
-            }
-            return model.books == Set(books)
-        }
-        let expectation = XCTNSPredicateExpectation(predicate: predicate, object: model)
-
         await model.searchBooks(by: query)
-        await fulfillment(of: [expectation], timeout: 2.0)
+        while model.books != Set(books) {
+            await Task.yield()
+        }
     }
 
-    func testSearch_cancels_whenReplacedWithinDelay() async {
+    @Test(.timeLimit(.minutes(1)))
+    func search_cancels_whenReplacedWithinDelay() async {
         let books1 = [
             Book(
                 id: "1",
@@ -112,101 +158,12 @@ final class SearchServiceBasedModelTests: XCTestCase {
             favoritesService: FavoritesMockService()
         )
 
-        let predicate = NSPredicate { model, _ in
-            guard let model = model as? SearchModel else {
-                return false
-            }
-            return model.books == Set(books1)
-        }
-        let expectation = XCTNSPredicateExpectation(predicate: predicate, object: model)
-
         await model.searchBooks(by: query2)
         await model.searchBooks(by: query1)
 
-        await fulfillment(of: [expectation], timeout: 2.0)
-    }
-
-    func testFavoriteBooksIDs_initiallyEmpty() {
-        let model: any SearchModel = SearchServiceBasedModel(
-            catalogService: CatalogMockService(), favoritesService: FavoritesMockService()
-        )
-        XCTAssertTrue(model.favoriteBookIDs.isEmpty)
-    }
-
-    func testFavoriteBooksIDs_update() {
-        let ids: Set = ["1"]
-        let model: any SearchModel = SearchServiceBasedModel(
-            catalogService: CatalogMockService(), favoritesService: FavoritesMockService(favoriteBookIDs: ids)
-        )
-
-        let expectation = XCTestExpectation(description: "Update received.")
-
-        var cancellables = Set<AnyCancellable>()
-        model
-            .favoriteBookIDsPublisher
-            .sink {
-                XCTAssertEqual($0, ids, "Unexpected data received.")
-                expectation.fulfill()
-            }
-            .store(in: &cancellables)
-
-        wait(for: [expectation], timeout: 1.0)
-
-        cancellables.forEach { $0.cancel() }
-    }
-
-    @MainActor
-    func testFavoriteBookID_toggling_onRemovingFromFavorites() {
-        let id = "1"
-        let favoritesService = FavoritesMockService(favoriteBookIDs: [id])
-
-        let model: any SearchModel = SearchServiceBasedModel(
-            catalogService: CatalogMockService(), favoritesService: favoritesService
-        )
-
-        let expectation = expectation(description: "Update received.")
-        expectation.assertForOverFulfill = false
-
-        var cancellables = Set<AnyCancellable>()
-        model
-            .favoriteBookIDsPublisher
-            .sink { _ in
-                expectation.fulfill()
-            }
-            .store(in: &cancellables)
-
-        waitForExpectations(timeout: 1.0)
-
-        model.toggleFavoriteStateOfBook(withID: id)
-        XCTAssertTrue(favoritesService.favoriteBookIDs.isEmpty)
-
-        cancellables.forEach { $0.cancel() }
-    }
-
-    @MainActor
-    func testFavoriteBookID_toggling_onAddingToFavorites() {
-        let favoritesService = FavoritesMockService()
-        let model: any SearchModel = SearchServiceBasedModel(
-            catalogService: CatalogMockService(), favoritesService: favoritesService
-        )
-
-        let expectation = expectation(description: "Update received.")
-        expectation.assertForOverFulfill = false
-
-        var cancellables = Set<AnyCancellable>()
-        model
-            .favoriteBookIDsPublisher
-            .sink { _ in
-                expectation.fulfill()
-            }
-            .store(in: &cancellables)
-
-        waitForExpectations(timeout: 1.0)
-
-        model.toggleFavoriteStateOfBook(withID: "1")
-        XCTAssertFalse(favoritesService.favoriteBookIDs.isEmpty)
-
-        cancellables.forEach { $0.cancel() }
+        while model.books != Set(books1) {
+            await Task.yield()
+        }
     }
 
 }

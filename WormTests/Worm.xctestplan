@@ -1,0 +1,46 @@
+{
+  "configurations" : [
+    {
+      "id" : "31DE059B-DF74-4F66-8383-8A42FAAB24B6",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : {
+      "targets" : [
+        {
+          "containerPath" : "container:Worm.xcodeproj",
+          "identifier" : "4E5C6D952565BBB400DDB833",
+          "name" : "Worm"
+        }
+      ]
+    },
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:Worm.xcodeproj",
+      "identifier" : "4E5C6D952565BBB400DDB833",
+      "name" : "Worm"
+    },
+    "testExecutionOrdering" : "random",
+    "testTimeoutsEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:Worm.xcodeproj",
+        "identifier" : "4E5C6DAB2565BBB500DDB833",
+        "name" : "WormTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Worm.xcodeproj",
+        "identifier" : "4E5C6DB62565BBB600DDB833",
+        "name" : "WormUITests"
+      }
+    }
+  ],
+  "version" : 1
+}

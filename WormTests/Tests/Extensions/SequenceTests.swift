@@ -5,15 +5,15 @@
 //  Created by Nikita Lazarev-Zubov on 13.3.2024.
 //
 
+import Testing
 @testable
 import Worm
-import XCTest
 
-final class SequenceTests: XCTestCase {
+struct SequenceTests {
 
     // MARK: - Methods
 
-    func testStableSorted_sorts() throws {
+    func stableSorted_sorts() {
         let items = [
             Item(value: 3),
             Item(value: 2),
@@ -22,17 +22,16 @@ final class SequenceTests: XCTestCase {
         ]
 
         let sortedItems = items.stableSorted { $0.value < $1.value }
-        XCTAssertEqual(
-            sortedItems.map { $0.value },
-            [1,
-             2,
-             2,
-             3],
+        #expect(
+            sortedItems.map { $0.value } == [1,
+                                             2,
+                                             2,
+                                             3],
             "Sorting produced the unexpected result."
         )
     }
 
-    func testStableSorted_stable() throws {
+    func stableSorted_stable() {
         let item1 = Item(value: 1)
         let item2 = Item(value: 2)
         let item3 = Item(value: 2)
@@ -46,8 +45,8 @@ final class SequenceTests: XCTestCase {
 
         let sortedItems = items.stableSorted { $0.value < $1.value }
 
-        XCTAssertTrue(sortedItems[1] === item2, "Sorting changed positions of equivalent items.")
-        XCTAssertTrue(sortedItems[2] === item3, "Sorting changed positions of equivalent items.")
+        #expect(sortedItems[1] === item2, "Sorting changed positions of equivalent items.")
+        #expect(sortedItems[2] === item3, "Sorting changed positions of equivalent items.")
     }
 
     private final class Item {

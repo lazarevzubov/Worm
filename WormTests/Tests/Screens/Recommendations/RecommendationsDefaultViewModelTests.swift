@@ -8,25 +8,27 @@
 import Combine
 import GoodreadsService
 import SwiftUI
+import Testing
 @testable
 import Worm
-import XCTest
 
-final class RecommendationsDefaultViewModelTest: XCTestCase {
+struct RecommendationsDefaultViewModelTests {
 
     // MARK: - Methods
 
-    func testRecommendationsOnboarding_stateInitially_asProvided() {
+    @Test
+    func recommendationsOnboarding_stateInitially_asProvided() {
         let value = true
         let service = OnboardingMockService(onboardingShown: value)
 
         let vm: any RecommendationsViewModel = RecommendationsDefaultViewModel(
             model: RecommendationsMockModel(), onboardingService: service, imageService: ImageMockService()
         )
-        XCTAssertEqual(vm.onboardingShown, value, "Onboarding has an unexpected initial value.")
+        #expect(vm.onboardingShown == value, "Onboarding has an unexpected initial value.")
     }
 
-    func testRecommendationsOnboarding_update_updatesPersistence() {
+    @Test(.timeLimit(.minutes(1)))
+    func recommendationsOnboarding_update_updatesPersistence() async {
         let value = true
         let service = OnboardingMockService(onboardingShown: value)
         let vm: any RecommendationsViewModel = RecommendationsDefaultViewModel(
@@ -34,28 +36,25 @@ final class RecommendationsDefaultViewModelTest: XCTestCase {
         )
 
         let newValue = !value
-        let predicate = NSPredicate { service, _ in
-            guard let service = service as? OnboardingService else {
-                return false
-            }
-            return service.recommendationsOnboardingShown == newValue
-        }
-        let expectation = XCTNSPredicateExpectation(predicate: predicate, object: service)
-
         vm.onboardingShown = newValue
-        wait(for: [expectation], timeout: 2.0)
+
+        while service.recommendationsOnboardingShown != newValue {
+            await Task.yield()
+        }
     }
 
-    func testRecommendations_initiallyEmpty() {
+    @Test
+    func recommendations_empty_initially() {
         let vm: any RecommendationsViewModel = RecommendationsDefaultViewModel(
             model: RecommendationsMockModel(),
             onboardingService: OnboardingMockService(),
             imageService: ImageMockService()
         )
-        XCTAssertTrue(vm.recommendations.isEmpty)
+        #expect(vm.recommendations.isEmpty)
     }
 
-    func testRecommendations_update() {
+    @Test(.timeLimit(.minutes(1)))
+    func recommendations_update() async {
         let recommendations: Set = [Book(id: "1", authors: [], title: "", description: "Desc")]
         let vm: any RecommendationsViewModel = RecommendationsDefaultViewModel(
             model: RecommendationsMockModel(recommendations: recommendations),
@@ -63,23 +62,15 @@ final class RecommendationsDefaultViewModelTest: XCTestCase {
             imageService: ImageMockService()
         )
 
-        let predicate = NSPredicate { vm, _ in
-            guard let vm = vm as? any RecommendationsViewModel else {
-                return false
-            }
-            return vm.recommendations == [
-                BookViewModel(book: Book(
-                    id: "1", authors: [], title: "", description: "Desc"
-                ),
-                              favorite: false)
-            ]
+        while vm.recommendations != [
+            BookViewModel(book: Book(id: "1", authors: [], title: "", description: "Desc"), favorite: false)
+        ] {
+            await Task.yield()
         }
-        let expectation = XCTNSPredicateExpectation(predicate: predicate, object: vm)
-
-        wait(for: [expectation], timeout: 3.0)
     }
 
-    func testRecommendations_update_afterTogglingFavorite() {
+    @Test(.timeLimit(.minutes(1)))
+    func recommendations_update_afterTogglingFavorite() async {
         let id = "1"
         let recommendations: Set = [Book(id: id, authors: [], title: "", description: "Desc")]
         let vm: any RecommendationsViewModel = RecommendationsDefaultViewModel(
@@ -88,19 +79,14 @@ final class RecommendationsDefaultViewModelTest: XCTestCase {
             imageService: ImageMockService()
         )
 
-        let predicate = NSPredicate { vm, _ in
-            guard let vm = vm as? any RecommendationsViewModel else {
-                return false
-            }
-            return vm.recommendations.isEmpty
-        }
-        let expectation = XCTNSPredicateExpectation(predicate: predicate, object: vm)
-
         vm.toggleFavoriteStateOfBook(withID: id)
-        wait(for: [expectation], timeout: 2.0)
+        while !vm.recommendations.isEmpty {
+            await Task.yield()
+        }
     }
 
-    func testTogglingFavorite_updatesModel() {
+    @Test
+    func togglingFavorite_updatesModel() {
         let model = RecommendationsMockModel()
         let vm: any RecommendationsViewModel = RecommendationsDefaultViewModel(
             model: model,
@@ -111,10 +97,11 @@ final class RecommendationsDefaultViewModelTest: XCTestCase {
         let id = "1"
         vm.toggleFavoriteStateOfBook(withID: id)
 
-        XCTAssertTrue(model.favoriteBookIDs.contains(id))
+        #expect(model.favoriteBookIDs.contains(id))
     }
 
-    func testDetailsViewModel_authors_accordingToBook() {
+    @Test
+    func detailsViewModel_authors_accordingToBook() {
         let authors = [
             "Author 1",
             "Authors 2"
@@ -131,10 +118,11 @@ final class RecommendationsDefaultViewModelTest: XCTestCase {
         )
         let detailsVM = vm.makeDetailsViewModel(for: bookVM)
 
-        XCTAssertEqual(detailsVM.authors, "Author 1, Authors 2", "Unexpected authors string")
+        #expect(detailsVM.authors == "Author 1, Authors 2", "Unexpected authors string")
     }
 
-    func testDetailsViewModel_title_accordingToBook() {
+    @Test
+    func detailsViewModel_title_accordingToBook() {
         let title = "Title"
         let bookVM = BookViewModel(
             book: Book(
@@ -156,10 +144,11 @@ final class RecommendationsDefaultViewModelTest: XCTestCase {
         )
         let detailsVM = vm.makeDetailsViewModel(for: bookVM)
 
-        XCTAssertEqual(detailsVM.title, "Title", "Unexpected title string")
+        #expect(detailsVM.title == "Title", "Unexpected title string")
     }
 
-    func testDetailsViewModel_image_accordingToImageService() {
+    @Test(.timeLimit(.minutes(1)))
+    func detailsViewModel_image_accordingToImageService() async {
         let imageURL = URL(string: "https://apple.com")!
         let image = UniversalImage()
         let imageService = ImageMockService(images: [imageURL : image])
@@ -185,18 +174,13 @@ final class RecommendationsDefaultViewModelTest: XCTestCase {
         )
         let detailsVM = vm.makeDetailsViewModel(for: bookVM)
 
-        let predicate = NSPredicate { detailsVM, _ in
-            guard let detailsVM = detailsVM as? any BookDetailsViewModel else {
-                return false
-            }
-            return detailsVM.image == image
+        while detailsVM.image != image {
+            await Task.yield()
         }
-        let expectation = XCTNSPredicateExpectation(predicate: predicate, object: detailsVM)
-
-        wait(for: [expectation], timeout: 2.0)
     }
 
-    func testBlockingRecommendation_updatesModel() {
+    @Test
+    func blockingRecommendation_updatesModel() {
         let model = RecommendationsMockModel()
         let vm: any RecommendationsViewModel = RecommendationsDefaultViewModel(
             model: model,
@@ -208,7 +192,7 @@ final class RecommendationsDefaultViewModelTest: XCTestCase {
         let bookVM = BookViewModel(book: Book(id: id, authors: [], title: "", description: "Desc2"), favorite: false)
 
         vm.blockRecommendation(bookVM)
-        XCTAssertTrue(model.blockedRecommendations.contains(id))
+        #expect(model.blockedRecommendations.contains(id))
     }
 
     // MARK: -
@@ -248,7 +232,7 @@ final class RecommendationsDefaultViewModelTest: XCTestCase {
                 favoriteBookIDs.insert(id)
             }
         }
-        
+
         func blockFromRecommendationsBook(withID id: String) {
             _ = synchronizationQueue.sync { blockedRecommendations.insert(id) }
         }

@@ -141,6 +141,7 @@
 		AF8B68B72BDADE3A00AFE50B /* SearchMockModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchMockModel.swift; sourceTree = "<group>"; };
 		AF9810A02BC31C69003B487A /* RecommendationsDefaultViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationsDefaultViewModelTests.swift; sourceTree = "<group>"; };
 		AFBE42192BEE6397000DE9B4 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
+		AFC52D662CEB9E760005A20D /* Worm.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; name = Worm.xctestplan; path = WormTests/Worm.xctestplan; sourceTree = SOURCE_ROOT; };
 		AFC62E872C3A9046007810B5 /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 		AFD626452BF29368000A2970 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		AFD626472BF29622000A2970 /* OnboardingMockService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingMockService.swift; sourceTree = "<group>"; };
@@ -270,6 +271,7 @@
 				AF5A04702BE0051400AF543C /* Resources */,
 				4E5C6E7A2565C1E400DDB833 /* Tests */,
 				4E5C6DB22565BBB500DDB833 /* Info.plist */,
+				AFC52D662CEB9E760005A20D /* Worm.xctestplan */,
 			);
 			path = WormTests;
 			sourceTree = "<group>";

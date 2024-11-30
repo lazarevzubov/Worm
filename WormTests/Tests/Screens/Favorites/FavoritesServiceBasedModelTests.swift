@@ -7,22 +7,24 @@
 
 import Combine
 import GoodreadsService
+import Testing
 @testable
 import Worm
-import XCTest
 
-final class FavoritesServiceBasedModelTests: XCTestCase {
+struct FavoritesServiceBasedModelTests {
 
     // MARK: - Methods
-    
-    func testFavorites_empty_initially() {
+
+    @Test
+    func favorites_empty_initially() {
         let model: FavoritesModel = FavoritesServiceBasedModel(
             catalogService: CatalogMockService(), favoritesService: FavoritesMockService()
         )
-        XCTAssertTrue(model.favorites.isEmpty)
+        #expect(model.favorites.isEmpty, "Favorites are not empty initially.")
     }
 
-    func testFavorites_update() {
+    @Test(.timeLimit(.minutes(1)))
+    func favorites_update() async {
         let id = "1"
         let book = Book(id: id, authors: [], title: "", description: "Desc")
 
@@ -33,23 +35,12 @@ final class FavoritesServiceBasedModelTests: XCTestCase {
             catalogService: catalogService, favoritesService: favoritesService
         )
 
-        let expectation = XCTestExpectation(description: "Update received")
-
-        var cancellables = Set<AnyCancellable>()
-        model
-            .favoritesPublisher
-            .dropFirst()
-            .sink {
-                XCTAssertEqual($0, [book], "Unexpected data received.")
-                expectation.fulfill()
-            }
-            .store(in: &cancellables)
-        wait(for: [expectation], timeout: 1.0)
-
-        cancellables.forEach { $0.cancel() }
+        var favorites = model.favoritesPublisher.dropFirst().values.makeAsyncIterator()
+        await #expect(favorites.next() == [book], "Unexpected data received.")
     }
 
-    func testFavorites_update_onAddingFavorite() {
+    @Test(.timeLimit(.minutes(1)))
+    func favorites_update_onAddingFavorite() async {
         let id = "1"
         let book = Book(id: id, authors: [], title: "", description: "Desc")
 
@@ -58,26 +49,14 @@ final class FavoritesServiceBasedModelTests: XCTestCase {
             catalogService: catalogService, favoritesService: FavoritesMockService()
         )
 
-        let expectation = XCTestExpectation(description: "Update received")
-
-        var cancellables = Set<AnyCancellable>()
-        model
-            .favoritesPublisher
-            .removeDuplicates()
-            .dropFirst()
-            .sink {
-                XCTAssertEqual($0, [book], "Unexpected data received.")
-                expectation.fulfill()
-            }
-            .store(in: &cancellables)
+        var favorites = model.favoritesPublisher.removeDuplicates().dropFirst().values.makeAsyncIterator()
 
         model.toggleFavoriteStateOfBook(withID: id)
-        wait(for: [expectation], timeout: 1.0)
-
-        cancellables.forEach { $0.cancel() }
+        await #expect(favorites.next() == [book], "Unexpected data received.")
     }
 
-    func testFavorites_update_onRemovingFavorite() {
+    @Test(.timeLimit(.minutes(1)))
+    func favorites_update_onRemovingFavorite() async {
         let id = "1"
         let book = Book(id: id, authors: [], title: "", description: "Desc")
 
@@ -88,46 +67,10 @@ final class FavoritesServiceBasedModelTests: XCTestCase {
             catalogService: catalogService, favoritesService: favoritesService
         )
 
-        let predicate = NSPredicate { model, _ in
-            guard let model = model as? FavoritesModel else {
-                return false
-            }
-            return model.favorites.isEmpty
-        }
-        let expectation = XCTNSPredicateExpectation(predicate: predicate, object: model)
-
         model.toggleFavoriteStateOfBook(withID: id)
-        wait(for: [expectation], timeout: 2.0)
-    }
-
-    // MARK: -
-
-    private struct CatalogMockService: CatalogService {
-
-        // MARK: - Properties
-
-        // MARK: Private properties
-
-        private let books: [Book]
-
-        // MARK: - Initialization
-
-        init(books: [Book] = []) {
-            self.books = books
+        while !model.favorites.isEmpty {
+            await Task.yield()
         }
-
-        // MARK: - Methods
-
-        // MARK: CatalogService protocol methods
-
-        func searchBooks(_ query: String) async -> [String] {
-            []
-        }
-        
-        func getBook(by id: String) async -> Book? {
-            books.first { $0.id == id }
-        }
-
     }
 
 }
