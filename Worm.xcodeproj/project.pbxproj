@@ -885,7 +885,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Worm/Preview Content\"";
-				DEVELOPMENT_TEAM = HFC9T3AWTY;
+				DEVELOPMENT_TEAM = 5P57GECZ2K;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Worm/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.books";
@@ -917,7 +917,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Worm/Preview Content\"";
-				DEVELOPMENT_TEAM = HFC9T3AWTY;
+				DEVELOPMENT_TEAM = 5P57GECZ2K;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Worm/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.books";
