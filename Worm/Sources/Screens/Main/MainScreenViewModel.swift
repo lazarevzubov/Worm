@@ -8,6 +8,7 @@
 import Combine
 
 /// The presentation logic of the main screen.
+@MainActor
 protocol MainScreenViewModel: ObservableObject {
 
     // MARK: - Properties

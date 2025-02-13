@@ -6,7 +6,6 @@
 //
 
 import Combine
-import Dispatch
 
 /// The presentation logic of the book search screen.
 protocol SearchViewModel: BookListCellViewModel, BookDetailsPresentable, ObservableObject {
@@ -26,40 +25,15 @@ protocol SearchViewModel: BookListCellViewModel, BookDetailsPresentable, Observa
 
 // MARK: -
 
-final class SearchPreviewViewModel: @unchecked Sendable, SearchViewModel, BookListCellViewModel {
+final class SearchPreviewViewModel: SearchViewModel, BookListCellViewModel {
 
     // MARK: - Properties
 
     // MARK: SearchViewModel protocol properties
 
-    var query: String {
-        get {
-            booksSynchronizationQueue.sync { synchronizedQuery }
-        }
-        set {
-            booksSynchronizationQueue.async(flags: .barrier) { self.synchronizedQuery = newValue }
-        }
-    }
-    var recommendationsOnboardingShown: Bool {
-        get {
-            recommendationsOnboardingSynchronizationQueue.sync { synchronizedRecommendationsOnboardingShown }
-        }
-        set {
-            recommendationsOnboardingSynchronizationQueue.async(flags: .barrier) {
-                self.synchronizedRecommendationsOnboardingShown = newValue
-            }
-        }
-    }
-    var searchOnboardingShown: Bool {
-        get {
-            searchOnboardingSynchronizationQueue.sync { synchronizedSearchOnboardingShown }
-        }
-        set {
-            searchOnboardingSynchronizationQueue.async(flags: .barrier) {
-                self.synchronizedSearchOnboardingShown = newValue
-            }
-        }
-    }
+    var query = ""
+    var recommendationsOnboardingShown = false
+    var searchOnboardingShown = false
     private(set) var books = [
         BookViewModel(
             id: "1",
@@ -183,39 +157,22 @@ final class SearchPreviewViewModel: @unchecked Sendable, SearchViewModel, BookLi
         )
     ]
 
-    // MARK: Private properties
-
-    private let booksSynchronizationQueue = DispatchQueue(label: "com.lazarevzubov.SearchPreviewViewModel-books",
-                                                          attributes: .concurrent)
-    private let recommendationsOnboardingSynchronizationQueue = DispatchQueue(
-        label: "com.lazarevzubov.SearchPreviewViewModel-recommendationsOnboarding", attributes: .concurrent
-    )
-    private let searchOnboardingSynchronizationQueue = DispatchQueue(
-        label: "com.lazarevzubov.SearchPreviewViewModel-searchOnboarding", attributes: .concurrent
-    )
-    private var synchronizedQuery = ""
-    private var synchronizedRecommendationsOnboardingShown = false
-    private var synchronizedSearchOnboardingShown = false
-
     // MARK: - Methods
 
     // MARK: SearchViewModel protocol methods
 
     func toggleFavoriteStateOfBook(withID id: String) {
-        booksSynchronizationQueue.async(flags: .barrier) {
-            self.books = self.books.map {
-                BookViewModel(
-                    id: $0.id,
-                    authors: $0.authors,
-                    title: $0.title,
-                    description: $0.description,
-                    imageURL: nil,
-                    favorite: ($0.id == id)
-                                  ? !$0.favorite
-                                  : $0.favorite
-                )
-
-            }
+        books = books.map {
+            BookViewModel(
+                id: $0.id,
+                authors: $0.authors,
+                title: $0.title,
+                description: $0.description,
+                imageURL: nil,
+                favorite: ($0.id == id)
+                    ? !$0.favorite
+                    : $0.favorite
+            )
         }
     }
 

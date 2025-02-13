@@ -7,7 +7,6 @@
 //
 
 import Combine
-import Dispatch
 
 /// Object responsible for Favorites screen presentation logic.
 protocol FavoritesViewModel: BookListCellViewModel, BookDetailsPresentable, ObservableObject {
@@ -22,7 +21,7 @@ protocol FavoritesViewModel: BookListCellViewModel, BookDetailsPresentable, Obse
 // MARK: -
 
 /// The default implementation of the Favorites screen view model.
-final class FavoritesDefaultViewModel: @unchecked Sendable, FavoritesViewModel {
+final class FavoritesDefaultViewModel: FavoritesViewModel {
 
     // MARK: - Properties
 
@@ -48,10 +47,6 @@ final class FavoritesDefaultViewModel: @unchecked Sendable, FavoritesViewModel {
         self.imageService = imageService
         
         bind(model: model)
-    }
-
-    deinit {
-        cancellables.forEach { $0.cancel() }
     }
 
     // MARK: - Methods
@@ -95,7 +90,7 @@ final class FavoritesDefaultViewModel: @unchecked Sendable, FavoritesViewModel {
 
 #if DEBUG
 
-final class FavoritesPreviewsViewModel: @unchecked Sendable, FavoritesViewModel {
+final class FavoritesPreviewsViewModel: FavoritesViewModel {
 
     // MARK: - Properties
 

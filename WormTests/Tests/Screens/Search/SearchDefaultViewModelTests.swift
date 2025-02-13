@@ -15,6 +15,7 @@ struct SearchDefaultViewModelTests {
 
     // MARK: - Methods
 
+    @MainActor
     @Test
     func searchOnboarding_state_asProvided_initially() {
         let value = true
@@ -26,6 +27,7 @@ struct SearchDefaultViewModelTests {
         #expect(vm.searchOnboardingShown == value, "Search onboarding has an unexpected initial value.")
     }
 
+    @MainActor
     @Test
     func searchOnboarding_update_doesNotUpdatePersistence() {
         let value = true
@@ -40,6 +42,7 @@ struct SearchDefaultViewModelTests {
         #expect(service.searchOnboardingShown == value, "Persistence was unexpectedly updated.")
     }
 
+    @MainActor
     @Test
     func recommendationsOnboarding_state_asProvided_initially() {
         let value = true
@@ -51,6 +54,7 @@ struct SearchDefaultViewModelTests {
         #expect(vm.recommendationsOnboardingShown == value, "Search onboarding has an unexpected initial value.")
     }
 
+    @MainActor
     @Test(.timeLimit(.minutes(1)))
     func recommendationsOnboarding_update_updatesPersistence() async {
         let value = true
@@ -67,6 +71,7 @@ struct SearchDefaultViewModelTests {
         }
     }
 
+    @MainActor
     @Test
     func query_empty_initially() {
         let vm: any MainScreenViewModel = SearchDefaultViewModel(
@@ -75,6 +80,7 @@ struct SearchDefaultViewModelTests {
         #expect(vm.query.isEmpty, "Query has an unexpected initial value.")
     }
 
+    @MainActor
     @Test(.timeLimit(.minutes(1)))
     func query_update_searchedModel() async {
         let model = SearchMockModel()
@@ -90,6 +96,7 @@ struct SearchDefaultViewModelTests {
         }
     }
 
+    @MainActor
     @Test
     func books_empty_initially() {
         let vm: any SearchViewModel = SearchDefaultViewModel(
@@ -98,6 +105,7 @@ struct SearchDefaultViewModelTests {
         #expect(vm.books.isEmpty)
     }
 
+    @MainActor
     @Test(.timeLimit(.minutes(1)))
     func books_update() async {
         let books: Set = [Book(id: "1", authors: [], title: "", description: "Desc")]
@@ -114,6 +122,7 @@ struct SearchDefaultViewModelTests {
         }
     }
 
+    @MainActor
     @Test(.timeLimit(.minutes(1)))
     func books_update_withFavorite() async {
         let id = "1"
@@ -131,6 +140,7 @@ struct SearchDefaultViewModelTests {
         }
     }
 
+    @MainActor
     @Test(.timeLimit(.minutes(1)))
     func books_update_afterTogglingFavorite() async {
         let id = "1"
@@ -149,6 +159,7 @@ struct SearchDefaultViewModelTests {
         }
     }
 
+    @MainActor
     @Test
     func togglingFavorite_togglesModel() {
         let model = SearchMockModel()
@@ -162,6 +173,7 @@ struct SearchDefaultViewModelTests {
         #expect(model.favoriteBookIDs.contains(id), "The favorite state of the book was not toggled.")
     }
 
+    @MainActor
     @Test
     func detailsViewModel_authors_asProvided() {
         let vm: any SearchViewModel = SearchDefaultViewModel(
@@ -181,6 +193,7 @@ struct SearchDefaultViewModelTests {
         #expect(bookDetailsVM.authors == bookVM.authors, "The authors of the source and the result don't match.")
     }
 
+    @MainActor
     @Test
     func detailsViewModel_title_asProvided() {
         let vm: any SearchViewModel = SearchDefaultViewModel(
@@ -200,6 +213,7 @@ struct SearchDefaultViewModelTests {
         #expect(bookDetailsVM.title == bookVM.title, "The titles of the source and the result don't match.")
     }
 
+    @MainActor
     @Test(.timeLimit(.minutes(1)))
     func detailsViewModel_image_asProvided() async {
         let imageURL = URL(string: "https://apple.com")!

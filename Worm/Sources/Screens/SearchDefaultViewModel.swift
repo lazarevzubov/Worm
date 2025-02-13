@@ -7,23 +7,19 @@
 //
 
 import Combine
-import Dispatch
 
 // MARK: -
 
 /// The presentation logic of the book search screen relying on the default model implementation.
-final class SearchDefaultViewModel: @unchecked Sendable, MainScreenViewModel, SearchViewModel {
+final class SearchDefaultViewModel: MainScreenViewModel, SearchViewModel {
 
     // MARK: - Properties
 
     // MARK: MainScreenViewModel protocol properties
 
-    var query: String {
-        get {
-            booksSynchronizationQueue.sync { synchronizedQuery }
-        }
-        set {
-            booksSynchronizationQueue.async(flags: .barrier) { self.synchronizedQuery = newValue }
+    var query = "" {
+        didSet {
+            Task { await model.searchBooks(by: query) }
         }
     }
 
@@ -33,32 +29,17 @@ final class SearchDefaultViewModel: @unchecked Sendable, MainScreenViewModel, Se
     private(set) var books = [BookViewModel]()
     @Published
     var recommendationsOnboardingShown: Bool {
-        didSet {
-            onboardingSynchronizationQueue
-                .async(flags: .barrier) { [weak self, recommendationsOnboardingShown] in
-                    self?.onboardingService.searchOnboardingShown = recommendationsOnboardingShown
-                }
-        }
+        didSet { onboardingService.searchOnboardingShown = recommendationsOnboardingShown }
     }
     @Published
     var searchOnboardingShown: Bool
 
     // MARK: Private methods
 
-    private let booksSynchronizationQueue = DispatchQueue(label: "com.lazarevzubov.SearchDefaultViewModel-books",
-                                                          attributes: .concurrent)
     private let imageService: ImageService
     private let model: any SearchModel
-    private let onboardingSynchronizationQueue = DispatchQueue(
-        label: "com.lazarevzubov.SearchDefaultViewModel-onboarding", attributes: .concurrent
-    )
     private lazy var cancellables = Set<AnyCancellable>()
     private var onboardingService: OnboardingService
-    private var synchronizedQuery = "" {
-        didSet {
-            Task { await model.searchBooks(by: query) }
-        }
-    }
 
     // MARK: - Initialization
 
@@ -76,10 +57,6 @@ final class SearchDefaultViewModel: @unchecked Sendable, MainScreenViewModel, Se
         recommendationsOnboardingShown = onboardingService.searchOnboardingShown
 
         bind(model: self.model)
-    }
-
-    deinit {
-        cancellables.forEach { $0.cancel() }
     }
 
     // MARK: - Methods
