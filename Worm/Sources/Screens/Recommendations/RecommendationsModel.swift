@@ -87,10 +87,6 @@ final class RecommendationsDefaultModel: @unchecked Sendable, RecommendationsMod
         bind(favoritesService: favoritesService)
     }
 
-    deinit {
-        cancellables.forEach { $0.cancel() }
-    }
-
     // MARK: - Methods
 
     // MARK: RecommendationsModel protocol methods

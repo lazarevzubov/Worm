@@ -61,10 +61,6 @@ final class FavoritesServiceBasedModel: @unchecked Sendable, FavoritesModel {
         bind(favoritesService: self.favoritesService)
     }
 
-    deinit {
-        cancellables.forEach { $0.cancel() }
-    }
-
     // MARK: - Methods
 
     // MARK: FavoritesModel protocol methods

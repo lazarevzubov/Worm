@@ -84,10 +84,6 @@ final class SearchServiceBasedModel: @unchecked Sendable, SearchModel {
         bind(favoritesService: favoritesService)
     }
 
-    deinit {
-        cancellables.forEach { $0.cancel() }
-    }
-
     // MARK: - Methods
 
     // MARK: SearchModel protocol methods
