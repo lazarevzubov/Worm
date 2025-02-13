@@ -5,6 +5,7 @@
 //  Created by Nikita Lazarev-Zubov on 14.3.2024.
 //
 
+@preconcurrency
 import Combine
 import Foundation
 import Testing
@@ -15,6 +16,7 @@ struct BookDetailsDefaultViewModelTests {
 
     // MARK: - Methods
 
+    @MainActor
     @Test(.timeLimit(.minutes(1)))
     func imageRetrieved() async throws {
         let url = URL(string: "https://example.com")!

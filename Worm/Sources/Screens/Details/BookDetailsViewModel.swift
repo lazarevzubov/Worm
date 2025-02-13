@@ -9,7 +9,8 @@ import Combine
 import Foundation
 
 /// Provides presentation data for a book details.
-protocol BookDetailsViewModel: Sendable, ObservableObject {
+@MainActor
+protocol BookDetailsViewModel: ObservableObject {
 
     // MARK: - Properties
 
@@ -27,7 +28,7 @@ protocol BookDetailsViewModel: Sendable, ObservableObject {
 // MARK: -
 
 /// The default provider of presentation data for a book details.
-final class BookDetailsDefaultViewModel: @unchecked Sendable, BookDetailsViewModel {
+final class BookDetailsDefaultViewModel: BookDetailsViewModel {
 
     // MARK: - Properties
 

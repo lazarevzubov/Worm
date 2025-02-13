@@ -16,6 +16,7 @@ struct RecommendationsDefaultViewModelTests {
 
     // MARK: - Methods
 
+    @MainActor
     @Test
     func recommendationsOnboarding_stateInitially_asProvided() {
         let value = true
@@ -27,6 +28,7 @@ struct RecommendationsDefaultViewModelTests {
         #expect(vm.onboardingShown == value, "Onboarding has an unexpected initial value.")
     }
 
+    @MainActor
     @Test(.timeLimit(.minutes(1)))
     func recommendationsOnboarding_update_updatesPersistence() async {
         let value = true
@@ -43,6 +45,7 @@ struct RecommendationsDefaultViewModelTests {
         }
     }
 
+    @MainActor
     @Test
     func recommendations_empty_initially() {
         let vm: any RecommendationsViewModel = RecommendationsDefaultViewModel(
@@ -53,6 +56,7 @@ struct RecommendationsDefaultViewModelTests {
         #expect(vm.recommendations.isEmpty)
     }
 
+    @MainActor
     @Test(.timeLimit(.minutes(1)))
     func recommendations_update() async {
         let recommendations: Set = [Book(id: "1", authors: [], title: "", description: "Desc")]
@@ -69,6 +73,7 @@ struct RecommendationsDefaultViewModelTests {
         }
     }
 
+    @MainActor
     @Test(.timeLimit(.minutes(1)))
     func recommendations_update_afterTogglingFavorite() async {
         let id = "1"
@@ -85,6 +90,7 @@ struct RecommendationsDefaultViewModelTests {
         }
     }
 
+    @MainActor
     @Test
     func togglingFavorite_updatesModel() {
         let model = RecommendationsMockModel()
@@ -100,6 +106,7 @@ struct RecommendationsDefaultViewModelTests {
         #expect(model.favoriteBookIDs.contains(id))
     }
 
+    @MainActor
     @Test
     func detailsViewModel_authors_accordingToBook() {
         let authors = [
@@ -121,6 +128,7 @@ struct RecommendationsDefaultViewModelTests {
         #expect(detailsVM.authors == "Author 1, Authors 2", "Unexpected authors string")
     }
 
+    @MainActor
     @Test
     func detailsViewModel_title_accordingToBook() {
         let title = "Title"
@@ -147,6 +155,7 @@ struct RecommendationsDefaultViewModelTests {
         #expect(detailsVM.title == "Title", "Unexpected title string")
     }
 
+    @MainActor
     @Test(.timeLimit(.minutes(1)))
     func detailsViewModel_image_accordingToImageService() async {
         let imageURL = URL(string: "https://apple.com")!
@@ -179,6 +188,7 @@ struct RecommendationsDefaultViewModelTests {
         }
     }
 
+    @MainActor
     @Test
     func blockingRecommendation_updatesModel() {
         let model = RecommendationsMockModel()

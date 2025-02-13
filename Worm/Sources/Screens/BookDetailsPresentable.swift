@@ -7,6 +7,7 @@
 //
 
 /// Manages book details presentation.
+@MainActor
 protocol BookDetailsPresentable {
 
     /// The corresponding book details view model type.

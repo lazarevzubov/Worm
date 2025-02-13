@@ -16,6 +16,7 @@ struct FavoritesDefaultViewModelTests {
 
     // MARK: - Methods
 
+    @MainActor
     @Test
     func favorites_empty_initially() {
         let vm: any FavoritesViewModel = FavoritesDefaultViewModel(
@@ -24,6 +25,7 @@ struct FavoritesDefaultViewModelTests {
         #expect(vm.favorites.isEmpty, "Favorites are not empty initially.")
     }
 
+    @MainActor
     @Test
     func detailsViewModel_authors_asExpected() {
         let vm: any FavoritesViewModel = FavoritesDefaultViewModel(
@@ -45,6 +47,7 @@ struct FavoritesDefaultViewModelTests {
         #expect(bookDetailsVM.authors == bookVM.authors, "Unexpected authors string generated")
     }
 
+    @MainActor
     @Test
     func testDetailsViewModel_title() {
         let vm: any FavoritesViewModel = FavoritesDefaultViewModel(
@@ -66,6 +69,7 @@ struct FavoritesDefaultViewModelTests {
         #expect(bookDetailsVM.title == bookVM.title, "Unexpected authors string generated")
     }
 
+    @MainActor
     @Test(.timeLimit(.minutes(1)))
     func favorites_update() async {
         let id = "1"
@@ -79,6 +83,7 @@ struct FavoritesDefaultViewModelTests {
         }
     }
 
+    @MainActor
     @Test(.timeLimit(.minutes(1)))
     func favorites_update_onRemovingFavorite() async {
         let id = "1"
@@ -94,6 +99,7 @@ struct FavoritesDefaultViewModelTests {
         }
     }
 
+    @MainActor
     @Test(.timeLimit(.minutes(1)))
     func detailsViewModel_image() async {
         let imageURL = URL(string: "https://apple.com")!

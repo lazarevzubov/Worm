@@ -7,7 +7,8 @@
 //
 
 /// The presentation logic of the table cell representing a book info.
-protocol BookListCellViewModel: Sendable {
+@MainActor
+protocol BookListCellViewModel {
 
     // MARK: - Methods
 
