@@ -18,11 +18,11 @@ struct RecommendationsDefaultViewModelTests {
 
     @MainActor
     @Test
-    func recommendationsOnboarding_stateInitially_asProvided() {
+    func recommendationsOnboarding_stateInitially_asProvided() async {
         let value = true
         let service = OnboardingMockService(onboardingShown: value)
 
-        let vm: any RecommendationsViewModel = RecommendationsDefaultViewModel(
+        let vm: any RecommendationsViewModel = await RecommendationsDefaultViewModel(
             model: RecommendationsMockModel(), onboardingService: service, imageService: ImageMockService()
         )
         #expect(vm.onboardingShown == value, "Onboarding has an unexpected initial value.")
@@ -33,7 +33,7 @@ struct RecommendationsDefaultViewModelTests {
     func recommendationsOnboarding_update_updatesPersistence() async {
         let value = true
         let service = OnboardingMockService(onboardingShown: value)
-        let vm: any RecommendationsViewModel = RecommendationsDefaultViewModel(
+        let vm: any RecommendationsViewModel = await RecommendationsDefaultViewModel(
             model: RecommendationsMockModel(), onboardingService: service, imageService: ImageMockService()
         )
 
@@ -47,8 +47,8 @@ struct RecommendationsDefaultViewModelTests {
 
     @MainActor
     @Test
-    func recommendations_empty_initially() {
-        let vm: any RecommendationsViewModel = RecommendationsDefaultViewModel(
+    func recommendations_empty_initially() async {
+        let vm: any RecommendationsViewModel = await RecommendationsDefaultViewModel(
             model: RecommendationsMockModel(),
             onboardingService: OnboardingMockService(),
             imageService: ImageMockService()
@@ -60,7 +60,7 @@ struct RecommendationsDefaultViewModelTests {
     @Test(.timeLimit(.minutes(1)))
     func recommendations_update() async {
         let recommendations: Set = [Book(id: "1", authors: [], title: "", description: "Desc")]
-        let vm: any RecommendationsViewModel = RecommendationsDefaultViewModel(
+        let vm: any RecommendationsViewModel = await RecommendationsDefaultViewModel(
             model: RecommendationsMockModel(recommendations: recommendations),
             onboardingService: OnboardingMockService(),
             imageService: ImageMockService()
@@ -78,7 +78,7 @@ struct RecommendationsDefaultViewModelTests {
     func recommendations_update_afterTogglingFavorite() async {
         let id = "1"
         let recommendations: Set = [Book(id: id, authors: [], title: "", description: "Desc")]
-        let vm: any RecommendationsViewModel = RecommendationsDefaultViewModel(
+        let vm: any RecommendationsViewModel = await RecommendationsDefaultViewModel(
             model: RecommendationsMockModel(recommendations: recommendations),
             onboardingService: OnboardingMockService(),
             imageService: ImageMockService()
@@ -91,9 +91,9 @@ struct RecommendationsDefaultViewModelTests {
     }
 
     @MainActor
-    @Test
-    func togglingFavorite_updatesModel() {
-        let model = RecommendationsMockModel()
+    @Test(.timeLimit(.minutes(1)))
+    func togglingFavorite_updatesModel() async {
+        let model = await RecommendationsMockModel()
         let vm: any RecommendationsViewModel = RecommendationsDefaultViewModel(
             model: model,
             onboardingService: OnboardingMockService(),
@@ -103,12 +103,14 @@ struct RecommendationsDefaultViewModelTests {
         let id = "1"
         vm.toggleFavoriteStateOfBook(withID: id)
 
-        #expect(model.favoriteBookIDs.contains(id))
+        while await !model.favoriteBookIDs.contains(id) {
+            await Task.yield()
+        }
     }
 
     @MainActor
     @Test
-    func detailsViewModel_authors_accordingToBook() {
+    func detailsViewModel_authors_accordingToBook() async {
         let authors = [
             "Author 1",
             "Authors 2"
@@ -118,7 +120,7 @@ struct RecommendationsDefaultViewModelTests {
             favorite: false
         )
 
-        let vm: any RecommendationsViewModel = RecommendationsDefaultViewModel(
+        let vm: any RecommendationsViewModel = await RecommendationsDefaultViewModel(
             model: RecommendationsMockModel(),
             onboardingService: OnboardingMockService(),
             imageService: ImageMockService()
@@ -130,7 +132,7 @@ struct RecommendationsDefaultViewModelTests {
 
     @MainActor
     @Test
-    func detailsViewModel_title_accordingToBook() {
+    func detailsViewModel_title_accordingToBook() async {
         let title = "Title"
         let bookVM = BookViewModel(
             book: Book(
@@ -145,7 +147,7 @@ struct RecommendationsDefaultViewModelTests {
             favorite: false
         )
 
-        let vm: any RecommendationsViewModel = RecommendationsDefaultViewModel(
+        let vm: any RecommendationsViewModel = await RecommendationsDefaultViewModel(
             model: RecommendationsMockModel(),
             onboardingService: OnboardingMockService(),
             imageService: ImageMockService()
@@ -176,7 +178,7 @@ struct RecommendationsDefaultViewModelTests {
             favorite: false
         )
 
-        let vm: any RecommendationsViewModel = RecommendationsDefaultViewModel(
+        let vm: any RecommendationsViewModel = await RecommendationsDefaultViewModel(
             model: RecommendationsMockModel(),
             onboardingService: OnboardingMockService(),
             imageService: imageService
@@ -189,9 +191,9 @@ struct RecommendationsDefaultViewModelTests {
     }
 
     @MainActor
-    @Test
-    func blockingRecommendation_updatesModel() {
-        let model = RecommendationsMockModel()
+    @Test(.timeLimit(.minutes(1)))
+    func blockingRecommendation_updatesModel() async {
+        let model = await RecommendationsMockModel()
         let vm: any RecommendationsViewModel = RecommendationsDefaultViewModel(
             model: model,
             onboardingService: OnboardingMockService(),
@@ -202,12 +204,14 @@ struct RecommendationsDefaultViewModelTests {
         let bookVM = BookViewModel(book: Book(id: id, authors: [], title: "", description: "Desc2"), favorite: false)
 
         vm.blockRecommendation(bookVM)
-        #expect(model.blockedRecommendations.contains(id))
+        while await !model.blockedRecommendations.contains(id) {
+            await Task.yield()
+        }
     }
 
     // MARK: -
 
-    private final class RecommendationsMockModel: @unchecked Sendable, RecommendationsModel {
+    private actor RecommendationsMockModel: RecommendationsModel {
 
         // MARK: - Properties
 
@@ -222,13 +226,9 @@ struct RecommendationsDefaultViewModelTests {
         @Published
         private(set) var recommendations: Set<Book>
 
-        // MARK: Private properties
-
-        private let synchronizationQueue = DispatchQueue(label: "com.lazarevzubov.RecommendationsMockModel")
-
         // MARK: - Initialization
 
-        init(recommendations: Set<Book> = [], favoriteBookIDs: Set<String> = []) {
+        init(recommendations: Set<Book> = [], favoriteBookIDs: Set<String> = []) async {
             self.recommendations = recommendations
             self.favoriteBookIDs = favoriteBookIDs
         }
@@ -244,7 +244,7 @@ struct RecommendationsDefaultViewModelTests {
         }
 
         func blockFromRecommendationsBook(withID id: String) {
-            _ = synchronizationQueue.sync { blockedRecommendations.insert(id) }
+            blockedRecommendations.insert(id)
         }
 
     }

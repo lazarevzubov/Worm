@@ -64,6 +64,7 @@
 		AFF699E02C5677060074DF66 /* NSImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF699DF2C5677060074DF66 /* NSImage.swift */; };
 		AFF699E32C5679C00074DF66 /* Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF699E22C5679C00074DF66 /* Bundle.swift */; };
 		AFF699E52C567A9F0074DF66 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF699E42C567A9F0074DF66 /* UIImage.swift */; };
+		DD00E47E2D63B24800A15E8C /* Publisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD00E47D2D63B24600A15E8C /* Publisher.swift */; };
 		DDA193D22BAC9F1B00081F5F /* FavoritesServiceBasedModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA193D12BAC9F1B00081F5F /* FavoritesServiceBasedModelTests.swift */; };
 		DDB4B7A32B932EF3001A3172 /* OrderedCollections in Frameworks */ = {isa = PBXBuildFile; productRef = DDB4B7A22B932EF3001A3172 /* OrderedCollections */; };
 		DDB4B7A62B933155001A3172 /* Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB4B7A52B933155001A3172 /* Sequence.swift */; };
@@ -153,6 +154,7 @@
 		AFF699DF2C5677060074DF66 /* NSImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSImage.swift; sourceTree = "<group>"; };
 		AFF699E22C5679C00074DF66 /* Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bundle.swift; sourceTree = "<group>"; };
 		AFF699E42C567A9F0074DF66 /* UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
+		DD00E47D2D63B24600A15E8C /* Publisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Publisher.swift; sourceTree = "<group>"; };
 		DDA193D12BAC9F1B00081F5F /* FavoritesServiceBasedModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesServiceBasedModelTests.swift; sourceTree = "<group>"; };
 		DDB4B7A52B933155001A3172 /* Sequence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sequence.swift; sourceTree = "<group>"; };
 		DDBBF8022BA239A00032039C /* SequenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SequenceTests.swift; sourceTree = "<group>"; };
@@ -486,6 +488,7 @@
 		DDB4B7A42B933139001A3172 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				DD00E47D2D63B24600A15E8C /* Publisher.swift */,
 				AFF699E22C5679C00074DF66 /* Bundle.swift */,
 				AFBE42192BEE6397000DE9B4 /* Color.swift */,
 				AFF699DF2C5677060074DF66 /* NSImage.swift */,
@@ -667,6 +670,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DD00E47E2D63B24800A15E8C /* Publisher.swift in Sources */,
 				4E5AFB5C25ACC24A00DD73BF /* FavoritesView.swift in Sources */,
 				4E5C6E002565BE8900DDB833 /* FavoritesService.swift in Sources */,
 				DDB4B7A62B933155001A3172 /* Sequence.swift in Sources */,
@@ -947,7 +951,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = HFC9T3AWTY;
+				DEVELOPMENT_TEAM = 5P57GECZ2K;
 				INFOPLIST_FILE = WormTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -956,7 +960,7 @@
 					"@loader_path/Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 15.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.DreamBroker.WormTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.LazarevZubov.WormTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SUPPORTS_MACCATALYST = NO;
@@ -975,7 +979,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = HFC9T3AWTY;
+				DEVELOPMENT_TEAM = 5P57GECZ2K;
 				INFOPLIST_FILE = WormTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -984,7 +988,7 @@
 					"@loader_path/Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 15.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.DreamBroker.WormTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.LazarevZubov.WormTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SUPPORTS_MACCATALYST = NO;
@@ -1001,7 +1005,7 @@
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = HFC9T3AWTY;
+				DEVELOPMENT_TEAM = 5P57GECZ2K;
 				INFOPLIST_FILE = WormUITests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1010,7 +1014,7 @@
 					"@loader_path/Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 15.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.DreamBroker.WormUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.LazarevZubov.WormUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SUPPORTS_MACCATALYST = NO;
@@ -1029,7 +1033,7 @@
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = HFC9T3AWTY;
+				DEVELOPMENT_TEAM = 5P57GECZ2K;
 				INFOPLIST_FILE = WormUITests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1038,7 +1042,7 @@
 					"@loader_path/Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 15.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.DreamBroker.WormUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.LazarevZubov.WormUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SUPPORTS_MACCATALYST = NO;

@@ -39,32 +39,30 @@ struct WormApp: App {
 #endif
         return GoodreadsService(key: "JQfiS9k0doIho3vm13Qxdg")
     }()
-    private let favoritesService = {
-        let modelContainer: ModelContainer = {
+    private var favoritesService: FavoritesService {
+        get {
+            let modelContainer: ModelContainer = {
 #if DEBUG
-            let storedInMemory = if ProcessInfo.processInfo.environment["TEST"] != nil {
-                true
-            } else {
-                false
-            }
+                let storedInMemory = ProcessInfo.processInfo.environment["TEST"] != nil
 #else
-            let isStoredInMemoryOnly = false
+                let storedInMemory = false
 #endif
-            let schema = Schema(
-                [BlockedBook.self,
-                 FavoriteBook.self],
-                version: Schema.Version(1, 0, 0)
-            )
-            let configuration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: storedInMemory)
-            do {
-                return try ModelContainer(for: schema, configurations: configuration)
-            } catch {
-                // TODO: Proper error handling.
-                fatalError("Could not create ModelContainer: \(error)")
-            }
-        }()
-        return FavoritesPersistenceService(modelContainer: modelContainer)
-    }()
+                let schema = Schema(
+                    [BlockedBook.self,
+                     FavoriteBook.self],
+                    version: Schema.Version(1, 0, 0)
+                )
+                let configuration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: storedInMemory)
+                do {
+                    return try ModelContainer(for: schema, configurations: configuration)
+                } catch {
+                    // TODO: Proper error handling.
+                    fatalError("Could not create ModelContainer: \(error)")
+                }
+            }()
+            return FavoritesPersistenceService(modelContainer: modelContainer)
+        }
+    }
     private let imageService = ImageWebService(webService: URLSession.shared)
     private let onboardingService = OnboardingPersistentService()
 

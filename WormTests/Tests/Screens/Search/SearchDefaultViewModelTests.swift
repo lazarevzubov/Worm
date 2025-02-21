@@ -17,11 +17,11 @@ struct SearchDefaultViewModelTests {
 
     @MainActor
     @Test
-    func searchOnboarding_state_asProvided_initially() {
+    func searchOnboarding_state_asProvided_initially() async {
         let value = true
         let service = OnboardingMockService(onboardingShown: value)
 
-        let vm: any SearchViewModel = SearchDefaultViewModel(
+        let vm: any SearchViewModel = await SearchDefaultViewModel(
             model: SearchMockModel(), onboardingService: service, imageService: ImageMockService()
         )
         #expect(vm.searchOnboardingShown == value, "Search onboarding has an unexpected initial value.")
@@ -29,10 +29,10 @@ struct SearchDefaultViewModelTests {
 
     @MainActor
     @Test
-    func searchOnboarding_update_doesNotUpdatePersistence() {
+    func searchOnboarding_update_doesNotUpdatePersistence() async {
         let value = true
         let service = OnboardingMockService(onboardingShown: value)
-        let vm: any SearchViewModel = SearchDefaultViewModel(
+        let vm: any SearchViewModel = await SearchDefaultViewModel(
             model: SearchMockModel(), onboardingService: service, imageService: ImageMockService()
         )
 
@@ -44,11 +44,11 @@ struct SearchDefaultViewModelTests {
 
     @MainActor
     @Test
-    func recommendationsOnboarding_state_asProvided_initially() {
+    func recommendationsOnboarding_state_asProvided_initially() async {
         let value = true
         let service = OnboardingMockService(onboardingShown: value)
 
-        let vm: any SearchViewModel = SearchDefaultViewModel(
+        let vm: any SearchViewModel = await SearchDefaultViewModel(
             model: SearchMockModel(), onboardingService: service, imageService: ImageMockService()
         )
         #expect(vm.recommendationsOnboardingShown == value, "Search onboarding has an unexpected initial value.")
@@ -59,7 +59,7 @@ struct SearchDefaultViewModelTests {
     func recommendationsOnboarding_update_updatesPersistence() async {
         let value = true
         let service = OnboardingMockService(onboardingShown: value)
-        let vm: any SearchViewModel = SearchDefaultViewModel(
+        let vm: any SearchViewModel = await SearchDefaultViewModel(
             model: SearchMockModel(), onboardingService: service, imageService: ImageMockService()
         )
 
@@ -73,8 +73,8 @@ struct SearchDefaultViewModelTests {
 
     @MainActor
     @Test
-    func query_empty_initially() {
-        let vm: any MainScreenViewModel = SearchDefaultViewModel(
+    func query_empty_initially() async {
+        let vm: any MainScreenViewModel = await SearchDefaultViewModel(
             model: SearchMockModel(), onboardingService: OnboardingMockService(), imageService: ImageMockService()
         )
         #expect(vm.query.isEmpty, "Query has an unexpected initial value.")
@@ -83,7 +83,7 @@ struct SearchDefaultViewModelTests {
     @MainActor
     @Test(.timeLimit(.minutes(1)))
     func query_update_searchedModel() async {
-        let model = SearchMockModel()
+        let model = await SearchMockModel()
         let vm: any MainScreenViewModel = SearchDefaultViewModel(
             model: model, onboardingService: OnboardingMockService(), imageService: ImageMockService()
         )
@@ -91,15 +91,15 @@ struct SearchDefaultViewModelTests {
         let query = "Query"
         vm.query = query
 
-        while model.query != query {
+        while await model.query != query {
             await Task.yield()
         }
     }
 
     @MainActor
     @Test
-    func books_empty_initially() {
-        let vm: any SearchViewModel = SearchDefaultViewModel(
+    func books_empty_initially() async {
+        let vm: any SearchViewModel = await SearchDefaultViewModel(
             model: SearchMockModel(), onboardingService: OnboardingMockService(), imageService: ImageMockService()
         )
         #expect(vm.books.isEmpty)
@@ -109,7 +109,7 @@ struct SearchDefaultViewModelTests {
     @Test(.timeLimit(.minutes(1)))
     func books_update() async {
         let books: Set = [Book(id: "1", authors: [], title: "", description: "Desc")]
-        let vm: any SearchViewModel = SearchDefaultViewModel(
+        let vm: any SearchViewModel = await SearchDefaultViewModel(
             model: SearchMockModel(books: books),
             onboardingService: OnboardingMockService(),
             imageService: ImageMockService()
@@ -127,7 +127,7 @@ struct SearchDefaultViewModelTests {
     func books_update_withFavorite() async {
         let id = "1"
         let books: Set = [Book(id: id, authors: [], title: "", description: "Desc")]
-        let vm: any SearchViewModel = SearchDefaultViewModel(
+        let vm: any SearchViewModel = await SearchDefaultViewModel(
             model: SearchMockModel(books: books, favoriteBookIDs: [id]),
             onboardingService: OnboardingMockService(),
             imageService: ImageMockService()
@@ -145,7 +145,7 @@ struct SearchDefaultViewModelTests {
     func books_update_afterTogglingFavorite() async {
         let id = "1"
         let books: Set = [Book(id: id, authors: [], title: "", description: "Desc")]
-        let vm: any SearchViewModel = SearchDefaultViewModel(
+        let vm: any SearchViewModel = await SearchDefaultViewModel(
             model: SearchMockModel(books: books),
             onboardingService: OnboardingMockService(),
             imageService: ImageMockService()
@@ -160,9 +160,9 @@ struct SearchDefaultViewModelTests {
     }
 
     @MainActor
-    @Test
-    func togglingFavorite_togglesModel() {
-        let model = SearchMockModel()
+    @Test(.timeLimit(.minutes(1)))
+    func togglingFavorite_togglesModel() async {
+        let model = await SearchMockModel()
         let vm: any SearchViewModel = SearchDefaultViewModel(
             model: model, onboardingService: OnboardingMockService(), imageService: ImageMockService()
         )
@@ -170,13 +170,15 @@ struct SearchDefaultViewModelTests {
         let id = "1"
         vm.toggleFavoriteStateOfBook(withID: id)
 
-        #expect(model.favoriteBookIDs.contains(id), "The favorite state of the book was not toggled.")
+        while await !model.favoriteBookIDs.contains(id) {
+            await Task.yield()
+        }
     }
 
     @MainActor
     @Test
-    func detailsViewModel_authors_asProvided() {
-        let vm: any SearchViewModel = SearchDefaultViewModel(
+    func detailsViewModel_authors_asProvided() async {
+        let vm: any SearchViewModel = await SearchDefaultViewModel(
             model: SearchMockModel(), onboardingService: OnboardingMockService(), imageService: ImageMockService()
         )
 
@@ -195,8 +197,8 @@ struct SearchDefaultViewModelTests {
 
     @MainActor
     @Test
-    func detailsViewModel_title_asProvided() {
-        let vm: any SearchViewModel = SearchDefaultViewModel(
+    func detailsViewModel_title_asProvided() async {
+        let vm: any SearchViewModel = await SearchDefaultViewModel(
             model: SearchMockModel(), onboardingService: OnboardingMockService(), imageService: ImageMockService()
         )
 
@@ -219,7 +221,7 @@ struct SearchDefaultViewModelTests {
         let imageURL = URL(string: "https://apple.com")!
         let image = UniversalImage()
 
-        let vm: any SearchViewModel = SearchDefaultViewModel(
+        let vm: any SearchViewModel = await SearchDefaultViewModel(
             model: SearchMockModel(),
             onboardingService: OnboardingMockService(),
             imageService: ImageMockService(images: [imageURL : image])

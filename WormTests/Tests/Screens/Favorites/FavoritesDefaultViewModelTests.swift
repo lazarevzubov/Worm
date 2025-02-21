@@ -18,8 +18,8 @@ struct FavoritesDefaultViewModelTests {
 
     @MainActor
     @Test
-    func favorites_empty_initially() {
-        let vm: any FavoritesViewModel = FavoritesDefaultViewModel(
+    func favorites_empty_initially() async {
+        let vm: any FavoritesViewModel = await FavoritesDefaultViewModel(
             model: FavoritesMockModel(), imageService: ImageMockService()
         )
         #expect(vm.favorites.isEmpty, "Favorites are not empty initially.")
@@ -27,8 +27,8 @@ struct FavoritesDefaultViewModelTests {
 
     @MainActor
     @Test
-    func detailsViewModel_authors_asExpected() {
-        let vm: any FavoritesViewModel = FavoritesDefaultViewModel(
+    func detailsViewModel_authors_asExpected() async {
+        let vm: any FavoritesViewModel = await FavoritesDefaultViewModel(
             model: FavoritesMockModel(), imageService: ImageMockService()
         )
 
@@ -49,8 +49,8 @@ struct FavoritesDefaultViewModelTests {
 
     @MainActor
     @Test
-    func testDetailsViewModel_title() {
-        let vm: any FavoritesViewModel = FavoritesDefaultViewModel(
+    func testDetailsViewModel_title() async {
+        let vm: any FavoritesViewModel = await FavoritesDefaultViewModel(
             model: FavoritesMockModel(), imageService: ImageMockService()
         )
 
@@ -75,7 +75,7 @@ struct FavoritesDefaultViewModelTests {
         let id = "1"
         let book = Book(id: id, authors: [], title: "", description: "Desc")
 
-        let vm: any FavoritesViewModel = FavoritesDefaultViewModel(
+        let vm: any FavoritesViewModel = await FavoritesDefaultViewModel(
             model: FavoritesMockModel(favorites: [book]), imageService: ImageMockService()
         )
         while vm.favorites != [BookViewModel(book: book, favorite: true)] {
@@ -89,7 +89,7 @@ struct FavoritesDefaultViewModelTests {
         let id = "1"
         let book = Book(id: id, authors: [], title: "", description: "Desc")
 
-        let vm: any FavoritesViewModel = FavoritesDefaultViewModel(
+        let vm: any FavoritesViewModel = await FavoritesDefaultViewModel(
             model: FavoritesMockModel(favorites: [book]), imageService: ImageMockService()
         )
 
@@ -105,7 +105,7 @@ struct FavoritesDefaultViewModelTests {
         let imageURL = URL(string: "https://apple.com")!
         let image = UniversalImage()
 
-        let vm: any FavoritesViewModel = FavoritesDefaultViewModel(
+        let vm: any FavoritesViewModel = await FavoritesDefaultViewModel(
             model: FavoritesMockModel(), imageService: ImageMockService(images: [imageURL : image])
         )
         let bookVM = BookViewModel(
@@ -128,7 +128,7 @@ struct FavoritesDefaultViewModelTests {
 
     // MARK: -
 
-    private final class FavoritesMockModel: @unchecked Sendable, FavoritesModel {
+    private actor FavoritesMockModel: FavoritesModel {
 
         // MARK: - Properties
 
@@ -138,13 +138,9 @@ struct FavoritesDefaultViewModelTests {
         @Published
         private(set) var favorites: [Book]
 
-        // MARK: Private properties
-
-        private let synchronisationQueue = DispatchQueue(label: "com.lazarevzubov.FavoritesMockModel")
-
         // MARK: - Initialization
 
-        init(favorites: [Book] = [Book]()) {
+        init(favorites: [Book] = [Book]()) async {
             self.favorites = favorites
         }
 
@@ -153,12 +149,10 @@ struct FavoritesDefaultViewModelTests {
         // MARK: FavoritesModel protocol methods
 
         func toggleFavoriteStateOfBook(withID id: String) {
-            synchronisationQueue.sync {
-                if favorites.contains(where: { $0.id == id }) {
-                    favorites.removeAll { $0.id == id }
-                } else {
-                    favorites.append(Book(id: id, authors: [], title: "", description: "Desc"))
-                }
+            if favorites.contains(where: { $0.id == id }) {
+                favorites.removeAll { $0.id == id }
+            } else {
+                favorites.append(Book(id: id, authors: [], title: "", description: "Desc"))
             }
         }
 

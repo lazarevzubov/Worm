@@ -9,7 +9,7 @@ import Combine
 @testable
 import Worm
 
-final class FavoritesMockService: FavoritesService {
+actor FavoritesMockService: FavoritesService {
 
     // MARK: - Properties
 
@@ -24,7 +24,7 @@ final class FavoritesMockService: FavoritesService {
 
     // MARK: - Initialization
 
-    init(favoriteBookIDs: Set<String> = []) {
+    init(favoriteBookIDs: Set<String> = []) async {
         self.favoriteBookIDs = favoriteBookIDs
     }
 

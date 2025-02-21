@@ -64,7 +64,9 @@ final class RecommendationsDefaultViewModel: RecommendationsViewModel {
 
         onboardingShown = onboardingService.recommendationsOnboardingShown
 
-        bind(model: model)
+        Task { [weak self] in
+            await self?.bind(model: model)
+        }
     }
 
     // MARK: - Methods
@@ -72,7 +74,7 @@ final class RecommendationsDefaultViewModel: RecommendationsViewModel {
     // MARK: RecommendationsViewModel protocol methods
 
     func toggleFavoriteStateOfBook(withID id: String) {
-        model.toggleFavoriteStateOfBook(withID: id)
+        Task { await model.toggleFavoriteStateOfBook(withID: id) }
     }
 
     func makeDetailsViewModel(for book: BookViewModel) -> some BookDetailsViewModel {
@@ -84,25 +86,34 @@ final class RecommendationsDefaultViewModel: RecommendationsViewModel {
     }
 
     func blockRecommendation(_ recommendation: BookViewModel) {
-        model.blockFromRecommendationsBook(withID: recommendation.id)
+        Task { await model.blockFromRecommendationsBook(withID: recommendation.id) }
     }
 
     // MARK: Private methods
 
-    private func bind(model: any RecommendationsModel) {
-        model
+    private func bind(model: any RecommendationsModel) async {
+        await model
             .recommendationsPublisher
             .removeDuplicates()
             .debounce(for: .seconds(2), scheduler: RunLoop.main)
-            .sink { [weak self] recommendations in
-                self?.recommendations = recommendations
-                    .map { BookViewModel(book: $0, favorite: model.favoriteBookIDs.contains($0.id)) }
-                    .filter { !$0.favorite }
+            .sink { @Sendable [weak self] recommendations in
+                Task { [weak self] in
+                    guard let self else {
+                        return
+                    }
+
+                    let favoriteBookIDs = await model.favoriteBookIDs
+                    Task { @MainActor [weak self] in
+                        self?.recommendations = recommendations
+                            .map { BookViewModel(book: $0, favorite: favoriteBookIDs.contains($0.id)) }
+                            .filter { !$0.favorite }
+                    }
+                }
             }
             .store(in: &cancellables)
-        model
+        await model
             .favoriteBookIDsPublisher
-            .sink { ids in
+            .sink { @Sendable ids in
                 Task { @MainActor [weak self] in
                     self?.recommendations.removeAll { ids.contains($0.id) }
                 }
