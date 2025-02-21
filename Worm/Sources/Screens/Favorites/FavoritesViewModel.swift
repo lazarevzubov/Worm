@@ -45,8 +45,10 @@ final class FavoritesDefaultViewModel: FavoritesViewModel {
     init(model: any FavoritesModel, imageService: ImageService) {
         self.model = model
         self.imageService = imageService
-        
-        bind(model: model)
+
+        Task { [weak self] in
+            await self?.bind(model: model)
+        }
     }
 
     // MARK: - Methods
@@ -54,7 +56,9 @@ final class FavoritesDefaultViewModel: FavoritesViewModel {
     // MARK: FavoritesViewModel protocol methods
 
     func toggleFavoriteStateOfBook(withID id: String) {
-        model.toggleFavoriteStateOfBook(withID: id)
+        Task {
+            await model.toggleFavoriteStateOfBook(withID: id)
+        }
     }
 
     func makeDetailsViewModel(for book: BookViewModel) -> some BookDetailsViewModel {
@@ -69,16 +73,20 @@ final class FavoritesDefaultViewModel: FavoritesViewModel {
 
     // MARK: Private methods
 
-    private func bind(model: any FavoritesModel) {
-        model
+    private func bind(model: any FavoritesModel) async {
+        await model
             .favoritesPublisher
             .removeDuplicates()
-            .sink { book in
-                Task { @MainActor [weak self, weak model] in
+            .sink { @Sendable book in
+                Task { [weak self, weak model] in
                     guard let model else {
                         return
                     }
-                    self?.favorites = model.favorites.map { BookViewModel(book: $0, favorite: true) }
+
+                    let favorites = await model.favorites
+                    Task { @MainActor [weak self] in
+                        self?.favorites = favorites.map { BookViewModel(book: $0, favorite: true) }
+                    }
                 }
             }
             .store(in: &cancellables)

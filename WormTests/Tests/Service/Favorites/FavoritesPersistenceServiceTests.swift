@@ -16,7 +16,7 @@ struct FavoritesPersistenceServiceTests {
     // MARK: - Methods
 
     @Test
-    func blockedBookIDs_empty_initially() throws {
+    func blockedBookIDs_empty_initially() async throws {
         let schema = Schema(
             [BlockedBook.self,
              FavoriteBook.self],
@@ -26,7 +26,7 @@ struct FavoritesPersistenceServiceTests {
         let modelContainer = try ModelContainer(for: schema, configurations: [modelConfiguration])
 
         let service = FavoritesPersistenceService(modelContainer: modelContainer)
-        #expect(service.blockedBookIDs.isEmpty)
+        await #expect(service.blockedBookIDs.isEmpty)
     }
 
     @Test(.timeLimit(.minutes(1)))
@@ -47,7 +47,7 @@ struct FavoritesPersistenceServiceTests {
         try context.save()
 
         let service = FavoritesPersistenceService(modelContainer: modelContainer)
-        var ids = service.blockedBookIDsPublisher.values.makeAsyncIterator()
+        var ids = await service.blockedBookIDsPublisher.dropFirst().values.makeAsyncIterator()
 
         await #expect(ids.next() == [id], "Unexpected data received.")
     }
@@ -63,16 +63,16 @@ struct FavoritesPersistenceServiceTests {
         let modelContainer = try ModelContainer(for: schema, configurations: [modelConfiguration])
 
         let service = FavoritesPersistenceService(modelContainer: modelContainer)
-        var ids = service.blockedBookIDsPublisher.dropFirst().values.makeAsyncIterator()
+        var ids = await service.blockedBookIDsPublisher.dropFirst().values.makeAsyncIterator()
 
         let id = "ID"
-        service.addToBlockedBook(withID: id)
+        await service.addToBlockedBook(withID: id)
 
         await #expect(ids.next() == [id], "Unexpected data received.")
     }
 
     @Test
-    func favoriteBookIDs_empty_initially() throws {
+    func favoriteBookIDs_empty_initially() async throws {
         let schema = Schema(
             [BlockedBook.self,
              FavoriteBook.self],
@@ -82,7 +82,7 @@ struct FavoritesPersistenceServiceTests {
         let modelContainer = try ModelContainer(for: schema, configurations: [modelConfiguration])
 
         let service = FavoritesPersistenceService(modelContainer: modelContainer)
-        #expect(service.favoriteBookIDs.isEmpty)
+        await #expect(service.favoriteBookIDs.isEmpty)
     }
 
     @Test(.timeLimit(.minutes(1)))
@@ -103,7 +103,7 @@ struct FavoritesPersistenceServiceTests {
         try context.save()
 
         let service = FavoritesPersistenceService(modelContainer: modelContainer)
-        var ids = service.favoriteBookIDsPublisher.values.makeAsyncIterator()
+        var ids = await service.favoriteBookIDsPublisher.dropFirst().values.makeAsyncIterator()
 
         await #expect(ids.next() == [id], "Unexpected data received.")
     }
@@ -119,10 +119,10 @@ struct FavoritesPersistenceServiceTests {
         let modelContainer = try ModelContainer(for: schema, configurations: [modelConfiguration])
 
         let service = FavoritesPersistenceService(modelContainer: modelContainer)
-        var ids = service.favoriteBookIDsPublisher.dropFirst().values.makeAsyncIterator()
+        var ids = await service.favoriteBookIDsPublisher.dropFirst().values.makeAsyncIterator()
 
         let id = "ID"
-        service.addToFavoritesBook(withID: id)
+        await service.addToFavoritesBook(withID: id)
 
         await #expect(ids.next() == [id], "Unexpected data received.")
     }
@@ -145,9 +145,9 @@ struct FavoritesPersistenceServiceTests {
         try context.save()
 
         let service = FavoritesPersistenceService(modelContainer: modelContainer)
-        var ids = service.favoriteBookIDsPublisher.dropFirst().values.makeAsyncIterator()
+        var ids = await service.favoriteBookIDsPublisher.dropFirst().values.makeAsyncIterator()
 
-        service.removeFromFavoriteBook(withID: id)
+        await service.removeFromFavoriteBook(withID: id)
         await #expect(ids.next()?.isEmpty == true, "Unexpected data received.")
     }
 

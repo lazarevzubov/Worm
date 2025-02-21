@@ -7,11 +7,10 @@
 //
 
 import Combine
-import Dispatch
 import GoodreadsService
 
 /// Owns logic of maintaining a list of favorite books.
-protocol FavoritesModel: Sendable, AnyObject {
+protocol FavoritesModel: Actor {
 
     // MARK: - Properties
 
@@ -24,14 +23,14 @@ protocol FavoritesModel: Sendable, AnyObject {
 
     /// Toggles the favorite-ness state of a book.
     /// - Parameter bookID: The ID of the book to manipulate.
-    func toggleFavoriteStateOfBook(withID id: String)
+    func toggleFavoriteStateOfBook(withID id: String) async
     
 }
 
 // MARK: -
 
 /// The default logic of the favorites list maintenance.
-final class FavoritesServiceBasedModel: @unchecked Sendable, FavoritesModel {
+actor FavoritesServiceBasedModel: FavoritesModel {
 
     // MARK: - Properties
 
@@ -45,7 +44,6 @@ final class FavoritesServiceBasedModel: @unchecked Sendable, FavoritesModel {
 
     private let catalogService: CatalogService
     private let favoritesService: any FavoritesService
-    private let synchronizationQueue = DispatchQueue(label: "com.lazarevzubov.FavoritesServiceBasedModel")
     private lazy var cancellables = Set<AnyCancellable>()
 
     // MARK: - Initialization
@@ -58,28 +56,30 @@ final class FavoritesServiceBasedModel: @unchecked Sendable, FavoritesModel {
         self.catalogService = catalogService
         self.favoritesService = favoritesService
 
-        bind(favoritesService: self.favoritesService)
+        Task { [weak self] in
+            await self?.bind(favoritesService: favoritesService)
+        }
     }
 
     // MARK: - Methods
 
     // MARK: FavoritesModel protocol methods
 
-    func toggleFavoriteStateOfBook(withID id: String) {
+    func toggleFavoriteStateOfBook(withID id: String) async {
         if favorites.contains(where: { $0.id == id }) {
-            favoritesService.removeFromFavoriteBook(withID: id)
+            await favoritesService.removeFromFavoriteBook(withID: id)
         } else {
-            favoritesService.addToFavoritesBook(withID: id)
+            await favoritesService.addToFavoritesBook(withID: id)
         }
     }
 
     // MARK: Private methods
 
-    private func bind(favoritesService: any FavoritesService) {
-        favoritesService
+    private func bind(favoritesService: any FavoritesService) async {
+        await favoritesService
             .favoriteBookIDsPublisher
             .removeDuplicates()
-            .sink { ids in
+            .sink { @Sendable ids in
                 Task { [weak self] in
                     await self?.updateFavorites(with: ids)
                 }
@@ -91,12 +91,10 @@ final class FavoritesServiceBasedModel: @unchecked Sendable, FavoritesModel {
         for bookID in favoriteBookIDs {
             if let book = await catalogService.getBook(by: bookID),
                !favorites.contains(where: { $0.id == book.id }) {
-                synchronizationQueue.sync { favorites.append(book) }
+                favorites.append(book)
             }
         }
-        synchronizationQueue.sync {
-            favorites.removeAll { !favoriteBookIDs.contains($0.id) }
-        }
+        favorites.removeAll { !favoriteBookIDs.contains($0.id) }
     }
 
 }

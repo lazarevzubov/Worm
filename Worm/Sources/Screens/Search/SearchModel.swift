@@ -7,11 +7,10 @@
 //
 
 import Combine
-import Dispatch
 import GoodreadsService
 
 /// The search screen model.
-protocol SearchModel: Sendable {
+protocol SearchModel: Actor {
 
     // MARK: - Properties
 
@@ -31,14 +30,14 @@ protocol SearchModel: Sendable {
     func searchBooks(by query: String) async
     /// Toggles the favorite-ness state of a book.
     /// - Parameter id: The ID of the book to manipulate.
-    func toggleFavoriteStateOfBook(withID id: String)
+    func toggleFavoriteStateOfBook(withID id: String) async
 
 }
 
 // MARK: -
 
 /// The search screen model implemented on top of a data providing service.
-final class SearchServiceBasedModel: @unchecked Sendable, SearchModel {
+actor SearchServiceBasedModel: SearchModel {
 
     // MARK: - Properties
 
@@ -56,7 +55,6 @@ final class SearchServiceBasedModel: @unchecked Sendable, SearchModel {
     private let catalogService: CatalogService
     private let favoritesService: FavoritesService
     private let queryDelay: Duration?
-    private let synchronizationQueue = DispatchQueue(label: "com.lazarevzubov.SearchServiceBasedModel")
     private lazy var cancellables = Set<AnyCancellable>()
     private var currentSearchResult = [String]() {
         didSet {
@@ -81,7 +79,9 @@ final class SearchServiceBasedModel: @unchecked Sendable, SearchModel {
         self.favoritesService = favoritesService
         self.queryDelay = queryDelay
 
-        bind(favoritesService: favoritesService)
+        Task { [weak self] in
+            await self?.bind(favoritesService: favoritesService)
+        }
     }
 
     // MARK: - Methods
@@ -94,8 +94,11 @@ final class SearchServiceBasedModel: @unchecked Sendable, SearchModel {
             if let queryDelay {
                 try await Task.sleep(for: queryDelay)
             }
+            guard !Task.isCancelled else {
+                return
+            }
 
-            synchronizationQueue.sync { books.removeAll() }
+            books.removeAll()
             currentSearchResult.removeAll()
 
             if !query.isEmpty {
@@ -104,25 +107,30 @@ final class SearchServiceBasedModel: @unchecked Sendable, SearchModel {
         }
     }
 
-    func toggleFavoriteStateOfBook(withID id: String) {
+    func toggleFavoriteStateOfBook(withID id: String) async {
         if favoriteBookIDs.contains(id) {
-            favoritesService.removeFromFavoriteBook(withID: id)
+            await favoritesService.removeFromFavoriteBook(withID: id)
         } else {
-            favoritesService.addToFavoritesBook(withID: id)
+            await favoritesService.addToFavoritesBook(withID: id)
         }
     }
 
     // MARK: Private methods
 
-    private func bind(favoritesService: FavoritesService) {
-        favoritesService
+    private func bind(favoritesService: FavoritesService) async {
+        await favoritesService
             .favoriteBookIDsPublisher
             .removeDuplicates()
-            .sink { [weak self] in
-                self?.favoriteBookIDs = $0
-
+            .sink { @Sendable [weak self] favoriteBookIDs in
+                Task { [weak self] in
+                    await self?.updateFavoriteBookIDs(favoriteBookIDs)
+                }
             }
             .store(in: &cancellables)
+    }
+
+    private func updateFavoriteBookIDs(_ favoriteBookIDs: Set<String>) {
+        self.favoriteBookIDs = favoriteBookIDs
     }
 
     private func handleSearchResult(_ result: String) async {
@@ -133,7 +141,7 @@ final class SearchServiceBasedModel: @unchecked Sendable, SearchModel {
 
     private func appendIfNeeded(book: Book) {
         if currentSearchResult.contains(book.id) {
-            _ = synchronizationQueue.sync { books.insert(book) }
+            books.insert(book)
         }
     }
 

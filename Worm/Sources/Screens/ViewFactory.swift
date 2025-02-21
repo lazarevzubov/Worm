@@ -32,15 +32,14 @@ enum ViewFactory {
             imageService: imageService,
             onboardingService: onboardingService
         )
-        let searchView = makeSearchView(viewModel: viewModel)
 
+        let searchView = makeSearchView(viewModel: viewModel)
         let recommendationsView = makeRecommendationsView(
             catalogService: catalogService,
             favoritesService: favoritesService,
             imageService: imageService,
             onboardingService: onboardingService
         )
-
         let favoritesView = makeFavoritesView(
             catalogService: catalogService, favoritesService: favoritesService, imageService: imageService
         )
@@ -62,7 +61,9 @@ enum ViewFactory {
         onboardingService: OnboardingService
     ) -> some MainScreenViewModel & SearchViewModel {
         let model = SearchServiceBasedModel(catalogService: catalogService, favoritesService: favoritesService)
-        return SearchDefaultViewModel(model: model, onboardingService: onboardingService, imageService: imageService)
+        return SearchDefaultViewModel(
+            model: model, onboardingService: onboardingService, imageService: imageService
+        )
     }
 
     private static func makeSearchView(viewModel: some SearchViewModel) -> some View {

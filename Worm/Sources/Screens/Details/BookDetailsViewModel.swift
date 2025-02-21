@@ -72,7 +72,9 @@ final class BookDetailsDefaultViewModel: BookDetailsViewModel {
         }
         Task {
             let image = await service.getImage(from: url)
-            await MainActor.run { self.image = image }
+            Task { @MainActor in
+                self.image = image
+            }
         }
     }
 

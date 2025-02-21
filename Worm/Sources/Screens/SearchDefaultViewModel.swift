@@ -56,7 +56,9 @@ final class SearchDefaultViewModel: MainScreenViewModel, SearchViewModel {
         searchOnboardingShown = onboardingService.searchOnboardingShown
         recommendationsOnboardingShown = onboardingService.searchOnboardingShown
 
-        bind(model: self.model)
+        Task { [weak self] in
+            await self?.bind(model: model)
+        }
     }
 
     // MARK: - Methods
@@ -64,7 +66,9 @@ final class SearchDefaultViewModel: MainScreenViewModel, SearchViewModel {
     // MARK: SearchViewModel protocol methods
 
     func toggleFavoriteStateOfBook(withID id: String) {
-        model.toggleFavoriteStateOfBook(withID: id)
+        Task { [weak self] in
+            await self?.model.toggleFavoriteStateOfBook(withID: id)
+        }
     }
 
     func makeDetailsViewModel(for book: BookViewModel) -> some BookDetailsViewModel {
@@ -79,22 +83,27 @@ final class SearchDefaultViewModel: MainScreenViewModel, SearchViewModel {
 
     // MARK: Private methods
 
-    private func bind(model: any SearchModel) {
-        model
+    private func bind(model: any SearchModel) async {
+        await model
             .booksPublisher
             .removeDuplicates()
-            .sink { books in
-                Task { @MainActor [weak self] in
-                    self?.books = books.map {
-                        BookViewModel(book: $0, favorite: model.favoriteBookIDs.contains($0.id))
+            .sink { @Sendable books in
+                Task { [weak self] in
+                    guard let self else {
+                        return
+                    }
+
+                    let favoriteBookIDs = await model.favoriteBookIDs
+                    Task { @MainActor [weak self] in
+                        self?.books = books.map { BookViewModel(book: $0, favorite: favoriteBookIDs.contains($0.id)) }
                     }
                 }
             }
             .store(in: &cancellables)
-        model
+        await model
             .favoriteBookIDsPublisher
             .removeDuplicates()
-            .sink { ids in
+            .sink { @Sendable ids in
                 Task { @MainActor [weak self] in
                     guard let self else {
                         return

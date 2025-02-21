@@ -11,7 +11,7 @@ import Foundation
 import SwiftData
 
 /// Manages a favorite books list.
-protocol FavoritesService {
+protocol FavoritesService: Actor {
 
     // MARK: - Properties
 
@@ -41,7 +41,7 @@ protocol FavoritesService {
 // MARK: -
 
 /// The favorite books service based on a Core Data persistent storage.
-final class FavoritesPersistenceService: FavoritesService {
+actor FavoritesPersistenceService: FavoritesService {
 
     // MARK: - Properties
 
@@ -76,7 +76,9 @@ final class FavoritesPersistenceService: FavoritesService {
     /// - Parameter modelContainer: An object that manages an app’s schema and model storage configuration.
     init(modelContainer: ModelContainer) {
         container = modelContainer
-        update()
+        Task { [weak self] in
+            await self?.update()
+        }
     }
 
     // MARK: - Methods

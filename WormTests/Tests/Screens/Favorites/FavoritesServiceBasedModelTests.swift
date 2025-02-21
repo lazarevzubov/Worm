@@ -16,11 +16,11 @@ struct FavoritesServiceBasedModelTests {
     // MARK: - Methods
 
     @Test
-    func favorites_empty_initially() {
-        let model: FavoritesModel = FavoritesServiceBasedModel(
+    func favorites_empty_initially() async {
+        let model: FavoritesModel = await FavoritesServiceBasedModel(
             catalogService: CatalogMockService(), favoritesService: FavoritesMockService()
         )
-        #expect(model.favorites.isEmpty, "Favorites are not empty initially.")
+        await #expect(model.favorites.isEmpty, "Favorites are not empty initially.")
     }
 
     @Test(.timeLimit(.minutes(1)))
@@ -29,13 +29,13 @@ struct FavoritesServiceBasedModelTests {
         let book = Book(id: id, authors: [], title: "", description: "Desc")
 
         let catalogService = CatalogMockService(books: [book])
-        let favoritesService = FavoritesMockService(favoriteBookIDs: [id])
+        let favoritesService = await FavoritesMockService(favoriteBookIDs: [id])
 
         let model: FavoritesModel = FavoritesServiceBasedModel(
             catalogService: catalogService, favoritesService: favoritesService
         )
 
-        var favorites = model.favoritesPublisher.dropFirst().values.makeAsyncIterator()
+        var favorites = await model.favoritesPublisher.dropFirst().values.makeAsyncIterator()
         await #expect(favorites.next() == [book], "Unexpected data received.")
     }
 
@@ -45,13 +45,13 @@ struct FavoritesServiceBasedModelTests {
         let book = Book(id: id, authors: [], title: "", description: "Desc")
 
         let catalogService = CatalogMockService(books: [book])
-        let model: FavoritesModel = FavoritesServiceBasedModel(
+        let model: FavoritesModel = await FavoritesServiceBasedModel(
             catalogService: catalogService, favoritesService: FavoritesMockService()
         )
 
-        var favorites = model.favoritesPublisher.removeDuplicates().dropFirst().values.makeAsyncIterator()
+        var favorites = await model.favoritesPublisher.removeDuplicates().dropFirst().values.makeAsyncIterator()
 
-        model.toggleFavoriteStateOfBook(withID: id)
+        await model.toggleFavoriteStateOfBook(withID: id)
         await #expect(favorites.next() == [book], "Unexpected data received.")
     }
 
@@ -61,14 +61,14 @@ struct FavoritesServiceBasedModelTests {
         let book = Book(id: id, authors: [], title: "", description: "Desc")
 
         let catalogService = CatalogMockService(books: [book])
-        let favoritesService = FavoritesMockService(favoriteBookIDs: [id])
+        let favoritesService = await FavoritesMockService(favoriteBookIDs: [id])
 
         let model: FavoritesModel = FavoritesServiceBasedModel(
             catalogService: catalogService, favoritesService: favoritesService
         )
 
-        model.toggleFavoriteStateOfBook(withID: id)
-        while !model.favorites.isEmpty {
+        await model.toggleFavoriteStateOfBook(withID: id)
+        while await !model.favorites.isEmpty {
             await Task.yield()
         }
     }

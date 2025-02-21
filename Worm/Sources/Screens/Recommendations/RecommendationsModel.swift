@@ -7,12 +7,11 @@
 //
 
 import Combine
-import Dispatch
 import GoodreadsService
 import OrderedCollections
 
 /// Owns logic of maintaining a list of recommendations.
-protocol RecommendationsModel: Sendable {
+protocol RecommendationsModel: Actor {
 
     // TODO: Unblock?
 
@@ -31,17 +30,17 @@ protocol RecommendationsModel: Sendable {
 
     /// Toggles the favorite-ness state of a book.
     /// - Parameter id: The ID of the book to manipulate.
-    func toggleFavoriteStateOfBook(withID id: String)
+    func toggleFavoriteStateOfBook(withID id: String) async
     /// Blocks a book ID from appearing as a recommendation.
     /// - Parameter bookID: The ID of the book to manipulate.
-    func blockFromRecommendationsBook(withID id: String)
+    func blockFromRecommendationsBook(withID id: String) async
 
 }
 
 // MARK: -
 
 /// The default logic of the recommendations list maintenance.
-final class RecommendationsDefaultModel: @unchecked Sendable, RecommendationsModel {
+actor RecommendationsDefaultModel: RecommendationsModel {
 
     // MARK: - Properties
 
@@ -57,20 +56,16 @@ final class RecommendationsDefaultModel: @unchecked Sendable, RecommendationsMod
     // MARK: Private properties
 
     private let catalogService: CatalogService
-    private let favoriteBookIDsSynchronizationQueue = DispatchQueue(label: "com.lazarevzubov.FavoriteBookIDs")
     private let favoritesService: any FavoritesService
-    private let recommendationsSynchronizationQueue = DispatchQueue(label: "com.lazarevzubov.Recommendations")
     private lazy var cancellables = Set<AnyCancellable>()
     private var prioritizedRecommendations = OrderedDictionary<String, (book: Book, sourceIDs: Set<String>)>() {
         didSet {
-            recommendationsSynchronizationQueue.sync {
-                recommendations = Set(
-                    prioritizedRecommendations
-                        .values
-                        .stableSorted { $0.sourceIDs.count > $1.sourceIDs.count }
-                        .compactMap { $0.book }
-                )
-            }
+            recommendations = Set(
+                prioritizedRecommendations
+                    .values
+                    .stableSorted { $0.sourceIDs.count > $1.sourceIDs.count }
+                    .compactMap { $0.book }
+            )
         }
     }
 
@@ -84,37 +79,37 @@ final class RecommendationsDefaultModel: @unchecked Sendable, RecommendationsMod
         self.catalogService = catalogService
         self.favoritesService = favoritesService
 
-        bind(favoritesService: favoritesService)
+        Task { [weak self] in
+            await self?.bind(favoritesService: favoritesService)
+        }
     }
 
     // MARK: - Methods
 
     // MARK: RecommendationsModel protocol methods
 
-    func toggleFavoriteStateOfBook(withID id: String) {
+    func toggleFavoriteStateOfBook(withID id: String) async {
         if favoriteBookIDs.contains(id) {
-            favoritesService.removeFromFavoriteBook(withID: id)
+            await favoritesService.removeFromFavoriteBook(withID: id)
             removeRecommendedBooksForBook(withID: id)
         } else {
-            Task {
-                favoritesService.addToFavoritesBook(withID: id)
-                await addRecommendedBooksForBook(withID: id)
-            }
+            await favoritesService.addToFavoritesBook(withID: id)
+            await addRecommendedBooksForBook(withID: id)
         }
     }
 
-    func blockFromRecommendationsBook(withID id: String) {
+    func blockFromRecommendationsBook(withID id: String) async {
         prioritizedRecommendations.removeValue(forKey: id)
-        favoritesService.addToBlockedBook(withID: id)
+        await favoritesService.addToBlockedBook(withID: id)
     }
 
     // MARK: Private methods
 
-    private func bind(favoritesService: any FavoritesService) {
-        favoritesService
+    private func bind(favoritesService: any FavoritesService) async {
+        await favoritesService
             .favoriteBookIDsPublisher
             .removeDuplicates()
-            .sink { ids in
+            .sink { @Sendable ids in
                 Task { [weak self] in
                     await self?.update(with: ids)
                 }
@@ -123,7 +118,7 @@ final class RecommendationsDefaultModel: @unchecked Sendable, RecommendationsMod
     }
 
     private func update(with favoriteBookIDs: Set<String>) async {
-        favoriteBookIDsSynchronizationQueue.sync { self.favoriteBookIDs = favoriteBookIDs }
+        self.favoriteBookIDs = favoriteBookIDs
         await addRecommendedBooksForBooks(withIDs: favoriteBookIDs)
     }
 
@@ -134,16 +129,12 @@ final class RecommendationsDefaultModel: @unchecked Sendable, RecommendationsMod
     }
 
     private func addRecommendedBooksForBook(withID id: String) async {
-        let book = await catalogService.getBook(by: id)
-        await addRecommendedBooks(withIDs: book?.similarBookIDs ?? [], for: id)
+        await addRecommendedBooks(withIDs: catalogService.getBook(by: id)?.similarBookIDs ?? [], for: id)
     }
 
     private func addRecommendedBooks(withIDs ids: [String], for sourceID: String) async {
-        let blockedBooks = favoritesService.blockedBookIDs
-        let filteredIDs = ids.filter { id in
-            !blockedBooks.contains(id)
-        }
-
+        let blockedBookIDs = await favoritesService.blockedBookIDs
+        let filteredIDs = ids.filter { !blockedBookIDs.contains($0) }
         for id in filteredIDs {
             await addRecommendedBook(withID: id, for: sourceID)
         }
@@ -162,7 +153,7 @@ final class RecommendationsDefaultModel: @unchecked Sendable, RecommendationsMod
         }
 
         // This needs re-checking, because the situation might've changed while the book was being fetched.
-        if favoritesService.blockedBookIDs.contains(id) {
+        if await favoritesService.blockedBookIDs.contains(id) {
             prioritizedRecommendations.removeValue(forKey: id)
         } else {
             prioritizedRecommendations[id] = (book, [sourceID])

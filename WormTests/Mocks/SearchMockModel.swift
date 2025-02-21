@@ -6,12 +6,11 @@
 //
 
 import Combine
-import Dispatch
 import GoodreadsService
 @testable
 import Worm
 
-final class SearchMockModel: @unchecked Sendable, SearchModel {
+actor SearchMockModel: SearchModel {
 
     // MARK: - Properties
 
@@ -26,13 +25,9 @@ final class SearchMockModel: @unchecked Sendable, SearchModel {
     private(set) var favoriteBookIDs = Set<String>()
     var favoriteBookIDsPublisher: Published<Set<String>>.Publisher { $favoriteBookIDs }
 
-    // MARK: Private properties
-
-    private let synchronizationQueue = DispatchQueue(label: "com.lazarevzubov.SearchMockModel")
-
     // MARK: - Initialization
 
-    init(books: Set<Book> = [], favoriteBookIDs: Set<String> = []) {
+    init(books: Set<Book> = [], favoriteBookIDs: Set<String> = []) async {
         self.books = books
         self.favoriteBookIDs = favoriteBookIDs
     }
@@ -42,7 +37,7 @@ final class SearchMockModel: @unchecked Sendable, SearchModel {
     // MARK: SearchModel protocol methods
 
     func searchBooks(by query: String) {
-        synchronizationQueue.sync { self.query = query }
+        self.query = query
     }
     
     func toggleFavoriteStateOfBook(withID id: String) {

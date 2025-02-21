@@ -10,7 +10,7 @@ import SwiftData
 
 /// A persisted object representing a favorite book.
 @Model
-final class FavoriteBook: @unchecked Sendable {
+final class FavoriteBook {
 
     // MARK: - Properties
 

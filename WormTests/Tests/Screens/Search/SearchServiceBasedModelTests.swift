@@ -16,60 +16,60 @@ struct SearchServiceBasedModelTests {
     // MARK: - Methods
 
     @Test
-    func books_empty_initially() {
-        let model: any SearchModel = SearchServiceBasedModel(
+    func books_empty_initially() async {
+        let model: any SearchModel = await SearchServiceBasedModel(
             catalogService: CatalogMockService(), favoritesService: FavoritesMockService()
         )
-        #expect(model.books.isEmpty)
+        await #expect(model.books.isEmpty)
     }
 
     @Test
-    func favoriteBooksIDs_empty_initially() {
-        let model: any SearchModel = SearchServiceBasedModel(
+    func favoriteBooksIDs_empty_initially() async {
+        let model: any SearchModel = await SearchServiceBasedModel(
             catalogService: CatalogMockService(), favoritesService: FavoritesMockService()
         )
-        #expect(model.favoriteBookIDs.isEmpty)
+        await #expect(model.favoriteBookIDs.isEmpty)
     }
 
     @Test(.timeLimit(.minutes(1)))
     func favoriteBooksIDs_update() async {
         let expectedIDs: Set = ["1"]
-        let model: any SearchModel = SearchServiceBasedModel(
+        let model: any SearchModel = await SearchServiceBasedModel(
             catalogService: CatalogMockService(), favoritesService: FavoritesMockService(favoriteBookIDs: expectedIDs)
         )
 
-        var ids = model.favoriteBookIDsPublisher.values.makeAsyncIterator()
+        var ids = await model.favoriteBookIDsPublisher.dropFirst().values.makeAsyncIterator()
         await #expect(ids.next() == expectedIDs, "Unexpected data received.")
     }
 
-    @Test
+    @Test(.timeLimit(.minutes(1)))
     func favoriteBookID_toggling_onRemovingFromFavorites() async {
         let id = "1"
-        let favoritesService = FavoritesMockService(favoriteBookIDs: [id])
+        let favoritesService = await FavoritesMockService(favoriteBookIDs: [id])
 
         let model: any SearchModel = SearchServiceBasedModel(
             catalogService: CatalogMockService(), favoritesService: favoritesService
         )
 
-        var ids = model.favoriteBookIDsPublisher.values.makeAsyncIterator()
+        var ids = await model.favoriteBookIDsPublisher.values.makeAsyncIterator()
         _ = await ids.next()
 
-        model.toggleFavoriteStateOfBook(withID: id)
-        #expect(favoritesService.favoriteBookIDs.isEmpty)
+        await model.toggleFavoriteStateOfBook(withID: id)
+        await #expect(favoritesService.favoriteBookIDs.isEmpty, "Unexpected data is present in the service.")
     }
 
     @Test
     func favoriteBookID_toggling_onAddingToFavorites() async {
-        let favoritesService = FavoritesMockService()
+        let favoritesService = await FavoritesMockService()
         let model: any SearchModel = SearchServiceBasedModel(
             catalogService: CatalogMockService(), favoritesService: favoritesService
         )
 
-        var ids = model.favoriteBookIDsPublisher.values.makeAsyncIterator()
+        var ids = await model.favoriteBookIDsPublisher.values.makeAsyncIterator()
         _ = await ids.next()
 
-        model.toggleFavoriteStateOfBook(withID: "1")
-        #expect(!favoritesService.favoriteBookIDs.isEmpty)
+        await model.toggleFavoriteStateOfBook(withID: "1")
+        await #expect(!favoritesService.favoriteBookIDs.isEmpty)
     }
 
     @Test(.timeLimit(.minutes(1)))
@@ -94,13 +94,13 @@ struct SearchServiceBasedModelTests {
         let query = "Query"
         let result = books.map { $0.id }
 
-        let model: any SearchModel = SearchServiceBasedModel(
+        let model: any SearchModel = await SearchServiceBasedModel(
             catalogService: CatalogMockService(books: books, queries: [query : result]),
             favoritesService: FavoritesMockService()
         )
 
         await model.searchBooks(by: query)
-        while model.books != Set(books) {
+        while await model.books != Set(books) {
             await Task.yield()
         }
     }
@@ -147,7 +147,7 @@ struct SearchServiceBasedModelTests {
         let query2 = "Query2"
         let result2 = books2.map { $0.id }
 
-        let model: any SearchModel = SearchServiceBasedModel(
+        let model: any SearchModel = await SearchServiceBasedModel(
             catalogService: CatalogMockService(
                 books: books1 + books2,
                 queries: [
@@ -161,7 +161,7 @@ struct SearchServiceBasedModelTests {
         await model.searchBooks(by: query2)
         await model.searchBooks(by: query1)
 
-        while model.books != Set(books1) {
+        while await model.books != Set(books1) {
             await Task.yield()
         }
     }

@@ -9,7 +9,7 @@
 import GoodreadsService
 
 /// The data service of the app.
-protocol CatalogService {
+protocol CatalogService: Sendable {
 
     // MARK: - Methods
 
@@ -24,9 +24,9 @@ protocol CatalogService {
 
 }
 
-// MARK: - Service
+// MARK: - CatalogService
 
-extension GoodreadsService: CatalogService { }
+extension GoodreadsService: @unchecked @retroactive Sendable, CatalogService { }
 
 #if DEBUG
 
