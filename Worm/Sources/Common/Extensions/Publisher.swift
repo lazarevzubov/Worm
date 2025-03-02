@@ -8,4 +8,6 @@
 
 import Combine
 
+// MARK: - Sendable
+
 extension Published.Publisher: @unchecked @retroactive Sendable { }

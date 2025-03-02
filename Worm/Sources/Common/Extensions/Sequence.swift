@@ -25,8 +25,8 @@ extension Sequence {
         try enumerated()
             .sorted {
                 try areInIncreasingOrder($0.element, $1.element)
-                    || (($0.offset < $1.offset)
-                            && !areInIncreasingOrder($1.element, $0.element))
+                        || (($0.offset < $1.offset)
+                                && !areInIncreasingOrder($1.element, $0.element))
             }
             .map { $0.element }
     }
