@@ -20,6 +20,7 @@ enum ViewFactory {
     ///   - favoritesService: The favorite books list manager.
     ///   - favoritesService: Provides with information related to the user onboarding.
     /// - Returns: The main view of the app.
+    @ViewBuilder
     static func makeMainView(
         catalogService: CatalogService,
         favoritesService: any FavoritesService,
@@ -44,7 +45,7 @@ enum ViewFactory {
             catalogService: catalogService, favoritesService: favoritesService, imageService: imageService
         )
 
-        return MainScreen(
+        MainScreen(
             searchView: searchView,
             recommendationsView: recommendationsView,
             favoritesView: favoritesView,
