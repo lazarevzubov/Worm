@@ -78,10 +78,12 @@ struct MainScreen<
     ///   - recommendationsView: The Recommendations tab visual representation.
     ///   - favoritesView: The Favorites tab visual representation.
     ///   - viewModel: The presentation logic handler.
-    init(searchView: SearchView,
-         recommendationsView: RecommendationsView,
-         favoritesView: FavoritesView,
-         viewModel: ViewModel) {
+    init(
+        searchView: SearchView,
+        recommendationsView: RecommendationsView,
+        favoritesView: FavoritesView,
+        viewModel: ViewModel
+    ) {
         self.searchView = searchView
         self.recommendationsView = recommendationsView
         self.favoritesView = favoritesView
