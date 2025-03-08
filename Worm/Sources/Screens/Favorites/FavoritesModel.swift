@@ -88,13 +88,13 @@ actor FavoritesServiceBasedModel: FavoritesModel {
     }
 
     private func updateFavorites(with favoriteBookIDs: Set<String>) async {
+        favorites.removeAll { !favoriteBookIDs.contains($0.id) }
         for bookID in favoriteBookIDs {
             if let book = await catalogService.getBook(by: bookID),
                !favorites.contains(where: { $0.id == book.id }) {
                 favorites.append(book)
             }
         }
-        favorites.removeAll { !favoriteBookIDs.contains($0.id) }
     }
 
 }
