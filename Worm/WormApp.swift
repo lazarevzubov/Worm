@@ -37,7 +37,11 @@ struct WormApp: App {
             return CatalogPreviewsService()
         }
 #endif
-        return GoodreadsService(key: "JQfiS9k0doIho3vm13Qxdg")
+
+        let goodreadsService = GoodreadsService(key: "JQfiS9k0doIho3vm13Qxdg")
+        let cacheService = CacheInMemoryService<String, Book>()
+
+        return CatalogGoodreadsService(goodreadsService: goodreadsService, cacheService: cacheService)
     }()
     private var favoritesService: FavoritesService {
         get {
