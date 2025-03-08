@@ -6,6 +6,7 @@
 //  Copyright © 2020 Nikita Lazarev-Zubov. All rights reserved.
 //
 
+@preconcurrency
 import GoodreadsService
 
 /// The data service of the app.
@@ -24,9 +25,54 @@ protocol CatalogService: Sendable {
 
 }
 
-// MARK: - CatalogService
+// MARK: -
 
-extension GoodreadsService: @unchecked @retroactive Sendable, CatalogService { }
+/// The data service of the app, based on the Goodreads service.
+///
+/// The book-retrieving APIs take advantage from a caching layer to provide repeatedly requested data in more efficient way.
+final class CatalogGoodreadsService: CatalogService {
+
+    // MARK: - Properties
+
+    // MARK: Private properties
+
+    private let cacheService: any CacheService<String, Book>
+    private let goodreadsService: GoodreadsService
+
+    // MARK: - Initialization
+
+    /// Creates a data service of the app, based on the Goodreads service.
+    /// - Parameters:
+    ///   - goodreadsService: The entry point to the service.
+    ///   - cacheService: Stores results of computations or distributed calls to provide them in a more efficient manner than repeating the initial call again.
+    init(goodreadsService: GoodreadsService, cacheService: any CacheService<String, Book>) {
+        self.goodreadsService = goodreadsService
+        self.cacheService = cacheService
+    }
+
+    // MARK: - Methods
+
+    // MARK: CatalogService protocol methods
+
+    func searchBooks(_ query: String) async -> [String] {
+        await goodreadsService.searchBooks(query)
+    }
+
+    func getBook(by id: String) async -> Book? {
+        if let book = await cacheService.storage[id] {
+            return book
+        }
+
+        let book = await goodreadsService.getBook(by: id)
+        if let book {
+            await cacheService.insert(book, for: id)
+        }
+
+        return book
+    }
+
+
+}
 
 #if DEBUG
 
