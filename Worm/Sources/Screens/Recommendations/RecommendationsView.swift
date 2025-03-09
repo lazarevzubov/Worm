@@ -25,8 +25,18 @@ struct RecommendationsView<ViewModel: RecommendationsViewModel>: View {
                                 .background(Color.white.opacity(0.0001)) // For making empty space clickable/tappable.
                         }
                             .buttonStyle(.plain)
+                            .contextMenu {
+                                Button("Delete") {
+                                    viewModel
+                                        .recommendations
+                                        .filter { $0.id == book.id }
+                                        .forEach { viewModel.blockRecommendation($0) }
+                                }
+                            }
                     }
-                        .onDelete(perform: deleteItem)
+                        .onDelete { indexSet in
+                            indexSet.forEach { viewModel.blockRecommendation(viewModel.recommendations[$0]) }
+                        }
                 }
                     .animation(.easeIn, value: viewModel.recommendations)
                     .listStyle(.plain)
@@ -65,14 +75,6 @@ struct RecommendationsView<ViewModel: RecommendationsViewModel>: View {
     /// - Parameter viewModel: The object responsible for Recommendations screen presentation logic.
     init(viewModel: ViewModel) {
         self.viewModel = viewModel
-    }
-
-    // MARK: - Methods
-
-    // MARK: Private methods
-
-    private func deleteItem(at indexSet: IndexSet) {
-        indexSet.forEach { viewModel.blockRecommendation(viewModel.recommendations[$0]) }
     }
 
 }
