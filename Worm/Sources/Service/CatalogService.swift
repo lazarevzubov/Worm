@@ -6,7 +6,6 @@
 //  Copyright © 2020 Nikita Lazarev-Zubov. All rights reserved.
 //
 
-@preconcurrency
 import GoodreadsService
 
 /// The data service of the app.
