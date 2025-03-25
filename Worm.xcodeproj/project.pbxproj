@@ -1062,7 +1062,7 @@
 			repositoryURL = "https://github.com/lazarevzubov/GoodreadsService.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 2.0.0;
+				minimumVersion = 3.0.0;
 			};
 		};
 		DDB4B7A12B932EF3001A3172 /* XCRemoteSwiftPackageReference "swift-collections" */ = {
