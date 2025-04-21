@@ -188,6 +188,7 @@ struct SearchDefaultViewModelTests {
             title: "Title",
             description: "Desc",
             imageURL: URL(string: "https://apple.com"),
+            rating: nil,
             favorite: true
         )
         let bookDetailsVM = vm.makeDetailsViewModel(for: bookVM)
@@ -208,11 +209,33 @@ struct SearchDefaultViewModelTests {
             title: "Title",
             description: "Desc",
             imageURL: URL(string: "https://apple.com"),
+            rating: nil,
             favorite: true
         )
         let bookDetailsVM = vm.makeDetailsViewModel(for: bookVM)
 
         #expect(bookDetailsVM.title == bookVM.title, "The titles of the source and the result don't match.")
+    }
+
+    @MainActor
+    @Test
+    func detailsViewModel_rating_asProvided() async {
+        let vm: any SearchViewModel = await SearchDefaultViewModel(
+            model: SearchMockModel(), onboardingService: OnboardingMockService(), imageService: ImageMockService()
+        )
+
+        let bookVM = BookViewModel(
+            id: "ID",
+            authors: "Authors",
+            title: "Title",
+            description: "Desc",
+            imageURL: URL(string: "https://apple.com"),
+            rating: "Rating",
+            favorite: true
+        )
+        let bookDetailsVM = vm.makeDetailsViewModel(for: bookVM)
+
+        #expect(bookDetailsVM.rating == bookVM.rating, "The ratings of the source and the result don't match.")
     }
 
     @MainActor
@@ -232,6 +255,7 @@ struct SearchDefaultViewModelTests {
             title: "Title",
             description: "Desc",
             imageURL: imageURL,
+            rating: nil,
             favorite: true
         )
 

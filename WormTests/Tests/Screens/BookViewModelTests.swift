@@ -127,4 +127,48 @@ struct BookViewModelTests {
         #expect(vm.title == title)
     }
 
+    @Test
+    func rating_whenBookRating_nil_thenNil() {
+        let book = Book(
+            id: "ID",
+            authors: [
+                "Author1",
+                "Author2"
+            ],
+            title: "Title",
+            description: "Desc",
+            rating: nil,
+            imageURL: URL(string: "https://apple.com")!,
+            similarBookIDs: [
+                "ID1",
+                "ID2"
+            ]
+        )
+
+        let vm = BookViewModel(book: book, favorite: true)
+        #expect(vm.rating == nil)
+    }
+
+    @Test
+    func rating_whenBookRating_notNil_thenFormattedWithTwoDecimals() {
+        let book = Book(
+            id: "ID",
+            authors: [
+                "Author1",
+                "Author2"
+            ],
+            title: "Title",
+            description: "Desc",
+            rating: 1.234,
+            imageURL: URL(string: "https://apple.com")!,
+            similarBookIDs: [
+                "ID1",
+                "ID2"
+            ]
+        )
+
+        let vm = BookViewModel(book: book, favorite: true)
+        #expect(vm.rating == "1.23")
+    }
+
 }

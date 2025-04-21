@@ -24,6 +24,8 @@ struct BookViewModel: Sendable {
     let imageURL: URL?
     /// Whether the book is in the favorites list.
     let favorite: Bool
+    /// The average rating of the book.
+    let rating: String?
     /// The book title.
     let title: String
 
@@ -36,13 +38,23 @@ struct BookViewModel: Sendable {
     ///   - title: The book title.
     ///   - description: The book's description.
     ///   - imageURL: The URL of the book image.
+    ///   - rating: The average rating of the book.
     ///   - favorite: Whether the book is in the favorites list.
-    init(id: String, authors: String, title: String, description: String, imageURL: URL?, favorite: Bool) {
+    init(
+        id: String,
+        authors: String,
+        title: String,
+        description: String,
+        imageURL: URL?,
+        rating: String?,
+        favorite: Bool
+    ) {
         self.id = id
         self.authors = authors
         self.title = title
         self.description = description
         self.imageURL = imageURL
+        self.rating = rating
         self.favorite = favorite
     }
 
@@ -67,12 +79,18 @@ extension BookViewModel {
     ///   - book: A book meta-data object.
     ///   - favorite: Whether the book is a favorite.
     init(book: Book, favorite: Bool) {
+        let rating: String? = if let ratingNumber = book.rating {
+            String(format: "%.2f", ratingNumber)
+        } else {
+            nil
+        }
         self.init(
             id: book.id,
             authors: book.authors.joined(separator: ", "),
             title: book.title,
             description: book.description,
             imageURL: book.imageURL,
+            rating: rating,
             favorite: favorite
         )
     }

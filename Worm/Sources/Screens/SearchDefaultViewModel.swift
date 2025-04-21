@@ -77,6 +77,7 @@ final class SearchDefaultViewModel: MainScreenViewModel, SearchViewModel {
             title: book.title,
             description: book.description,
             imageURL: book.imageURL,
+            rating: book.rating,
             imageService: imageService
         )
     }
@@ -108,14 +109,15 @@ final class SearchDefaultViewModel: MainScreenViewModel, SearchViewModel {
                     guard let self else {
                         return
                     }
-                    for bookIndex in self.books.indices {
-                        self.books[bookIndex] = BookViewModel(
-                            id: self.books[bookIndex].id,
-                            authors: self.books[bookIndex].authors,
-                            title: self.books[bookIndex].title,
-                            description: self.books[bookIndex].description,
-                            imageURL: self.books[bookIndex].imageURL,
-                            favorite: ids.contains(self.books[bookIndex].id)
+                    for bookIndex in books.indices {
+                        books[bookIndex] = BookViewModel(
+                            id: books[bookIndex].id,
+                            authors: books[bookIndex].authors,
+                            title: books[bookIndex].title,
+                            description: books[bookIndex].description,
+                            imageURL: books[bookIndex].imageURL,
+                            rating: books[bookIndex].rating,
+                            favorite: ids.contains(books[bookIndex].id)
                         )
                     }
                 }

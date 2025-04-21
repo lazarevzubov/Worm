@@ -20,6 +20,8 @@ protocol BookDetailsViewModel: ObservableObject {
     var description: String { get }
     /// The book's image.
     var image: UniversalImage? { get }
+    /// The book's rating.
+    var rating: String? { get }
     /// The book's title.
     var title: String { get }
 
@@ -36,12 +38,14 @@ final class BookDetailsDefaultViewModel: BookDetailsViewModel {
 
     let authors: String
     let description: String
+    let rating: String?
     let title: String
     @Published
     var image: UniversalImage?
 
     // MARK: Private properties
 
+    // FIXME: Don't store it.
     private let imageService: ImageService
 
     // MARK: - Initialization
@@ -52,11 +56,20 @@ final class BookDetailsDefaultViewModel: BookDetailsViewModel {
     ///   - title: The title string.
     ///   - description: The book's description.
     ///   - imageURL: The URL of the image.
+    ///   - rating: The book's rating.
     ///   - imageService: The service that magically turns image URL into image.
-    init(authors: String, title: String, description: String, imageURL: URL?, imageService: ImageService) {
+    init(
+        authors: String,
+        title: String,
+        description: String,
+        imageURL: URL?,
+        rating: String?,
+        imageService: ImageService
+    ) {
         self.authors = authors
         self.description = description
         self.title = title
+        self.rating = rating
         self.imageService = imageService
 
         retrieveImage(from: imageURL, using: self.imageService)
@@ -93,6 +106,7 @@ final class BookDetailsPreviewViewModel: BookDetailsViewModel {
     let authors = "J.R.R. Tolkien"
     let description = "A sensitive hobbit unexpectedly saves the situation."
     let image = UniversalImage(systemName: "scribble.variable")
+    let rating: String? = "1.23"
     let title = "The Lord of the Rings"
 
 }
