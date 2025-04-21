@@ -158,6 +158,33 @@ struct RecommendationsDefaultViewModelTests {
     }
 
     @MainActor
+    @Test
+    func detailsViewModel_rating_accordingToBook() async {
+        let bookVM = BookViewModel(
+            book: Book(
+                id: "1",
+                authors: [
+                    "Author 1",
+                    "Authors 2"
+                ],
+                title: "Title",
+                description: "Desc",
+                rating: 1.23
+            ),
+            favorite: false
+        )
+
+        let vm: any RecommendationsViewModel = await RecommendationsDefaultViewModel(
+            model: RecommendationsMockModel(),
+            onboardingService: OnboardingMockService(),
+            imageService: ImageMockService()
+        )
+        let detailsVM = vm.makeDetailsViewModel(for: bookVM)
+
+        #expect(detailsVM.rating == "1.23", "Unexpected rating string")
+    }
+
+    @MainActor
     @Test(.timeLimit(.minutes(1)))
     func detailsViewModel_image_accordingToImageService() async {
         let imageURL = URL(string: "https://apple.com")!

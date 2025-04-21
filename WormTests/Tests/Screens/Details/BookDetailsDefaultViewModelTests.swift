@@ -25,11 +25,28 @@ struct BookDetailsDefaultViewModelTests {
             title: "Title",
             description: "Desc",
             imageURL: url,
+            rating: nil,
             imageService: ImageMockService(images: [url : UniversalImage()])
         )
 
         var images = vm.$image.dropFirst().values.makeAsyncIterator()
         await #expect(images.next() != nil, "Retrieved image should not be nil.")
+    }
+
+    @MainActor
+    @Test
+    func rating_asProvided() {
+        let rating = "Rating"
+        let vm: any BookDetailsViewModel = BookDetailsDefaultViewModel(
+            authors: "Authors",
+            title: "Title",
+            description: "Description",
+            imageURL: nil,
+            rating: rating,
+            imageService: ImageMockService()
+        )
+
+        #expect(vm.rating == rating, "Rating should be the same as provided.")
     }
 
 }
