@@ -11,6 +11,7 @@ import Testing
 @testable
 import Worm
 
+@Suite(.serialized)
 struct SearchServiceBasedModelTests {
 
     // MARK: - Methods
@@ -51,7 +52,7 @@ struct SearchServiceBasedModelTests {
             catalogService: CatalogMockService(), favoritesService: favoritesService
         )
 
-        var ids = await model.favoriteBookIDsPublisher.values.makeAsyncIterator()
+        var ids = await model.favoriteBookIDsPublisher.dropFirst().values.makeAsyncIterator()
         _ = await ids.next()
 
         await model.toggleFavoriteStateOfBook(withID: id)
