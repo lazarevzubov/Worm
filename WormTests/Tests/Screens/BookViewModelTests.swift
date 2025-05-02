@@ -150,7 +150,7 @@ struct BookViewModelTests {
     }
 
     @Test
-    func rating_whenBookRating_notNil_thenFormattedWithTwoDecimals() {
+    func rating_whenBookRating_notNil_thenAsProvided() {
         let book = Book(
             id: "ID",
             authors: [
@@ -168,7 +168,7 @@ struct BookViewModelTests {
         )
 
         let vm = BookViewModel(book: book, favorite: true)
-        #expect(vm.rating == "1.23")
+        #expect(vm.rating == 1.234)
     }
 
 }

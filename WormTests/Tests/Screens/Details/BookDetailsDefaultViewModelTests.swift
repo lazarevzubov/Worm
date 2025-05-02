@@ -35,8 +35,8 @@ struct BookDetailsDefaultViewModelTests {
 
     @MainActor
     @Test
-    func rating_asProvided() {
-        let rating = "Rating"
+    func createsRatingViewModel_withRating_asProvided() {
+        let rating = 1.23
         let vm: any BookDetailsViewModel = BookDetailsDefaultViewModel(
             authors: "Authors",
             title: "Title",
@@ -46,7 +46,7 @@ struct BookDetailsDefaultViewModelTests {
             imageService: ImageMockService()
         )
 
-        #expect(vm.rating == rating, "Rating should be the same as provided.")
+        #expect(vm.ratingViewModel?.rating == 1.23, "Rating should be the same as provided.")
     }
 
 }

@@ -21,7 +21,7 @@ protocol BookDetailsViewModel: ObservableObject {
     /// The book's image.
     var image: UniversalImage? { get }
     /// The book's rating.
-    var rating: String? { get }
+    var ratingViewModel: RatingViewModel? { get }
     /// The book's title.
     var title: String { get }
 
@@ -38,7 +38,7 @@ final class BookDetailsDefaultViewModel: BookDetailsViewModel {
 
     let authors: String
     let description: String
-    let rating: String?
+    let ratingViewModel: RatingViewModel?
     let title: String
     @Published
     var image: UniversalImage?
@@ -63,14 +63,19 @@ final class BookDetailsDefaultViewModel: BookDetailsViewModel {
         title: String,
         description: String,
         imageURL: URL?,
-        rating: String?,
+        rating: Double?,
         imageService: ImageService
     ) {
         self.authors = authors
         self.description = description
         self.title = title
-        self.rating = rating
         self.imageService = imageService
+
+        ratingViewModel = if let rating {
+            RatingViewModel(rating: rating)
+        } else {
+            nil
+        }
 
         retrieveImage(from: imageURL, using: self.imageService)
     }
@@ -106,7 +111,7 @@ final class BookDetailsPreviewViewModel: BookDetailsViewModel {
     let authors = "J.R.R. Tolkien"
     let description = "A sensitive hobbit unexpectedly saves the situation."
     let image = UniversalImage(systemName: "scribble.variable")
-    let rating: String? = "1.23"
+    let ratingViewModel: RatingViewModel? = RatingViewModel(rating: 1.23)
     let title = "The Lord of the Rings"
 
 }
