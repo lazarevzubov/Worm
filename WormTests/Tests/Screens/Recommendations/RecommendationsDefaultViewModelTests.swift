@@ -159,7 +159,7 @@ struct RecommendationsDefaultViewModelTests {
 
     @MainActor
     @Test
-    func detailsViewModel_rating_accordingToBook() async {
+    func detailsViewModel_createsRatingViewModel_withRating_accordingToBook() async {
         let bookVM = BookViewModel(
             book: Book(
                 id: "1",
@@ -181,7 +181,7 @@ struct RecommendationsDefaultViewModelTests {
         )
         let detailsVM = vm.makeDetailsViewModel(for: bookVM)
 
-        #expect(detailsVM.rating == "1.23", "Unexpected rating string")
+        #expect(detailsVM.ratingViewModel?.rating == 1.23, "Unexpected rating string")
     }
 
     @MainActor

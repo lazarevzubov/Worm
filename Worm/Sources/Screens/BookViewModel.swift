@@ -25,7 +25,7 @@ struct BookViewModel: Sendable {
     /// Whether the book is in the favorites list.
     let favorite: Bool
     /// The average rating of the book.
-    let rating: String?
+    let rating: Double?
     /// The book title.
     let title: String
 
@@ -46,7 +46,7 @@ struct BookViewModel: Sendable {
         title: String,
         description: String,
         imageURL: URL?,
-        rating: String?,
+        rating: Double?,
         favorite: Bool
     ) {
         self.id = id
@@ -79,18 +79,13 @@ extension BookViewModel {
     ///   - book: A book meta-data object.
     ///   - favorite: Whether the book is a favorite.
     init(book: Book, favorite: Bool) {
-        let rating: String? = if let ratingNumber = book.rating {
-            String(format: "%.2f", ratingNumber)
-        } else {
-            nil
-        }
         self.init(
             id: book.id,
             authors: book.authors.joined(separator: ", "),
             title: book.title,
             description: book.description,
             imageURL: book.imageURL,
-            rating: rating,
+            rating: book.rating,
             favorite: favorite
         )
     }

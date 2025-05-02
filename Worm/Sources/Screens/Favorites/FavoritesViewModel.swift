@@ -121,7 +121,7 @@ final class FavoritesPreviewsViewModel: FavoritesViewModel {
             title: "Paddington Pop-Up London",
             description: "A cute pop-up book about London, the capital of The United Kingdom.",
             imageURL: nil,
-            rating: "1.23",
+            rating: 1.23,
             favorite: false
         ),
         BookViewModel(
@@ -130,7 +130,7 @@ final class FavoritesPreviewsViewModel: FavoritesViewModel {
             title: "Harry Potter and the Sorcecer's Stone",
             description: "Another sensitive teenager saves the day thank to his friends.",
             imageURL: nil,
-            rating: "2.34",
+            rating: 2.34,
             favorite: false
         ),
         BookViewModel(
@@ -139,7 +139,7 @@ final class FavoritesPreviewsViewModel: FavoritesViewModel {
             title: "A Game of Thrones",
             description: "Caligula with magic and dragons.",
             imageURL: nil,
-            rating: "3.45",
+            rating: 3.45,
             favorite: false
         ),
         BookViewModel(
@@ -148,7 +148,7 @@ final class FavoritesPreviewsViewModel: FavoritesViewModel {
             title: "Dune I",
             description: "A good example of why immigrants can be useful to a country (or a planet).",
             imageURL: nil,
-            rating: "4.56",
+            rating: 4.56,
             favorite: false
         ),
         BookViewModel(
@@ -166,7 +166,7 @@ final class FavoritesPreviewsViewModel: FavoritesViewModel {
             title: "Watchmen",
             description: "Aging superheroes with psychological issues face the demons of their past.",
             imageURL: nil,
-            rating: "0.12",
+            rating: 0.12,
             favorite: false
         ),
         BookViewModel(
@@ -175,7 +175,7 @@ final class FavoritesPreviewsViewModel: FavoritesViewModel {
             title: "Code Complete",
             description: "How to make your code a bit less shitty.",
             imageURL: nil,
-            rating: "1.23",
+            rating: 1.23,
             favorite: false
         ),
         BookViewModel(
@@ -184,7 +184,7 @@ final class FavoritesPreviewsViewModel: FavoritesViewModel {
             title: "Pride and Prejudice",
             description: "More than just a love story.",
             imageURL: nil,
-            rating: "2.34",
+            rating: 2.34,
             favorite: false
         ),
         BookViewModel(
@@ -193,7 +193,7 @@ final class FavoritesPreviewsViewModel: FavoritesViewModel {
             title: "Refactoring: Improving the Design of Existing Code",
             description: "A step-by-step guide how to make your code bearable to work with.",
             imageURL: nil,
-            rating: "3.45",
+            rating: 3.45,
             favorite: false
         ),
         BookViewModel(
@@ -202,7 +202,7 @@ final class FavoritesPreviewsViewModel: FavoritesViewModel {
             title: "The Shining",
             description: "How the family can drive a person crazy, when they are locked up together.",
             imageURL: nil,
-            rating: "4.56",
+            rating: 4.56,
             favorite: false
         ),
         BookViewModel(
@@ -220,7 +220,7 @@ final class FavoritesPreviewsViewModel: FavoritesViewModel {
             title: "The Idiot",
             description: "A book about a nice person in the world of idiots (i.e., the real world).",
             imageURL: nil,
-            rating: "2.34",
+            rating: 2.34,
             favorite: false
         ),
         BookViewModel(
@@ -229,7 +229,7 @@ final class FavoritesPreviewsViewModel: FavoritesViewModel {
             title: "Sometimes a Great Notion",
             description: "A story that proves you must stay away of your family after you grow up.",
             imageURL: nil,
-            rating: "3.45",
+            rating: 3.45,
             favorite: false
         ),
         BookViewModel(
@@ -238,7 +238,7 @@ final class FavoritesPreviewsViewModel: FavoritesViewModel {
             title: "The Wind-Up Bird Chronicle",
             description: "A half anime-pervert, half meditating phantasy.",
             imageURL: nil,
-            rating: "4.56",
+            rating: 4.56,
             favorite: false
         )
     ]

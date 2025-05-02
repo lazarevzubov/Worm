@@ -89,6 +89,7 @@ final class CatalogPreviewsService: CatalogService {
             authors: ["J.R.R. Tolkien"],
             title: "The Lord of the Rings",
             description: "A sensitive hobbit unexpectedly saves the situation.",
+            rating: nil,
             similarBookIDs: ["15"]
         ),
         Book(
@@ -96,6 +97,7 @@ final class CatalogPreviewsService: CatalogService {
             authors: ["Michael Bond"],
             title: "Paddington Pop-Up London",
             description: "A cute pop-up book about London, the capital of The United Kingdom.",
+            rating: 0.12,
             similarBookIDs: ["14"]
         ),
         Book(
@@ -103,6 +105,7 @@ final class CatalogPreviewsService: CatalogService {
             authors: ["J.K. Rowling"],
             title: "Harry Potter and the Sorcerer's Stone",
             description: "Another sensitive teenager saves the day thank to his friends.",
+            rating: 1.23,
             similarBookIDs: ["13"]
         ),
         Book(
@@ -110,6 +113,7 @@ final class CatalogPreviewsService: CatalogService {
             authors: ["George R.R. Martin"],
             title: "A Game of Thrones",
             description: "Caligula with magic and dragons.",
+            rating: 2.34,
             similarBookIDs: ["12"]
         ),
         Book(
@@ -117,6 +121,7 @@ final class CatalogPreviewsService: CatalogService {
             authors: ["Frank Herbert"],
             title: "Dune I",
             description: "A good example of why immigrants can be useful to a country (or a planet).",
+            rating: 3.45,
             similarBookIDs: ["11"]
         ),
         Book(
@@ -124,6 +129,7 @@ final class CatalogPreviewsService: CatalogService {
             authors: ["Mikhail Bulgakov"],
             title: "The Master and Margarita",
             description: "An exception that proves that some books from the public school program are actually good.",
+            rating: 4.56,
             similarBookIDs: ["10"]
         ),
         Book(
@@ -131,6 +137,7 @@ final class CatalogPreviewsService: CatalogService {
             authors: ["Alan Moore"],
             title: "Watchmen",
             description: "Aging superheroes with psychological issues face the demons of their past.",
+            rating: nil,
             similarBookIDs: ["9"]
         ),
         Book(
@@ -138,6 +145,7 @@ final class CatalogPreviewsService: CatalogService {
             authors: ["Steve McConnell"],
             title: "Code Complete",
             description: "How to make your code a bit less shitty.",
+            rating: 0.12,
             similarBookIDs: ["8"]
         ),
         Book(
@@ -145,6 +153,7 @@ final class CatalogPreviewsService: CatalogService {
             authors: ["Jane Austen"],
             title: "Pride and Prejudice",
             description: "More than just a love story.",
+            rating: 1.23,
             similarBookIDs: ["7"]
         ),
         Book(
@@ -152,6 +161,7 @@ final class CatalogPreviewsService: CatalogService {
             authors: ["Martin Fowler"],
             title: "Refactoring: Improving the Design of Existing Code",
             description: "A step-by-step guide how to make your code bearable to work with.",
+            rating: 2.34,
             similarBookIDs: ["6"]
         ),
         Book(
@@ -159,6 +169,7 @@ final class CatalogPreviewsService: CatalogService {
             authors: ["Stephen King"],
             title: "The Shining",
             description: "How the family can drive a person crazy, when they are locked up together.",
+            rating: 3.45,
             similarBookIDs: ["5"]
         ),
         Book(
@@ -166,6 +177,7 @@ final class CatalogPreviewsService: CatalogService {
             authors: ["Hannah Arendt"],
             title: "Eichmann in Jerusalem: A Report on the Banality of Evil",
             description: "How the Jew made their situation even worse during WWII.",
+            rating: 4.56,
             similarBookIDs: ["4"]
         ),
         Book(
@@ -173,6 +185,7 @@ final class CatalogPreviewsService: CatalogService {
             authors: ["Fyodor Dostoyevsky"],
             title: "The Idiot",
             description: "A book about a nice person in the world of idiots (i.e., the real world).",
+            rating: nil,
             similarBookIDs: ["3"]
         ),
         Book(
@@ -180,6 +193,7 @@ final class CatalogPreviewsService: CatalogService {
             authors: ["Ken Kesey"],
             title: "Sometimes a Great Notion",
             description: "A story that proves you must stay away of your family after you grow up.",
+            rating: 1.23,
             similarBookIDs: ["2"]
         ),
         Book(
@@ -187,6 +201,7 @@ final class CatalogPreviewsService: CatalogService {
             authors: ["Haruki Murakami"],
             title: "The Wind-Up Bird Chronicle",
             description: "A half anime-pervert, half meditating phantasy.",
+            rating: 2.34,
             similarBookIDs: ["1"]
         )
     ]

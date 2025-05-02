@@ -33,6 +33,11 @@ struct BookDetailsView<ViewModel: BookDetailsViewModel>: View {
             .font(.subheadline)
             .multilineTextAlignment(.center)
             .padding(.horizontal)
+        if let ratingViewModel = viewModel.ratingViewModel {
+            RatingView(viewModel: ratingViewModel)
+                .padding(.top, 2.0)
+                .padding(.horizontal)
+        }
         Text(viewModel.description)
             .font(.caption)
             .multilineTextAlignment(.center)
