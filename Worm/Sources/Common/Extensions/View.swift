@@ -13,11 +13,18 @@ extension View {
     /// - Parameters:
     ///   - condition: The condition to met.
     ///   - transform: The view modification to apply.
+    ///   - alternativeTransform: The modification to apply, if the condition is not met. If not provided, the original, unmodified view will be returned.
     /// - Returns: The view with the applied modification, if the condition is met, or the original view, if it isn't.
     @ViewBuilder
-    func `if`<Transform: View>(_ condition: Bool, transform: (Self) -> Transform) -> some View {
+    func `if`<Transform: View, AlternativeTransform: View>(
+        _ condition: Bool,
+        transform: (Self) -> Transform,
+        else alternativeTransform: ((Self) -> AlternativeTransform)? = nil
+    ) -> some View {
         if condition {
             transform(self)
+        } else if let alternativeTransform {
+            alternativeTransform(self)
         } else {
             self
         }

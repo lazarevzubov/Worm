@@ -86,6 +86,23 @@ final class RecommendationsScreenTests: XCTestCase {
         XCTAssertTrue(app.tables.staticTexts.count == 0)
     }
 
+    @MainActor
+    func testFiltersButton_isVisible() {
+        let app = openedRecommendationsTab()
+        XCTAssertTrue(app.buttons["RecommendationsFiltersButton"].isHittable)
+    }
+
+    @MainActor
+    func testTopRatedButton_isVisible_whenFiltersButton_isTapped() {
+        let app = openedRecommendationsTab()
+        app.buttons["RecommendationsFiltersButton"].tap()
+
+        let topRatedButton = app.buttons["Top rated"]
+        XCTAssertTrue(app.waitForExistence(timeout: 5.0))
+
+        XCTAssertTrue(topRatedButton.isHittable)
+    }
+
     // MARK: Private properties
 
     @MainActor

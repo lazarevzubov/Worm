@@ -10,7 +10,7 @@ import Combine
 import Foundation
 
 /// Object responsible for Recommendations screen presentation logic.
-protocol RecommendationsViewModel: BookListCellViewModel, BookDetailsPresentable, ObservableObject {
+protocol RecommendationsViewModel: BookListCellViewModel, FiltersViewModel, BookDetailsPresentable {
 
     // MARK: - Properties
 
@@ -37,6 +37,10 @@ final class RecommendationsDefaultViewModel: RecommendationsViewModel {
     // MARK: RecommendationsViewModel protocol properties
 
     @Published
+    var appliedFilters = [RecommendationsFilter]() {
+        didSet { updateRecommendations(with: unfilteredRecommendations) }
+    }
+    @Published
     var onboardingShown: Bool {
         didSet { onboardingService.recommendationsOnboardingShown = onboardingShown }
     }
@@ -49,6 +53,9 @@ final class RecommendationsDefaultViewModel: RecommendationsViewModel {
     private let model: any RecommendationsModel
     private lazy var cancellables = Set<AnyCancellable>()
     private var onboardingService: OnboardingService
+    private var unfilteredRecommendations = [BookViewModel]() {
+        didSet { updateRecommendations(with: unfilteredRecommendations) }
+    }
 
     // MARK: - Initialization
 
@@ -107,7 +114,7 @@ final class RecommendationsDefaultViewModel: RecommendationsViewModel {
 
                     let favoriteBookIDs = await model.favoriteBookIDs
                     Task { @MainActor [weak self] in
-                        self?.recommendations = recommendations
+                        self?.unfilteredRecommendations = recommendations
                             .map { BookViewModel(book: $0, favorite: favoriteBookIDs.contains($0.id)) }
                             .filter { !$0.favorite }
                     }
@@ -118,10 +125,22 @@ final class RecommendationsDefaultViewModel: RecommendationsViewModel {
             .favoriteBookIDsPublisher
             .sink { @Sendable ids in
                 Task { @MainActor [weak self] in
-                    self?.recommendations.removeAll { ids.contains($0.id) }
+                    self?.unfilteredRecommendations.removeAll { ids.contains($0.id) }
                 }
             }
             .store(in: &cancellables)
+    }
+
+    private func updateRecommendations(with unfilteredRecommendations: [BookViewModel]) {
+        var recommendations = unfilteredRecommendations
+        appliedFilters.forEach {
+            switch $0 {
+                case .topRated:
+                    recommendations = recommendations.filter { ($0.rating ?? .zero) >= 4.0 }
+            }
+        }
+
+        self.recommendations = recommendations
     }
 
 }
@@ -130,13 +149,15 @@ final class RecommendationsDefaultViewModel: RecommendationsViewModel {
 
 // MARK: -
 
-final class RecommendationsPreviewViewModel: RecommendationsViewModel {
+final class RecommendationsPreviewViewModel: RecommendationsViewModel, ObservableObject {
 
     // MARK: - Properties
 
     // MARK: RecommendationsViewModel protocol properties
 
-    var onboardingShown = false
+    @Published
+    var appliedFilters = [RecommendationsFilter]()
+    var onboardingShown = true
     let recommendations = [
         BookViewModel(
             id: "1",
