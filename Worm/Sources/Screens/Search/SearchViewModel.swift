@@ -32,8 +32,8 @@ final class SearchPreviewViewModel: SearchViewModel, BookListCellViewModel {
     // MARK: SearchViewModel protocol properties
 
     var query = ""
-    var recommendationsOnboardingShown = false
-    var searchOnboardingShown = false
+    var recommendationsOnboardingShown = true
+    var searchOnboardingShown = true
     private(set) var books = [
         BookViewModel(
             id: "1",

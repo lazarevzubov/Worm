@@ -236,6 +236,38 @@ struct RecommendationsDefaultViewModelTests {
         }
     }
 
+    @MainActor
+    @Test
+    func appliedFilters_empty_initially() async {
+        let vm: any RecommendationsViewModel = await RecommendationsDefaultViewModel(
+            model: RecommendationsMockModel(),
+            onboardingService: OnboardingMockService(),
+            imageService: ImageMockService()
+        )
+        #expect(vm.appliedFilters.isEmpty)
+    }
+
+    @MainActor
+    @Test
+    func recommendations_update_whenAppliedFilters_change() async {
+        let book = Book(id: "1", authors: [], title: "", description: "Desc", rating: 3.0)
+        let recommendations: Set = [book]
+
+        let vm: any RecommendationsViewModel = await RecommendationsDefaultViewModel(
+            model: RecommendationsMockModel(recommendations: recommendations),
+            onboardingService: OnboardingMockService(),
+            imageService: ImageMockService()
+        )
+        while vm.recommendations != [BookViewModel(book: book, favorite: false)] {
+            await Task.yield()
+        }
+
+        vm.appliedFilters.append(.topRated)
+        while !vm.recommendations.isEmpty {
+            await Task.yield()
+        }
+    }
+
     // MARK: -
 
     private actor RecommendationsMockModel: RecommendationsModel {
