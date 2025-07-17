@@ -17,8 +17,8 @@ struct OnboardingView: View {
     var body: some View {
         VStack(alignment: .trailing) {
             Image(systemName: "xmark")
-                .padding([.top, .bottom, .trailing], 4.0)
-            Text(text)
+                .padding([.vertical, .trailing], 4.0)
+            Text(text, comment: localizationComment)
         }
             .fontWeight(.light)
             .foregroundStyle(Color.black)
