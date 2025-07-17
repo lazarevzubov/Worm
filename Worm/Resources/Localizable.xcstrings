@@ -1,0 +1,184 @@
+{
+  "sourceLanguage" : "en-GB",
+  "strings" : {
+    "(book.title) favorite unchecked" : {
+      "comment" : "Accessibility label for a book and its favorite status",
+      "extractionState" : "stale",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "(book.title) не в избранных"
+          }
+        }
+      }
+    },
+    "%.1f out of %lld stars" : {
+      "localizations" : {
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$.1f out of %2$lld stars"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$.1f из %2$lld звезд"
+          }
+        }
+      }
+    },
+    "%@ – %@" : {
+      "comment" : "Accessibility label with a book title and authors",
+      "localizations" : {
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ – %2$@"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@–%2$@"
+          }
+        }
+      }
+    },
+    "%@ favorite checked" : {
+      "comment" : "Accessibility label for a book and its favorite status",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ в избранных"
+          }
+        }
+      }
+    },
+    "%@ favorite unchecked" : {
+      "comment" : "Accessibility label for a book and its favorite status",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ не в избранных"
+          }
+        }
+      }
+    },
+    "Close" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Закрыть"
+          }
+        }
+      }
+    },
+    "Delete" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Удалить"
+          }
+        }
+      }
+    },
+    "Favourites" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Избранное"
+          }
+        }
+      }
+    },
+    "Open recommendations filters." : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Открыть фильтры рекомендаций."
+          }
+        }
+      }
+    },
+    "Recommendations" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Рекомендации"
+          }
+        }
+      }
+    },
+    "Recommendations are shown in the order of their relevance and update as you turn some of them down or mark more books as favourites." : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Рекомендации отсортированы в порядке их релевантности и обновляются, когда они отклоняются и когда новые книги добавляются в избранное."
+          }
+        }
+      }
+    },
+    "Search" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Поиск"
+          }
+        }
+      }
+    },
+    "Search books" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Найти книги"
+          }
+        }
+      }
+    },
+    "Start by searching your favourite books and marking them as favourites." : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Начни с поиска своих любимых книг и добавления их в избранное."
+          }
+        }
+      }
+    },
+    "Then check your recommendations!" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "И после проверь рекомендации!"
+          }
+        }
+      }
+    },
+    "Top rated" : {
+      "comment" : "A title for the Top Rated filter",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Высокий рейтинг"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

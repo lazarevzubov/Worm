@@ -30,6 +30,7 @@ struct SearchView<ViewModel: SearchViewModel>: View {
                     VStack {
                         OnboardingView(
                             text: "Start by searching your favourite books and marking them as favourites.",
+                            localizationComment: "A tooltip that appears on the first launch of the app, explaining how to use search",
                             color: .favorites
                         )
                             .accessibilityIdentifier("SearchOnboardingLabel")
@@ -41,7 +42,11 @@ struct SearchView<ViewModel: SearchViewModel>: View {
                         && !viewModel.recommendationsOnboardingShown {
                     VStack {
                         Spacer()
-                        OnboardingView(text: "Then check your recommendations!", color: .recommendations)
+                        OnboardingView(
+                            text: "Then check your recommendations!",
+                            localizationComment: "A tooltip that appears on the first launch of the app, explaining how to check recommendations",
+                            color: .recommendations
+                        )
                             .accessibilityIdentifier("RecommendationsOnboardingLabel")
                     }
                         .onTapGesture { viewModel.recommendationsOnboardingShown = true }

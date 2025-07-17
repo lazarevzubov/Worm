@@ -36,7 +36,7 @@ struct FiltersView<ViewModel: FiltersViewModel>: View {
                 } label: {
                     switch filterItem {
                         case .topRated:
-                            Text("Top rated")
+                            Text("Top rated", comment: "A title for the Top Rated filter")
                     }
                 }
                 .`if`(viewModel.appliedFilters.contains(filterItem)) {

@@ -61,57 +61,57 @@ struct RatingView: View {
 
 #Preview {
     HStack {
-        Text("0.0:")
+        Text(verbatim: "0.0:")
         RatingView(viewModel: RatingViewModel(rating: .zero))
     }
         .padding([.bottom])
     HStack {
-        Text("0.1:")
+        Text(verbatim: "0.1:")
         RatingView(viewModel: RatingViewModel(rating: 0.1))
     }
         .padding([.bottom])
     HStack {
-        Text("0.4:")
+        Text(verbatim: "0.4:")
         RatingView(viewModel: RatingViewModel(rating: 0.4))
     }
         .padding([.bottom])
     HStack {
-        Text("0.5:")
+        Text(verbatim: "0.5:")
         RatingView(viewModel: RatingViewModel(rating: 0.5))
     }
         .padding([.bottom])
     HStack {
-        Text("0.6:")
+        Text(verbatim: "0.6:")
         RatingView(viewModel: RatingViewModel(rating: 0.6))
     }
         .padding([.bottom])
     HStack {
-        Text("0.9:")
+        Text(verbatim: "0.9:")
         RatingView(viewModel: RatingViewModel(rating: 0.9))
     }
         .padding([.bottom])
     HStack {
-        Text("1.0:")
+        Text(verbatim: "1.0:")
         RatingView(viewModel: RatingViewModel(rating: 1.0))
     }
         .padding([.bottom])
     HStack {
-        Text("2.0:")
+        Text(verbatim: "2.0:")
         RatingView(viewModel: RatingViewModel(rating: 2.0))
     }
         .padding([.bottom])
     HStack {
-        Text("3.0:")
+        Text(verbatim: "3.0:")
         RatingView(viewModel: RatingViewModel(rating: 3.0))
     }
         .padding([.bottom])
     HStack {
-        Text("4.0:")
+        Text(verbatim: "4.0:")
         RatingView(viewModel: RatingViewModel(rating: 4.0))
     }
         .padding([.bottom])
     HStack {
-        Text("5.0:")
+        Text(verbatim: "5.0:")
         RatingView(viewModel: RatingViewModel(rating: 5.0))
     }
         .padding([.bottom])
