@@ -30,16 +30,19 @@ struct OnboardingView: View {
     // MARK: Private properties
 
     private let color: Color
-    private let text: String
+    private let localizationComment: StaticString?
+    private let text: LocalizedStringKey
 
     // MARK: - Initialization
 
     /// Creates a hint view suited for on-boarding.
     /// - Parameters:
-    ///   - text: The text of the hint.
+    ///   - text: The localized  key used as the text of the hint.
+    ///   - localizationComment: The comment for the text's localized key.
     ///   - color: The background color of the hint.
-    init(text: String, color: Color) {
+    init(text: LocalizedStringKey, localizationComment: StaticString? = nil, color: Color) {
         self.text = text
+        self.localizationComment = localizationComment
         self.color = color
     }
 

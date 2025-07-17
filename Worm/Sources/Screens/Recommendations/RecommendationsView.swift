@@ -46,6 +46,7 @@ struct RecommendationsView<ViewModel: RecommendationsViewModel>: View {
                         VStack {
                             OnboardingView(
                                 text: "Recommendations are shown in the order of their relevance and update as you turn some of them down or mark more books as favourites.",
+                                localizationComment: "A tooltip that appears on the first launch of the app, explaining how recommendations work",
                                 color: .search
                             )
                                 .accessibilityIdentifier("OnboardingLabel")

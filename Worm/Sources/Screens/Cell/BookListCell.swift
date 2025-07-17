@@ -65,13 +65,15 @@ struct BookListCell: View {
     // MARK: Private methods
 
     private func makeCellAccessibilityLabel(for book: BookViewModel) -> Text {
-        Text("\(book.authors) – \(book.title)")
+        Text("\(book.authors) – \(book.title)", comment: "Accessibility label with a book title and authors")
     }
 
     private func makeFavoriteButtonAccessibilityLabel(for book: BookViewModel) -> Text {
         book.favorite
-            ? Text("\(book.title) favorite checked")
-            : Text("(book.title) favorite unchecked")
+            ? Text("\(book.title) favorite checked", comment: "Accessibility label for a book and its favorite status")
+            : Text(
+                "\(book.title) favorite unchecked", comment: "Accessibility label for a book and its favorite status"
+            )
     }
 
 }
