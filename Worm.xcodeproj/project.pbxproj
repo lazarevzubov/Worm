@@ -224,6 +224,7 @@
 			knownRegions = (
 				ru,
 				"en-GB",
+				en,
 			);
 			mainGroup = 4E5C6D8D2565BBB400DDB833;
 			packageReferences = (

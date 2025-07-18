@@ -1,20 +1,14 @@
 {
   "sourceLanguage" : "en-GB",
   "strings" : {
-    "(book.title) favorite unchecked" : {
-      "comment" : "Accessibility label for a book and its favorite status",
-      "extractionState" : "stale",
-      "localizations" : {
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "(book.title) не в избранных"
-          }
-        }
-      }
-    },
     "%.1f out of %lld stars" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%.1f out of %lld stars"
+          }
+        },
         "en-GB" : {
           "stringUnit" : {
             "state" : "new",
@@ -32,6 +26,12 @@
     "%@ – %@" : {
       "comment" : "Accessibility label with a book title and authors",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ – %2$@"
+          }
+        },
         "en-GB" : {
           "stringUnit" : {
             "state" : "new",
@@ -46,30 +46,48 @@
         }
       }
     },
-    "%@ favorite checked" : {
-      "comment" : "Accessibility label for a book and its favorite status",
+    "%@ favourite checked" : {
+      "comment" : "Accessibility label for a book and its favourite status",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ favorite checked"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ в избранных"
+            "value" : "%@ в избранном"
           }
         }
       }
     },
-    "%@ favorite unchecked" : {
-      "comment" : "Accessibility label for a book and its favorite status",
+    "%@ favourite unchecked" : {
+      "comment" : "Accessibility label for a book and its favourite status",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ favorite unchecked"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ не в избранных"
+            "value" : "%@ не в избранном"
           }
         }
       }
     },
     "Close" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Close"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -80,6 +98,12 @@
     },
     "Delete" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -90,6 +114,12 @@
     },
     "Favourites" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Favorites"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -100,6 +130,12 @@
     },
     "Open recommendations filters." : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open recommendations filters."
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -110,6 +146,12 @@
     },
     "Recommendations" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recommendations"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -120,6 +162,12 @@
     },
     "Recommendations are shown in the order of their relevance and update as you turn some of them down or mark more books as favourites." : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recommendations are shown in the order of their relevance and update as you turn some of them down or mark more books as favorites."
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -130,6 +178,12 @@
     },
     "Search" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Search"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -140,6 +194,12 @@
     },
     "Search books" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Search books"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -150,6 +210,12 @@
     },
     "Start by searching your favourite books and marking them as favourites." : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start by searching your favorite books and marking them as favorites."
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -160,6 +226,12 @@
     },
     "Then check your recommendations!" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Then check your recommendations!"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -171,6 +243,12 @@
     "Top rated" : {
       "comment" : "A title for the Top Rated filter",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Top rated"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
