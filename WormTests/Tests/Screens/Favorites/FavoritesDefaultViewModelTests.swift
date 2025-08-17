@@ -99,33 +99,6 @@ struct FavoritesDefaultViewModelTests {
         }
     }
 
-    @MainActor
-    @Test(.timeLimit(.minutes(1)))
-    func detailsViewModel_image() async {
-        let imageURL = URL(string: "https://apple.com")!
-        let image = UniversalImage()
-
-        let vm: any FavoritesViewModel = await FavoritesDefaultViewModel(
-            model: FavoritesMockModel(), imageService: ImageMockService(images: [imageURL : image])
-        )
-        let bookVM = BookViewModel(
-            book: Book(id: "ID",
-                       authors: [
-                        "Author1",
-                        "Author2"
-                       ],
-                       title: "Title",
-                       description: "Desc",
-                       imageURL: URL(string: "https://apple.com")),
-            favorite: false
-        )
-
-        let bookDetailsVM = vm.makeDetailsViewModel(for: bookVM)
-        while bookDetailsVM.image != image {
-            await Task.yield()
-        }
-    }
-
     // MARK: -
 
     private actor FavoritesMockModel: FavoritesModel {

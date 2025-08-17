@@ -38,13 +38,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		DD0ECA4E2E51EF6D00FB844A /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				Tests/Extensions/Bundle.swift,
-			);
-			target = 4E5C6D952565BBB400DDB833 /* Worm */;
-		};
 		DD8D1DCD2DC9368D00521949 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
@@ -69,7 +62,6 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
-				Tests/Extensions/Bundle.swift,
 				Worm.xctestplan,
 			);
 			target = 4E5C6DAB2565BBB500DDB833 /* WormTests */;
@@ -79,7 +71,7 @@
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		DD8D1D9F2DC9368C00521949 /* Worm */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (DD8D1DCD2DC9368D00521949 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = Worm; sourceTree = "<group>"; };
 		DD8D1E272DC9375500521949 /* WormUITests */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (DD8D1E2D2DC9375500521949 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = WormUITests; sourceTree = "<group>"; };
-		DD8D1E512DC9389700521949 /* WormTests */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (DD0ECA4E2E51EF6D00FB844A /* PBXFileSystemSynchronizedBuildFileExceptionSet */, DD8D1E672DC9389700521949 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = WormTests; sourceTree = "<group>"; };
+		DD8D1E512DC9389700521949 /* WormTests */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (DD8D1E672DC9389700521949 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = WormTests; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */

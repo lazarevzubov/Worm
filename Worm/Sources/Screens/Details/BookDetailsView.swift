@@ -22,7 +22,7 @@ struct BookDetailsView<ViewModel: BookDetailsViewModel>: View {
         }
         Spacer()
         if let image = viewModel.image { // TODO: Update if downloaded later.
-            UniversalImageView(image: image)
+            Image(decorative: image, scale: 1.0)
                 .padding(.bottom)
         }
         Text(viewModel.title)

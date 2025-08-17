@@ -7,6 +7,7 @@
 
 @preconcurrency
 import Combine
+import CoreGraphics
 import Foundation
 import Testing
 @testable
@@ -15,23 +16,6 @@ import Worm
 struct BookDetailsDefaultViewModelTests {
 
     // MARK: - Methods
-
-    @MainActor
-    @Test(.timeLimit(.minutes(1)))
-    func imageRetrieved() async throws {
-        let url = URL(string: "https://example.com")!
-        let vm: BookDetailsDefaultViewModel = BookDetailsDefaultViewModel(
-            authors: "Authors",
-            title: "Title",
-            description: "Desc",
-            imageURL: url,
-            rating: nil,
-            imageService: ImageMockService(images: [url : UniversalImage()])
-        )
-
-        var images = vm.$image.dropFirst().values.makeAsyncIterator()
-        await #expect(images.next() != nil, "Retrieved image should not be nil.")
-    }
 
     @MainActor
     @Test

@@ -5,6 +5,7 @@
 //  Created by Lazarev-Zubov, Nikita on 5.4.2024.
 //
 
+import CoreGraphics
 import Foundation
 @testable
 import Worm
@@ -13,11 +14,11 @@ struct ImageMockService: ImageService {
 
     // MARK: - Properties
 
-    let images: [URL : UniversalImage]
+    let images: [URL : CGImage]
 
     // MARK: - Initialization
 
-    init(images: [URL : UniversalImage] = [:]) {
+    init(images: [URL : CGImage] = [:]) {
         self.images = images
     }
 
@@ -25,7 +26,7 @@ struct ImageMockService: ImageService {
 
     // MARK: ImageService protocol methods
 
-    func getImage(from url: URL) async -> UniversalImage? {
+    func getImage(from url: URL) async -> CGImage? {
         images[url]
     }
 
