@@ -5,7 +5,9 @@
 //  Created by Nikita Lazarev-Zubov on 21.2.2021.
 //
 
+import CoreGraphics
 import Foundation
+import ImageIO
 
 /// Retrieves images.
 protocol ImageService: Sendable {
@@ -15,7 +17,7 @@ protocol ImageService: Sendable {
     /// Retrieves the image from an URL.
     /// - Parameter url: The image URL.
     /// - Returns: The retrieved image.
-    func getImage(from url: URL) async -> UniversalImage?
+    func getImage(from url: URL) async -> CGImage?
 
 }
 
@@ -60,9 +62,10 @@ final class ImageWebService: ImageService {
 
     // MARK: ImageService protocol methods
 
-    func getImage(from url: URL) async -> UniversalImage? {
-        if let (data, _) = try? await webService.data(from: url) {
-            UniversalImage(data: data)
+    func getImage(from url: URL) async -> CGImage? {
+        if let (data, _) = try? await webService.data(from: url),
+           let source = CGImageSourceCreateWithData(data as CFData, nil) {
+            CGImageSourceCreateImageAtIndex(source, 0, nil)
         } else {
             nil
         }

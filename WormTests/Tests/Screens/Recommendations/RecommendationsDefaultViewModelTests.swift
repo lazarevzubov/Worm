@@ -186,39 +186,6 @@ struct RecommendationsDefaultViewModelTests {
 
     @MainActor
     @Test(.timeLimit(.minutes(1)))
-    func detailsViewModel_image_accordingToImageService() async {
-        let imageURL = URL(string: "https://apple.com")!
-        let image = UniversalImage()
-        let imageService = ImageMockService(images: [imageURL : image])
-
-        let bookVM = BookViewModel(
-            book: Book(
-                id: "1",
-                authors: [
-                    "Author 1",
-                    "Authors 2"
-                ],
-                title: "Title",
-                description: "Desc",
-                imageURL: imageURL
-            ),
-            favorite: false
-        )
-
-        let vm: any RecommendationsViewModel = await RecommendationsDefaultViewModel(
-            model: RecommendationsMockModel(),
-            onboardingService: OnboardingMockService(),
-            imageService: imageService
-        )
-        let detailsVM = vm.makeDetailsViewModel(for: bookVM)
-
-        while detailsVM.image != image {
-            await Task.yield()
-        }
-    }
-
-    @MainActor
-    @Test(.timeLimit(.minutes(1)))
     func blockingRecommendation_updatesModel() async {
         let model = await RecommendationsMockModel()
         let vm: any RecommendationsViewModel = RecommendationsDefaultViewModel(

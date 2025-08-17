@@ -6,6 +6,7 @@
 //
 
 import Combine
+import CoreGraphics
 import Foundation
 
 /// Provides presentation data for a book details.
@@ -19,7 +20,7 @@ protocol BookDetailsViewModel: ObservableObject {
     /// The book's description.
     var description: String { get }
     /// The book's image.
-    var image: UniversalImage? { get }
+    var image: CGImage? { get }
     /// The book's rating.
     var ratingViewModel: RatingViewModel? { get }
     /// The book's title.
@@ -41,7 +42,7 @@ final class BookDetailsDefaultViewModel: BookDetailsViewModel {
     let ratingViewModel: RatingViewModel?
     let title: String
     @Published
-    var image: UniversalImage?
+    var image: CGImage?
 
     // MARK: Private properties
 
@@ -110,7 +111,7 @@ final class BookDetailsPreviewViewModel: BookDetailsViewModel {
 
     let authors = "J.R.R. Tolkien"
     let description = "A sensitive hobbit unexpectedly saves the situation."
-    let image = UniversalImage(systemName: "scribble.variable")
+    let image: CGImage? = nil
     let ratingViewModel: RatingViewModel? = RatingViewModel(rating: 1.23)
     let title = "The Lord of the Rings"
 

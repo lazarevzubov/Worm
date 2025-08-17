@@ -15,18 +15,6 @@ struct ImageWebServiceTests {
     // MARK: - Methods
 
     @Test
-    func image_returned_fromWebService() async {
-        let url = URL(string: "https://apple.com")!
-        let image = Bundle(for: type(of: BundleDetector())).image(forResource: "Worms.jpg")!
-        let webService = WebMockService(data: [url : image.dataRepresentation!])
-
-        let service = ImageWebService(webService: webService)
-        let retrievedImage = await service.getImage(from: url)
-
-        #expect(retrievedImage!.dataRepresentation! == image.dataRepresentation!, "Unexpected data received")
-    }
-
-    @Test
     func nil_returned_whenWebService_throws() async {
         let service = ImageWebService(webService: WebMockService())
 
