@@ -44,11 +44,6 @@ final class BookDetailsDefaultViewModel: BookDetailsViewModel {
     @Published
     var image: CGImage?
 
-    // MARK: Private properties
-
-    // FIXME: Don't store it.
-    private let imageService: ImageService
-
     // MARK: - Initialization
 
     /// Creates the provider.
@@ -70,7 +65,6 @@ final class BookDetailsDefaultViewModel: BookDetailsViewModel {
         self.authors = authors
         self.description = description
         self.title = title
-        self.imageService = imageService
 
         ratingViewModel = if let rating {
             RatingViewModel(rating: rating)
@@ -78,7 +72,7 @@ final class BookDetailsDefaultViewModel: BookDetailsViewModel {
             nil
         }
 
-        retrieveImage(from: imageURL, using: self.imageService)
+        retrieveImage(from: imageURL, using: imageService)
     }
 
     // MARK: - Methods
