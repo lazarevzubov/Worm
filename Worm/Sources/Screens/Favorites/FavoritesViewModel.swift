@@ -56,9 +56,7 @@ final class FavoritesDefaultViewModel: FavoritesViewModel {
     // MARK: FavoritesViewModel protocol methods
 
     func toggleFavoriteStateOfBook(withID id: String) {
-        Task {
-            await model.toggleFavoriteStateOfBook(withID: id)
-        }
+        Task { await model.toggleFavoriteStateOfBook(withID: id) }
     }
 
     func makeDetailsViewModel(for book: BookViewModel) -> some BookDetailsViewModel {
@@ -79,15 +77,8 @@ final class FavoritesDefaultViewModel: FavoritesViewModel {
             .favoritesPublisher
             .removeDuplicates()
             .sink { @Sendable book in
-                Task { [weak self, weak model] in
-                    guard let model else {
-                        return
-                    }
-
-                    let favorites = await model.favorites
-                    Task { @MainActor [weak self] in
-                        self?.favorites = favorites.map { BookViewModel(book: $0, favorite: true) }
-                    }
+                Task { @MainActor [weak self] in
+                    self?.favorites = await model.favorites.map { BookViewModel(book: $0, favorite: true) }
                 }
             }
             .store(in: &cancellables)

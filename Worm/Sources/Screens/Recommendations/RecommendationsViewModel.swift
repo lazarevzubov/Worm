@@ -107,17 +107,11 @@ final class RecommendationsDefaultViewModel: RecommendationsViewModel {
             .removeDuplicates()
             .debounce(for: .seconds(2), scheduler: RunLoop.main)
             .sink { @Sendable [weak self] recommendations in
-                Task { [weak self] in
-                    guard let self else {
-                        return
-                    }
-
+                Task { @MainActor [weak self] in
                     let favoriteBookIDs = await model.favoriteBookIDs
-                    Task { @MainActor [weak self] in
-                        self?.unfilteredRecommendations = recommendations
-                            .map { BookViewModel(book: $0, favorite: favoriteBookIDs.contains($0.id)) }
-                            .filter { !$0.favorite }
-                    }
+                    self?.unfilteredRecommendations = recommendations
+                        .map { BookViewModel(book: $0, favorite: favoriteBookIDs.contains($0.id)) }
+                        .filter { !$0.favorite }
                 }
             }
             .store(in: &cancellables)
