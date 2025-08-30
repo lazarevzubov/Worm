@@ -10,7 +10,7 @@ import XCTest
 
 final class RecommendationsScreenTests: XCTestCase {
 
-    // FIXME: Don't relay on hardcoded localizables.
+    // FIXME: Don't rely on hardcoded localizables.
 
     // MARK: - Methods
 
