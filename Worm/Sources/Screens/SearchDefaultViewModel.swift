@@ -89,15 +89,9 @@ final class SearchDefaultViewModel: MainScreenViewModel, SearchViewModel {
             .booksPublisher
             .removeDuplicates()
             .sink { @Sendable books in
-                Task { [weak self] in
-                    guard let self else {
-                        return
-                    }
-
+                Task { @MainActor [weak self] in
                     let favoriteBookIDs = await model.favoriteBookIDs
-                    Task { @MainActor [weak self] in
-                        self?.books = books.map { BookViewModel(book: $0, favorite: favoriteBookIDs.contains($0.id)) }
-                    }
+                    self?.books = books.map { BookViewModel(book: $0, favorite: favoriteBookIDs.contains($0.id)) }
                 }
             }
             .store(in: &cancellables)
