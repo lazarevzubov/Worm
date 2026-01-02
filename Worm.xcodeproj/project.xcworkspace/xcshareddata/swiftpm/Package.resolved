@@ -6,8 +6,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/lazarevzubov/GoodreadsService.git",
       "state" : {
-        "revision" : "b1f7582d156bb5034a89bb192f1587c22528b04d",
-        "version" : "3.1.0"
+        "revision" : "94f8be38689743fdcf02695f166f73ea71a53911",
+        "version" : "4.0.0"
       }
     },
     {
