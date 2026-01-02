@@ -27,32 +27,23 @@ struct MainScreen<
         TabView {
             NavigationStack {
                 searchView
-                    .searchable(text: $viewModel.query, placement: .toolbar, prompt: "Search books")
+                    .searchable(text: $viewModel.query, prompt: "Search books")
                     .autocorrectionDisabled(true)
-                    .toolbarColorScheme(.light, for: .automatic)
                     .navigationTitle("Search")
-                    .toolbarBackground(Color.search, for: .automatic)
-                    .toolbarBackground(.visible, for: .automatic)
             }
                 .tabItem {
                     Label("Search", systemImage: "magnifyingglass")
                 }
             NavigationStack {
                 recommendationsView
-                    .toolbarColorScheme(.light, for: .automatic)
                     .navigationTitle("Recommendations")
-                    .toolbarBackground(Color.recommendations, for: .automatic)
-                    .toolbarBackground(.visible, for: .automatic)
             }
                 .tabItem {
                     Label("Recommendations", systemImage: "checkmark")
                 }
             NavigationStack {
                 favoritesView
-                    .toolbarColorScheme(.light, for: .automatic)
                     .navigationTitle("Favourites")
-                    .toolbarBackground(Color.favorites, for: .automatic)
-                    .toolbarBackground(.visible, for: .automatic)
             }
                 .tabItem {
                     Label("Favourites", systemImage: "heart")
