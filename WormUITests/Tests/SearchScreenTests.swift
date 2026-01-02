@@ -226,7 +226,7 @@ final class SearchScreenTests: XCTestCase {
         }
         searchBar.tap()
 
-        let cancelButton = app.buttons["Cancel"]
+        let cancelButton = app.buttons["Close"]
         guard searchBar.waitForExistence(timeout: 5.0) else {
             XCTFail("Search bar didn't appear.")
             return
@@ -248,7 +248,7 @@ final class SearchScreenTests: XCTestCase {
         }
         searchBar.tap()
 
-        let cancelButton = app.navigationBars.buttons["Cancel"]
+        let cancelButton = app.navigationBars.buttons["Close"]
         guard cancelButton.waitForExistence(timeout: 5.0) else {
             XCTFail("Cancel button bar didn't appear.")
             return
