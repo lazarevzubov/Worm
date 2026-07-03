@@ -169,6 +169,47 @@ struct RecommendationsDefaultModelTests {
     }
 
     @Test(.timeLimit(.minutes(1)))
+    func recommendationsUpdate_keepsBook_whenOnlyOneOfMultipleSourcesIsRemoved() async {
+        let firstFavorite = Book(
+            id: "1", authors: ["Author"], title: "First Favorite", description: "Desc1", similarBookIDs: ["100"]
+        )
+        let secondFavorite = Book(
+            id: "2", authors: ["Author"], title: "Second Favorite", description: "Desc2", similarBookIDs: ["100"]
+        )
+
+        let recommendedBook = Book(
+            id: "100", authors: ["Author"], title: "Recommended", description: "Desc3", similarBookIDs: []
+        )
+
+        let model: RecommendationsModel = await RecommendationsDefaultModel(
+            catalogService: CatalogMockService(
+                books: [
+                    firstFavorite,
+                    secondFavorite,
+                    recommendedBook
+                ]
+            ),
+            favoritesService: FavoritesMockService(
+                favoriteBookIDs: [
+                    firstFavorite.id,
+                    secondFavorite.id
+                ]
+            )
+        )
+
+        var books = await model.recommendationsPublisher.dropFirst().values.makeAsyncIterator()
+        await #expect(books.next() == [recommendedBook], "Unexpected data received.")
+
+        try? await Task.sleep(for: .seconds(1)) // Lets both favorite sources finish adding the recommendation.
+
+        await model.toggleFavoriteStateOfBook(withID: secondFavorite.id)
+        await #expect(
+            books.next() == [recommendedBook],
+            "The book should stay recommended while the other favorite still recommends it."
+        )
+    }
+
+    @Test(.timeLimit(.minutes(1)))
     func recommendationsUpdate_received_onBlockingRecommendation() async {
         let book = Book(
             id: "1",
