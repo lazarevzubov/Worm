@@ -141,13 +141,6 @@ actor RecommendationsDefaultModel: RecommendationsModel {
     }
 
     private func addRecommendedBook(withID id: String, for sourceID: String) async {
-        if let bookDescriptor = prioritizedRecommendations[id] {
-            var sourceIDs = bookDescriptor.sourceIDs
-            sourceIDs.insert(sourceID)
-
-            prioritizedRecommendations[id] = (bookDescriptor.book, sourceIDs)
-        }
-
         guard let book = await catalogService.getBook(by: id) else {
             return
         }
@@ -156,7 +149,10 @@ actor RecommendationsDefaultModel: RecommendationsModel {
         if await favoritesService.blockedBookIDs.contains(id) {
             prioritizedRecommendations.removeValue(forKey: id)
         } else {
-            prioritizedRecommendations[id] = (book, [sourceID])
+            var sourceIDs = prioritizedRecommendations[id]?.sourceIDs ?? []
+            sourceIDs.insert(sourceID)
+
+            prioritizedRecommendations[id] = (book, sourceIDs)
         }
     }
 
