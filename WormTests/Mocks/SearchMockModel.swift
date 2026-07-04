@@ -19,15 +19,15 @@ actor SearchMockModel: SearchModel {
     // MARK: SearchModel protocol properties
 
     @Published
-    private(set) var books = Set<Book>()
-    var booksPublisher: Published<Set<Book>>.Publisher { $books }
+    private(set) var books = [Book]()
+    var booksPublisher: Published<[Book]>.Publisher { $books }
     @Published
     private(set) var favoriteBookIDs = Set<String>()
     var favoriteBookIDsPublisher: Published<Set<String>>.Publisher { $favoriteBookIDs }
 
     // MARK: - Initialization
 
-    init(books: Set<Book> = [], favoriteBookIDs: Set<String> = []) async {
+    init(books: [Book] = [], favoriteBookIDs: Set<String> = []) async {
         self.books = books
         self.favoriteBookIDs = favoriteBookIDs
     }

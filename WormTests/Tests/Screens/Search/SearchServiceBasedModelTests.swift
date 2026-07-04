@@ -101,7 +101,37 @@ struct SearchServiceBasedModelTests {
         )
 
         await model.searchBooks(by: query)
-        while await model.books != Set(books) {
+        while await model.books != books {
+            await Task.yield()
+        }
+    }
+
+    @Test(.timeLimit(.minutes(1)))
+    func books_update_onSearch_preservesRelevanceOrder_regardlessOfFetchCompletionOrder() async {
+        let query = "Query"
+
+        let books = [
+            Book(id: "1", authors: [], title: "First", description: "Desc1"),
+            Book(id: "2", authors: [], title: "Second", description: "Desc2"),
+            Book(id: "3", authors: [], title: "Third", description: "Desc3")
+        ]
+        let result = books.map { $0.id }
+
+        let model: any SearchModel = await SearchServiceBasedModel(
+            catalogService: CatalogMockService(
+                books: books,
+                queries: [query : result],
+                delays: [
+                    "1" : .milliseconds(300),
+                    "2" : .milliseconds(150),
+                    "3" : .milliseconds(0)
+                ]
+            ),
+            favoritesService: FavoritesMockService()
+        )
+
+        await model.searchBooks(by: query)
+        while await model.books != books {
             await Task.yield()
         }
     }
@@ -162,7 +192,7 @@ struct SearchServiceBasedModelTests {
         await model.searchBooks(by: query2)
         await model.searchBooks(by: query1)
 
-        while await model.books != Set(books1) {
+        while await model.books != books1 {
             await Task.yield()
         }
     }

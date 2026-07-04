@@ -108,7 +108,7 @@ struct SearchDefaultViewModelTests {
     @MainActor
     @Test(.timeLimit(.minutes(1)))
     func books_update() async {
-        let books: Set = [Book(id: "1", authors: [], title: "", description: "Desc")]
+        let books = [Book(id: "1", authors: [], title: "", description: "Desc")]
         let vm: any SearchViewModel = await SearchDefaultViewModel(
             model: SearchMockModel(books: books),
             onboardingService: OnboardingMockService(),
@@ -126,7 +126,7 @@ struct SearchDefaultViewModelTests {
     @Test(.timeLimit(.minutes(1)))
     func books_update_withFavorite() async {
         let id = "1"
-        let books: Set = [Book(id: id, authors: [], title: "", description: "Desc")]
+        let books = [Book(id: id, authors: [], title: "", description: "Desc")]
         let vm: any SearchViewModel = await SearchDefaultViewModel(
             model: SearchMockModel(books: books, favoriteBookIDs: [id]),
             onboardingService: OnboardingMockService(),
@@ -144,7 +144,7 @@ struct SearchDefaultViewModelTests {
     @Test(.timeLimit(.minutes(1)))
     func books_update_afterTogglingFavorite() async {
         let id = "1"
-        let books: Set = [Book(id: id, authors: [], title: "", description: "Desc")]
+        let books = [Book(id: id, authors: [], title: "", description: "Desc")]
         let vm: any SearchViewModel = await SearchDefaultViewModel(
             model: SearchMockModel(books: books),
             onboardingService: OnboardingMockService(),

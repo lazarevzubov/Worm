@@ -16,13 +16,15 @@ final class CatalogMockService: CatalogService {
     // MARK: Private properties
 
     private let books: [Book]
+    private let delays: [String : Duration]
     private let queries: [String : [String]]
 
     // MARK: - Initialization
 
-    init(books: [Book] = [], queries: [String : [String]] = [:]) {
+    init(books: [Book] = [], queries: [String : [String]] = [:], delays: [String : Duration] = [:]) {
         self.books = books
         self.queries = queries
+        self.delays = delays
     }
 
     // MARK: - Methods
@@ -34,7 +36,10 @@ final class CatalogMockService: CatalogService {
     }
 
     func getBook(by id: String) async -> Book? {
-        books.first { $0.id == id }
+        if let delay = delays[id] {
+            try? await Task.sleep(for: delay)
+        }
+        return books.first { $0.id == id }
     }
 
 }
