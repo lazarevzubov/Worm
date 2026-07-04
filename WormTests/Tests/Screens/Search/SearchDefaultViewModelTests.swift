@@ -28,8 +28,8 @@ struct SearchDefaultViewModelTests {
     }
 
     @MainActor
-    @Test
-    func searchOnboarding_update_doesNotUpdatePersistence() async {
+    @Test(.timeLimit(.minutes(1)))
+    func searchOnboarding_update_updatesPersistence() async {
         let value = true
         let service = OnboardingMockService(onboardingShown: value)
         let vm: any SearchViewModel = await SearchDefaultViewModel(
@@ -39,7 +39,9 @@ struct SearchDefaultViewModelTests {
         let newValue = !value
         vm.searchOnboardingShown = newValue
 
-        #expect(service.searchOnboardingShown == value, "Persistence was unexpectedly updated.")
+        while service.searchOnboardingShown != newValue {
+            await Task.yield()
+        }
     }
 
     @MainActor
@@ -66,7 +68,7 @@ struct SearchDefaultViewModelTests {
         let newValue = !value
         vm.recommendationsOnboardingShown = newValue
 
-        while service.searchOnboardingShown != newValue {
+        while service.recommendationsOnboardingShown != newValue {
             await Task.yield()
         }
     }

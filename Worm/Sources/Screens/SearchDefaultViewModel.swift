@@ -29,10 +29,12 @@ final class SearchDefaultViewModel: MainScreenViewModel, SearchViewModel {
     private(set) var books = [BookViewModel]()
     @Published
     var recommendationsOnboardingShown: Bool {
-        didSet { onboardingService.searchOnboardingShown = recommendationsOnboardingShown }
+        didSet { onboardingService.recommendationsOnboardingShown = recommendationsOnboardingShown }
     }
     @Published
-    var searchOnboardingShown: Bool
+    var searchOnboardingShown: Bool {
+        didSet { onboardingService.searchOnboardingShown = searchOnboardingShown }
+    }
 
     // MARK: Private methods
 
@@ -54,7 +56,7 @@ final class SearchDefaultViewModel: MainScreenViewModel, SearchViewModel {
         self.imageService = imageService
 
         searchOnboardingShown = onboardingService.searchOnboardingShown
-        recommendationsOnboardingShown = onboardingService.searchOnboardingShown
+        recommendationsOnboardingShown = onboardingService.recommendationsOnboardingShown
 
         Task { [weak self] in
             await self?.bind(model: model)
