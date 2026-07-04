@@ -22,9 +22,9 @@ protocol RecommendationsModel: Actor {
     /// The publisher of changes to the list of favorite book IDs.
     var favoriteBookIDsPublisher: Published<Set<String>>.Publisher { get }
     /// A list of recommended books in ready-to-display order.
-    var recommendations: Set<Book> { get }
+    var recommendations: [Book] { get }
     /// The publisher of changes to the list of recommended books.
-    var recommendationsPublisher: Published<Set<Book>>.Publisher { get }
+    var recommendationsPublisher: Published<[Book]>.Publisher { get }
 
     // MARK: - Methods
 
@@ -47,11 +47,11 @@ actor RecommendationsDefaultModel: RecommendationsModel {
     // MARK: RecommendationsModel protocol properties
 
     var favoriteBookIDsPublisher: Published<Set<String>>.Publisher { $favoriteBookIDs }
-    var recommendationsPublisher: Published<Set<Book>>.Publisher { $recommendations }
+    var recommendationsPublisher: Published<[Book]>.Publisher { $recommendations }
     @Published
     private(set) var favoriteBookIDs = Set<String>()
     @Published
-    private(set) var recommendations = Set<Book>()
+    private(set) var recommendations = [Book]()
 
     // MARK: Private properties
 
@@ -60,12 +60,10 @@ actor RecommendationsDefaultModel: RecommendationsModel {
     private lazy var cancellables = Set<AnyCancellable>()
     private var prioritizedRecommendations = OrderedDictionary<String, (book: Book, sourceIDs: Set<String>)>() {
         didSet {
-            recommendations = Set(
-                prioritizedRecommendations
-                    .values
-                    .stableSorted { $0.sourceIDs.count > $1.sourceIDs.count }
-                    .compactMap { $0.book }
-            )
+            recommendations = prioritizedRecommendations
+                .values
+                .stableSorted { $0.sourceIDs.count > $1.sourceIDs.count }
+                .map { $0.book }
         }
     }
 

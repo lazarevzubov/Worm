@@ -59,7 +59,7 @@ struct RecommendationsDefaultViewModelTests {
     @MainActor
     @Test(.timeLimit(.minutes(1)))
     func recommendations_update() async {
-        let recommendations: Set = [Book(id: "1", authors: [], title: "", description: "Desc")]
+        let recommendations = [Book(id: "1", authors: [], title: "", description: "Desc")]
         let vm: any RecommendationsViewModel = await RecommendationsDefaultViewModel(
             model: RecommendationsMockModel(recommendations: recommendations),
             onboardingService: OnboardingMockService(),
@@ -77,7 +77,7 @@ struct RecommendationsDefaultViewModelTests {
     @Test(.timeLimit(.minutes(1)))
     func recommendations_update_afterTogglingFavorite() async {
         let id = "1"
-        let recommendations: Set = [Book(id: id, authors: [], title: "", description: "Desc")]
+        let recommendations = [Book(id: id, authors: [], title: "", description: "Desc")]
         let vm: any RecommendationsViewModel = await RecommendationsDefaultViewModel(
             model: RecommendationsMockModel(recommendations: recommendations),
             onboardingService: OnboardingMockService(),
@@ -218,7 +218,7 @@ struct RecommendationsDefaultViewModelTests {
     @Test
     func recommendations_update_whenAppliedFilters_change() async {
         let book = Book(id: "1", authors: [], title: "", description: "Desc", rating: 3.0)
-        let recommendations: Set = [book]
+        let recommendations = [book]
 
         let vm: any RecommendationsViewModel = await RecommendationsDefaultViewModel(
             model: RecommendationsMockModel(recommendations: recommendations),
@@ -246,15 +246,15 @@ struct RecommendationsDefaultViewModelTests {
         // MARK: RecommendationsModel protocol properties
 
         var favoriteBookIDsPublisher: Published<Set<String>>.Publisher { $favoriteBookIDs }
-        var recommendationsPublisher: Published<Set<Book>>.Publisher { $recommendations }
+        var recommendationsPublisher: Published<[Book]>.Publisher { $recommendations }
         @Published
         private(set) var favoriteBookIDs: Set<String>
         @Published
-        private(set) var recommendations: Set<Book>
+        private(set) var recommendations: [Book]
 
         // MARK: - Initialization
 
-        init(recommendations: Set<Book> = [], favoriteBookIDs: Set<String> = []) async {
+        init(recommendations: [Book] = [], favoriteBookIDs: Set<String> = []) async {
             self.recommendations = recommendations
             self.favoriteBookIDs = favoriteBookIDs
         }

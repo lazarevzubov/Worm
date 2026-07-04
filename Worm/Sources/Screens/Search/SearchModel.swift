@@ -14,10 +14,10 @@ protocol SearchModel: Actor {
 
     // MARK: - Properties
 
-    /// The list of books corresponding to the current search query.
-    var books: Set<Book> { get }
+    /// The list of books corresponding to the current search query, in relevance order.
+    var books: [Book] { get }
     /// The publisher of changes to the list of books corresponding to the current search query.
-    var booksPublisher: Published<Set<Book>>.Publisher { get }
+    var booksPublisher: Published<[Book]>.Publisher { get }
     /// The list of favorite book IDs.
     var favoriteBookIDs: Set<String> { get }
     /// The publisher of books to the list of favorite book IDs.
@@ -43,10 +43,10 @@ actor SearchServiceBasedModel: SearchModel {
 
     // MARK: SearchModel protocol properties
 
-    var booksPublisher: Published<Set<Book>>.Publisher { $books }
+    var booksPublisher: Published<[Book]>.Publisher { $books }
     var favoriteBookIDsPublisher: Published<Set<String>>.Publisher { $favoriteBookIDs }
     @Published
-    private(set) var books = Set<Book>()
+    private(set) var books = [Book]()
     @Published
     private(set) var favoriteBookIDs = Set<String>()
 
@@ -64,6 +64,7 @@ actor SearchServiceBasedModel: SearchModel {
         }
     }
     private var currentSearchTask: Task<(), Error>?
+    private var fetchedBooks = [String : Book]()
 
     // MARK: - Initialization
 
@@ -99,6 +100,7 @@ actor SearchServiceBasedModel: SearchModel {
             }
 
             books.removeAll()
+            fetchedBooks.removeAll()
             currentSearchResult.removeAll()
 
             if !query.isEmpty {
@@ -140,9 +142,12 @@ actor SearchServiceBasedModel: SearchModel {
     }
 
     private func appendIfNeeded(book: Book) {
-        if currentSearchResult.contains(book.id) {
-            books.insert(book)
+        guard currentSearchResult.contains(book.id) else {
+            return
         }
+
+        fetchedBooks[book.id] = book
+        books = currentSearchResult.compactMap { fetchedBooks[$0] }
     }
 
 }
