@@ -13,6 +13,7 @@ struct SequenceTests {
 
     // MARK: - Methods
 
+    @Test
     func stableSorted_sorts() {
         let items = [
             Item(value: 3),
@@ -31,6 +32,7 @@ struct SequenceTests {
         )
     }
 
+    @Test
     func stableSorted_stable() {
         let item1 = Item(value: 1)
         let item2 = Item(value: 2)
