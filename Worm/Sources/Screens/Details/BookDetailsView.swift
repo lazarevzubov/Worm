@@ -15,37 +15,41 @@ struct BookDetailsView<ViewModel: BookDetailsViewModel>: View {
     // MARK: View protocol properties
 
     var body: some View {
-        HStack {
-            Spacer()
-            Button("Close") { dismiss() }
-                .padding()
+        VStack {
+            HStack {
+                Spacer()
+                Button("Close") { dismiss() }
+                    .padding()
+            }
+            ScrollView {
+                if let image = viewModel.image { // TODO: Update if downloaded later.
+                    Image(decorative: image, scale: 1.0)
+                        .padding(.bottom)
+                }
+                Text(viewModel.title)
+                    .font(.headline)
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal)
+                Text(viewModel.authors)
+                    .font(.subheadline)
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal)
+                if let ratingViewModel = viewModel.ratingViewModel {
+                    RatingView(viewModel: ratingViewModel)
+                        .padding(.top, 2.0)
+                        .padding(.horizontal)
+                }
+                Text(viewModel.description)
+                    .font(.caption)
+                    .multilineTextAlignment(.center)
+                    .padding(
+                        [
+                            .top,
+                            .horizontal
+                        ]
+                    )
+            }
         }
-        Spacer()
-        if let image = viewModel.image { // TODO: Update if downloaded later.
-            Image(decorative: image, scale: 1.0)
-                .padding(.bottom)
-        }
-        Text(viewModel.title)
-            .font(.headline)
-            .multilineTextAlignment(.center)
-            .padding(.horizontal)
-        Text(viewModel.authors)
-            .font(.subheadline)
-            .multilineTextAlignment(.center)
-            .padding(.horizontal)
-        if let ratingViewModel = viewModel.ratingViewModel {
-            RatingView(viewModel: ratingViewModel)
-                .padding(.top, 2.0)
-                .padding(.horizontal)
-        }
-        Text(viewModel.description)
-            .font(.caption)
-            .multilineTextAlignment(.center)
-            .padding(
-                [.top,
-                 .horizontal]
-            )
-        Spacer()
     }
 
     // MARK: Private properties
