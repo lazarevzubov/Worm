@@ -30,11 +30,11 @@ final class OnboardingPersistentService: OnboardingService {
 
     var recommendationsOnboardingShown: Bool {
         get { userDefaults.bool(forKey: .recommendationsOnboardingShown) }
-        set { userDefaults.setValue(newValue, forKey: .recommendationsOnboardingShown) }
+        set { userDefaults.set(newValue, forKey: .recommendationsOnboardingShown) }
     }
     var searchOnboardingShown: Bool {
         get { userDefaults.bool(forKey: .searchOnboardingShown) }
-        set { userDefaults.setValue(newValue, forKey: .searchOnboardingShown) }
+        set { userDefaults.set(newValue, forKey: .searchOnboardingShown) }
     }
 
     // MARK: Private properties
