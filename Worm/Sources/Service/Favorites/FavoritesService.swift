@@ -117,7 +117,10 @@ actor FavoritesPersistenceService: FavoritesService {
 
     func removeFromFavoriteBook(withID id: String) {
         do {
-            try ModelContext(container).delete(model: FavoriteBook.self, where: #Predicate { $0.id == id })
+            let context = ModelContext(container)
+            try context.delete(model: FavoriteBook.self, where: #Predicate { $0.id == id })
+            try context.save()
+
             updateFavoriteBooks()
         } catch {
             // TODO: Proper error handling.
