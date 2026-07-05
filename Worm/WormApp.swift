@@ -43,30 +43,28 @@ struct WormApp: App {
 
         return CatalogGoodreadsService(goodreadsService: goodreadsService, cacheService: cacheService)
     }()
-    private var favoritesService: FavoritesService {
-        get {
-            let modelContainer: ModelContainer = {
+    private let favoritesService: FavoritesService = {
+        let modelContainer: ModelContainer = {
 #if DEBUG
-                let storedInMemory = ProcessInfo.processInfo.environment["TEST"] != nil
+            let storedInMemory = ProcessInfo.processInfo.environment["TEST"] != nil
 #else
-                let storedInMemory = false
+            let storedInMemory = false
 #endif
-                let schema = Schema(
-                    [BlockedBook.self,
-                     FavoriteBook.self],
-                    version: Schema.Version(1, 0, 0)
-                )
-                let configuration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: storedInMemory)
-                do {
-                    return try ModelContainer(for: schema, configurations: configuration)
-                } catch {
-                    // TODO: Proper error handling.
-                    fatalError("Could not create ModelContainer: \(error)")
-                }
-            }()
-            return FavoritesPersistenceService(modelContainer: modelContainer)
-        }
-    }
+            let schema = Schema(
+                [BlockedBook.self,
+                 FavoriteBook.self],
+                version: Schema.Version(1, 0, 0)
+            )
+            let configuration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: storedInMemory)
+            do {
+                return try ModelContainer(for: schema, configurations: configuration)
+            } catch {
+                // TODO: Proper error handling.
+                fatalError("Could not create ModelContainer: \(error)")
+            }
+        }()
+        return FavoritesPersistenceService(modelContainer: modelContainer)
+    }()
     private let imageService = ImageWebService(webService: URLSession.shared)
     private let onboardingService = OnboardingPersistentService()
 
