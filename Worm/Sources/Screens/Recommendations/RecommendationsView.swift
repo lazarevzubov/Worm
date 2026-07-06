@@ -28,12 +28,7 @@ struct RecommendationsView<ViewModel: RecommendationsViewModel>: View {
                             }
                                 .buttonStyle(.plain)
                                 .contextMenu {
-                                    Button("Delete") {
-                                        viewModel
-                                            .recommendations
-                                            .filter { $0.id == book.id }
-                                            .forEach { viewModel.blockRecommendation($0) }
-                                    }
+                                    Button("Delete") { viewModel.blockRecommendation(book) }
                                 }
                         }
                             .onDelete { indexSet in
