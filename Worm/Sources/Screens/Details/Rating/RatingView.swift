@@ -16,8 +16,8 @@ struct RatingView: View {
 
     var body: some View {
         HStack(spacing: 4.0) {
-            ForEach(viewModel.units, id: \.self) {
-                Image(systemName: imageName(for: $0))
+            ForEach(Array(viewModel.units.enumerated()), id: \.offset) {
+                Image(systemName: imageName(for: $1))
                     .accessibilityHidden(true)
             }
         }
