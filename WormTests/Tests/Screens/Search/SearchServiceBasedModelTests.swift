@@ -197,4 +197,85 @@ struct SearchServiceBasedModelTests {
         }
     }
 
+    @Test(.timeLimit(.minutes(1)))
+    func booksFetch_supportsConcurrency() async {
+        let books = (1...20).map { Book(id: "\($0)", authors: [], title: "Book \($0)", description: "Desc") }
+        let query = "Query"
+        let result = books.map { $0.id }
+        let catalogService = ConcurrencyTrackingCatalogMockService(books: books, queries: [query : result])
+
+        let model: any SearchModel = await SearchServiceBasedModel(
+            catalogService: catalogService, favoritesService: FavoritesMockService()
+        )
+
+        await model.searchBooks(by: query)
+        while await model.books.count != books.count {
+            await Task.yield()
+        }
+
+        let peakConcurrency = await catalogService.peakConcurrency
+        #expect(peakConcurrency > 1, "Fetches should run concurrently.")
+    }
+
+    @Test(.timeLimit(.minutes(1)))
+    func booksFetch_boundsConcurrency() async {
+        let books = (1...20).map { Book(id: "\($0)", authors: [], title: "Book \($0)", description: "Desc") }
+        let query = "Query"
+        let result = books.map { $0.id }
+        let catalogService = ConcurrencyTrackingCatalogMockService(books: books, queries: [query : result])
+
+        let model: any SearchModel = await SearchServiceBasedModel(
+            catalogService: catalogService, favoritesService: FavoritesMockService()
+        )
+
+        await model.searchBooks(by: query)
+        while await model.books.count != books.count {
+            await Task.yield()
+        }
+
+        let peakConcurrency = await catalogService.peakConcurrency
+        #expect(peakConcurrency <= 5, "Concurrent fetches should be bounded.")
+    }
+
+    // MARK: -
+
+    private actor ConcurrencyTrackingCatalogMockService: CatalogService {
+
+        // MARK: - Properties
+
+        private(set) var peakConcurrency = 0
+
+        // MARK: Private properties
+
+        private let books: [Book]
+        private let queries: [String : [String]]
+        private var currentConcurrency = 0
+
+        // MARK: - Initialization
+
+        init(books: [Book], queries: [String : [String]]) {
+            self.books = books
+            self.queries = queries
+        }
+
+        // MARK: - Methods
+
+        // MARK: CatalogService protocol methods
+
+        func searchBooks(_ query: String) async -> [String] {
+            queries[query] ?? []
+        }
+
+        func getBook(by id: String) async -> Book? {
+            currentConcurrency += 1
+            peakConcurrency = max(peakConcurrency, currentConcurrency)
+
+            try? await Task.sleep(for: .milliseconds(50))
+            currentConcurrency -= 1
+
+            return books.first { $0.id == id }
+        }
+
+    }
+
 }

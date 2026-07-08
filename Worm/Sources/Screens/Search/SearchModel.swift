@@ -52,15 +52,16 @@ actor SearchServiceBasedModel: SearchModel {
 
     // MARK: Private properties
 
+    private static let maxConcurrentFetches = 5
     private let catalogService: CatalogService
     private let favoritesService: FavoritesService
     private let queryDelay: Duration?
     private lazy var cancellables = Set<AnyCancellable>()
+    private var currentFetchTask: Task<(), Never>?
     private var currentSearchResult = [String]() {
         didSet {
-            currentSearchResult.forEach { result in
-                Task { await handleSearchResult(result) }
-            }
+            currentFetchTask?.cancel()
+            currentFetchTask = Task { await fetchBooks(for: currentSearchResult) }
         }
     }
     private var currentSearchTask: Task<(), Error>?
@@ -133,6 +134,26 @@ actor SearchServiceBasedModel: SearchModel {
 
     private func updateFavoriteBookIDs(_ favoriteBookIDs: Set<String>) {
         self.favoriteBookIDs = favoriteBookIDs
+    }
+
+    private func fetchBooks(for results: [String]) async {
+        await withTaskGroup(of: Void.self) {
+            var pendingResults = results.makeIterator()
+
+            for _ in 0..<min(Self.maxConcurrentFetches, results.count) {
+                guard let result = pendingResults.next() else {
+                    break
+                }
+                $0.addTask { await self.handleSearchResult(result) }
+            }
+            while await $0.next() != nil {
+                guard !Task.isCancelled,
+                      let result = pendingResults.next() else {
+                    continue
+                }
+                $0.addTask { await self.handleSearchResult(result) }
+            }
+        }
     }
 
     private func handleSearchResult(_ result: String) async {
