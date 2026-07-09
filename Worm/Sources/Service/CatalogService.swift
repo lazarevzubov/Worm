@@ -58,7 +58,7 @@ final class CatalogGoodreadsService: CatalogService {
     }
 
     func getBook(by id: String) async -> Book? {
-        if let book = await cacheService.storage[id] {
+        if let book = await cacheService.value(for: id) {
             return book
         }
 
