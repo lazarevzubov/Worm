@@ -16,11 +16,12 @@ protocol CacheService<Key, Entity>: Actor {
 
     // MARK: - Properties
 
-    /// The stored data, in no particular order.
-    var storage: [Key: Entity] { get }
-
     // MARK: - Methods
 
+    /// Returns the stored value for the given key, if present.
+    /// - Parameter key: The key, associated with the object.
+    /// - Returns: The stored object, or `nil` if there's none stored for the given key.
+    func value(for key: Key) -> Entity?
     /// Inserts a new object to the storage.
     /// - Parameters:
     ///   - entity: The new object to store.
@@ -31,23 +32,59 @@ protocol CacheService<Key, Entity>: Actor {
 
 // MARK: -
 
-/// Stores results of computations or distributed calls to provide them in a more efficient manner than repeating the initial call again.
+/// Stores results of computations or distributed calls to provide them in a more efficient manner than repeating the
+///   initial call again.
 ///
-/// Uses the in-memory kind of storage, which is nor persisted across the app launches.
+/// Uses the in-memory kind of storage, which is nor persisted across the app launches. Once the number of stored
+///   entities reaches `capacity`, the LRU one is evicted to make room for a new one.
 actor CacheInMemoryService<Key: Hashable, Entity>: CacheService {
 
     // MARK: - Properties
 
-    // MARK: CacheService protocol properties
+    // MARK: Private properties
 
-    private(set) var storage = [Key : Entity]()
+    private let capacity: Int
+    private var recencyOrder = [Key]()
+    private var storage = [Key: Entity]()
+
+    // MARK: - Initialization
+
+    /// Creates a cache service, backed by an in-memory storage.
+    /// - Parameter capacity: The maximum number of entities to store at once, before the least recently used one gets
+    ///   evicted.
+    init(capacity: Int = 200) {
+        self.capacity = capacity
+    }
 
     // MARK: - Methods
 
     // MARK: CacheService protocol methods
 
+    func value(for key: Key) -> Entity? {
+        guard let entity = storage[key] else {
+            return nil
+        }
+        markUsed(key)
+
+        return entity
+    }
+
     func insert(_ entity: Entity, for key: Key) {
         storage[key] = entity
+        markUsed(key)
+
+        if storage.count > capacity,
+        let leastRecentlyUsed = recencyOrder.first {
+            storage.removeValue(forKey: leastRecentlyUsed)
+            recencyOrder.removeFirst()
+        }
+    }
+
+    // MARK: Private methods
+
+    private func markUsed(_ key: Key) {
+        recencyOrder.removeAll { $0 == key }
+        recencyOrder.append(key)
     }
 
 }
