@@ -49,7 +49,7 @@ struct FavoritesDefaultViewModelTests {
 
     @MainActor
     @Test
-    func testDetailsViewModel_title() async {
+    func detailsViewModel_title() async {
         let vm: any FavoritesViewModel = await FavoritesDefaultViewModel(
             model: FavoritesMockModel(), imageService: ImageMockService()
         )
