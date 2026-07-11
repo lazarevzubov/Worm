@@ -58,8 +58,6 @@ struct MainScreen<
     private let searchView: SearchView
     @ObservedObject
     private var viewModel: ViewModel
-    @State
-    private var searchQuery = ""
 
     // MARK: - Initialization
 
