@@ -43,10 +43,10 @@ struct MainScreen<
                 }
             NavigationStack {
                 favoritesView
-                    .navigationTitle("Favourites")
+                    .navigationTitle("Favorites")
             }
                 .tabItem {
-                    Label("Favourites", systemImage: "heart")
+                    Label("Favorites", systemImage: "heart")
                 }
         }
     }

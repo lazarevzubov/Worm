@@ -29,7 +29,7 @@ struct SearchView<ViewModel: SearchViewModel>: View {
                 if !viewModel.searchOnboardingShown {
                     VStack {
                         OnboardingView(
-                            text: "Start by searching your favourite books and marking them as favourites.",
+                            text: "Start by searching your favorite books and marking them as favorites.",
                             localizationComment: "A tooltip that appears on the first launch of the app, explaining how to use search",
                             color: .favorites
                         )
