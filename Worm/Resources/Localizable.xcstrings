@@ -46,8 +46,8 @@
         }
       }
     },
-    "%@ favourite checked" : {
-      "comment" : "Accessibility label for a book and its favourite status",
+    "%@ favorite checked" : {
+      "comment" : "Accessibility label for a book and its favorite status",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -63,8 +63,8 @@
         }
       }
     },
-    "%@ favourite unchecked" : {
-      "comment" : "Accessibility label for a book and its favourite status",
+    "%@ favorite unchecked" : {
+      "comment" : "Accessibility label for a book and its favorite status",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -112,7 +112,7 @@
         }
       }
     },
-    "Favourites" : {
+    "Favorites" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -160,7 +160,7 @@
         }
       }
     },
-    "Recommendations are shown in the order of their relevance and update as you turn some of them down or mark more books as favourites." : {
+    "Recommendations are shown in the order of their relevance and update as you turn some of them down or mark more books as favorites." : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -208,7 +208,7 @@
         }
       }
     },
-    "Start by searching your favourite books and marking them as favourites." : {
+    "Start by searching your favorite books and marking them as favorites." : {
       "localizations" : {
         "en" : {
           "stringUnit" : {

@@ -40,7 +40,7 @@ struct RecommendationsView<ViewModel: RecommendationsViewModel>: View {
                     if !viewModel.onboardingShown {
                         VStack {
                             OnboardingView(
-                                text: "Recommendations are shown in the order of their relevance and update as you turn some of them down or mark more books as favourites.",
+                                text: "Recommendations are shown in the order of their relevance and update as you turn some of them down or mark more books as favorites.",
                                 localizationComment: "A tooltip that appears on the first launch of the app, explaining how recommendations work",
                                 color: .search
                             )

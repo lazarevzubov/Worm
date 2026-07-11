@@ -53,7 +53,7 @@ struct OnboardingView: View {
 // MARK: -
 
 #Preview {
-    OnboardingView(text: "Start by searching your favourite books and marking them as favourites.", color: .favorites)
+    OnboardingView(text: "Start by searching your favorite books and marking them as favorites.", color: .favorites)
 }
 
 #endif
