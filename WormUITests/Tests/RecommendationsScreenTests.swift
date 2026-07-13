@@ -8,22 +8,20 @@
 
 import XCTest
 
+@MainActor
 final class RecommendationsScreenTests: XCTestCase {
 
     // FIXME: Don't rely on hardcoded localizables.
 
     // MARK: - Methods
 
-    @MainActor
     func testScreenOpening() {
-        let app = openedRecommendationsTab()
+        let app = makeOpenRecommendationsTab()
         XCTAssert(app.staticTexts["Recommendations"].exists)
     }
 
-    @MainActor
     func testOnboarding_shown_onFirstLaunch() {
-        deleteApp()
-        let app = openedRecommendationsTab()
+        let app = makeOpenRecommendationsTab(resetOnboarding: true)
 
         let onboardingLabel = app.staticTexts["OnboardingLabel"]
         guard onboardingLabel.waitForExistence(timeout: 5.0) else {
@@ -35,10 +33,8 @@ final class RecommendationsScreenTests: XCTestCase {
         XCTAssertTrue(onboardingLabel.isHittable, "Onboarding isn't tappable.")
     }
 
-    @MainActor
     func testOnboarding_disappears_onTap() {
-        deleteApp()
-        let app = openedRecommendationsTab()
+        let app = makeOpenRecommendationsTab(resetOnboarding: true)
 
         let onboardingLabel = app.staticTexts["OnboardingLabel"]
         guard onboardingLabel.waitForExistence(timeout: 5.0) else {
@@ -54,10 +50,8 @@ final class RecommendationsScreenTests: XCTestCase {
         XCTAssertFalse(onboardingLabel.isHittable, "Oboarding is tappable.")
     }
 
-    @MainActor
     func testOnboarding_notShownTwice_afterDismissal() {
-        deleteApp()
-        let app = openedRecommendationsTab()
+        let app = makeOpenRecommendationsTab(resetOnboarding: true)
 
         let onboardingLabel = app.staticTexts["OnboardingLabel"]
         guard onboardingLabel.waitForExistence(timeout: 5.0) else {
@@ -72,7 +66,7 @@ final class RecommendationsScreenTests: XCTestCase {
         }
 
         app.terminate()
-        _ = openedRecommendationsTab()
+        _ = makeOpenRecommendationsTab()
 
         guard !onboardingLabel.waitForExistence(timeout: 5.0) else {
             XCTFail("Onboarding appeared again.")
@@ -80,21 +74,18 @@ final class RecommendationsScreenTests: XCTestCase {
         }
     }
 
-    @MainActor
     func testListInitiallyEmpty() {
-        let app = openedRecommendationsTab()
+        let app = makeOpenRecommendationsTab()
         XCTAssertTrue(app.tables.staticTexts.count == 0)
     }
 
-    @MainActor
     func testFiltersButton_isVisible() {
-        let app = openedRecommendationsTab()
+        let app = makeOpenRecommendationsTab()
         XCTAssertTrue(app.buttons["RecommendationsFiltersButton"].isHittable)
     }
 
-    @MainActor
     func testTopRatedButton_isVisible_whenFiltersButton_isTapped() {
-        let app = openedRecommendationsTab()
+        let app = makeOpenRecommendationsTab()
         app.buttons["RecommendationsFiltersButton"].tap()
 
         let topRatedButton = app.buttons["Top rated"]
@@ -105,9 +96,8 @@ final class RecommendationsScreenTests: XCTestCase {
 
     // MARK: Private properties
 
-    @MainActor
-    private func openedRecommendationsTab() -> XCUIApplication {
-        let app = XCTestCase.testApp
+    private func makeOpenRecommendationsTab(resetOnboarding: Bool = false) -> XCUIApplication {
+        let app = XCTestCase.makeTestApp(resetOnboarding: resetOnboarding)
         app.launch()
 
         let tabButton = app.tabBars.buttons["Recommendations"]

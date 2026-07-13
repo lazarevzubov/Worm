@@ -55,7 +55,7 @@ final class BookDetailsViewUITests: XCTestCase {
 
     @MainActor
     private func openSearch() -> XCUIApplication {
-        let app = XCTestCase.testApp
+        let app = XCTestCase.makeTestApp()
         app.launch()
 
         let onboardingLabel = app.staticTexts["SearchOnboardingLabel"]

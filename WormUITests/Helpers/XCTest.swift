@@ -12,47 +12,26 @@ extension XCTestCase {
 
     // MARK: - Properties
 
-    /// The application under test instance with the `TEST` flag added to the launch environment.
-    @MainActor
-    static var testApp: XCUIApplication {
-        let app = XCUIApplication()
-        app.launchEnvironment = ["TEST": "YES"]
+    static let resetOnboardingEnvironmentKey = "RESET_ONBOARDING"
 
-        return app
-    }
+    // MARK: Private properties
+
+    static let testEnvironmentKey = "TEST"
 
     // MARK: - Methods
 
-    /// Removes the app from the testing device.
     @MainActor
-    func deleteApp() {
-        XCUIApplication().terminate()
+    static func makeTestApp(resetOnboarding: Bool = false) -> XCUIApplication {
+        let app = XCUIApplication()
 
-        let springboard = XCUIApplication(bundleIdentifier: "com.apple.springboard")
-        let icon = springboard.icons["Worm"]
-        guard icon.exists else {
-            return
+        var environment = [testEnvironmentKey : "YES"]
+        if resetOnboarding {
+            environment[resetOnboardingEnvironmentKey] = "YES"
         }
 
-        icon.press(forDuration: 1.0)
+        app.launchEnvironment = environment
 
-        let removeAppButton = springboard.buttons["Remove App"]
-        guard removeAppButton.waitForExistence(timeout: 5.0) else {
-            return
-        }
-        removeAppButton.tap()
-
-        let deleteAppButton = springboard.buttons["Delete App"]
-        guard deleteAppButton.waitForExistence(timeout: 5.0) else {
-            return
-        }
-        deleteAppButton.tap()
-
-        let deleteButton = springboard.buttons["Delete"]
-        guard deleteButton.waitForExistence(timeout: 5.0) else {
-            return
-        }
-        deleteButton.tap()
+        return app
     }
 
 }
