@@ -48,6 +48,12 @@ final class OnboardingPersistentService: OnboardingService {
     ///     app.
     init(userDefaults: UserDefaults = .standard) {
         self.userDefaults = userDefaults
+#if DEBUG
+        if ProcessInfo.processInfo.environment["RESET_ONBOARDING"] != nil {
+            userDefaults.removeObject(forKey: .recommendationsOnboardingShown)
+            userDefaults.removeObject(forKey: .searchOnboardingShown)
+        }
+#endif
     }
 
 }
