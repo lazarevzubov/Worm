@@ -57,7 +57,7 @@ struct BookViewModelTests {
         )
 
         let vm = BookViewModel(book: book, favorite: true)
-        #expect(vm.authors == "\(author1), \(author2)")
+        #expect(vm.authors == ListFormatter.localizedString(byJoining: [author1, author2]))
     }
 
     @Test

@@ -81,7 +81,7 @@ extension BookViewModel {
     init(book: Book, favorite: Bool) {
         self.init(
             id: book.id,
-            authors: book.authors.joined(separator: ", "), // TODO: Localize.
+            authors: ListFormatter.localizedString(byJoining: book.authors),
             title: book.title,
             description: book.description,
             imageURL: book.imageURL,

@@ -6,6 +6,7 @@
 //
 
 import Combine
+import Foundation
 import GoodreadsService
 import SwiftUI
 import Testing
@@ -121,7 +122,7 @@ struct RecommendationsDefaultViewModelTests {
         )
         let detailsVM = vm.makeDetailsViewModel(for: bookVM)
 
-        #expect(detailsVM.authors == "Author 1, Authors 2", "Unexpected authors string")
+        #expect(detailsVM.authors == ListFormatter.localizedString(byJoining: authors), "Unexpected authors string")
     }
 
     @Test
