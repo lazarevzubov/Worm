@@ -22,7 +22,7 @@ struct BookDetailsView<ViewModel: BookDetailsViewModel>: View {
                     .padding()
             }
             ScrollView {
-                if let image = viewModel.image { // TODO: Update if downloaded later.
+                if let image = viewModel.image {
                     Image(decorative: image, scale: 1.0)
                         .padding(.bottom)
                 }
