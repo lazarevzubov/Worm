@@ -18,14 +18,15 @@ actor FavoritesMockService: FavoritesService {
     var blockedBookIDsPublisher: Published<Set<String>>.Publisher { $blockedBookIDs }
     var favoriteBookIDsPublisher: Published<Set<String>>.Publisher { $favoriteBookIDs }
     @Published
-    private(set) var blockedBookIDs = Set<String>()
+    private(set) var blockedBookIDs: Set<String>
     @Published
     private(set) var favoriteBookIDs: Set<String>
 
     // MARK: - Initialization
 
-    init(favoriteBookIDs: Set<String> = []) async {
+    init(favoriteBookIDs: Set<String> = [], blockedBookIDs: Set<String> = []) async {
         self.favoriteBookIDs = favoriteBookIDs
+        self.blockedBookIDs = blockedBookIDs
     }
 
     // MARK: - Methods

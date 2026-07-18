@@ -12,11 +12,11 @@ import Testing
 @testable
 import Worm
 
+@MainActor
 struct RecommendationsDefaultViewModelTests {
 
     // MARK: - Methods
 
-    @MainActor
     @Test
     func recommendationsOnboarding_stateInitially_asProvided() async {
         let value = true
@@ -28,7 +28,6 @@ struct RecommendationsDefaultViewModelTests {
         #expect(vm.onboardingShown == value, "Onboarding has an unexpected initial value.")
     }
 
-    @MainActor
     @Test(.timeLimit(.minutes(1)))
     func recommendationsOnboarding_update_updatesPersistence() async {
         let value = true
@@ -45,7 +44,6 @@ struct RecommendationsDefaultViewModelTests {
         }
     }
 
-    @MainActor
     @Test
     func recommendations_empty_initially() async {
         let vm: any RecommendationsViewModel = await RecommendationsDefaultViewModel(
@@ -56,7 +54,6 @@ struct RecommendationsDefaultViewModelTests {
         #expect(vm.recommendations.isEmpty)
     }
 
-    @MainActor
     @Test(.timeLimit(.minutes(1)))
     func recommendations_update() async {
         let recommendations = [Book(id: "1", authors: [], title: "", description: "Desc")]
@@ -73,7 +70,6 @@ struct RecommendationsDefaultViewModelTests {
         }
     }
 
-    @MainActor
     @Test(.timeLimit(.minutes(1)))
     func recommendations_update_afterTogglingFavorite() async {
         let id = "1"
@@ -90,7 +86,6 @@ struct RecommendationsDefaultViewModelTests {
         }
     }
 
-    @MainActor
     @Test(.timeLimit(.minutes(1)))
     func togglingFavorite_updatesModel() async {
         let model = await RecommendationsMockModel()
@@ -108,7 +103,6 @@ struct RecommendationsDefaultViewModelTests {
         }
     }
 
-    @MainActor
     @Test
     func detailsViewModel_authors_accordingToBook() async {
         let authors = [
@@ -130,7 +124,6 @@ struct RecommendationsDefaultViewModelTests {
         #expect(detailsVM.authors == "Author 1, Authors 2", "Unexpected authors string")
     }
 
-    @MainActor
     @Test
     func detailsViewModel_title_accordingToBook() async {
         let title = "Title"
@@ -157,7 +150,6 @@ struct RecommendationsDefaultViewModelTests {
         #expect(detailsVM.title == "Title", "Unexpected title string")
     }
 
-    @MainActor
     @Test
     func detailsViewModel_createsRatingViewModel_withRating_accordingToBook() async {
         let bookVM = BookViewModel(
@@ -184,7 +176,6 @@ struct RecommendationsDefaultViewModelTests {
         #expect(detailsVM.ratingViewModel?.rating == 1.23, "Unexpected rating string")
     }
 
-    @MainActor
     @Test(.timeLimit(.minutes(1)))
     func blockingRecommendation_updatesModel() async {
         let model = await RecommendationsMockModel()
@@ -203,7 +194,6 @@ struct RecommendationsDefaultViewModelTests {
         }
     }
 
-    @MainActor
     @Test
     func appliedFilters_empty_initially() async {
         let vm: any RecommendationsViewModel = await RecommendationsDefaultViewModel(
@@ -214,7 +204,25 @@ struct RecommendationsDefaultViewModelTests {
         #expect(vm.appliedFilters.isEmpty)
     }
 
-    @MainActor
+    @Test(.timeLimit(.minutes(1)))
+    func recommendations_preservesOrder_fromModel() async {
+        let books = [
+            Book(id: "1", authors: [], title: "First", description: "Desc1"),
+            Book(id: "2", authors: [], title: "Second", description: "Desc2"),
+            Book(id: "3", authors: [], title: "Third", description: "Desc3")
+        ]
+        let vm: any RecommendationsViewModel = await RecommendationsDefaultViewModel(
+            model: RecommendationsMockModel(recommendations: books),
+            onboardingService: OnboardingMockService(),
+            imageService: ImageMockService()
+        )
+
+        let expected = books.map { BookViewModel(book: $0, favorite: false) }
+        while vm.recommendations != expected {
+            await Task.yield()
+        }
+    }
+
     @Test
     func recommendations_update_whenAppliedFilters_change() async {
         let book = Book(id: "1", authors: [], title: "", description: "Desc", rating: 3.0)
