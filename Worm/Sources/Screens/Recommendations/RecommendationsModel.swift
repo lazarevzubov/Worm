@@ -58,11 +58,11 @@ actor RecommendationsDefaultModel: RecommendationsModel {
     private let catalogService: CatalogService
     private let favoritesService: any FavoritesService
     private lazy var cancellables = Set<AnyCancellable>()
-    private var prioritizedRecommendations = OrderedDictionary<String, (book: Book, sourceIDs: Set<String>)>() {
+    private var prioritizedRecommendations = OrderedDictionary<String, RecommendationEntry>() {
         didSet {
             recommendations = prioritizedRecommendations
                 .values
-                .stableSorted { $0.sourceIDs.count > $1.sourceIDs.count }
+                .stableSorted { $0.rank > $1.rank }
                 .map { $0.book }
         }
     }
@@ -78,7 +78,7 @@ actor RecommendationsDefaultModel: RecommendationsModel {
         self.favoritesService = favoritesService
 
         Task { [weak self] in
-            await self?.bind(favoritesService: favoritesService)
+            await self?.bindFavoritesService(favoritesService)
         }
     }
 
@@ -98,18 +98,29 @@ actor RecommendationsDefaultModel: RecommendationsModel {
 
     func blockFromRecommendationsBook(withID id: String) async {
         prioritizedRecommendations.removeValue(forKey: id)
+
         await favoritesService.addToBlockedBook(withID: id)
+        await applyPenalty(fromBlockedBookWithID: id)
     }
 
     // MARK: Private methods
 
-    private func bind(favoritesService: any FavoritesService) async {
+    private func bindFavoritesService(_ favoritesService: any FavoritesService) async {
         await favoritesService
             .favoriteBookIDsPublisher
             .removeDuplicates()
             .sink { @Sendable ids in
                 Task { [weak self] in
                     await self?.update(with: ids)
+                }
+            }
+            .store(in: &cancellables)
+        await favoritesService
+            .blockedBookIDsPublisher
+            .removeDuplicates()
+            .sink { @Sendable ids in
+                Task { [weak self] in
+                    await self?.applyPenalties(fromBlockedBookIDs: ids)
                 }
             }
             .store(in: &cancellables)
@@ -146,28 +157,78 @@ actor RecommendationsDefaultModel: RecommendationsModel {
         // This needs re-checking, because the situation might've changed while the book was being fetched.
         if await favoritesService.blockedBookIDs.contains(id) {
             prioritizedRecommendations.removeValue(forKey: id)
-        } else {
-            var sourceIDs = prioritizedRecommendations[id]?.sourceIDs ?? []
-            sourceIDs.insert(sourceID)
+            return
+        }
 
-            prioritizedRecommendations[id] = (book, sourceIDs)
+        if var entry = prioritizedRecommendations[id] {
+            entry.sourceIDs.insert(sourceID)
+            prioritizedRecommendations[id] = entry
+        } else {
+            let penalizingIDs = await penalizingBookIDs(forBookWithID: id)
+            prioritizedRecommendations[id] = RecommendationEntry(
+                book: book, penalizingIDs: penalizingIDs, sourceIDs: [sourceID]
+            )
         }
     }
 
     private func removeRecommendedBooksForBook(withID id: String) {
-        for bookDescriptor in prioritizedRecommendations {
-            var sourceIDs = bookDescriptor.value.sourceIDs
-            guard sourceIDs.contains(id) else {
+        for element in prioritizedRecommendations {
+            guard element.value.sourceIDs.contains(id) else {
                 continue
             }
 
-            if sourceIDs.count == 1 {
-                prioritizedRecommendations.removeValue(forKey: bookDescriptor.key)
+            if element.value.sourceIDs.count == 1 {
+                prioritizedRecommendations.removeValue(forKey: element.key)
             } else {
-                sourceIDs.remove(id)
-                prioritizedRecommendations[bookDescriptor.key] = (bookDescriptor.value.book, sourceIDs)
+                var entry = element.value
+                entry.sourceIDs.remove(id)
+
+                prioritizedRecommendations[element.key] = entry
             }
         }
+    }
+
+    private func applyPenalties(fromBlockedBookIDs blockedBookIDs: Set<String>) async {
+        for blockedBookID in blockedBookIDs {
+            await applyPenalty(fromBlockedBookWithID: blockedBookID)
+        }
+    }
+
+    private func applyPenalty(fromBlockedBookWithID blockedBookID: String) async {
+        let similarBookIDs = await catalogService.getBook(by: blockedBookID)?.similarBookIDs ?? []
+        for candidateID in similarBookIDs {
+            guard var entry = prioritizedRecommendations[candidateID] else {
+                continue
+            }
+
+            entry.penalizingIDs.insert(blockedBookID)
+            prioritizedRecommendations[candidateID] = entry
+        }
+    }
+
+    private func penalizingBookIDs(forBookWithID candidateID: String) async -> Set<String> {
+        var penalizingIDs = Set<String>()
+        for blockedBookID in await favoritesService.blockedBookIDs {
+            let similarBookIDs = await catalogService.getBook(by: blockedBookID)?.similarBookIDs ?? []
+            if similarBookIDs.contains(candidateID) {
+                penalizingIDs.insert(blockedBookID)
+            }
+        }
+
+        return penalizingIDs
+    }
+
+    // MARK: -
+
+    private struct RecommendationEntry {
+
+        // MARK: - Properties
+
+        let book: Book
+        var penalizingIDs = Set<String>()
+        var rank: Int { sourceIDs.count - penalizingIDs.count }
+        var sourceIDs: Set<String>
+
     }
 
 }

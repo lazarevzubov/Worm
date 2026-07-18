@@ -255,4 +255,138 @@ struct RecommendationsDefaultModelTests {
         await #expect(favoritesService.blockedBookIDs.contains(id))
     }
 
+    @Test(.timeLimit(.minutes(1)))
+    func recommendationsUpdate_ordersBooks_byNumberOfRecommendingFavorites() async {
+        let firstFavorite = Book(
+            id: "1",
+            authors: ["Author"],
+            title: "First Favorite",
+            description: "Desc1",
+            similarBookIDs: [
+                "100",
+                "200"
+            ]
+        )
+        let secondFavorite = Book(
+            id: "2", authors: ["Author"], title: "Second Favorite", description: "Desc2", similarBookIDs: ["100"]
+        )
+
+        let higherRanked = Book(id: "100", authors: ["Author"], title: "Higher Ranked", description: "Desc3")
+        let lowerRanked = Book(id: "200", authors: ["Author"], title: "Lower Ranked", description: "Desc4")
+
+        let model: RecommendationsModel = await RecommendationsDefaultModel(
+            catalogService: CatalogMockService(
+                books: [
+                    firstFavorite,
+                    secondFavorite,
+                    higherRanked,
+                    lowerRanked
+                ]
+            ),
+            favoritesService: FavoritesMockService(
+                favoriteBookIDs: [
+                    firstFavorite.id,
+                    secondFavorite.id
+                ]
+            )
+        )
+
+        while await model.recommendations != [
+            higherRanked,
+            lowerRanked
+        ] {
+            await Task.yield()
+        }
+    }
+
+    @Test(.timeLimit(.minutes(1)))
+    func recommendationsUpdate_lowersRank_ofBooksRecommendedByBlockedBook() async {
+        let favorite = Book(
+            id: "1",
+            authors: ["Author"],
+            title: "Favorite",
+            description: "Desc1",
+            similarBookIDs: [
+                "100",
+                "200",
+                "300"
+            ]
+        )
+        let blockedRecommendation = Book(
+            id: "100", authors: ["Author"], title: "Blocked", description: "Desc2", similarBookIDs: ["200"]
+        )
+
+        let penalizedRecommendation = Book(id: "200", authors: ["Author"], title: "Penalized", description: "Desc3")
+        let unaffectedRecommendation = Book(id: "300", authors: ["Author"], title: "Unaffected", description: "Desc4")
+
+        let model: RecommendationsModel = await RecommendationsDefaultModel(
+            catalogService: CatalogMockService(
+                books: [
+                    favorite,
+                    blockedRecommendation,
+                    penalizedRecommendation,
+                    unaffectedRecommendation
+                ]
+            ),
+            favoritesService: FavoritesMockService(favoriteBookIDs: [favorite.id])
+        )
+
+        while await model.recommendations != [
+            blockedRecommendation,
+            penalizedRecommendation,
+            unaffectedRecommendation
+        ] {
+            await Task.yield()
+        }
+
+        await model.blockFromRecommendationsBook(withID: blockedRecommendation.id)
+        while await model.recommendations != [
+            unaffectedRecommendation,
+            penalizedRecommendation
+        ] {
+            await Task.yield()
+        }
+    }
+
+    @Test(.timeLimit(.minutes(1)))
+    func recommendationsUpdate_appliesAlreadyBlockedBooksPenalty_toNewlyAddedRecommendation() async {
+        let alreadyBlocked = Book(
+            id: "1", authors: ["Author"], title: "Already Blocked", description: "Desc1", similarBookIDs: ["200"]
+        )
+        let favorite = Book(
+            id: "2",
+            authors: ["Author"],
+            title: "Favorite",
+            description: "Desc2",
+            similarBookIDs: [
+                "200",
+                "300"
+            ]
+        )
+
+        let penalizedRecommendation = Book(id: "200", authors: ["Author"], title: "Penalized", description: "Desc3")
+        let unaffectedRecommendation = Book(id: "300", authors: ["Author"], title: "Unaffected", description: "Desc4")
+
+        let model: RecommendationsModel = await RecommendationsDefaultModel(
+            catalogService: CatalogMockService(
+                books: [
+                    alreadyBlocked,
+                    favorite,
+                    penalizedRecommendation,
+                    unaffectedRecommendation
+                ]
+            ),
+            favoritesService: FavoritesMockService(
+                favoriteBookIDs: [favorite.id], blockedBookIDs: [alreadyBlocked.id]
+            )
+        )
+
+        while await model.recommendations != [
+            unaffectedRecommendation,
+            penalizedRecommendation
+        ] {
+            await Task.yield()
+        }
+    }
+
 }
