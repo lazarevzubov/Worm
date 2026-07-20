@@ -53,7 +53,6 @@ final class BookDetailsViewUITests: XCTestCase {
 
     // MARK: Private methods
 
-    @MainActor
     private func openSearch() -> XCUIApplication {
         let app = XCTestCase.makeTestApp()
         app.launch()

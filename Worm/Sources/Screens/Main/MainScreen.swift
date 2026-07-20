@@ -9,7 +9,6 @@
 import SwiftUI
 
 // TODO: Accessibility.
-// TODO: UI tests.
 
 /// The main screen visual representation.
 struct MainScreen<
