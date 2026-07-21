@@ -26,8 +26,7 @@ final class BookDetailsViewUITests: XCTestCase {
 
         bookCell.tap()
 
-        let ratingView = app.otherElements["4,6 out of 5 stars"]
-        print(app.debugDescription)
+        let ratingView = app.otherElements["4.6 out of 5 stars"]
         XCTAssertTrue(ratingView.exists, "Rating view should be displayed for books with ratings.")
     }
 
@@ -44,9 +43,10 @@ final class BookDetailsViewUITests: XCTestCase {
         }
 
         bookCell.tap()
-        if app.otherElements.allElementsBoundByIndex.first(
-            where: { $0.label.matches("\\d,\\d out of 5 stars") }
-        ) != nil {
+        if app
+            .otherElements
+            .allElementsBoundByIndex
+            .first(where: { $0.label.matches("\\d\\.\\d out of 5 stars") }) != nil {
             XCTFail("Rating view should not be displayed for books without ratings.")
         }
     }
