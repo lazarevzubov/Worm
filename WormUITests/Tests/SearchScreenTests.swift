@@ -11,8 +11,6 @@ import XCTest
 @MainActor
 final class SearchScreenTests: XCTestCase {
 
-    // FIXME: Don't rely on hardcoded localizables.
-
     // MARK: - Methods
 
     func testSearchOnboarding_shown_onFirstLaunch() {
@@ -162,7 +160,7 @@ final class SearchScreenTests: XCTestCase {
         let app = XCTestCase.makeTestApp()
         app.launch()
 
-        XCTAssert(app.staticTexts["Search"].exists)
+        XCTAssert(app.navigationBars.searchFields.element(boundBy: 0).exists)
     }
 
     func testSearchBarVisible() {

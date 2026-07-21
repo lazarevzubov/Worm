@@ -25,6 +25,10 @@ struct FiltersView<ViewModel: FiltersViewModel>: View {
 #endif
         LazyVGrid(columns: [GridItem(.adaptive(minimum: 100.0))], spacing: 20.0) {
             ForEach(RecommendationsFilter.allCases, id: \.self) { filterItem in
+                let identifier = switch filterItem {
+                    case .topRated:
+                        "TopRatedFilterButton"
+                }
                 Button {
                     withAnimation {
                         if viewModel.appliedFilters.contains(filterItem) {
@@ -39,14 +43,15 @@ struct FiltersView<ViewModel: FiltersViewModel>: View {
                             Text("Top rated", comment: "A title for the Top Rated filter")
                     }
                 }
-                .`if`(viewModel.appliedFilters.contains(filterItem)) {
-                    $0
-                        .buttonStyle(.borderedProminent)
-                } `else`: {
-                    $0
-                        .buttonStyle(.bordered)
-                }
-                .buttonBorderShape(.capsule)
+                    .accessibilityIdentifier(identifier)
+                    .`if`(viewModel.appliedFilters.contains(filterItem)) {
+                        $0
+                            .buttonStyle(.borderedProminent)
+                    } `else`: {
+                        $0
+                            .buttonStyle(.bordered)
+                    }
+                    .buttonBorderShape(.capsule)
             }
         }
             .padding(32.0)

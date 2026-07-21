@@ -11,13 +11,11 @@ import XCTest
 @MainActor
 final class RecommendationsScreenTests: XCTestCase {
 
-    // FIXME: Don't rely on hardcoded localizables.
-
     // MARK: - Methods
 
     func testScreenOpening() {
         let app = makeOpenRecommendationsTab()
-        XCTAssert(app.staticTexts["Recommendations"].exists)
+        XCTAssert(app.buttons["RecommendationsFiltersButton"].exists)
     }
 
     func testOnboarding_shown_onFirstLaunch() {
@@ -88,9 +86,9 @@ final class RecommendationsScreenTests: XCTestCase {
         let app = makeOpenRecommendationsTab()
         app.buttons["RecommendationsFiltersButton"].tap()
 
-        let topRatedButton = app.buttons["Top rated"]
-        XCTAssertTrue(app.waitForExistence(timeout: 5.0))
+        let topRatedButton = app.buttons["TopRatedFilterButton"]
 
+        XCTAssertTrue(topRatedButton.waitForExistence(timeout: 5.0))
         XCTAssertTrue(topRatedButton.isHittable)
     }
 
@@ -100,7 +98,7 @@ final class RecommendationsScreenTests: XCTestCase {
         let app = XCTestCase.makeTestApp(resetOnboarding: resetOnboarding)
         app.launch()
 
-        let tabButton = app.tabBars.buttons["Recommendations"]
+        let tabButton = app.tabBars.buttons["RecommendationsTabButton"]
         tabButton.tap()
 
         return app

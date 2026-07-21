@@ -32,6 +32,7 @@ struct MainScreen<
             }
                 .tabItem {
                     Label("Search", systemImage: "magnifyingglass")
+                        .accessibilityIdentifier("SearchTabButton")
                 }
             NavigationStack {
                 recommendationsView
@@ -39,6 +40,7 @@ struct MainScreen<
             }
                 .tabItem {
                     Label("Recommendations", systemImage: "checkmark")
+                        .accessibilityIdentifier("RecommendationsTabButton")
                 }
             NavigationStack {
                 favoritesView
@@ -46,6 +48,7 @@ struct MainScreen<
             }
                 .tabItem {
                     Label("Favorites", systemImage: "heart")
+                        .accessibilityIdentifier("FavoritesTabButton")
                 }
         }
     }

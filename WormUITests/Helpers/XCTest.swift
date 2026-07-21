@@ -31,6 +31,13 @@ extension XCTestCase {
 
         app.launchEnvironment = environment
 
+        app.launchArguments += [
+            "-AppleLanguages", 
+            "(en)",
+            "-AppleLocale",
+            "en_US"
+        ]
+
         return app
     }
 
