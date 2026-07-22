@@ -56,11 +56,11 @@ struct WormApp: App {
                 version: Schema.Version(1, 0, 0)
             )
             let configuration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: storedInMemory)
+
             do {
-                return try ModelContainer(for: schema, configurations: configuration)
+                return try ModelContainerFactory.make(for: schema, configuration: configuration)
             } catch {
-                // TODO: Proper error handling.
-                fatalError("Could not create ModelContainer: \(error)")
+                fatalError("Could not create ModelContainer, even after resetting the store: \(error)")
             }
         }()
         return FavoritesPersistenceService(modelContainer: modelContainer)
