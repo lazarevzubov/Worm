@@ -32,6 +32,7 @@ struct FavoritesView<ViewModel: FavoritesViewModel>: View {
                         .frame(width: geometry.size.width * 0.8, height: geometry.size.height * 1.2)
 #endif
                 }
+                .errorAlert($viewModel.errorDisplayed)
         }
     }
 

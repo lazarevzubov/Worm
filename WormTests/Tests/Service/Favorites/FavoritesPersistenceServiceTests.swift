@@ -66,7 +66,7 @@ struct FavoritesPersistenceServiceTests {
         var ids = await service.blockedBookIDsPublisher.dropFirst().values.makeAsyncIterator()
 
         let id = "ID"
-        await service.addToBlockedBook(withID: id)
+        try await service.addToBlockedBook(withID: id)
 
         await #expect(ids.next() == [id], "Unexpected data received.")
     }
@@ -122,7 +122,7 @@ struct FavoritesPersistenceServiceTests {
         var ids = await service.favoriteBookIDsPublisher.dropFirst().values.makeAsyncIterator()
 
         let id = "ID"
-        await service.addToFavoritesBook(withID: id)
+        try await service.addToFavoritesBook(withID: id)
 
         await #expect(ids.next() == [id], "Unexpected data received.")
     }
@@ -147,7 +147,7 @@ struct FavoritesPersistenceServiceTests {
         let service = FavoritesPersistenceService(modelContainer: modelContainer)
         var ids = await service.favoriteBookIDsPublisher.dropFirst().values.makeAsyncIterator()
 
-        await service.removeFromFavoriteBook(withID: id)
+        try await service.removeFromFavoriteBook(withID: id)
         await #expect(ids.next()?.isEmpty == true, "Unexpected data received.")
     }
 

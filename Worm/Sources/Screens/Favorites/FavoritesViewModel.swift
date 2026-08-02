@@ -13,6 +13,8 @@ protocol FavoritesViewModel: BookListCellViewModel, BookDetailsPresentable, Obse
 
     // MARK: - Properties
 
+    /// Whether an error alert about a failed save should be shown.
+    var errorDisplayed: Bool { get set }
     /// A list of view models representing items on the Favorites screen.
     var favorites: [BookViewModel] { get }
 
@@ -27,6 +29,8 @@ final class FavoritesDefaultViewModel: FavoritesViewModel {
 
     // MARK: FavoritesViewModel protocol properties
 
+    @Published
+    var errorDisplayed = false
     @Published
     private(set) var favorites = [BookViewModel]()
 
@@ -56,7 +60,13 @@ final class FavoritesDefaultViewModel: FavoritesViewModel {
     // MARK: FavoritesViewModel protocol methods
 
     func toggleFavoriteStateOfBook(withID id: String) {
-        Task { await model.toggleFavoriteStateOfBook(withID: id) }
+        Task { @MainActor [weak self] in
+            do {
+                try await self?.model.toggleFavoriteStateOfBook(withID: id)
+            } catch {
+                self?.errorDisplayed = true
+            }
+        }
     }
 
     func makeDetailsViewModel(for book: BookViewModel) -> some BookDetailsViewModel {
@@ -95,6 +105,7 @@ final class FavoritesPreviewsViewModel: FavoritesViewModel {
 
     // MARK: FavoritesViewModel protocol properties
 
+    var errorDisplayed = false
     private(set) var favorites = Book.previewFixtures.map { BookViewModel(book: $0, favorite: false) }
 
     // MARK: - Methods

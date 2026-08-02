@@ -30,10 +30,12 @@ protocol RecommendationsModel: Actor {
 
     /// Toggles the favorite-ness state of a book.
     /// - Parameter id: The ID of the book to manipulate.
-    func toggleFavoriteStateOfBook(withID id: String) async
+    /// - Throws: An error if the change couldn't be persisted.
+    func toggleFavoriteStateOfBook(withID id: String) async throws
     /// Blocks a book ID from appearing as a recommendation.
     /// - Parameter bookID: The ID of the book to manipulate.
-    func blockFromRecommendationsBook(withID id: String) async
+    /// - Throws: An error if the change couldn't be persisted.
+    func blockFromRecommendationsBook(withID id: String) async throws
 
 }
 
@@ -86,20 +88,20 @@ actor RecommendationsDefaultModel: RecommendationsModel {
 
     // MARK: RecommendationsModel protocol methods
 
-    func toggleFavoriteStateOfBook(withID id: String) async {
+    func toggleFavoriteStateOfBook(withID id: String) async throws {
         if favoriteBookIDs.contains(id) {
-            await favoritesService.removeFromFavoriteBook(withID: id)
+            try await favoritesService.removeFromFavoriteBook(withID: id)
             removeRecommendedBooksForBook(withID: id)
         } else {
-            await favoritesService.addToFavoritesBook(withID: id)
+            try await favoritesService.addToFavoritesBook(withID: id)
             await addRecommendedBooksForBook(withID: id)
         }
     }
 
-    func blockFromRecommendationsBook(withID id: String) async {
-        prioritizedRecommendations.removeValue(forKey: id)
+    func blockFromRecommendationsBook(withID id: String) async throws {
+        try await favoritesService.addToBlockedBook(withID: id)
 
-        await favoritesService.addToBlockedBook(withID: id)
+        prioritizedRecommendations.removeValue(forKey: id)
         await applyPenalty(fromBlockedBookWithID: id)
     }
 

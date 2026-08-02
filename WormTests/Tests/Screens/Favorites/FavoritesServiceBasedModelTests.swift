@@ -40,7 +40,7 @@ struct FavoritesServiceBasedModelTests {
     }
 
     @Test(.timeLimit(.minutes(1)))
-    func favorites_update_onAddingFavorite() async {
+    func favorites_update_onAddingFavorite() async throws {
         let id = "1"
         let book = Book(id: id, authors: [], title: "", description: "Desc")
 
@@ -51,12 +51,12 @@ struct FavoritesServiceBasedModelTests {
 
         var favorites = await model.favoritesPublisher.removeDuplicates().dropFirst().values.makeAsyncIterator()
 
-        await model.toggleFavoriteStateOfBook(withID: id)
+        try await model.toggleFavoriteStateOfBook(withID: id)
         await #expect(favorites.next() == [book], "Unexpected data received.")
     }
 
     @Test(.timeLimit(.minutes(1)))
-    func favorites_update_onRemovingFavorite() async {
+    func favorites_update_onRemovingFavorite() async throws {
         let id = "1"
         let book = Book(id: id, authors: [], title: "", description: "Desc")
 
@@ -67,10 +67,19 @@ struct FavoritesServiceBasedModelTests {
             catalogService: catalogService, favoritesService: favoritesService
         )
 
-        await model.toggleFavoriteStateOfBook(withID: id)
+        try await model.toggleFavoriteStateOfBook(withID: id)
         while await !model.favorites.isEmpty {
             await Task.yield()
         }
+    }
+
+    @Test
+    func toggleFavoriteStateOfBook_throws_whenServiceFails() async {
+        let model: FavoritesModel = await FavoritesServiceBasedModel(
+            catalogService: CatalogMockService(),
+            favoritesService: FavoritesMockService(errorToThrow: MockError())
+        )
+        await #expect(throws: MockError.self) { try await model.toggleFavoriteStateOfBook(withID: "1") }
     }
 
 }

@@ -44,7 +44,7 @@ struct SearchServiceBasedModelTests {
     }
 
     @Test(.timeLimit(.minutes(1)))
-    func favoriteBookID_toggling_onRemovingFromFavorites() async {
+    func favoriteBookID_toggling_onRemovingFromFavorites() async throws {
         let id = "1"
         let favoritesService = await FavoritesMockService(favoriteBookIDs: [id])
 
@@ -55,12 +55,12 @@ struct SearchServiceBasedModelTests {
         var ids = await model.favoriteBookIDsPublisher.dropFirst().values.makeAsyncIterator()
         _ = await ids.next()
 
-        await model.toggleFavoriteStateOfBook(withID: id)
+        try await model.toggleFavoriteStateOfBook(withID: id)
         await #expect(favoritesService.favoriteBookIDs.isEmpty, "Unexpected data is present in the service.")
     }
 
     @Test
-    func favoriteBookID_toggling_onAddingToFavorites() async {
+    func favoriteBookID_toggling_onAddingToFavorites() async throws {
         let favoritesService = await FavoritesMockService()
         let model: any SearchModel = SearchServiceBasedModel(
             catalogService: CatalogMockService(), favoritesService: favoritesService
@@ -69,8 +69,16 @@ struct SearchServiceBasedModelTests {
         var ids = await model.favoriteBookIDsPublisher.values.makeAsyncIterator()
         _ = await ids.next()
 
-        await model.toggleFavoriteStateOfBook(withID: "1")
+        try await model.toggleFavoriteStateOfBook(withID: "1")
         await #expect(!favoritesService.favoriteBookIDs.isEmpty)
+    }
+
+    @Test
+    func toggleFavoriteStateOfBook_throws_whenServiceFails() async {
+        let model: any SearchModel = await SearchServiceBasedModel(
+            catalogService: CatalogMockService(), favoritesService: FavoritesMockService(errorToThrow: MockError())
+        )
+        await #expect(throws: MockError.self) { try await model.toggleFavoriteStateOfBook(withID: "1") }
     }
 
     @Test(.timeLimit(.minutes(1)))

@@ -28,13 +28,16 @@ protocol FavoritesService: Actor {
 
     /// Blocks a book from recommendations.
     /// - Parameter id: The ID of the book to block.
-    func addToBlockedBook(withID id: String)
+    /// - Throws: An error if the change couldn't be persisted.
+    func addToBlockedBook(withID id: String) throws
     /// Adds a favorite book to the current list.
     /// - Parameter id: The ID of the book to be added.
-    func addToFavoritesBook(withID id: String)
+    /// - Throws: An error if the change couldn't be persisted.
+    func addToFavoritesBook(withID id: String) throws
     /// Removes a favorite book from the current list.
     /// - Parameter id: The ID of the book to be removed.
-    func removeFromFavoriteBook(withID id: String)
+    /// - Throws: An error if the change couldn't be persisted.
+    func removeFromFavoriteBook(withID id: String) throws
 
 }
 
@@ -85,47 +88,32 @@ actor FavoritesPersistenceService: FavoritesService {
 
     // MARK: FavoritesService protocol methods
 
-    func addToBlockedBook(withID id: String) {
-        do {
-            let blockedBook = BlockedBook(id: id)
+    func addToBlockedBook(withID id: String) throws {
+        let blockedBook = BlockedBook(id: id)
 
-            let context = ModelContext(container)
-            context.insert(blockedBook)
-            try context.save()
+        let context = ModelContext(container)
+        context.insert(blockedBook)
+        try context.save()
 
-            updateBlockedBooks()
-        } catch {
-            // TODO: Proper error handling.
-            print("Could not save context: \(error)")
-        }
+        updateBlockedBooks()
     }
 
-    func addToFavoritesBook(withID id: String) {
-        do {
-            let favoriteBook = FavoriteBook(id: id)
+    func addToFavoritesBook(withID id: String) throws {
+        let favoriteBook = FavoriteBook(id: id)
 
-            let context = ModelContext(container)
-            context.insert(favoriteBook)
-            try context.save()
+        let context = ModelContext(container)
+        context.insert(favoriteBook)
+        try context.save()
 
-            updateFavoriteBooks()
-        } catch {
-            // TODO: Proper error handling.
-            print("Could not save context: \(error)")
-        }
+        updateFavoriteBooks()
     }
 
-    func removeFromFavoriteBook(withID id: String) {
-        do {
-            let context = ModelContext(container)
-            try context.delete(model: FavoriteBook.self, where: #Predicate { $0.id == id })
-            try context.save()
+    func removeFromFavoriteBook(withID id: String) throws {
+        let context = ModelContext(container)
+        try context.delete(model: FavoriteBook.self, where: #Predicate { $0.id == id })
+        try context.save()
 
-            updateFavoriteBooks()
-        } catch {
-            // TODO: Proper error handling.
-            print("Could not save context: \(error)")
-        }
+        updateFavoriteBooks()
     }
 
     // MARK: Private methods

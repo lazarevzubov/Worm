@@ -63,6 +63,7 @@ struct RecommendationsView<ViewModel: RecommendationsViewModel>: View {
                             .frame(width: geometry.size.width * 0.8, height: geometry.size.height * 0.4)
 #endif
                     }
+                    .errorAlert($viewModel.errorDisplayed)
             }
         }
             .toolbar {

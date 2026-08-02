@@ -96,6 +96,23 @@
         }
       }
     },
+    "Couldn't save your changes. Please try again." : {
+      "comment" : "An error message shown when a change couldn't be persisted.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Couldn't save your changes. Please try again."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не удалось сохранить изменения. Пожалуйста, попробуйте снова."
+          }
+        }
+      }
+    },
     "Delete" : {
       "localizations" : {
         "en" : {
@@ -124,6 +141,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Избранное"
+          }
+        }
+      }
+    },
+    "OK" : {
+      "comment" : "A button that dismisses an alert.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OK"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ОК"
           }
         }
       }
@@ -208,6 +242,23 @@
         }
       }
     },
+    "Something Went Wrong" : {
+      "comment" : "A title for an alert that shows when an error occurs.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Something Went Wrong"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Что-то пошло не так"
+          }
+        }
+      }
+    },
     "Start by searching your favorite books and marking them as favorites." : {
       "localizations" : {
         "en" : {
@@ -258,5 +309,5 @@
       }
     }
   },
-  "version" : "1.0"
+  "version" : "1.1"
 }
