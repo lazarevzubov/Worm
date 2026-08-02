@@ -30,7 +30,8 @@ protocol SearchModel: Actor {
     func searchBooks(by query: String) async
     /// Toggles the favorite-ness state of a book.
     /// - Parameter id: The ID of the book to manipulate.
-    func toggleFavoriteStateOfBook(withID id: String) async
+    /// - Throws: An error if the change couldn't be persisted.
+    func toggleFavoriteStateOfBook(withID id: String) async throws
 
 }
 
@@ -110,11 +111,11 @@ actor SearchServiceBasedModel: SearchModel {
         }
     }
 
-    func toggleFavoriteStateOfBook(withID id: String) async {
+    func toggleFavoriteStateOfBook(withID id: String) async throws {
         if favoriteBookIDs.contains(id) {
-            await favoritesService.removeFromFavoriteBook(withID: id)
+            try await favoritesService.removeFromFavoriteBook(withID: id)
         } else {
-            await favoritesService.addToFavoritesBook(withID: id)
+            try await favoritesService.addToFavoritesBook(withID: id)
         }
     }
 

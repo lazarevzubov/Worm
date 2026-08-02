@@ -14,6 +14,8 @@ protocol RecommendationsViewModel: BookListCellViewModel, FiltersViewModel, Book
 
     // MARK: - Properties
 
+    /// Whether an error alert about a failed save should be shown.
+    var errorDisplayed: Bool { get set }
     /// Whether the onboarding has been already shown to the user.
     var onboardingShown: Bool { get set }
     /// A list of view models representing items on the Recommendations screen.
@@ -40,6 +42,8 @@ final class RecommendationsDefaultViewModel: RecommendationsViewModel {
     var appliedFilters = [RecommendationsFilter]() {
         didSet { updateRecommendations(with: unfilteredRecommendations) }
     }
+    @Published
+    var errorDisplayed = false
     @Published
     var onboardingShown: Bool {
         didSet { onboardingService.recommendationsOnboardingShown = onboardingShown }
@@ -81,7 +85,13 @@ final class RecommendationsDefaultViewModel: RecommendationsViewModel {
     // MARK: RecommendationsViewModel protocol methods
 
     func toggleFavoriteStateOfBook(withID id: String) {
-        Task { await model.toggleFavoriteStateOfBook(withID: id) }
+        Task { @MainActor [weak self] in
+            do {
+                try await self?.model.toggleFavoriteStateOfBook(withID: id)
+            } catch {
+                self?.errorDisplayed = true
+            }
+        }
     }
 
     func makeDetailsViewModel(for book: BookViewModel) -> some BookDetailsViewModel {
@@ -96,7 +106,13 @@ final class RecommendationsDefaultViewModel: RecommendationsViewModel {
     }
 
     func blockRecommendation(_ recommendation: BookViewModel) {
-        Task { await model.blockFromRecommendationsBook(withID: recommendation.id) }
+        Task { @MainActor [weak self] in
+            do {
+                try await self?.model.blockFromRecommendationsBook(withID: recommendation.id)
+            } catch {
+                self?.errorDisplayed = true
+            }
+        }
     }
 
     // MARK: Private methods
@@ -150,6 +166,7 @@ final class RecommendationsPreviewViewModel: RecommendationsViewModel, Observabl
 
     @Published
     var appliedFilters = [RecommendationsFilter]()
+    var errorDisplayed = false
     var onboardingShown = true
     let recommendations = Book.previewFixtures.map { BookViewModel(book: $0, favorite: false) }
 

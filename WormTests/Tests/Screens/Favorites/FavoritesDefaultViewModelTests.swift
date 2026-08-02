@@ -12,11 +12,11 @@ import Testing
 @testable
 import Worm
 
+@MainActor
 struct FavoritesDefaultViewModelTests {
 
     // MARK: - Methods
 
-    @MainActor
     @Test
     func favorites_empty_initially() async {
         let vm: any FavoritesViewModel = await FavoritesDefaultViewModel(
@@ -25,7 +25,6 @@ struct FavoritesDefaultViewModelTests {
         #expect(vm.favorites.isEmpty, "Favorites are not empty initially.")
     }
 
-    @MainActor
     @Test
     func detailsViewModel_authors_asExpected() async {
         let vm: any FavoritesViewModel = await FavoritesDefaultViewModel(
@@ -33,13 +32,15 @@ struct FavoritesDefaultViewModelTests {
         )
 
         let bookVM = BookViewModel(
-            book: Book(id: "ID",
-                       authors: [
-                        "Author1",
-                        "Author2"
-                       ],
-                       title: "Title",
-                       description: "Desc"),
+            book: Book(
+                id: "ID",
+                authors: [
+                    "Author1",
+                    "Author2"
+                ],
+                title: "Title",
+                description: "Desc"
+            ),
             favorite: false
         )
         let bookDetailsVM = vm.makeDetailsViewModel(for: bookVM)
@@ -47,7 +48,6 @@ struct FavoritesDefaultViewModelTests {
         #expect(bookDetailsVM.authors == bookVM.authors, "Unexpected authors string generated")
     }
 
-    @MainActor
     @Test
     func detailsViewModel_title() async {
         let vm: any FavoritesViewModel = await FavoritesDefaultViewModel(
@@ -55,13 +55,15 @@ struct FavoritesDefaultViewModelTests {
         )
 
         let bookVM = BookViewModel(
-            book: Book(id: "ID",
-                       authors: [
-                        "Author1",
-                        "Author2"
-                       ],
-                       title: "Title",
-                       description: "Desc"),
+            book: Book(
+                id: "ID",
+                authors: [
+                    "Author1",
+                    "Author2"
+                ],
+                title: "Title",
+                description: "Desc"
+            ),
             favorite: false
         )
         let bookDetailsVM = vm.makeDetailsViewModel(for: bookVM)
@@ -69,7 +71,6 @@ struct FavoritesDefaultViewModelTests {
         #expect(bookDetailsVM.title == bookVM.title, "Unexpected authors string generated")
     }
 
-    @MainActor
     @Test(.timeLimit(.minutes(1)))
     func favorites_update() async {
         let id = "1"
@@ -83,7 +84,6 @@ struct FavoritesDefaultViewModelTests {
         }
     }
 
-    @MainActor
     @Test(.timeLimit(.minutes(1)))
     func favorites_update_onRemovingFavorite() async {
         let id = "1"
@@ -95,6 +95,18 @@ struct FavoritesDefaultViewModelTests {
 
         vm.toggleFavoriteStateOfBook(withID: id)
         while !vm.favorites.isEmpty {
+            await Task.yield()
+        }
+    }
+
+    @Test(.timeLimit(.minutes(1)))
+    func errorDisplayed_set_whenTogglingFavoriteFails() async {
+        let vm: any FavoritesViewModel = await FavoritesDefaultViewModel(
+            model: FavoritesMockModel(errorToThrow: MockError()), imageService: ImageMockService()
+        )
+
+        vm.toggleFavoriteStateOfBook(withID: "1")
+        while !vm.errorDisplayed {
             await Task.yield()
         }
     }
@@ -111,17 +123,25 @@ struct FavoritesDefaultViewModelTests {
         @Published
         private(set) var favorites: [Book]
 
+        // MARK: Private properties
+
+        private let errorToThrow: Error?
+
         // MARK: - Initialization
 
-        init(favorites: [Book] = [Book]()) async {
+        init(favorites: [Book] = [Book](), errorToThrow: Error? = nil) async {
             self.favorites = favorites
+            self.errorToThrow = errorToThrow
         }
 
         // MARK: - Methods
 
         // MARK: FavoritesModel protocol methods
 
-        func toggleFavoriteStateOfBook(withID id: String) {
+        func toggleFavoriteStateOfBook(withID id: String) throws {
+            if let errorToThrow {
+                throw errorToThrow
+            }
             if favorites.contains(where: { $0.id == id }) {
                 favorites.removeAll { $0.id == id }
             } else {

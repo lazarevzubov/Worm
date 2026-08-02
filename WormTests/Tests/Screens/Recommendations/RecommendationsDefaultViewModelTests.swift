@@ -8,7 +8,6 @@
 import Combine
 import Foundation
 import GoodreadsService
-import SwiftUI
 import Testing
 @testable
 import Worm

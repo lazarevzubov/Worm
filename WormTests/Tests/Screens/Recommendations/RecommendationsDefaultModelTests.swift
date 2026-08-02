@@ -35,7 +35,7 @@ struct RecommendationsDefaultModelTests {
     }
 
     @Test(.timeLimit(.minutes(1)))
-    func favoriteBookIDs_updates_onAddingFavorite() async {
+    func favoriteBookIDs_updates_onAddingFavorite() async throws {
         let model: RecommendationsModel = await RecommendationsDefaultModel(
             catalogService: CatalogMockService(), favoritesService: FavoritesMockService()
         )
@@ -43,13 +43,13 @@ struct RecommendationsDefaultModelTests {
         var favorites = await model.favoriteBookIDsPublisher.dropFirst().values.makeAsyncIterator()
 
         let id = "1"
-        await model.toggleFavoriteStateOfBook(withID: id)
+        try await model.toggleFavoriteStateOfBook(withID: id)
 
         await #expect(favorites.next() == [id], "Unexpected data received.")
     }
 
     @Test(.timeLimit(.minutes(1)))
-    func favoriteBookIDs_updates_onRemovingFavorite() async {
+    func favoriteBookIDs_updates_onRemovingFavorite() async throws {
         let id = "1"
         let model: RecommendationsModel = await RecommendationsDefaultModel(
             catalogService: CatalogMockService(), favoritesService: FavoritesMockService(favoriteBookIDs: [id])
@@ -58,7 +58,7 @@ struct RecommendationsDefaultModelTests {
         var favorites = await model.favoriteBookIDsPublisher.dropFirst().values.makeAsyncIterator()
         await #expect(favorites.next()?.isEmpty == false, "Unexpected data received.")
 
-        await model.toggleFavoriteStateOfBook(withID: id)
+        try await model.toggleFavoriteStateOfBook(withID: id)
         await #expect(favorites.next()?.isEmpty == true, "Unexpected data received.")
     }
 
@@ -102,7 +102,7 @@ struct RecommendationsDefaultModelTests {
     }
 
     @Test(.timeLimit(.minutes(1)))
-    func recommendationsUpdate_received_onAddingFavorite() async {
+    func recommendationsUpdate_received_onAddingFavorite() async throws {
         let book = Book(
             id: "1",
             authors: ["J.R.R. Tolkien"],
@@ -130,12 +130,12 @@ struct RecommendationsDefaultModelTests {
 
         var books = await model.recommendationsPublisher.dropFirst().values.makeAsyncIterator()
 
-        await model.toggleFavoriteStateOfBook(withID: "1")
+        try await model.toggleFavoriteStateOfBook(withID: "1")
         await #expect(books.next() == [recommendedBook], "Unexpected data received.")
     }
 
     @Test(.timeLimit(.minutes(1)))
-    func recommendationsUpdate_received_onRemovingFavorite() async {
+    func recommendationsUpdate_received_onRemovingFavorite() async throws {
         let book = Book(
             id: "1",
             authors: ["J.R.R. Tolkien"],
@@ -164,12 +164,12 @@ struct RecommendationsDefaultModelTests {
         var books = await model.recommendationsPublisher.dropFirst(2).values.makeAsyncIterator()
         try? await Task.sleep(for: .seconds(1)) // Imitates a separate update, after initialization.
 
-        await model.toggleFavoriteStateOfBook(withID: book.id)
+        try await model.toggleFavoriteStateOfBook(withID: book.id)
         await #expect(books.next()?.isEmpty == true, "Unexpected data received.")
     }
 
     @Test(.timeLimit(.minutes(1)))
-    func recommendationsUpdate_keepsBook_whenOnlyOneOfMultipleSourcesIsRemoved() async {
+    func recommendationsUpdate_keepsBook_whenOnlyOneOfMultipleSourcesIsRemoved() async throws {
         let firstFavorite = Book(
             id: "1", authors: ["Author"], title: "First Favorite", description: "Desc1", similarBookIDs: ["100"]
         )
@@ -202,7 +202,7 @@ struct RecommendationsDefaultModelTests {
 
         try? await Task.sleep(for: .seconds(1)) // Lets both favorite sources finish adding the recommendation.
 
-        await model.toggleFavoriteStateOfBook(withID: secondFavorite.id)
+        try await model.toggleFavoriteStateOfBook(withID: secondFavorite.id)
         await #expect(
             books.next() == [recommendedBook],
             "The book should stay recommended while the other favorite still recommends it."
@@ -210,7 +210,7 @@ struct RecommendationsDefaultModelTests {
     }
 
     @Test(.timeLimit(.minutes(1)))
-    func recommendationsUpdate_received_onBlockingRecommendation() async {
+    func recommendationsUpdate_received_onBlockingRecommendation() async throws {
         let book = Book(
             id: "1",
             authors: ["J.R.R. Tolkien"],
@@ -238,19 +238,19 @@ struct RecommendationsDefaultModelTests {
 
         var books = await model.recommendationsPublisher.dropFirst().values.makeAsyncIterator()
 
-        await model.blockFromRecommendationsBook(withID: recommendedBook.id)
+        try await model.blockFromRecommendationsBook(withID: recommendedBook.id)
         await #expect(books.next()?.isEmpty == true, "Unexpected data received.")
     }
 
     @Test
-    func blockingRecommendation_updatesBlockedBooks() async {
+    func blockingRecommendation_updatesBlockedBooks() async throws {
         let favoritesService = await FavoritesMockService()
         let model: RecommendationsModel = RecommendationsDefaultModel(
             catalogService: CatalogMockService(), favoritesService: favoritesService
         )
 
         let id = "1"
-        await model.blockFromRecommendationsBook(withID: id)
+        try await model.blockFromRecommendationsBook(withID: id)
 
         await #expect(favoritesService.blockedBookIDs.contains(id))
     }
@@ -300,7 +300,7 @@ struct RecommendationsDefaultModelTests {
     }
 
     @Test(.timeLimit(.minutes(1)))
-    func recommendationsUpdate_lowersRank_ofBooksRecommendedByBlockedBook() async {
+    func recommendationsUpdate_lowersRank_ofBooksRecommendedByBlockedBook() async throws {
         let favorite = Book(
             id: "1",
             authors: ["Author"],
@@ -339,7 +339,7 @@ struct RecommendationsDefaultModelTests {
             await Task.yield()
         }
 
-        await model.blockFromRecommendationsBook(withID: blockedRecommendation.id)
+        try await model.blockFromRecommendationsBook(withID: blockedRecommendation.id)
         while await model.recommendations != [
             unaffectedRecommendation,
             penalizedRecommendation
@@ -387,6 +387,22 @@ struct RecommendationsDefaultModelTests {
         ] {
             await Task.yield()
         }
+    }
+
+    @Test
+    func toggleFavoriteStateOfBook_throws_whenServiceFails() async {
+        let model: RecommendationsModel = await RecommendationsDefaultModel(
+            catalogService: CatalogMockService(), favoritesService: FavoritesMockService(errorToThrow: MockError())
+        )
+        await #expect(throws: MockError.self) { try await model.toggleFavoriteStateOfBook(withID: "1") }
+    }
+
+    @Test
+    func blockFromRecommendationsBook_throws_whenServiceFails() async {
+        let model: RecommendationsModel = await RecommendationsDefaultModel(
+            catalogService: CatalogMockService(), favoritesService: FavoritesMockService(errorToThrow: MockError())
+        )
+        await #expect(throws: MockError.self) { try await model.blockFromRecommendationsBook(withID: "1") }
     }
 
 }

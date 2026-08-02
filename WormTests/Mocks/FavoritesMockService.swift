@@ -22,26 +22,40 @@ actor FavoritesMockService: FavoritesService {
     @Published
     private(set) var favoriteBookIDs: Set<String>
 
+    // MARK: Private properties
+
+    private let errorToThrow: Error?
+
     // MARK: - Initialization
 
-    init(favoriteBookIDs: Set<String> = [], blockedBookIDs: Set<String> = []) async {
+    init(favoriteBookIDs: Set<String> = [], blockedBookIDs: Set<String> = [], errorToThrow: Error? = nil) async {
         self.favoriteBookIDs = favoriteBookIDs
         self.blockedBookIDs = blockedBookIDs
+        self.errorToThrow = errorToThrow
     }
 
     // MARK: - Methods
 
     // MARK: FavoritesService protocol methods
 
-    func addToBlockedBook(withID id: String) {
+    func addToBlockedBook(withID id: String) throws {
+        if let errorToThrow {
+            throw errorToThrow
+        }
         blockedBookIDs.insert(id)
     }
 
-    func addToFavoritesBook(withID id: String) {
+    func addToFavoritesBook(withID id: String) throws {
+        if let errorToThrow {
+            throw errorToThrow
+        }
         favoriteBookIDs.insert(id)
     }
 
-    func removeFromFavoriteBook(withID id: String) {
+    func removeFromFavoriteBook(withID id: String) throws {
+        if let errorToThrow {
+            throw errorToThrow
+        }
         favoriteBookIDs.remove(id)
     }
 

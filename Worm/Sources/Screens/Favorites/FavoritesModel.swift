@@ -23,8 +23,9 @@ protocol FavoritesModel: Actor {
 
     /// Toggles the favorite-ness state of a book.
     /// - Parameter bookID: The ID of the book to manipulate.
-    func toggleFavoriteStateOfBook(withID id: String) async
-    
+    /// - Throws: An error if the change couldn't be persisted.
+    func toggleFavoriteStateOfBook(withID id: String) async throws
+
 }
 
 // MARK: -
@@ -65,11 +66,11 @@ actor FavoritesServiceBasedModel: FavoritesModel {
 
     // MARK: FavoritesModel protocol methods
 
-    func toggleFavoriteStateOfBook(withID id: String) async {
+    func toggleFavoriteStateOfBook(withID id: String) async throws {
         if favorites.contains(where: { $0.id == id }) {
-            await favoritesService.removeFromFavoriteBook(withID: id)
+            try await favoritesService.removeFromFavoriteBook(withID: id)
         } else {
-            await favoritesService.addToFavoritesBook(withID: id)
+            try await favoritesService.addToFavoritesBook(withID: id)
         }
     }
 
