@@ -28,28 +28,32 @@ struct SearchView<ViewModel: SearchViewModel>: View {
                     .listStyle(.plain)
                 if !viewModel.searchOnboardingShown {
                     VStack {
-                        OnboardingView(
-                            text: "Start by searching your favorite books and marking them as favorites.",
-                            localizationComment: "A tooltip that appears on the first launch of the app, explaining how to use search",
-                            color: .favorites
-                        )
+                        Button { viewModel.searchOnboardingShown = true } label: {
+                            OnboardingView(
+                                text: "Start by searching your favorite books and marking them as favorites.",
+                                localizationComment: "A tooltip that appears on the first launch of the app, explaining how to use search",
+                                color: .favorites
+                            )
+                        }
+                            .buttonStyle(.plain)
                             .accessibilityIdentifier("SearchOnboardingLabel")
                         Spacer()
                     }
-                        .onTapGesture { viewModel.searchOnboardingShown = true }
                 }
                 if viewModel.searchOnboardingShown
                         && !viewModel.recommendationsOnboardingShown {
                     VStack {
                         Spacer()
-                        OnboardingView(
-                            text: "Then check your recommendations!",
-                            localizationComment: "A tooltip that appears on the first launch of the app, explaining how to check recommendations",
-                            color: .recommendations
-                        )
+                        Button { viewModel.recommendationsOnboardingShown = true } label: {
+                            OnboardingView(
+                                text: "Then check your recommendations!",
+                                localizationComment: "A tooltip that appears on the first launch of the app, explaining how to check recommendations",
+                                color: .recommendations
+                            )
+                        }
+                            .buttonStyle(.plain)
                             .accessibilityIdentifier("RecommendationsOnboardingLabel")
                     }
-                        .onTapGesture { viewModel.recommendationsOnboardingShown = true }
                 }
             }
                 .animation(.default, value: viewModel.searchOnboardingShown)
