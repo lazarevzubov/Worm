@@ -81,6 +81,7 @@ struct RecommendationsView<ViewModel: RecommendationsViewModel>: View {
                         Image(systemName: "line.3.horizontal.decrease")
                     }
                         .accessibilityIdentifier("RecommendationsFiltersButton")
+                        .accessibilityLabel("Filters")
                         .accessibilityHint("Open recommendations filters.")
                 }
             }
