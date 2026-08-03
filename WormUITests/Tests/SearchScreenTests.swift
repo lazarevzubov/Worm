@@ -17,7 +17,7 @@ final class SearchScreenTests: XCTestCase {
         let app = XCTestCase.makeTestApp(resetOnboarding: true)
         app.launch()
 
-        let onboardingLabel = app.staticTexts["SearchOnboardingLabel"]
+        let onboardingLabel = app.buttons["SearchOnboardingLabel"]
         guard onboardingLabel.waitForExistence(timeout: 5.0) else {
             XCTFail("Search onboarding didn't appear.")
             return
@@ -31,7 +31,7 @@ final class SearchScreenTests: XCTestCase {
         let app = XCTestCase.makeTestApp(resetOnboarding: true)
         app.launch()
 
-        let onboardingLabel = app.staticTexts["SearchOnboardingLabel"]
+        let onboardingLabel = app.buttons["SearchOnboardingLabel"]
         guard onboardingLabel.waitForExistence(timeout: 5.0) else {
             XCTFail("Search onboarding didn't appear.")
             return
@@ -49,7 +49,7 @@ final class SearchScreenTests: XCTestCase {
         let app = XCTestCase.makeTestApp(resetOnboarding: true)
         app.launch()
 
-        let onboardingLabel = app.staticTexts["SearchOnboardingLabel"]
+        let onboardingLabel = app.buttons["SearchOnboardingLabel"]
         guard onboardingLabel.waitForExistence(timeout: 5.0) else {
             XCTFail("Search onboarding didn't appear.")
             return
@@ -74,7 +74,7 @@ final class SearchScreenTests: XCTestCase {
         let app = XCTestCase.makeTestApp(resetOnboarding: true)
         app.launch()
 
-        let searchOnboardingLabel = app.staticTexts["SearchOnboardingLabel"]
+        let searchOnboardingLabel = app.buttons["SearchOnboardingLabel"]
         guard searchOnboardingLabel.waitForExistence(timeout: 5.0) else {
             XCTFail("Search onboarding didn't appear.")
             return
@@ -86,7 +86,7 @@ final class SearchScreenTests: XCTestCase {
             return
         }
 
-        let recommendationsOnboardingLabel = app.staticTexts["RecommendationsOnboardingLabel"]
+        let recommendationsOnboardingLabel = app.buttons["RecommendationsOnboardingLabel"]
         guard recommendationsOnboardingLabel.waitForExistence(timeout: 5.0) else {
             XCTFail("Search onboarding didn't appear.")
             return
@@ -100,14 +100,14 @@ final class SearchScreenTests: XCTestCase {
         let app = XCTestCase.makeTestApp(resetOnboarding: true)
         app.launch()
 
-        let searchOnboardingLabel = app.staticTexts["SearchOnboardingLabel"]
+        let searchOnboardingLabel = app.buttons["SearchOnboardingLabel"]
         guard searchOnboardingLabel.waitForExistence(timeout: 5.0) else {
             XCTFail("Search onboarding didn't appear.")
             return
         }
         searchOnboardingLabel.tap()
 
-        let recommendationsOnboardingLabel = app.staticTexts["RecommendationsOnboardingLabel"]
+        let recommendationsOnboardingLabel = app.buttons["RecommendationsOnboardingLabel"]
         guard recommendationsOnboardingLabel.waitForExistence(timeout: 5.0) else {
             XCTFail("Search onboarding didn't appear.")
             return
@@ -127,14 +127,14 @@ final class SearchScreenTests: XCTestCase {
         let app = XCTestCase.makeTestApp(resetOnboarding: true)
         app.launch()
 
-        let searchOnboardingLabel = app.staticTexts["SearchOnboardingLabel"]
+        let searchOnboardingLabel = app.buttons["SearchOnboardingLabel"]
         guard searchOnboardingLabel.waitForExistence(timeout: 5.0) else {
             XCTFail("Search onboarding didn't appear.")
             return
         }
         searchOnboardingLabel.tap()
 
-        let recommendationsOnboardingLabel = app.staticTexts["RecommendationsOnboardingLabel"]
+        let recommendationsOnboardingLabel = app.buttons["RecommendationsOnboardingLabel"]
         guard recommendationsOnboardingLabel.waitForExistence(timeout: 5.0) else {
             XCTFail("Search onboarding didn't appear.")
             return

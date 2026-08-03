@@ -21,7 +21,7 @@ final class RecommendationsScreenTests: XCTestCase {
     func testOnboarding_shown_onFirstLaunch() {
         let app = makeOpenRecommendationsTab(resetOnboarding: true)
 
-        let onboardingLabel = app.staticTexts["OnboardingLabel"]
+        let onboardingLabel = app.buttons["OnboardingLabel"]
         guard onboardingLabel.waitForExistence(timeout: 5.0) else {
             XCTFail("Onboarding didn't appear.")
             return
@@ -34,7 +34,7 @@ final class RecommendationsScreenTests: XCTestCase {
     func testOnboarding_disappears_onTap() {
         let app = makeOpenRecommendationsTab(resetOnboarding: true)
 
-        let onboardingLabel = app.staticTexts["OnboardingLabel"]
+        let onboardingLabel = app.buttons["OnboardingLabel"]
         guard onboardingLabel.waitForExistence(timeout: 5.0) else {
             XCTFail("Onboarding didn't appear.")
             return
@@ -51,7 +51,7 @@ final class RecommendationsScreenTests: XCTestCase {
     func testOnboarding_notShownTwice_afterDismissal() {
         let app = makeOpenRecommendationsTab(resetOnboarding: true)
 
-        let onboardingLabel = app.staticTexts["OnboardingLabel"]
+        let onboardingLabel = app.buttons["OnboardingLabel"]
         guard onboardingLabel.waitForExistence(timeout: 5.0) else {
             XCTFail("Onboarding didn't appear.")
             return

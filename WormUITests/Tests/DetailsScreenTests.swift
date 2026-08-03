@@ -57,12 +57,12 @@ final class BookDetailsViewUITests: XCTestCase {
         let app = XCTestCase.makeTestApp()
         app.launch()
 
-        let onboardingLabel = app.staticTexts["SearchOnboardingLabel"]
+        let onboardingLabel = app.buttons["SearchOnboardingLabel"]
         if onboardingLabel.waitForExistence(timeout: 0.1) {
             onboardingLabel.tap()
         }
 
-        let recommendationsOnboardingLabel = app.staticTexts["RecommendationsOnboardingLabel"]
+        let recommendationsOnboardingLabel = app.buttons["RecommendationsOnboardingLabel"]
         if recommendationsOnboardingLabel.waitForExistence(timeout: 0.1) {
             recommendationsOnboardingLabel.tap()
         }
