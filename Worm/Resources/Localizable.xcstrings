@@ -145,6 +145,23 @@
         }
       }
     },
+    "Filters" : {
+      "comment" : "Accessibility label for the button that opens the recommendations filters.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filters"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Фильтры"
+          }
+        }
+      }
+    },
     "OK" : {
       "comment" : "A button that dismisses an alert.",
       "localizations" : {
