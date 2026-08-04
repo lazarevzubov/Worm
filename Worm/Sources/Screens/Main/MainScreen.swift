@@ -8,8 +8,6 @@
 
 import SwiftUI
 
-// TODO: Accessibility.
-
 /// The main screen visual representation.
 struct MainScreen<
     FavoritesView: View,
