@@ -25,33 +25,14 @@ struct FiltersView<ViewModel: FiltersViewModel>: View {
 #endif
         LazyVGrid(columns: [GridItem(.adaptive(minimum: 100.0))], spacing: 20.0) {
             ForEach(RecommendationsFilter.allCases, id: \.self) { filterItem in
-                let identifier = switch filterItem {
-                    case .topRated:
-                        "TopRatedFilterButton"
+                if viewModel.appliedFilters.contains(filterItem) {
+                    filterButton(for: filterItem)
+                        .buttonStyle(.borderedProminent)
+                        .accessibilityAddTraits(.isSelected)
+                } else {
+                    filterButton(for: filterItem)
+                        .buttonStyle(.bordered)
                 }
-                Button {
-                    withAnimation {
-                        if viewModel.appliedFilters.contains(filterItem) {
-                            viewModel.appliedFilters.removeAll { $0 == filterItem }
-                        } else {
-                            viewModel.appliedFilters.append(filterItem)
-                        }
-                    }
-                } label: {
-                    switch filterItem {
-                        case .topRated:
-                            Text("Top rated", comment: "A title for the Top Rated filter")
-                    }
-                }
-                    .accessibilityIdentifier(identifier)
-                    .`if`(viewModel.appliedFilters.contains(filterItem)) {
-                        $0
-                            .buttonStyle(.borderedProminent)
-                    } `else`: {
-                        $0
-                            .buttonStyle(.bordered)
-                    }
-                    .buttonBorderShape(.capsule)
             }
         }
             .padding(32.0)
@@ -82,6 +63,33 @@ struct FiltersView<ViewModel: FiltersViewModel>: View {
     /// - Parameter viewModel: Object responsible for the presentation logic of the recommendations filters.
     init(viewModel: ViewModel) {
         self.viewModel = viewModel
+    }
+
+    // MARK: - Methods
+
+    // MARK: Private methods
+
+    private func filterButton(for filterItem: RecommendationsFilter) -> some View {
+        let identifier = switch filterItem {
+            case .topRated:
+                "TopRatedFilterButton"
+        }
+        return Button {
+            withAnimation {
+                if viewModel.appliedFilters.contains(filterItem) {
+                    viewModel.appliedFilters.removeAll { $0 == filterItem }
+                } else {
+                    viewModel.appliedFilters.append(filterItem)
+                }
+            }
+        } label: {
+            switch filterItem {
+                case .topRated:
+                    Text("Top rated", comment: "A title for the Top Rated filter")
+            }
+        }
+            .buttonBorderShape(.capsule)
+            .accessibilityIdentifier(identifier)
     }
 
     // MARK: -
