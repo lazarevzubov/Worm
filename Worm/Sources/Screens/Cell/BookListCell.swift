@@ -31,6 +31,7 @@ struct BookListCell: View {
             }
                 .accessibilityElement()
                 .accessibility(label: makeCellAccessibilityLabel(for: book))
+                .accessibilityAddTraits(.isButton)
             Spacer()
             Button { viewModel.toggleFavoriteStateOfBook(withID: book.id) } label: {
                 Image(systemName: (book.favorite
