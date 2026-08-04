@@ -38,6 +38,8 @@ struct BookListCell: View {
                                        ? "heart.fill"
                                        : "heart"))
                     .foregroundColor(.primary)
+                    .frame(minSize: 44.0)
+                    .contentShape(.rect)
             }
                 .accessibilityElement()
                 .accessibility(label: makeFavoriteButtonAccessibilityLabel(for: book))

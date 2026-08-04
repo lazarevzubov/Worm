@@ -31,4 +31,34 @@ extension View {
         }
     }
 
+    /// Positions this view within an invisible frame having the specified size constraints.
+    /// - Parameters:
+    ///   - minSize: The minimum width and height of the resulting frame.
+    ///   - idealWidth: The ideal width of the resulting frame.
+    ///   - maxWidth: The maximum width of the resulting frame.
+    ///   - idealHeight: The ideal height of the resulting frame.
+    ///   - maxHeight: The maximum height of the resulting frame.
+    ///   - alignment: The alignment of this view inside the resulting frame. Note that most alignment values have no
+    ///     apparent effect when the size of the frame happens to match that of this view.
+    /// - Returns: A view with flexible dimensions given by the call’s non-`nil` parameters.
+    @inlinable
+    nonisolated public func frame(
+        minSize: CGFloat,
+        idealWidth: CGFloat? = nil,
+        maxWidth: CGFloat? = nil,
+        idealHeight: CGFloat? = nil,
+        maxHeight: CGFloat? = nil,
+        alignment: Alignment = .center
+    ) -> some View {
+        frame(
+            minWidth: minSize,
+            idealWidth: idealWidth,
+            maxWidth: maxWidth,
+            minHeight: minSize,
+            idealHeight: idealHeight,
+            maxHeight: maxHeight,
+            alignment: alignment
+        )
+    }
+
 }
