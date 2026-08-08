@@ -18,12 +18,14 @@ enum ViewFactory {
     /// - Parameters:
     ///   - catalogService: The main data service of the app.
     ///   - favoritesService: The favorite books list manager.
+    ///   - blockedBooksService: The blocked books list manager.
     ///   - favoritesService: Provides with information related to the user onboarding.
     /// - Returns: The main view of the app.
     @ViewBuilder
     static func makeMainView(
         catalogService: CatalogService,
         favoritesService: any FavoritesService,
+        blockedBooksService: any BlockedBooksService,
         imageService: ImageService,
         onboardingService: OnboardingService
     ) -> some View {
@@ -38,6 +40,7 @@ enum ViewFactory {
         let recommendationsView = makeRecommendationsView(
             catalogService: catalogService,
             favoritesService: favoritesService,
+            blockedBooksService: blockedBooksService,
             imageService: imageService,
             onboardingService: onboardingService
         )
@@ -74,11 +77,12 @@ enum ViewFactory {
     private static func makeRecommendationsView(
         catalogService: CatalogService,
         favoritesService: any FavoritesService,
+        blockedBooksService: any BlockedBooksService,
         imageService: ImageService,
         onboardingService: OnboardingService
     ) -> some View {
         let recommendationsModel = RecommendationsDefaultModel(
-            catalogService: catalogService, favoritesService: favoritesService
+            catalogService: catalogService, favoritesService: favoritesService, blockedBooksService: blockedBooksService
         )
         let viewModel = RecommendationsDefaultViewModel(
             model: recommendationsModel, onboardingService: onboardingService, imageService: imageService
