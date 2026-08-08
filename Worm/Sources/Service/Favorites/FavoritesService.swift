@@ -15,10 +15,6 @@ protocol FavoritesService: Actor {
 
     // MARK: - Properties
 
-    /// The list of IDs of books blocked from recommendations.
-    var blockedBookIDs: Set<String> { get }
-    /// The publisher of changes to the list of IDs of books blocked from recommendations.
-    var blockedBookIDsPublisher: Published<Set<String>>.Publisher { get }
     /// The list of IDs of favorite books.
     var favoriteBookIDs: Set<String> { get }
     /// The publisher of books to the list of IDs of favorite books.
@@ -26,10 +22,6 @@ protocol FavoritesService: Actor {
 
     // MARK: - Methods
 
-    /// Blocks a book from recommendations.
-    /// - Parameter id: The ID of the book to block.
-    /// - Throws: An error if the change couldn't be persisted.
-    func addToBlockedBook(withID id: String) throws
     /// Adds a favorite book to the current list.
     /// - Parameter id: The ID of the book to be added.
     /// - Throws: An error if the change couldn't be persisted.
@@ -50,22 +42,13 @@ actor FavoritesPersistenceService: FavoritesService {
 
     // MARK: FavoritesService protocol properties
 
-    var blockedBookIDsPublisher: Published<Set<String>>.Publisher { $blockedBookIDs }
     var favoriteBookIDsPublisher: Published<Set<String>>.Publisher { $favoriteBookIDs }
-    @Published
-    private(set) var blockedBookIDs = Set<String>()
     @Published
     private(set) var favoriteBookIDs = Set<String>()
 
     // MARK: Private properties
 
     private let container: ModelContainer
-    private var blockedBooks: [BlockedBook] {
-        let context = ModelContext(container)
-        let descriptor = FetchDescriptor<BlockedBook>()
-
-        return (try? context.fetch(descriptor)) ?? []
-    }
     private var favoriteBooks: [FavoriteBook] {
         let context = ModelContext(container)
         let descriptor = FetchDescriptor<FavoriteBook>()
@@ -80,23 +63,13 @@ actor FavoritesPersistenceService: FavoritesService {
     init(modelContainer: ModelContainer) {
         container = modelContainer
         Task { [weak self] in
-            await self?.update()
+            await self?.updateFavoriteBooks()
         }
     }
 
     // MARK: - Methods
 
     // MARK: FavoritesService protocol methods
-
-    func addToBlockedBook(withID id: String) throws {
-        let blockedBook = BlockedBook(id: id)
-
-        let context = ModelContext(container)
-        context.insert(blockedBook)
-        try context.save()
-
-        updateBlockedBooks()
-    }
 
     func addToFavoritesBook(withID id: String) throws {
         let favoriteBook = FavoriteBook(id: id)
@@ -117,15 +90,6 @@ actor FavoritesPersistenceService: FavoritesService {
     }
 
     // MARK: Private methods
-
-    private func update() {
-        updateBlockedBooks()
-        updateFavoriteBooks()
-    }
-
-    private func updateBlockedBooks() {
-        blockedBookIDs = Set(blockedBooks.map { $0.id })
-    }
 
     private func updateFavoriteBooks() {
         favoriteBookIDs = Set(favoriteBooks.map { $0.id })

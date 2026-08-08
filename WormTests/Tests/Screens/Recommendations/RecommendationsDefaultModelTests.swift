@@ -18,7 +18,9 @@ struct RecommendationsDefaultModelTests {
     @Test
     func favoriteBookIDs_empty_initially() async {
         let model = await RecommendationsDefaultModel(
-            catalogService: CatalogMockService(), favoritesService: FavoritesMockService()
+            catalogService: CatalogMockService(),
+            favoritesService: FavoritesMockService(),
+            blockedBooksService: BlockedBooksMockService()
         )
         await #expect(model.favoriteBookIDs.isEmpty)
     }
@@ -27,7 +29,9 @@ struct RecommendationsDefaultModelTests {
     func favoriteBookIDs_updates() async {
         let id = "1"
         let model: RecommendationsModel = await RecommendationsDefaultModel(
-            catalogService: CatalogMockService(), favoritesService: FavoritesMockService(favoriteBookIDs: [id])
+            catalogService: CatalogMockService(),
+            favoritesService: FavoritesMockService(favoriteBookIDs: [id]),
+            blockedBooksService: BlockedBooksMockService()
         )
 
         var ids =  await model.favoriteBookIDsPublisher.dropFirst().values.makeAsyncIterator()
@@ -37,7 +41,9 @@ struct RecommendationsDefaultModelTests {
     @Test(.timeLimit(.minutes(1)))
     func favoriteBookIDs_updates_onAddingFavorite() async throws {
         let model: RecommendationsModel = await RecommendationsDefaultModel(
-            catalogService: CatalogMockService(), favoritesService: FavoritesMockService()
+            catalogService: CatalogMockService(),
+            favoritesService: FavoritesMockService(),
+            blockedBooksService: BlockedBooksMockService()
         )
 
         var favorites = await model.favoriteBookIDsPublisher.dropFirst().values.makeAsyncIterator()
@@ -52,7 +58,9 @@ struct RecommendationsDefaultModelTests {
     func favoriteBookIDs_updates_onRemovingFavorite() async throws {
         let id = "1"
         let model: RecommendationsModel = await RecommendationsDefaultModel(
-            catalogService: CatalogMockService(), favoritesService: FavoritesMockService(favoriteBookIDs: [id])
+            catalogService: CatalogMockService(),
+            favoritesService: FavoritesMockService(favoriteBookIDs: [id]),
+            blockedBooksService: BlockedBooksMockService()
         )
 
         var favorites = await model.favoriteBookIDsPublisher.dropFirst().values.makeAsyncIterator()
@@ -65,7 +73,9 @@ struct RecommendationsDefaultModelTests {
     @Test
     func recommendations_empty_initially() async {
         let model = await RecommendationsDefaultModel(
-            catalogService: CatalogMockService(), favoritesService: FavoritesMockService()
+            catalogService: CatalogMockService(),
+            favoritesService: FavoritesMockService(),
+            blockedBooksService: BlockedBooksMockService()
         )
         await #expect(model.recommendations.isEmpty)
     }
@@ -94,7 +104,8 @@ struct RecommendationsDefaultModelTests {
                     recommendedBook
                 ]
             ),
-            favoritesService: FavoritesMockService(favoriteBookIDs: ["1"])
+            favoritesService: FavoritesMockService(favoriteBookIDs: ["1"]),
+            blockedBooksService: BlockedBooksMockService()
         )
 
         var books = await model.recommendationsPublisher.dropFirst().values.makeAsyncIterator()
@@ -125,7 +136,8 @@ struct RecommendationsDefaultModelTests {
                     recommendedBook
                 ]
             ),
-            favoritesService: FavoritesMockService()
+            favoritesService: FavoritesMockService(),
+            blockedBooksService: BlockedBooksMockService()
         )
 
         var books = await model.recommendationsPublisher.dropFirst().values.makeAsyncIterator()
@@ -158,7 +170,8 @@ struct RecommendationsDefaultModelTests {
                     recommendedBook
                 ]
             ),
-            favoritesService: FavoritesMockService(favoriteBookIDs: [book.id])
+            favoritesService: FavoritesMockService(favoriteBookIDs: [book.id]),
+            blockedBooksService: BlockedBooksMockService()
         )
 
         var books = await model.recommendationsPublisher.dropFirst(2).values.makeAsyncIterator()
@@ -194,7 +207,8 @@ struct RecommendationsDefaultModelTests {
                     firstFavorite.id,
                     secondFavorite.id
                 ]
-            )
+            ),
+            blockedBooksService: BlockedBooksMockService()
         )
 
         var books = await model.recommendationsPublisher.dropFirst().values.makeAsyncIterator()
@@ -233,7 +247,8 @@ struct RecommendationsDefaultModelTests {
                     recommendedBook
                 ]
             ),
-            favoritesService: FavoritesMockService(favoriteBookIDs: [book.id])
+            favoritesService: FavoritesMockService(favoriteBookIDs: [book.id]),
+            blockedBooksService: BlockedBooksMockService()
         )
 
         var books = await model.recommendationsPublisher.dropFirst().values.makeAsyncIterator()
@@ -244,15 +259,17 @@ struct RecommendationsDefaultModelTests {
 
     @Test
     func blockingRecommendation_updatesBlockedBooks() async throws {
-        let favoritesService = await FavoritesMockService()
-        let model: RecommendationsModel = RecommendationsDefaultModel(
-            catalogService: CatalogMockService(), favoritesService: favoritesService
+        let blockedBooksService = await BlockedBooksMockService()
+        let model: RecommendationsModel = await RecommendationsDefaultModel(
+            catalogService: CatalogMockService(),
+            favoritesService: FavoritesMockService(),
+            blockedBooksService: blockedBooksService
         )
 
         let id = "1"
         try await model.blockFromRecommendationsBook(withID: id)
 
-        await #expect(favoritesService.blockedBookIDs.contains(id))
+        await #expect(blockedBooksService.blockedBookIDs.contains(id))
     }
 
     @Test(.timeLimit(.minutes(1)))
@@ -288,7 +305,8 @@ struct RecommendationsDefaultModelTests {
                     firstFavorite.id,
                     secondFavorite.id
                 ]
-            )
+            ),
+            blockedBooksService: BlockedBooksMockService()
         )
 
         while await model.recommendations != [
@@ -328,7 +346,8 @@ struct RecommendationsDefaultModelTests {
                     unaffectedRecommendation
                 ]
             ),
-            favoritesService: FavoritesMockService(favoriteBookIDs: [favorite.id])
+            favoritesService: FavoritesMockService(favoriteBookIDs: [favorite.id]),
+            blockedBooksService: BlockedBooksMockService()
         )
 
         while await model.recommendations != [
@@ -343,6 +362,66 @@ struct RecommendationsDefaultModelTests {
         while await model.recommendations != [
             unaffectedRecommendation,
             penalizedRecommendation
+        ] {
+            await Task.yield()
+        }
+    }
+
+    @Test(.timeLimit(.minutes(1)))
+    func recommendationsUpdate_reversesRankPenalty_andReintroducesBook_onUnblocking() async throws {
+        let favorite = Book(
+            id: "1",
+            authors: ["Author"],
+            title: "Favorite",
+            description: "Desc1",
+            similarBookIDs: [
+                "100",
+                "200",
+                "300"
+            ]
+        )
+        let blockedRecommendation = Book(
+            id: "100", authors: ["Author"], title: "Blocked", description: "Desc2", similarBookIDs: ["200"]
+        )
+
+        let penalizedRecommendation = Book(id: "200", authors: ["Author"], title: "Penalized", description: "Desc3")
+        let unaffectedRecommendation = Book(id: "300", authors: ["Author"], title: "Unaffected", description: "Desc4")
+
+        let blockedBooksService = await BlockedBooksMockService()
+        let model: RecommendationsModel = await RecommendationsDefaultModel(
+            catalogService: CatalogMockService(
+                books: [
+                    favorite,
+                    blockedRecommendation,
+                    penalizedRecommendation,
+                    unaffectedRecommendation
+                ]
+            ),
+            favoritesService: FavoritesMockService(favoriteBookIDs: [favorite.id]),
+            blockedBooksService: blockedBooksService
+        )
+
+        while await model.recommendations != [
+            blockedRecommendation,
+            penalizedRecommendation,
+            unaffectedRecommendation
+        ] {
+            await Task.yield()
+        }
+
+        try await model.blockFromRecommendationsBook(withID: blockedRecommendation.id)
+        while await model.recommendations != [
+            unaffectedRecommendation,
+            penalizedRecommendation
+        ] {
+            await Task.yield()
+        }
+
+        try await blockedBooksService.removeFromBlockedBook(withID: blockedRecommendation.id)
+        while await Set(model.recommendations) != [
+            blockedRecommendation,
+            penalizedRecommendation,
+            unaffectedRecommendation
         ] {
             await Task.yield()
         }
@@ -376,9 +455,8 @@ struct RecommendationsDefaultModelTests {
                     unaffectedRecommendation
                 ]
             ),
-            favoritesService: FavoritesMockService(
-                favoriteBookIDs: [favorite.id], blockedBookIDs: [alreadyBlocked.id]
-            )
+            favoritesService: FavoritesMockService(favoriteBookIDs: [favorite.id]),
+            blockedBooksService: BlockedBooksMockService(blockedBookIDs: [alreadyBlocked.id])
         )
 
         while await model.recommendations != [
@@ -392,7 +470,9 @@ struct RecommendationsDefaultModelTests {
     @Test
     func toggleFavoriteStateOfBook_throws_whenServiceFails() async {
         let model: RecommendationsModel = await RecommendationsDefaultModel(
-            catalogService: CatalogMockService(), favoritesService: FavoritesMockService(errorToThrow: MockError())
+            catalogService: CatalogMockService(),
+            favoritesService: FavoritesMockService(errorToThrow: MockError()),
+            blockedBooksService: BlockedBooksMockService()
         )
         await #expect(throws: MockError.self) { try await model.toggleFavoriteStateOfBook(withID: "1") }
     }
@@ -400,7 +480,9 @@ struct RecommendationsDefaultModelTests {
     @Test
     func blockFromRecommendationsBook_throws_whenServiceFails() async {
         let model: RecommendationsModel = await RecommendationsDefaultModel(
-            catalogService: CatalogMockService(), favoritesService: FavoritesMockService(errorToThrow: MockError())
+            catalogService: CatalogMockService(),
+            favoritesService: FavoritesMockService(),
+            blockedBooksService: BlockedBooksMockService(errorToThrow: MockError())
         )
         await #expect(throws: MockError.self) { try await model.blockFromRecommendationsBook(withID: "1") }
     }

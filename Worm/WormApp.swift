@@ -23,6 +23,7 @@ struct WormApp: App {
             ViewFactory.makeMainView(
                 catalogService: catalogService,
                 favoritesService: favoritesService,
+                blockedBooksService: blockedBooksService,
                 imageService: imageService,
                 onboardingService: onboardingService
             )
@@ -31,6 +32,7 @@ struct WormApp: App {
 
     // MARK: Private properties
 
+    private let blockedBooksService: BlockedBooksService
     private let catalogService: CatalogService = {
 #if DEBUG
         if ProcessInfo.processInfo.environment["TEST"] != nil {
@@ -43,29 +45,36 @@ struct WormApp: App {
 
         return CatalogGoodreadsService(goodreadsService: goodreadsService, cacheService: cacheService)
     }()
-    private let favoritesService: FavoritesService = {
-        let modelContainer: ModelContainer = {
-#if DEBUG
-            let storedInMemory = ProcessInfo.processInfo.environment["TEST"] != nil
-#else
-            let storedInMemory = false
-#endif
-            let schema = Schema(
-                [BlockedBook.self,
-                 FavoriteBook.self],
-                version: Schema.Version(1, 0, 0)
-            )
-            let configuration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: storedInMemory)
-
-            do {
-                return try ModelContainerFactory.make(for: schema, configuration: configuration)
-            } catch {
-                fatalError("Could not create ModelContainer, even after resetting the store: \(error)")
-            }
-        }()
-        return FavoritesPersistenceService(modelContainer: modelContainer)
-    }()
+    private let favoritesService: FavoritesService
     private let imageService = ImageWebService(webService: URLSession.shared)
     private let onboardingService = OnboardingPersistentService()
+
+    // MARK: - Initialization
+
+    init() {
+#if DEBUG
+        let storedInMemory = ProcessInfo.processInfo.environment["TEST"] != nil
+#else
+        let storedInMemory = false
+#endif
+        let schema = Schema(
+            [
+                BlockedBook.self,
+                FavoriteBook.self
+            ],
+            version: Schema.Version(1, 0, 0)
+        )
+        let configuration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: storedInMemory)
+
+        let modelContainer: ModelContainer
+        do {
+            modelContainer = try ModelContainerFactory.make(for: schema, configuration: configuration)
+        } catch {
+            fatalError("Could not create ModelContainer, even after resetting the store: \(error)")
+        }
+
+        blockedBooksService = BlockedBooksPersistenceService(modelContainer: modelContainer)
+        favoritesService = FavoritesPersistenceService(modelContainer: modelContainer)
+    }
 
 }
