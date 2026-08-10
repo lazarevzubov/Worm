@@ -19,7 +19,7 @@ final class BlockedScreenTests: XCTestCase {
 
         dismissOnboarding(in: app)
 
-        app.tabBars.buttons["Blocked"].tap()
+        app.tabBars.buttons["BlockedTabButton"].tap()
 
         XCTAssertTrue(app.tables.staticTexts.count == 0)
     }
@@ -32,7 +32,7 @@ final class BlockedScreenTests: XCTestCase {
 
         favoriteBook(titled: "The Lord of the Rings", in: app)
 
-        app.tabBars.buttons["Recommendations"].tap()
+        app.tabBars.buttons["RecommendationsTabButton"].tap()
 
         let recommendedBook = app.staticTexts["The Wind-Up Bird Chronicle"]
         guard recommendedBook.waitForExistence(timeout: 5.0) else {
@@ -42,7 +42,7 @@ final class BlockedScreenTests: XCTestCase {
         recommendedBook.swipeLeft()
 
         app.buttons["Delete"].tap()
-        app.tabBars.buttons["Blocked"].tap()
+        app.tabBars.buttons["BlockedTabButton"].tap()
 
         let blockedBook = app.staticTexts["The Wind-Up Bird Chronicle"]
         guard blockedBook.waitForExistence(timeout: 5.0) else {
@@ -58,7 +58,7 @@ final class BlockedScreenTests: XCTestCase {
             return
         }
 
-        app.tabBars.buttons["Recommendations"].tap()
+        app.tabBars.buttons["RecommendationsTabButton"].tap()
         XCTAssertTrue(
             app.staticTexts["The Wind-Up Bird Chronicle"].waitForExistence(timeout: 5.0),
             "Book didn't reappear as a recommendation after unblocking."
