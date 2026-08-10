@@ -49,7 +49,7 @@ extension Book {
             id: "5",
             authors: ["Frank Herbert"],
             title: "Dune I",
-            description: "A good example of why immigrants can be useful to a country (or a planet).",
+            description: "A young heir navigates politics, prophecy, and survival on a desert planet.",
             rating: 3.45,
             similarBookIDs: ["11"]
         ),
@@ -73,7 +73,7 @@ extension Book {
             id: "8",
             authors: ["Steve McConnell"],
             title: "Code Complete",
-            description: "How to make your code a bit less shitty.",
+            description: "How to make your code a bit less messy.",
             rating: 0.12,
             similarBookIDs: ["8"]
         ),
@@ -105,7 +105,7 @@ extension Book {
             id: "12",
             authors: ["Hannah Arendt"],
             title: "Eichmann in Jerusalem: A Report on the Banality of Evil",
-            description: "How the Jew made their situation even worse during WWII.",
+            description: "A philosopher's account of a war-crimes trial and the unsettling ordinariness of evil.",
             rating: 4.56,
             similarBookIDs: ["4"]
         ),
@@ -129,7 +129,7 @@ extension Book {
             id: "15",
             authors: ["Haruki Murakami"],
             title: "The Wind-Up Bird Chronicle",
-            description: "A half anime-pervert, half meditating phantasy.",
+            description: "A man's search for his missing cat spirals into a surreal journey through memory and war.",
             rating: 2.34,
             similarBookIDs: ["1"]
         )
