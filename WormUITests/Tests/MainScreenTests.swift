@@ -14,7 +14,7 @@ final class MainScreenTests: XCTestCase {
 
     func testSearchTab_visible() {
         let app = launchedApp()
-        XCTAssertTrue(app.tabBars.buttons["Search"].isHittable)
+        XCTAssertTrue(app.tabBars.buttons["SearchTabButton"].isHittable)
     }
 
     func testSearchTab_selectedByDefault() {
@@ -24,36 +24,36 @@ final class MainScreenTests: XCTestCase {
 
     func testRecommendationsTab_visible() {
         let app = launchedApp()
-        XCTAssertTrue(app.tabBars.buttons["Recommendations"].isHittable)
+        XCTAssertTrue(app.tabBars.buttons["RecommendationsTabButton"].isHittable)
     }
 
     func testTappingRecommendationsTab_showsRecommendationsScreen() {
         let app = launchedApp()
-        app.tabBars.buttons["Recommendations"].tap()
+        app.tabBars.buttons["RecommendationsTabButton"].tap()
 
         XCTAssertTrue(app.staticTexts["Recommendations"].exists)
     }
 
     func testFavoritesTab_visible() {
         let app = launchedApp()
-        XCTAssertTrue(app.tabBars.buttons["Favorites"].isHittable)
+        XCTAssertTrue(app.tabBars.buttons["FavoritesTabButton"].isHittable)
     }
 
     func testTappingFavoritesTab_showsFavoritesScreen() {
         let app = launchedApp()
-        app.tabBars.buttons["Favorites"].tap()
+        app.tabBars.buttons["FavoritesTabButton"].tap()
 
         XCTAssertTrue(app.staticTexts["Favorites"].exists)
     }
 
     func testBlockedTab_visible() {
         let app = launchedApp()
-        XCTAssertTrue(app.tabBars.buttons["Blocked"].isHittable)
+        XCTAssertTrue(app.tabBars.buttons["BlockedTabButton"].isHittable)
     }
 
     func testTappingBlockedTab_showsBlockedScreen() {
         let app = launchedApp()
-        app.tabBars.buttons["Blocked"].tap()
+        app.tabBars.buttons["BlockedTabButton"].tap()
 
         XCTAssertTrue(app.staticTexts["Blocked"].exists)
     }
