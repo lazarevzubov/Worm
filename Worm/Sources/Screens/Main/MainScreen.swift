@@ -10,9 +10,10 @@ import SwiftUI
 
 /// The main screen visual representation.
 struct MainScreen<
-    FavoritesView: View,
-    RecommendationsView: View,
     SearchView: View,
+    RecommendationsView: View,
+    FavoritesView: View,
+    BlockedView: View,
     ViewModel: MainScreenViewModel
 >: View {
 
@@ -48,11 +49,20 @@ struct MainScreen<
                     Label("Favorites", systemImage: "heart")
                         .accessibilityIdentifier("FavoritesTabButton")
                 }
+            NavigationStack {
+                blockedView
+                    .navigationTitle("Blocked")
+            }
+                .tabItem {
+                    Label("Blocked", systemImage: "nosign")
+                        .accessibilityIdentifier("BlockedTabButton")
+                }
         }
     }
 
     // MARK: Private properties
 
+    private let blockedView: BlockedView
     private let favoritesView: FavoritesView
     private let recommendationsView: RecommendationsView
     private let searchView: SearchView
@@ -66,23 +76,24 @@ struct MainScreen<
     ///   - searchView: The Search tab visual representation.
     ///   - recommendationsView: The Recommendations tab visual representation.
     ///   - favoritesView: The Favorites tab visual representation.
+    ///   - blockedView: The Blocked tab visual representation.
     ///   - viewModel: The presentation logic handler.
     init(
         searchView: SearchView,
         recommendationsView: RecommendationsView,
         favoritesView: FavoritesView,
+        blockedView: BlockedView,
         viewModel: ViewModel
     ) {
         self.searchView = searchView
         self.recommendationsView = recommendationsView
         self.favoritesView = favoritesView
+        self.blockedView = blockedView
 
         self.viewModel = viewModel
     }
 
 }
-
-#if DEBUG
 
 // MARK: -
 
@@ -90,9 +101,8 @@ struct MainScreen<
     MainScreen(
         searchView: SearchView(viewModel: SearchPreviewViewModel()),
         recommendationsView: RecommendationsView(viewModel: RecommendationsPreviewViewModel()),
-        favoritesView: FavoritesView(viewModel: FavoritesPreviewsViewModel()), 
+        favoritesView: FavoritesView(viewModel: FavoritesPreviewsViewModel()),
+        blockedView: BlockedBooksView(viewModel: BlockedBooksPreviewViewModel()),
         viewModel: MainScreenPreviewViewModel()
     )
 }
-
-#endif

@@ -74,7 +74,6 @@ final class CatalogGoodreadsService: CatalogService {
 }
 
 #if DEBUG
-
 // MARK: -
 
 final class CatalogPreviewsService: CatalogService {
@@ -92,5 +91,4 @@ final class CatalogPreviewsService: CatalogService {
     }
 
 }
-
 #endif

@@ -69,10 +69,6 @@ struct BookDetailsView<ViewModel: BookDetailsViewModel>: View {
 
 }
 
-#if DEBUG
-
 // MARK: -
 
 #Preview { BookDetailsView(viewModel: BookDetailsPreviewViewModel()) }
-
-#endif

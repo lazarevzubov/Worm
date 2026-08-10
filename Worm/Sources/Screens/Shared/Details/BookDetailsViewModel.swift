@@ -91,7 +91,6 @@ final class BookDetailsDefaultViewModel: BookDetailsViewModel {
 }
 
 #if DEBUG
-
 // MARK: -
 
 final class BookDetailsPreviewViewModel: BookDetailsViewModel {
@@ -107,5 +106,4 @@ final class BookDetailsPreviewViewModel: BookDetailsViewModel {
     let title = "The Lord of the Rings"
 
 }
-
 #endif

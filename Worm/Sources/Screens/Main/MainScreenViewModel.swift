@@ -19,7 +19,6 @@ protocol MainScreenViewModel: ObservableObject {
 }
 
 #if DEBUG
-
 // MARK: -
 
 final class MainScreenPreviewViewModel: MainScreenViewModel {
@@ -31,5 +30,4 @@ final class MainScreenPreviewViewModel: MainScreenViewModel {
     var query = ""
 
 }
-
 #endif
