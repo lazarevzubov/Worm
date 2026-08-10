@@ -47,11 +47,15 @@ enum ViewFactory {
         let favoritesView = makeFavoritesView(
             catalogService: catalogService, favoritesService: favoritesService, imageService: imageService
         )
+        let blockedView = makeBlockedView(
+            catalogService: catalogService, blockedBooksService: blockedBooksService, imageService: imageService
+        )
 
         MainScreen(
             searchView: searchView,
             recommendationsView: recommendationsView,
             favoritesView: favoritesView,
+            blockedView: blockedView,
             viewModel: viewModel
         )
     }
@@ -98,6 +102,17 @@ enum ViewFactory {
         let viewModel = FavoritesDefaultViewModel(model: model, imageService: imageService)
 
         return FavoritesView(viewModel: viewModel)
+    }
+
+    private static func makeBlockedView(
+        catalogService: CatalogService, blockedBooksService: any BlockedBooksService, imageService: ImageService
+    ) -> some View {
+        let model = BlockedBooksServiceBasedModel(
+            catalogService: catalogService, blockedBooksService: blockedBooksService
+        )
+        let viewModel = BlockedBooksDefaultViewModel(model: model, imageService: imageService)
+
+        return BlockedBooksView(viewModel: viewModel)
     }
 
 }

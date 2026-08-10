@@ -85,10 +85,6 @@ struct SearchView<ViewModel: SearchViewModel>: View {
 
 }
 
-#if DEBUG
-
 // MARK: -
 
 #Preview { SearchView(viewModel: SearchPreviewViewModel()) }
-
-#endif

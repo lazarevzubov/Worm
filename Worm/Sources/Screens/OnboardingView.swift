@@ -55,12 +55,8 @@ struct OnboardingView: View {
 
 }
 
-#if DEBUG
-
 // MARK: -
 
 #Preview {
     OnboardingView(text: "Start by searching your favorite books and marking them as favorites.", color: .favorites)
 }
-
-#endif

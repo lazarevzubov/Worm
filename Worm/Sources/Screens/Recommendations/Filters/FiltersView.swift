@@ -114,10 +114,6 @@ struct FiltersView<ViewModel: FiltersViewModel>: View {
 
 }
 
-#if DEBUG
-
 // MARK: -
 
 #Preview { FiltersView(viewModel: RecommendationsPreviewViewModel()) }
-
-#endif

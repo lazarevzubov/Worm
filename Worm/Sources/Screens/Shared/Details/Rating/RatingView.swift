@@ -55,8 +55,6 @@ struct RatingView: View {
 
 }
 
-#if DEBUG
-
 // MARK: -
 
 #Preview {
@@ -116,5 +114,3 @@ struct RatingView: View {
     }
         .padding([.bottom])
 }
-
-#endif

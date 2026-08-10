@@ -28,7 +28,7 @@ struct RecommendationsView<ViewModel: RecommendationsViewModel>: View {
                             }
                                 .buttonStyle(.plain)
                                 .contextMenu {
-                                    Button("Delete") { viewModel.blockRecommendation(book) }
+                                    Button("Delete", role: .destructive) { viewModel.blockRecommendation(book) }
                                 }
                         }
                             .onDelete { indexSet in
@@ -108,13 +108,9 @@ struct RecommendationsView<ViewModel: RecommendationsViewModel>: View {
 
 // MARK: -
 
-#if DEBUG
-
 #Preview {
     NavigationView {
         RecommendationsView(viewModel: RecommendationsPreviewViewModel())
             .navigationTitle("Example")
     }
 }
-
-#endif

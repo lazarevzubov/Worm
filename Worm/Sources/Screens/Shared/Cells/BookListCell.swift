@@ -17,26 +17,14 @@ struct BookListCell: View {
 
     var body: some View {
         HStack {
-            VStack(alignment: .leading) {
-                Text(book.authors)
-                    .font(.body)
-                    .fontWeight(.light)
-                    .foregroundColor(.secondary)
-                    .accessibility(hidden: true)
-                Text(book.title)
-                    .font(.headline)
-                    .fontWeight(.medium)
-                    .foregroundColor(.primary)
-                    .accessibility(hidden: true)
-            }
-                .accessibilityElement()
-                .accessibility(label: makeCellAccessibilityLabel(for: book))
-                .accessibilityAddTraits(.isButton)
+            BookInfoView(book: book)
             Spacer()
             Button { viewModel.toggleFavoriteStateOfBook(withID: book.id) } label: {
-                Image(systemName: (book.favorite
-                                       ? "heart.fill"
-                                       : "heart"))
+                Image(
+                    systemName: book.favorite
+                        ? "heart.fill"
+                        : "heart"
+                )
                     .foregroundColor(.primary)
                     .frame(minSize: 44.0)
                     .contentShape(.rect)
@@ -66,10 +54,6 @@ struct BookListCell: View {
     // MARK: - Methods
 
     // MARK: Private methods
-
-    private func makeCellAccessibilityLabel(for book: BookViewModel) -> Text {
-        Text("\(book.authors) – \(book.title)", comment: "Accessibility label with a book title and authors")
-    }
 
     private func makeFavoriteButtonAccessibilityLabel(for book: BookViewModel) -> Text {
         book.favorite

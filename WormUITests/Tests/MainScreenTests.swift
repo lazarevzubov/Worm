@@ -46,6 +46,18 @@ final class MainScreenTests: XCTestCase {
         XCTAssertTrue(app.staticTexts["Favorites"].exists)
     }
 
+    func testBlockedTab_visible() {
+        let app = launchedApp()
+        XCTAssertTrue(app.tabBars.buttons["Blocked"].isHittable)
+    }
+
+    func testTappingBlockedTab_showsBlockedScreen() {
+        let app = launchedApp()
+        app.tabBars.buttons["Blocked"].tap()
+
+        XCTAssertTrue(app.staticTexts["Blocked"].exists)
+    }
+
     // MARK: Private methods
 
     private func launchedApp() -> XCUIApplication {
