@@ -126,15 +126,15 @@ final class SearchDefaultViewModel: MainScreenViewModel, SearchViewModel {
                     guard let self else {
                         return
                     }
-                    for bookIndex in books.indices {
-                        books[bookIndex] = BookViewModel(
-                            id: books[bookIndex].id,
-                            authors: books[bookIndex].authors,
-                            title: books[bookIndex].title,
-                            description: books[bookIndex].description,
-                            imageURL: books[bookIndex].imageURL,
-                            rating: books[bookIndex].rating,
-                            favorite: ids.contains(books[bookIndex].id)
+                    books = books.map {
+                        BookViewModel(
+                            id: $0.id,
+                            authors: $0.authors,
+                            title: $0.title,
+                            description: $0.description,
+                            imageURL: $0.imageURL,
+                            rating: $0.rating,
+                            favorite: ids.contains($0.id)
                         )
                     }
                 }
