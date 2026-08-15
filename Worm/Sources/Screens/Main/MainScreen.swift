@@ -25,9 +25,13 @@ struct MainScreen<
         TabView {
             NavigationStack {
                 searchView
-                    .searchable(text: $viewModel.query, prompt: "Search books")
-                    .autocorrectionDisabled(true)
+                    // Makes the whole content area participate in hit testing, including otherwise empty areas.
+                    .contentShape(Rectangle())
+                    .simultaneousGesture(TapGesture().onEnded { searchFieldFocused = false }, including: .all)
                     .navigationTitle("Search")
+                    .searchable(text: $viewModel.query, prompt: "Search books")
+                    .searchFocused($searchFieldFocused)
+                    .autocorrectionDisabled(true)
             }
                 .tabItem {
                     Label("Search", systemImage: "magnifyingglass")
@@ -66,6 +70,8 @@ struct MainScreen<
     private let favoritesView: FavoritesView
     private let recommendationsView: RecommendationsView
     private let searchView: SearchView
+    @FocusState
+    private var searchFieldFocused: Bool
     @ObservedObject
     private var viewModel: ViewModel
 
