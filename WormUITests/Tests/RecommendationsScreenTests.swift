@@ -74,7 +74,7 @@ final class RecommendationsScreenTests: XCTestCase {
 
     func testListInitiallyEmpty() {
         let app = makeOpenRecommendationsTab()
-        XCTAssertTrue(app.tables.staticTexts.count == 0)
+        XCTAssertTrue(app.cells.count == 0)
     }
 
     func testFiltersButton_isVisible() {
@@ -97,9 +97,7 @@ final class RecommendationsScreenTests: XCTestCase {
     private func makeOpenRecommendationsTab(resetOnboarding: Bool = false) -> XCUIApplication {
         let app = XCTestCase.makeTestApp(resetOnboarding: resetOnboarding)
         app.launch()
-
-        let tabButton = app.tabBars.buttons["RecommendationsTabButton"]
-        tabButton.tap()
+        app.element(withIdentifier: "RecommendationsTabButton").tap()
 
         return app
     }
