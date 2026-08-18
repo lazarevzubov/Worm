@@ -160,14 +160,14 @@ final class SearchScreenTests: XCTestCase {
         let app = XCTestCase.makeTestApp()
         app.launch()
 
-        XCTAssert(app.navigationBars.searchFields.element(boundBy: 0).exists)
+        XCTAssert(app.searchFields.firstMatch.exists)
     }
 
     func testSearchBarVisible() {
         let app = XCTestCase.makeTestApp()
         app.launch()
 
-        let searchBar = app.navigationBars.searchFields.element(boundBy: 0)
+        let searchBar = app.searchFields.firstMatch
         guard searchBar.waitForExistence(timeout: 5.0) else {
             XCTFail("Search bar didn't appear.")
             return
@@ -177,11 +177,12 @@ final class SearchScreenTests: XCTestCase {
         XCTAssertTrue(searchBar.isHittable)
     }
 
+#if os(iOS)
     func testKeyboardActivation() {
         let app = XCTestCase.makeTestApp()
         app.launch()
 
-        let searchBar = app.navigationBars.searchFields.element(boundBy: 0)
+        let searchBar = app.searchFields.firstMatch
         guard searchBar.waitForExistence(timeout: 5.0) else {
             XCTFail("Search bar didn't appear.")
             return
@@ -197,7 +198,7 @@ final class SearchScreenTests: XCTestCase {
         let app = XCTestCase.makeTestApp()
         app.launch()
 
-        let searchBar = app.navigationBars.searchFields.element(boundBy: 0)
+        let searchBar = app.searchFields.firstMatch
         guard searchBar.waitForExistence(timeout: 5.0) else {
             XCTFail("Search bar didn't appear.")
             return
@@ -218,7 +219,7 @@ final class SearchScreenTests: XCTestCase {
         let app = XCTestCase.makeTestApp()
         app.launch()
 
-        let searchBar = app.navigationBars.searchFields.element(boundBy: 0)
+        let searchBar = app.searchFields.firstMatch
         guard searchBar.waitForExistence(timeout: 5.0) else {
             XCTFail("Search bar didn't appear.")
             return
@@ -241,12 +242,13 @@ final class SearchScreenTests: XCTestCase {
         expectation(for: keyboardDeactivated, evaluatedWith: app.keyboards)
         waitForExpectations(timeout: 5.0)
     }
+#endif
 
     func testResultsInitiallyEmpty() {
         let app = XCTestCase.makeTestApp()
         app.launch()
 
-        XCTAssertTrue(app.tables.staticTexts.count == 0)
+        XCTAssertTrue(app.cells.count == 0)
     }
 
 }

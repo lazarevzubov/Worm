@@ -19,9 +19,9 @@ final class BlockedScreenTests: XCTestCase {
 
         dismissOnboarding(in: app)
 
-        app.tabBars.buttons["BlockedTabButton"].tap()
+        app.element(withIdentifier: "BlockedTabButton").tap()
 
-        XCTAssertTrue(app.tables.staticTexts.count == 0)
+        XCTAssertTrue(app.cells.count == 0)
     }
 
     func testBlockedBook_appearsAfterBlocking_andDisappearsAfterUnblocking() {
@@ -32,9 +32,9 @@ final class BlockedScreenTests: XCTestCase {
 
         favoriteBook(titled: "The Lord of the Rings", in: app)
 
-        app.tabBars.buttons["RecommendationsTabButton"].tap()
+        app.element(withIdentifier: "RecommendationsTabButton").tap()
 
-        let recommendedBook = app.staticTexts["The Wind-Up Bird Chronicle"]
+        let recommendedBook = app.bookRow(titled: "The Wind-Up Bird Chronicle")
         guard recommendedBook.waitForExistence(timeout: 5.0) else {
             XCTFail("Recommendation didn't appear.")
             return
@@ -42,9 +42,9 @@ final class BlockedScreenTests: XCTestCase {
         recommendedBook.swipeLeft()
 
         app.buttons["Delete"].tap()
-        app.tabBars.buttons["BlockedTabButton"].tap()
+        app.element(withIdentifier: "BlockedTabButton").tap()
 
-        let blockedBook = app.staticTexts["The Wind-Up Bird Chronicle"]
+        let blockedBook = app.bookRow(titled: "The Wind-Up Bird Chronicle")
         guard blockedBook.waitForExistence(timeout: 5.0) else {
             XCTFail("Blocked book didn't appear.")
             return
@@ -58,9 +58,9 @@ final class BlockedScreenTests: XCTestCase {
             return
         }
 
-        app.tabBars.buttons["RecommendationsTabButton"].tap()
+        app.element(withIdentifier: "RecommendationsTabButton").tap()
         XCTAssertTrue(
-            app.staticTexts["The Wind-Up Bird Chronicle"].waitForExistence(timeout: 5.0),
+            app.bookRow(titled: "The Wind-Up Bird Chronicle").waitForExistence(timeout: 5.0),
             "Book didn't reappear as a recommendation after unblocking."
         )
     }
@@ -80,7 +80,7 @@ final class BlockedScreenTests: XCTestCase {
     }
 
     private func favoriteBook(titled title: String, in app: XCUIApplication) {
-        let searchField = app.navigationBars.searchFields.element(boundBy: 0)
+        let searchField = app.searchFields.firstMatch
         searchField.tap()
         searchField.typeText(title)
 
@@ -96,7 +96,10 @@ final class BlockedScreenTests: XCTestCase {
             return
         }
 
-        app.navigationBars.buttons["Close"].tap()
+        let closeButton = app.buttons["Close"]
+        if closeButton.exists {
+            closeButton.tap()
+        }
     }
 
 }

@@ -16,10 +16,16 @@ final class BookDetailsViewUITests: XCTestCase {
         let app = openSearch()
 
         let searchField = app.searchFields.firstMatch
+        _ = searchField.waitForExistence(timeout: 5.0)
         searchField.tap()
         searchField.typeText("The Master and Margarita") // Rating "4.6."
 
-        let bookCell = app.staticTexts["The Master and Margarita"]
+        let bookCell = app.bookRow(titled: "The Master and Margarita")
+        guard bookCell.waitForExistence(timeout: 5.0) else {
+            XCTFail("Book cell didn't appear.")
+            return
+        }
+
         while !bookCell.isHittable {
             app.swipeUp()
         }
@@ -34,10 +40,16 @@ final class BookDetailsViewUITests: XCTestCase {
         let app = openSearch()
 
         let searchField = app.searchFields.firstMatch
+        _ = searchField.waitForExistence(timeout: 5.0)
         searchField.tap()
         searchField.typeText("The Lord of the Rings") // No rating.
 
-        let bookCell = app.staticTexts["The Lord of the Rings"]
+        let bookCell = app.bookRow(titled: "The Lord of the Rings")
+        guard bookCell.waitForExistence(timeout: 5.0) else {
+            XCTFail("Book cell didn't appear.")
+            return
+        }
+
         while !bookCell.isHittable {
             app.swipeUp()
         }

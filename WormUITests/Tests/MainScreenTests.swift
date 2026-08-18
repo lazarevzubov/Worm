@@ -14,48 +14,50 @@ final class MainScreenTests: XCTestCase {
 
     func testSearchTab_visible() {
         let app = launchedApp()
-        XCTAssertTrue(app.tabBars.buttons["SearchTabButton"].isHittable)
+        XCTAssertTrue(app.element(withIdentifier: "SearchTabButton").isHittable)
     }
 
     func testSearchTab_selectedByDefault() {
         let app = launchedApp()
-        XCTAssertTrue(app.staticTexts["Search"].exists, "The Search tab should be selected on first launch.")
+        XCTAssertTrue(
+            app.isTabSelected(withIdentifier: "SearchTabButton"), "The Search tab should be selected on first launch."
+        )
     }
 
     func testRecommendationsTab_visible() {
         let app = launchedApp()
-        XCTAssertTrue(app.tabBars.buttons["RecommendationsTabButton"].isHittable)
+        XCTAssertTrue(app.element(withIdentifier: "RecommendationsTabButton").isHittable)
     }
 
     func testTappingRecommendationsTab_showsRecommendationsScreen() {
         let app = launchedApp()
-        app.tabBars.buttons["RecommendationsTabButton"].tap()
+        app.element(withIdentifier: "RecommendationsTabButton").tap()
 
-        XCTAssertTrue(app.staticTexts["Recommendations"].exists)
+        XCTAssertTrue(app.isScreenVisible(titled: "Recommendations"))
     }
 
     func testFavoritesTab_visible() {
         let app = launchedApp()
-        XCTAssertTrue(app.tabBars.buttons["FavoritesTabButton"].isHittable)
+        XCTAssertTrue(app.element(withIdentifier: "FavoritesTabButton").isHittable)
     }
 
     func testTappingFavoritesTab_showsFavoritesScreen() {
         let app = launchedApp()
-        app.tabBars.buttons["FavoritesTabButton"].tap()
+        app.element(withIdentifier: "FavoritesTabButton").tap()
 
-        XCTAssertTrue(app.staticTexts["Favorites"].exists)
+        XCTAssertTrue(app.isScreenVisible(titled: "Favorites"))
     }
 
     func testBlockedTab_visible() {
         let app = launchedApp()
-        XCTAssertTrue(app.tabBars.buttons["BlockedTabButton"].isHittable)
+        XCTAssertTrue(app.element(withIdentifier: "BlockedTabButton").isHittable)
     }
 
     func testTappingBlockedTab_showsBlockedScreen() {
         let app = launchedApp()
-        app.tabBars.buttons["BlockedTabButton"].tap()
+        app.element(withIdentifier: "BlockedTabButton").tap()
 
-        XCTAssertTrue(app.staticTexts["Blocked"].exists)
+        XCTAssertTrue(app.isScreenVisible(titled: "Blocked"))
     }
 
     // MARK: Private methods
