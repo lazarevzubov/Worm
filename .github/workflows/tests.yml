@@ -1,0 +1,44 @@
+name: Tests
+
+on:
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: tests-${{ github.workflow }}-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: test (${{ matrix.platform }})
+    runs-on: macos-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: [iOS Simulator, macOS]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Show selected Xcode version
+        run: xcodebuild -version
+      - name: Pick an available iOS simulator
+        if: matrix.platform == 'iOS Simulator'
+        id: sim
+        run: |
+          NAME=$(xcrun simctl list devices available | grep -m1 -E "iPhone" | sed -E 's/^ *([^(]+) \(.*/\1/' | sed -E 's/ +$//')
+          echo "Picked simulator: $NAME"
+          echo "name=$NAME" >> "$GITHUB_OUTPUT"
+      - name: Run tests (iOS Simulator)
+        if: matrix.platform == 'iOS Simulator'
+        run: |
+          xcodebuild test \
+            -scheme Worm \
+            -destination "platform=iOS Simulator,name=${{ steps.sim.outputs.name }}"
+      - name: Run tests (macOS)
+        if: matrix.platform == 'macOS'
+        run: |
+          xcodebuild test \
+            -scheme Worm \
+            -destination "platform=macOS" \
+            CODE_SIGN_IDENTITY="-" \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGNING_ALLOWED=NO
