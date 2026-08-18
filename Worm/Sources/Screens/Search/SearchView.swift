@@ -19,11 +19,7 @@ struct SearchView<ViewModel: SearchViewModel>: View {
         GeometryReader { geometry in
             ZStack {
                 List(viewModel.books) { book in
-                    Button { selectedBook = book } label: {
-                        BookListCell(book: book, viewModel: viewModel)
-                            .background(Color.white.opacity(0.0001)) // For making empty space clickable/tappable.
-                    }
-                        .buttonStyle(.plain)
+                    BookListCell(book: book, viewModel: viewModel) { selectedBook = book }
                 }
                     .listStyle(.plain)
                 if !viewModel.searchOnboardingShown {

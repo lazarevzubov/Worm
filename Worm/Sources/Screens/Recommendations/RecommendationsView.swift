@@ -21,12 +21,7 @@ struct RecommendationsView<ViewModel: RecommendationsViewModel>: View {
                 ZStack {
                     List {
                         ForEach(viewModel.recommendations) { book in
-                            Button { selectedBook = book } label: {
-                                BookListCell(book: book, viewModel: viewModel)
-                                    // For making empty space clickable/tappable.
-                                    .background(Color.white.opacity(0.0001))
-                            }
-                                .buttonStyle(.plain)
+                            BookListCell(book: book, viewModel: viewModel) { selectedBook = book }
                                 .contextMenu {
                                     Button("Delete", role: .destructive) { viewModel.blockRecommendation(book) }
                                 }
