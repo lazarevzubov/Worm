@@ -33,11 +33,14 @@ struct BookListCell: View {
                 .accessibility(label: makeFavoriteButtonAccessibilityLabel(for: book))
         }
             .buttonStyle(.plain)
+            .contentShape(.rect)
+            .onTapGesture { onRowTap?() }
     }
 
     // MARK: Private properties
 
     private let book: BookViewModel
+    private let onRowTap: (() -> Void)?
     private let viewModel: BookListCellViewModel
 
     // MARK: - Initialization
@@ -46,9 +49,11 @@ struct BookListCell: View {
     /// - Parameters:
     ///   - book: A book data for a visual representation.
     ///   - viewModel: The presentation logic of the book table cell.
-    init(book: BookViewModel, viewModel: BookListCellViewModel) {
+    ///   - onRowTap: Called when the cell is tapped anywhere outside the favorite button.
+    init(book: BookViewModel, viewModel: BookListCellViewModel, onRowTap: (() -> Void)? = nil) {
         self.book = book
         self.viewModel = viewModel
+        self.onRowTap = onRowTap
     }
 
     // MARK: - Methods
