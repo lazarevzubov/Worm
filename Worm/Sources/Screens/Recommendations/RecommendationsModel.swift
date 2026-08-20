@@ -58,6 +58,7 @@ actor RecommendationsDefaultModel: RecommendationsModel {
     private let blockedBooksService: any BlockedBooksService
     private let catalogService: CatalogService
     private let favoritesService: any FavoritesService
+    private var blockedBooksPenaltyIndex: [String: Set<String>]?
     private lazy var cancellables = Set<AnyCancellable>()
     private var prioritizedRecommendations = OrderedDictionary<String, RecommendationEntry>() {
         didSet {
@@ -106,6 +107,7 @@ actor RecommendationsDefaultModel: RecommendationsModel {
 
     func blockFromRecommendationsBook(withID id: String) async throws {
         try await blockedBooksService.addToBlockedBook(withID: id)
+        blockedBooksPenaltyIndex = nil
 
         prioritizedRecommendations.removeValue(forKey: id)
         await applyPenalty(fromBlockedBookWithID: id)
@@ -200,6 +202,7 @@ actor RecommendationsDefaultModel: RecommendationsModel {
     }
 
     private func reconcile(withBlockedBookIDs blockedBookIDs: Set<String>) async {
+        blockedBooksPenaltyIndex = nil
         for (candidateID, entry) in prioritizedRecommendations {
             let staleIDs = entry.penalizingIDs.subtracting(blockedBookIDs)
             guard !staleIDs.isEmpty else {
@@ -235,15 +238,25 @@ actor RecommendationsDefaultModel: RecommendationsModel {
     }
 
     private func penalizingBookIDs(forBookWithID candidateID: String) async -> Set<String> {
-        var penalizingIDs = Set<String>()
+        await penaltyIndex()[candidateID] ?? []
+    }
+
+    private func penaltyIndex() async -> [String: Set<String>] {
+        if let blockedBooksPenaltyIndex {
+            return blockedBooksPenaltyIndex
+        }
+
+        var index = [String: Set<String>]()
         for blockedBookID in await blockedBooksService.blockedBookIDs {
             let similarBookIDs = await catalogService.getBook(by: blockedBookID)?.similarBookIDs ?? []
-            if similarBookIDs.contains(candidateID) {
-                penalizingIDs.insert(blockedBookID)
+            for candidateID in similarBookIDs {
+                index[candidateID, default: []].insert(blockedBookID)
             }
         }
 
-        return penalizingIDs
+        blockedBooksPenaltyIndex = index
+
+        return index
     }
 
     // MARK: -
