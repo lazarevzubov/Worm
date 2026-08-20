@@ -35,7 +35,7 @@ struct FavoritesServiceBasedModelTests {
             catalogService: catalogService, favoritesService: favoritesService
         )
 
-        var favorites = await model.favoritesPublisher.dropFirst(2).values.makeAsyncIterator()
+        var favorites = await model.favoritesPublisher.removeDuplicates().dropFirst().values.makeAsyncIterator()
         await #expect(favorites.next() == [book], "Unexpected data received.")
     }
 
