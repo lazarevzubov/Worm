@@ -59,6 +59,7 @@ actor RecommendationsDefaultModel: RecommendationsModel {
     private let blockedBooksService: any BlockedBooksService
     private let catalogService: CatalogService
     private let favoritesService: any FavoritesService
+    private var blockedBookIDs = Set<String>()
     private var blockedBooksPenaltyIndex: [String: Set<String>]?
     private lazy var cancellables = Set<AnyCancellable>()
     private var prioritizedRecommendations = OrderedDictionary<String, RecommendationEntry>()
@@ -102,9 +103,9 @@ actor RecommendationsDefaultModel: RecommendationsModel {
 
     func blockFromRecommendationsBook(withID id: String) async throws {
         try await blockedBooksService.addToBlockedBook(withID: id)
+        blockedBookIDs.insert(id)
         blockedBooksPenaltyIndex = nil
 
-        prioritizedRecommendations.removeValue(forKey: id)
         await applyPenalty(fromBlockedBookWithID: id)
 
         recomputeRecommendations()
@@ -180,12 +181,6 @@ actor RecommendationsDefaultModel: RecommendationsModel {
             return
         }
 
-        // This needs re-checking, because the situation might've changed while the book was being fetched.
-        if await blockedBooksService.blockedBookIDs.contains(id) {
-            prioritizedRecommendations.removeValue(forKey: id)
-            return
-        }
-
         if var entry = prioritizedRecommendations[id] {
             entry.sourceIDs.insert(sourceID)
             prioritizedRecommendations[id] = entry
@@ -215,7 +210,12 @@ actor RecommendationsDefaultModel: RecommendationsModel {
     }
 
     private func reconcile(withBlockedBookIDs blockedBookIDs: Set<String>) async {
+        guard blockedBookIDs != self.blockedBookIDs else {
+            return
+        }
+        self.blockedBookIDs = blockedBookIDs
         blockedBooksPenaltyIndex = nil
+
         for (candidateID, entry) in prioritizedRecommendations {
             let staleIDs = entry.penalizingIDs.subtracting(blockedBookIDs)
             guard !staleIDs.isEmpty else {
@@ -227,8 +227,6 @@ actor RecommendationsDefaultModel: RecommendationsModel {
 
             prioritizedRecommendations[candidateID] = updatedEntry
         }
-
-        await addRecommendedBooksForBooks(withIDs: favoriteBookIDs)
         await applyPenalties(fromBlockedBookIDs: blockedBookIDs)
 
         recomputeRecommendations()
@@ -236,6 +234,7 @@ actor RecommendationsDefaultModel: RecommendationsModel {
 
     private func recomputeRecommendations() {
         recommendations = prioritizedRecommendations
+            .filter { !blockedBookIDs.contains($0.key) }
             .values
             .stableSorted { $0.rank > $1.rank }
             .map { $0.book }
