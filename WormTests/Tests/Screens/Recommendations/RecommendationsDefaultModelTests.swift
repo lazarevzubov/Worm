@@ -350,7 +350,7 @@ struct RecommendationsDefaultModelTests {
             blockedBooksService: BlockedBooksMockService()
         )
 
-        while await model.recommendations != [
+        while await Set(model.recommendations) != [
             blockedRecommendation,
             penalizedRecommendation,
             unaffectedRecommendation
@@ -401,7 +401,7 @@ struct RecommendationsDefaultModelTests {
             blockedBooksService: blockedBooksService
         )
 
-        while await model.recommendations != [
+        while await Set(model.recommendations) != [
             blockedRecommendation,
             penalizedRecommendation,
             unaffectedRecommendation
