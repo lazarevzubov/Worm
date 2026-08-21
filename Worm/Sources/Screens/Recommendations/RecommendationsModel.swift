@@ -55,6 +55,7 @@ actor RecommendationsDefaultModel: RecommendationsModel {
 
     // MARK: Private properties
 
+    private static let maxConcurrentFetches = 5
     private let blockedBooksService: any BlockedBooksService
     private let catalogService: CatalogService
     private let favoritesService: any FavoritesService
@@ -155,8 +156,22 @@ actor RecommendationsDefaultModel: RecommendationsModel {
     private func addRecommendedBooks(withIDs ids: [String], for sourceID: String) async {
         let blockedBookIDs = await blockedBooksService.blockedBookIDs
         let filteredIDs = ids.filter { !blockedBookIDs.contains($0) }
-        for id in filteredIDs {
-            await addRecommendedBook(withID: id, for: sourceID)
+
+        await withTaskGroup(of: Void.self) {
+            var pendingIDs = filteredIDs.makeIterator()
+
+            for _ in 0..<min(Self.maxConcurrentFetches, filteredIDs.count) {
+                guard let id = pendingIDs.next() else {
+                    break
+                }
+                $0.addTask { await self.addRecommendedBook(withID: id, for: sourceID) }
+            }
+            while await $0.next() != nil {
+                guard let id = pendingIDs.next() else {
+                    continue
+                }
+                $0.addTask { await self.addRecommendedBook(withID: id, for: sourceID) }
+            }
         }
     }
 
