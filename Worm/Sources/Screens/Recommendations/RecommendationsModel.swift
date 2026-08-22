@@ -60,14 +60,7 @@ actor RecommendationsDefaultModel: RecommendationsModel {
     private let favoritesService: any FavoritesService
     private var blockedBooksPenaltyIndex: [String: Set<String>]?
     private lazy var cancellables = Set<AnyCancellable>()
-    private var prioritizedRecommendations = OrderedDictionary<String, RecommendationEntry>() {
-        didSet {
-            recommendations = prioritizedRecommendations
-                .values
-                .stableSorted { $0.rank > $1.rank }
-                .map { $0.book }
-        }
-    }
+    private var prioritizedRecommendations = OrderedDictionary<String, RecommendationEntry>()
 
     // MARK: - Initialization
 
@@ -103,6 +96,7 @@ actor RecommendationsDefaultModel: RecommendationsModel {
             try await favoritesService.addToFavoritesBook(withID: id)
             await addRecommendedBooksForBook(withID: id)
         }
+        recomputeRecommendations()
     }
 
     func blockFromRecommendationsBook(withID id: String) async throws {
@@ -111,6 +105,8 @@ actor RecommendationsDefaultModel: RecommendationsModel {
 
         prioritizedRecommendations.removeValue(forKey: id)
         await applyPenalty(fromBlockedBookWithID: id)
+
+        recomputeRecommendations()
     }
 
     // MARK: Private methods
@@ -142,6 +138,8 @@ actor RecommendationsDefaultModel: RecommendationsModel {
     private func update(with favoriteBookIDs: Set<String>) async {
         self.favoriteBookIDs = favoriteBookIDs
         await addRecommendedBooksForBooks(withIDs: favoriteBookIDs)
+
+        recomputeRecommendations()
     }
 
     private func addRecommendedBooksForBooks(withIDs ids: Set<String>) async {
@@ -217,6 +215,15 @@ actor RecommendationsDefaultModel: RecommendationsModel {
 
         await addRecommendedBooksForBooks(withIDs: favoriteBookIDs)
         await applyPenalties(fromBlockedBookIDs: blockedBookIDs)
+
+        recomputeRecommendations()
+    }
+
+    private func recomputeRecommendations() {
+        recommendations = prioritizedRecommendations
+            .values
+            .stableSorted { $0.rank > $1.rank }
+            .map { $0.book }
     }
 
     private func applyPenalties(fromBlockedBookIDs blockedBookIDs: Set<String>) async {
