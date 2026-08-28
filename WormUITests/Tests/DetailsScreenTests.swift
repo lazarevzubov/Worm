@@ -33,7 +33,10 @@ final class BookDetailsViewUITests: XCTestCase {
         bookCell.tap()
 
         let ratingView = app.otherElements["4.6 out of 5 stars"]
-        XCTAssertTrue(ratingView.exists, "Rating view should be displayed for books with ratings.")
+        XCTAssertTrue(
+            ratingView.waitForExistence(timeout: 5.0),
+            "Rating view should be displayed for books with ratings."
+        )
     }
 
     func test_whenBookHasNoRating_thenRatingViewIsNotDisplayed() {
@@ -55,6 +58,11 @@ final class BookDetailsViewUITests: XCTestCase {
         }
 
         bookCell.tap()
+        guard app.buttons["Close"].waitForExistence(timeout: 5.0) else {
+            XCTFail("Details screen didn't appear.")
+            return
+        }
+
         if app
             .otherElements
             .allElementsBoundByIndex

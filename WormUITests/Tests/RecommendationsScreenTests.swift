@@ -97,7 +97,18 @@ final class RecommendationsScreenTests: XCTestCase {
     private func makeOpenRecommendationsTab(resetOnboarding: Bool = false) -> XCUIApplication {
         let app = XCTestCase.makeTestApp(resetOnboarding: resetOnboarding)
         app.launch()
-        app.element(withIdentifier: "RecommendationsTabButton").tap()
+
+        let searchOnboardingLabel = app.buttons["SearchOnboardingLabel"]
+        if searchOnboardingLabel.waitForExistence(timeout: 0.1) {
+            searchOnboardingLabel.tap()
+        }
+
+        let recommendationsTabButton = app.element(withIdentifier: "RecommendationsTabButton")
+        guard recommendationsTabButton.waitForExistence(timeout: 5.0) else {
+            XCTFail("Recommendations tab button didn't appear.")
+            return app
+        }
+        recommendationsTabButton.tap()
 
         return app
     }

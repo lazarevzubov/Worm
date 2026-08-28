@@ -41,7 +41,13 @@ final class BlockedScreenTests: XCTestCase {
         }
         recommendedBook.swipeLeft()
 
-        app.buttons["Delete"].tap()
+        let deleteButton = app.buttons["Delete"]
+        guard deleteButton.waitForExistence(timeout: 5.0) else {
+            XCTFail("Delete action didn't appear.")
+            return
+        }
+        deleteButton.tap()
+
         app.element(withIdentifier: "BlockedTabButton").tap()
 
         let blockedBook = app.bookRow(titled: "The Wind-Up Bird Chronicle")
@@ -51,7 +57,12 @@ final class BlockedScreenTests: XCTestCase {
         }
         blockedBook.swipeLeft()
 
-        app.buttons["Unblock"].tap()
+        let unblockButton = app.buttons["Unblock"]
+        guard unblockButton.waitForExistence(timeout: 5.0) else {
+            XCTFail("Unblock action didn't appear.")
+            return
+        }
+        unblockButton.tap()
 
         guard !blockedBook.waitForExistence(timeout: 5.0) else {
             XCTFail("Blocked book didn't disappear after unblocking.")
